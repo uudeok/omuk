@@ -1,4 +1,4 @@
-import StyledComponentsRegistry from '@/styles/registry';
+import ClientComponentContainer from '@/components/ClientComponentContainer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function RootLayout({
     return (
         <html lang="ko">
             <body>
-                <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+                <ClientComponentContainer>{children}</ClientComponentContainer>
             </body>
         </html>
     );
