@@ -1,4 +1,5 @@
 import ClientComponentContainer from '@/components/ClientComponentContainer';
+import Providers from '@/context/Provider';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -16,7 +17,9 @@ export default function RootLayout({
     return (
         <html lang="ko">
             <body>
-                <ClientComponentContainer>{children}</ClientComponentContainer>
+                <Providers>
+                    <ClientComponentContainer>{children}</ClientComponentContainer>
+                </Providers>
             </body>
         </html>
     );
