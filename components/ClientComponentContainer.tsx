@@ -3,8 +3,8 @@
 import styled from 'styled-components';
 import StyledComponentsRegistry from '@/styles/registry';
 import { ThemeProvider } from 'styled-components';
-import theme from '@/styles/theme';
 import GlobalStyle from '@/styles/GlobalStyle';
+import { theme } from '../styles/theme';
 
 interface IClientComponentContainerProps {
     children: React.ReactNode;

@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     },
     description: 'The best way to find a good restaurant',
 };
+
 export default function RootLayout({
     children,
 }: Readonly<{
