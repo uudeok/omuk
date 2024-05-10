@@ -5,9 +5,16 @@ import BigInput from './common/BigInput';
 import useInput from '@/hooks/useInput';
 import styled from 'styled-components';
 import Button from './common/Button';
+import Badge from './common/Badge';
+
+const Categories = ['맛있어요', '싱거워요', '짜요', '뷰맛집', '가족모임👍', '데이트코스'];
 
 const Test = () => {
     const [value, onChangeInput, isValid] = useInput({ minLength: 3, type: 'string' });
+
+    const handleBadge = (category: string) => {
+        console.log(category);
+    };
 
     return (
         <Self>
@@ -17,6 +24,14 @@ const Test = () => {
             <Button size="lg" role="round" disabled={!isValid || !value}>
                 확인
             </Button>
+
+            <BadgeList>
+                {Categories.map((category) => (
+                    <Badge key={category} onClick={() => handleBadge(category)}>
+                        {category}
+                    </Badge>
+                ))}
+            </BadgeList>
         </Self>
     );
 };
@@ -29,4 +44,9 @@ const Self = styled.div`
     display: flex;
     flex-direction: column;
     gap: 15px;
+`;
+
+const BadgeList = styled.div`
+    display: flex;
+    gap: 10px;
 `;
