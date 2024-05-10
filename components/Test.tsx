@@ -1,20 +1,25 @@
 'use client';
 
-import Input from './Input';
-import BigInput from './BigInput';
+import Input from './common/Input';
+import BigInput from './common/BigInput';
+import useInput from '@/hooks/useInput';
+import styled from 'styled-components';
 
 const Test = () => {
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.value);
-    };
+    const [value, onChangeInput, isValid] = useInput({ minLength: 3, type: 'string' });
 
     return (
-        <div>
-            <Input bottomText="입력 가능한 최대 금액은 1,000만원 이에요." label="하하하하하">
-                <BigInput hasError={false} placeholder="금액을 입력해주세요" />
+        <Self>
+            <Input bottomText="대&소문자, 특수기호를 포함한 7자리 이상 입력해주세요" label="비밀번호">
+                <BigInput hasError={!isValid} placeholder="비밀번호를 입력해주세요" onChange={onChangeInput} />
             </Input>
-        </div>
+        </Self>
     );
 };
 
 export default Test;
+
+const Self = styled.div`
+    width: 500px;
+    margin: 10px auto;
+`;
