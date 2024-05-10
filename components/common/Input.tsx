@@ -19,7 +19,7 @@ interface InputProps extends HTMLAttributes<HTMLDivElement> {
  * 즉 기존의 다른 모든 속성들을 유지한 새로운 Element 를 생성한다.
  */
 
-function Input({ label, children, bottomText, ...props }: InputProps) {
+const Input = ({ label, children, bottomText, ...props }: InputProps) => {
     const child = Children.only(children);
     const generatedId = useId();
     const id = child.props.id ?? generatedId;
@@ -35,13 +35,12 @@ function Input({ label, children, bottomText, ...props }: InputProps) {
             {bottomText != null ? <Text isError={isError}>{bottomText}</Text> : null}
         </Self>
     );
-}
+};
 
 export default Input;
 
 const Self = styled.div`
     width: 100%;
-    background-color: aliceblue;
 `;
 
 const Label = styled.label`
