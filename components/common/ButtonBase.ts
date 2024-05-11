@@ -87,7 +87,6 @@ export const ButtonBase = styled.button<{ role?: Role; size: Size }>`
     width: 100%;
     border: 0 solid transparent;
     background-color: ${(props) => props.theme.colors.mainColor};
-    /* background-color: ${(props) => props.theme.palette.iconic}; */
     color: white;
     cursor: pointer;
     font-size: 17px;
@@ -97,7 +96,6 @@ export const ButtonBase = styled.button<{ role?: Role; size: Size }>`
     user-select: none;
     // 브라우저에서 폰트를 부드럽게 렌더링
     -webkit-font-smoothing: antialiased;
-    /* font-family: ${(props) => props.theme.fonts.pretend}; */
     font-weight: 600;
     transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out;
 
@@ -111,7 +109,6 @@ export const ButtonBase = styled.button<{ role?: Role; size: Size }>`
     }
 
     &:hover {
-        /* background-color: ${(props) => props.theme.palette.combi}; */
         background-color: ${(props) => props.theme.colors.mainColorLg};
     }
 

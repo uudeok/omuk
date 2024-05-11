@@ -2,7 +2,7 @@
 
 import styled, { css } from 'styled-components';
 
-const BigInput = styled.input<{ hasError?: boolean }>`
+const InputBase = styled.input<{ hasError?: boolean }>`
     width: 100%;
     color: ${(props) => props.theme.colors.grey800};
     padding: 0 0 8px;
@@ -30,4 +30,4 @@ const errorStyle = css`
     }
 `;
 
-export default BigInput;
+export default InputBase;
