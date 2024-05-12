@@ -86,7 +86,7 @@ export const ButtonBase = styled.button<{ role?: Role; size: Size }>`
     justify-content: center;
     width: 100%;
     border: 0 solid transparent;
-    background-color: ${(props) => props.theme.colors.mainColor};
+    background-color: ${(props) => props.theme.colors.mainColorDk};
     color: white;
     cursor: pointer;
     font-size: 17px;
