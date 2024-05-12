@@ -1,24 +1,46 @@
 'use client';
 
-import { ReactNode } from 'react';
 import styled from 'styled-components';
+import Search from '../Search';
+import Button from '../common/Button';
 
 // 메뉴바 있는 버전 레이아웃
 
 const SideBar = () => {
     return (
-        <Wrapper>
-            <div>menubar 들어갈자리</div>
-        </Wrapper>
+        <Layout>
+            <SearchBox>
+                <Search />
+                <ButtonBox>
+                    <Button size="lg" role="round">
+                        맛집
+                    </Button>
+                    <Button size="lg" role="round">
+                        MY
+                    </Button>
+                </ButtonBox>
+            </SearchBox>
+        </Layout>
     );
 };
 
 export default SideBar;
 
-const Wrapper = styled.aside`
-    display: flex;
-    justify-content: space-between;
+const Layout = styled.nav`
     border: 1px solid black;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 40%;
+    width: 15%;
+    min-width: 350px;
+`;
+
+const SearchBox = styled.div`
+    height: 200px;
+    padding: 20px 10px;
+    background-color: ${(props) => props.theme.colors.mainColor};
+`;
+
+const ButtonBox = styled.div`
+    display: flex;
+    gap: 20px;
+
+    margin-top: 30px;
 `;

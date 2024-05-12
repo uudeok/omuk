@@ -9,12 +9,13 @@ const InputBase = styled.input<{ hasError?: boolean }>`
     color: ${(props) => props.theme.colors.grey900};
     height: 40px;
     font-weight: 500;
-    font-size: 22px;
+    font-size: 20px;
     border-radius: 1px;
     caret-color: ${(props) => props.theme.colors.mainColorDk};
     outline: none;
     border: 0 none;
-    border-bottom: 2px solid ${(props) => props.theme.colors.grey300};
+    /* border-bottom: 2px solid ${(props) => props.theme.colors.grey300}; */
+
     :focus {
         border-bottom-color: ${(props) => props.theme.colors.mainColorlg};
     }
