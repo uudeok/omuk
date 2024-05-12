@@ -1,16 +1,12 @@
 'use client';
 
-import styled from 'styled-components';
 import StyledComponentsRegistry from '@/styles/registry';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from '@/styles/GlobalStyle';
 import { theme } from '../styles/theme';
+import { ReactNode } from 'react';
 
-interface IClientComponentContainerProps {
-    children: React.ReactNode;
-}
-
-function ClientComponentContainer({ children }: IClientComponentContainerProps) {
+function ClientComponentContainer({ children }: { children: ReactNode }) {
     return (
         <StyledComponentsRegistry>
             <GlobalStyle />

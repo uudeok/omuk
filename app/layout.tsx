@@ -1,5 +1,6 @@
 import ClientComponentContainer from '@/components/ClientComponentContainer';
-import Providers from '@/context/Provider';
+import SideBar from '@/components/layout/SideBar';
+import ReactQueryProvider from '@/context/ReactQueryProvider';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -17,10 +18,13 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ko">
-            <body>
-                <Providers>
-                    <ClientComponentContainer>{children}</ClientComponentContainer>
-                </Providers>
+            <body style={{ display: 'flex' }}>
+                <ReactQueryProvider>
+                    <ClientComponentContainer>
+                        <SideBar />
+                        {children}
+                    </ClientComponentContainer>
+                </ReactQueryProvider>
             </body>
         </html>
     );
