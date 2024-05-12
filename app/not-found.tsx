@@ -4,9 +4,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import Text from '@/components/common/Text';
 
-// export const metadata = {
-//     title: 'Not Found',
-// };
+/** css 으로 metadata 사용이 안되는데, 이 문제 해결 고민 */
 
 const NotFound = () => {
     return (
