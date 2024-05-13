@@ -11,6 +11,12 @@ export const metadata: Metadata = {
     description: 'The best way to find a good restaurant',
 };
 
+declare global {
+    interface Window {
+        Kakao: any;
+    }
+}
+
 export default function RootLayout({
     children,
 }: Readonly<{
