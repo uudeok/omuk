@@ -1,9 +1,14 @@
 'use client';
 
-import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useEffect, useState } from 'react';
 import useKakaoLoader from '@/hooks/useKakaoLoader';
-import { useSearchStore } from '@/store/SearchResult';
+import { useSearchStore } from '@/store/SearchStore';
+
+/** 24.05.15
+ * Next.js 14 인포윈도우가 안보이는 이슈
+ * 오픈소스 이슈에도 제기
+ */
 
 const Maps = () => {
     useKakaoLoader();
@@ -12,36 +17,31 @@ const Maps = () => {
     const [markers, setMarkers] = useState<any>([]);
     const [map, setMap] = useState<any>();
 
-    const handleClickMarker = (e: any) => {
-        console.log('asdadadasd');
-        console.log(e);
-        // map.panTo(e.getPosition());
+    const handleClickMarker = (e: any, marker: any) => {
+        // console.log('marker', marker);
+        setInfo(marker);
+        map.panTo(e.getPosition());
     };
 
-    console.log('입력한 값 : ', keyword);
-
     /** 검색 전에는 위치기반 지도 띄우기 */
-    const searchPlace = keyword ? keyword : '야당역 맛집';
+    const searchPlace = keyword ? keyword : '야당역';
 
     useEffect(() => {
         if (!map) return;
         const ps = new kakao.maps.services.Places();
-        // const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
         ps.keywordSearch(
             searchPlace,
             (data, status, pagintaion) => {
-                console.log('data', data);
-                console.log('status', status);
-                console.log('pagintaion', pagintaion);
+                // console.log('data', data);
+                // console.log('pagintaion', pagintaion);
 
                 if (status === kakao.maps.services.Status.OK) {
                     const bounds = new kakao.maps.LatLngBounds();
-                    setInfo(data);
 
                     let markers = [];
 
-                    for (var i = 0; i < data.length; i++) {
+                    for (let i = 0; i < data.length; i++) {
                         // @ts-ignore
                         markers.push({
                             position: {
@@ -60,14 +60,10 @@ const Maps = () => {
                 }
             },
             {
-                useMapBounds: true,
                 category_group_code: 'FD6',
             }
         );
     }, [map, searchPlace]);
-
-    // console.log('info', info);
-    // markers.map((marker: any) => console.log(marker.content));
 
     return (
         <Map
@@ -86,7 +82,7 @@ const Maps = () => {
                 <MapMarker
                     key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
                     position={marker.position}
-                    onClick={(e) => handleClickMarker(e)}
+                    onClick={(e) => handleClickMarker(e, marker)}
                 ></MapMarker>
             ))}
         </Map>

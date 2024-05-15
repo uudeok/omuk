@@ -3,7 +3,7 @@
 import useInput from '@/hooks/useInput';
 import Input from './common/Input';
 import InputBase from './common/InputBase';
-import { useSearchStore } from '@/store/SearchResult';
+import { useSearchStore } from '@/store/SearchStore';
 
 const Search = () => {
     const [value, onChangeInput] = useInput();
