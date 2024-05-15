@@ -2,6 +2,7 @@ import ClientComponentContainer from '@/components/ClientComponentContainer';
 import SideBar from '@/components/layout/SideBar';
 import ReactQueryProvider from '@/context/ReactQueryProvider';
 import type { Metadata } from 'next';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
     title: {
@@ -11,11 +12,11 @@ export const metadata: Metadata = {
     description: 'The best way to find a good restaurant',
 };
 
-declare global {
-    interface Window {
-        Kakao: any;
-    }
-}
+// declare global {
+//     interface Window {
+//         Kakao: any;
+//     }
+// }
 
 export default function RootLayout({
     children,
@@ -28,6 +29,10 @@ export default function RootLayout({
                 <ReactQueryProvider>
                     <ClientComponentContainer>
                         <SideBar />
+                        {/* <Script
+                            src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer&autoload=false`}
+                            strategy="beforeInteractive"
+                        /> */}
                         {children}
                     </ClientComponentContainer>
                 </ReactQueryProvider>
