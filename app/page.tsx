@@ -1,9 +1,7 @@
+import Maps from '@/components/Maps';
+
 const HomePage = () => {
-    return (
-        <div>
-            <h2>hello</h2>
-        </div>
-    );
+    return <Maps />;
 };
 
 export default HomePage;
