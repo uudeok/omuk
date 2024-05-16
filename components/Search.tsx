@@ -6,19 +6,16 @@ import InputBase from './common/InputBase';
 import { useSearchStore } from '@/store/SearchStore';
 
 const Search = () => {
-    const [value, onChangeInput] = useInput();
+    const [value, onChangeInput, isValid] = useInput();
     const { setKeyword } = useSearchStore();
 
-    console.log(value);
-
-    const handleKeyword = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('제출', value);
         setKeyword(value);
     };
 
     return (
-        <form onSubmit={handleKeyword}>
+        <form onSubmit={handleSubmitSearch}>
             <Input>
                 <InputBase placeholder="음식점 및 장소 검색해주세요" onChange={onChangeInput} />
             </Input>

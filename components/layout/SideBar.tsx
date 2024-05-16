@@ -2,21 +2,14 @@
 
 import styled from 'styled-components';
 import Search from '../Search';
-import Button from '../common/Button';
+import ButtonController from '../ButtonController';
 
 const SideBar = () => {
     return (
         <Layout>
             <SearchBox>
                 <Search />
-                <ButtonBox>
-                    <Button size="lg" role="round">
-                        맛집
-                    </Button>
-                    <Button size="lg" role="round">
-                        MY
-                    </Button>
-                </ButtonBox>
+                <ButtonController />
             </SearchBox>
         </Layout>
     );
@@ -34,10 +27,4 @@ const SearchBox = styled.div`
     height: 200px;
     padding: 20px 10px;
     background-color: ${(props) => props.theme.colors.mainColor};
-`;
-
-const ButtonBox = styled.div`
-    display: flex;
-    gap: 20px;
-    margin-top: 30px;
 `;

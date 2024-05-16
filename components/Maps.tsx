@@ -18,7 +18,7 @@ const Maps = () => {
     const [map, setMap] = useState<any>();
 
     const handleClickMarker = (e: any, marker: any) => {
-        // console.log('marker', marker);
+        console.log('marker', marker);
         setInfo(marker);
         map.panTo(e.getPosition());
     };
@@ -55,7 +55,7 @@ const Maps = () => {
                     }
                     setMarkers(markers);
 
-                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정
                     map.setBounds(bounds);
                 }
             },
