@@ -3,7 +3,8 @@
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useEffect, useState } from 'react';
 import useKakaoLoader from '@/hooks/useKakaoLoader';
-import { useSearchStore } from '@/store/SearchStore';
+import { useSearchStore } from '@/store/searchStore';
+import useMapDataStore from '@/store/mapDataStore';
 
 /** 24.05.15
  * Next.js 14 인포윈도우가 안보이는 이슈
@@ -13,12 +14,13 @@ import { useSearchStore } from '@/store/SearchStore';
 const Maps = () => {
     useKakaoLoader();
     const { keyword } = useSearchStore();
+    const { setData } = useMapDataStore();
     const [info, setInfo] = useState<any>();
     const [markers, setMarkers] = useState<any>([]);
     const [map, setMap] = useState<any>();
 
     const handleClickMarker = (e: any, marker: any) => {
-        console.log('marker', marker);
+        // console.log('marker', marker);
         setInfo(marker);
         map.panTo(e.getPosition());
     };
@@ -55,15 +57,19 @@ const Maps = () => {
                     }
                     setMarkers(markers);
 
+                    // data 전역 상태 관리를 위해
+                    setData(data);
+
                     // 검색된 장소 위치를 기준으로 지도 범위를 재설정
                     map.setBounds(bounds);
                 }
             },
             {
+                // 카테고리로 검색 : 음식점
                 category_group_code: 'FD6',
             }
         );
-    }, [map, searchPlace]);
+    }, [map, searchPlace, setData]);
 
     return (
         <Map
