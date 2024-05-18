@@ -3,55 +3,52 @@
 import styled from 'styled-components';
 import Search from '../Search';
 import ButtonController from '../ButtonController';
-import useMapDataStore from '@/store/mapDataStore';
-import List, { ListRow, ListBox } from '../common/List';
-import Text from '../common/Text';
-import Button from '../common/Button';
+import { useBoolean } from '@/hooks/useBoolean';
+import Card from '../Card';
+import Slide from './Slide';
 
 const SideBar = () => {
-    const { data } = useMapDataStore();
+    const { value, setTrue, setFalse } = useBoolean();
 
-    console.log('Data : ', data);
     return (
-        <Layout>
-            <SearchBox>
-                <Search />
-                <ButtonController />
-            </SearchBox>
+        <Self>
+            <Layout>
+                <SearchBox>
+                    <Search />
+                    <ButtonController />
+                </SearchBox>
 
-            <List>
-                {data.map((item) => (
-                    <ListBox
-                        key={item.id}
-                        top={
-                            <Title>
-                                <Text typography="t5">{item.place_name}</Text>
-                                <Text typography="st3">{item.road_address_name}</Text>
-                            </Title>
-                        }
-                        bottom={
-                            <div>
-                                <Text typography="st3">{item.phone}</Text>
-                            </div>
-                        }
-                    />
-                ))}
-            </List>
-        </Layout>
+                <Card setTrue={setTrue} />
+            </Layout>
+
+            {value && <Slide setFalse={setFalse}>sss</Slide>}
+        </Self>
     );
 };
 
 export default SideBar;
 
-const Layout = styled.nav`
+const Self = styled.div`
+    display: flex;
+    position: relative;
+`;
+
+const Layout = styled.div`
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    background-color: white;
     border: 1px solid lightgrey;
     width: 15%;
     min-width: 350px;
     overflow-y: auto;
     scrollbar-width: thin;
+    z-index: 100;
 
     &::-webkit-scrollbar {
-        width: 8px; /* 스크롤바 너비 */
+        width: 8px;
     }
 `;
 
@@ -59,10 +56,4 @@ const SearchBox = styled.div`
     height: 200px;
     padding: 20px 10px;
     background-color: ${(props) => props.theme.colors.mainColor};
-`;
-
-const Title = styled.div`
-    display: flex;
-    flex-direction: column;
-    line-height: 1.5;
 `;
