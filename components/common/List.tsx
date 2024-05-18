@@ -41,9 +41,9 @@ const Self = styled.ul`
     /* padding: 5px 24px; */
     display: flex;
     flex-direction: column;
-    > li:not(:first-of-type) {
+    /* > li:not(:first-of-type) {
         margin-top: 15px;
-    }
+    } */
 `;
 
 const Item = styled.li`
@@ -56,7 +56,8 @@ const Box = styled.li`
     display: flex;
     flex-direction: column;
     padding: 20px 25px 16px;
-    border: 1px solid lightgrey;
+    border-top: 1px solid lightgrey;
+    /* border-bottom: 1px solid lightgrey; */
     height: 248px;
 
     &:hover {

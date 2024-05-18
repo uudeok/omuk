@@ -16,10 +16,10 @@ const ButtonController = () => {
     return (
         <>
             <ControllerBox>
-                <Button size="lg" role="round" onClick={() => setFalse()}>
+                <Button size="lg" role="round" onClick={() => setTrue()}>
                     맛집
                 </Button>
-                <Button size="lg" role="round" onClick={() => setTrue()}>
+                <Button size="lg" role="round" onClick={() => setFalse()}>
                     MY
                 </Button>
             </ControllerBox>
@@ -38,10 +38,10 @@ const ButtonController = () => {
             ) : (
                 <ObserverBox>
                     <Button size="sm" role="round">
-                        별점순⭐️
+                        타임라인🕒
                     </Button>
                     <Button size="sm" role="round">
-                        리뷰순👀
+                        리뷰👀
                     </Button>
                 </ObserverBox>
             )}
