@@ -6,6 +6,7 @@ import ButtonController from '../ButtonController';
 import { useBoolean } from '@/hooks/useBoolean';
 import Card from '../Card';
 import Slide from './Slide';
+import Detail from '../Detail';
 
 const SideBar = () => {
     const { value, setTrue, setFalse } = useBoolean();
@@ -21,7 +22,11 @@ const SideBar = () => {
                 <Card setTrue={setTrue} />
             </Layout>
 
-            {value && <Slide setFalse={setFalse}>sss</Slide>}
+            {value && (
+                <Slide setFalse={setFalse} styles={{ minWidth: '350px', right: '-99%' }}>
+                    <Detail />
+                </Slide>
+            )}
         </Self>
     );
 };

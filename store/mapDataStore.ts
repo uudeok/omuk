@@ -1,16 +1,38 @@
 import { create } from 'zustand';
 
 type MapDataType = {
-    data: kakao.maps.services.PlacesSearchResult;
-    setData: (newData: kakao.maps.services.PlacesSearchResult) => void;
+    datas: kakao.maps.services.PlacesSearchResult;
+    detail: kakao.maps.services.PlacesSearchResultItem;
+    setDatas: (newData: kakao.maps.services.PlacesSearchResult) => void;
+    setDetail: (newData: kakao.maps.services.PlacesSearchResultItem) => void;
 };
 
 export const useMapDataStore = create<MapDataType>((set) => ({
-    data: [],
+    datas: [],
+    // detail: [],
+    detail: {
+        id: '',
+        place_name: '',
+        category_name: '',
+        category_group_code: 'FD6',
+        category_group_name: '',
+        phone: '',
+        address_name: '',
+        road_address_name: '',
+        x: '',
+        y: '',
+        place_url: '',
+        distance: '',
+    },
 
-    setData: (newData) =>
+    setDatas: (newData) =>
         set(() => ({
-            data: newData,
+            datas: newData,
+        })),
+
+    setDetail: (newData) =>
+        set(() => ({
+            detail: newData,
         })),
 }));
 

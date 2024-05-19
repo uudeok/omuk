@@ -1,5 +1,3 @@
-'use client';
-
 import styled, { css } from 'styled-components';
 
 const InputBase = styled.input<{ hasError?: boolean }>`
@@ -14,6 +12,7 @@ const InputBase = styled.input<{ hasError?: boolean }>`
     caret-color: ${(props) => props.theme.colors.mainColorDk};
     outline: none;
     border: 0 none;
+    cursor: pointer;
     /* border-bottom: 2px solid ${(props) => props.theme.colors.grey300}; */
 
     :focus {

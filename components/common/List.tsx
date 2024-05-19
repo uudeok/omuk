@@ -38,7 +38,6 @@ export const ListBox = ({ top, bottom, onClick }: ListBoxProps) => {
 export default List;
 
 const Self = styled.ul`
-    /* padding: 5px 24px; */
     display: flex;
     flex-direction: column;
     /* > li:not(:first-of-type) {
@@ -55,7 +54,7 @@ const Item = styled.li`
 const Box = styled.li`
     display: flex;
     flex-direction: column;
-    padding: 20px 25px 16px;
+    /* padding: 20px 25px 16px; */
     border-top: 1px solid lightgrey;
     /* border-bottom: 1px solid lightgrey; */
     height: 248px;

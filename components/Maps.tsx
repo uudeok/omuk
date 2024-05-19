@@ -14,13 +14,12 @@ import useMapDataStore from '@/store/mapDataStore';
 const Maps = () => {
     useKakaoLoader();
     const { keyword } = useSearchStore();
-    const { setData } = useMapDataStore();
+    const { setDatas } = useMapDataStore();
     const [info, setInfo] = useState<any>();
     const [markers, setMarkers] = useState<any>([]);
     const [map, setMap] = useState<any>();
 
     const handleClickMarker = (e: any, marker: any) => {
-        // console.log('marker', marker);
         setInfo(marker);
         map.panTo(e.getPosition());
     };
@@ -57,8 +56,8 @@ const Maps = () => {
                     }
                     setMarkers(markers);
 
-                    // data 전역 상태 관리를 위해
-                    setData(data);
+                    // data 전역 상태 관리를 위해 store 저장
+                    setDatas(data);
 
                     // 검색된 장소 위치를 기준으로 지도 범위를 재설정
                     map.setBounds(bounds);
@@ -69,7 +68,7 @@ const Maps = () => {
                 category_group_code: 'FD6',
             }
         );
-    }, [map, searchPlace, setData]);
+    }, [map, searchPlace, setDatas]);
 
     return (
         <Map

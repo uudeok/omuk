@@ -1,5 +1,3 @@
-'use client';
-
 import { Children, HTMLAttributes, ReactElement, ReactNode, cloneElement, useId } from 'react';
 import styled from 'styled-components';
 
