@@ -1,5 +1,3 @@
-'use client';
-
 import styled, { css } from 'styled-components';
 
 export type Role = 'round' | 'kakao' | 'cancel' | 'none';

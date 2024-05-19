@@ -1,6 +1,6 @@
 import Maps from '@/components/Maps';
 
-const HomePage = () => {
+const HomePage = async () => {
     return <Maps />;
 };
 

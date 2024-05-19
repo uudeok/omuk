@@ -37,8 +37,6 @@ const slideIn = keyframes`
 const Self = styled.div`
     position: absolute;
     top: 0;
-    right: -99%;
-    min-width: 350px;
     height: 100%;
     background-color: white;
     z-index: 99;
@@ -47,7 +45,6 @@ const Self = styled.div`
 
 const CloseButton = styled.div`
     position: relative;
-    top: 0;
     right: -100%;
     width: 45px;
 `;
