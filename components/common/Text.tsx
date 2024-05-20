@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
-import styled, { css } from 'styled-components';
-
+import styles from '../../styles/Common.module.css';
 import { valueOf } from '@/types/common';
 
 export const Typography = {
@@ -19,7 +18,7 @@ export const Typography = {
 export type TypographyValue = valueOf<typeof Typography>;
 
 export type TextProps = {
-    children?: ReactNode;
+    children: ReactNode;
     color?: string;
     textAlign?: string;
     typography: TypographyValue;
@@ -28,73 +27,10 @@ export type TextProps = {
 const Text = (props: TextProps) => {
     const { typography, color, textAlign, children, ...rest } = props;
     return (
-        <TextBase typography={typography} style={{ color }}>
+        <span className={`${styles.textBase} ${styles[typography]}`} style={{ color }}>
             {children}
-        </TextBase>
+        </span>
     );
 };
 
 export default Text;
-
-const TextBase = styled.span<{ typography: string }>`
-    font-weight: normal;
-    color: inherit;
-    text-align: inherit;
-
-    ${({ typography }) => {
-        switch (typography) {
-            case 't1':
-                return css`
-                    font-size: 30px;
-                    font-weight: bold;
-                `;
-            case 't2':
-                return css`
-                    font-size: 28px;
-                    font-weight: bold;
-                `;
-            case 't3':
-                return css`
-                    font-size: 26px;
-                    font-weight: bold;
-                `;
-            case 't4':
-                return css`
-                    font-size: 24px;
-                    font-weight: bold;
-                `;
-            case 't5':
-                return css`
-                    font-size: 22px;
-                    font-weight: bold;
-                `;
-            case 'st1':
-                return css`
-                    font-size: 24px;
-                    font-weight: normal;
-                `;
-            case 'st2':
-                return css`
-                    font-size: 20px;
-                    font-weight: normal;
-                `;
-            case 'st3':
-                return css`
-                    font-size: 16px;
-                    font-weight: normal;
-                `;
-            case 'st4':
-                return css`
-                    font-size: 14px;
-                    font-weight: normal;
-                `;
-            case 'st5':
-                return css`
-                    font-size: 12px;
-                    font-weight: normal;
-                `;
-            default:
-                return null;
-        }
-    }}
-`;

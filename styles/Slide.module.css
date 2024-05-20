@@ -1,0 +1,24 @@
+@keyframes slideIn {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background-color: white;
+    z-index: 99;
+    animation: slideIn 0.3s forwards;
+}
+
+.closeButton {
+    position: fixed;
+    right: -13%;
+    top: 0;
+    width: 45px;
+}

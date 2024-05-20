@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import useKakaoLoader from '@/hooks/useKakaoLoader';
 import { useSearchStore } from '@/store/searchStore';
 import useMapDataStore from '@/store/mapDataStore';
+import { useGeoLocation } from '@/hooks/useGeoLocation';
 
 /** 24.05.15
  * Next.js 14 인포윈도우가 안보이는 이슈
@@ -18,6 +19,7 @@ const Maps = () => {
     const [info, setInfo] = useState<any>();
     const [markers, setMarkers] = useState<any>([]);
     const [map, setMap] = useState<any>();
+    const { curLocation } = useGeoLocation();
 
     const handleClickMarker = (e: any, marker: any) => {
         setInfo(marker);
@@ -68,7 +70,7 @@ const Maps = () => {
                 category_group_code: 'FD6',
             }
         );
-    }, [map, searchPlace, setDatas]);
+    }, [map, searchPlace, setDatas, curLocation]);
 
     return (
         <Map
