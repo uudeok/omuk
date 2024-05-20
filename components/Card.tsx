@@ -1,7 +1,9 @@
+'use client';
+
 import List, { ListBox } from './common/List';
 import Text from './common/Text';
-import styled from 'styled-components';
 import useMapDataStore from '@/store/mapDataStore';
+import styles from '../styles/Card.module.css';
 
 type CardProps = {
     setTrue: () => void;
@@ -12,12 +14,11 @@ const Card = ({ setTrue }: CardProps) => {
 
     const handleSetRestaurant = (id: string) => {
         setTrue();
-
         const restaurant = restaurants.find((res) => res.id === id);
-        if (restaurant) {
-            setDetail(restaurant);
-        }
+        setDetail(restaurant!);
     };
+
+    console.log(restaurants);
 
     return (
         <List>
@@ -28,10 +29,10 @@ const Card = ({ setTrue }: CardProps) => {
                     }}
                     key={res.id}
                     top={
-                        <Title>
-                            <Text typography="t5">{res.place_name}</Text>
+                        <div className={styles.title}>
+                            <Text typography="t4">{res.place_name}</Text>
                             <Text typography="st3">{res.road_address_name}</Text>
-                        </Title>
+                        </div>
                     }
                     bottom={
                         <div>
@@ -45,9 +46,3 @@ const Card = ({ setTrue }: CardProps) => {
 };
 
 export default Card;
-
-const Title = styled.div`
-    display: flex;
-    flex-direction: column;
-    line-height: 1.5;
-`;

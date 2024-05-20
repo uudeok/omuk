@@ -1,5 +1,5 @@
 import { Children, HTMLAttributes, ReactElement, ReactNode, cloneElement, useId } from 'react';
-import styled from 'styled-components';
+import styles from '../../styles/Common.module.css';
 
 interface InputProps extends HTMLAttributes<HTMLDivElement> {
     label?: ReactNode;
@@ -24,36 +24,21 @@ const Input = ({ label, children, bottomText, ...props }: InputProps) => {
     const isError: boolean = child.props.hasError ?? false;
 
     return (
-        <Self {...props}>
-            <Label htmlFor={id}>{label}</Label>
+        <div className={styles.container} {...props}>
+            <label className={styles.label} htmlFor={id}>
+                {label}
+            </label>
             {cloneElement(child, {
                 id,
                 ...child.props,
             })}
-            {bottomText != null ? <Text isError={isError}>{bottomText}</Text> : null}
-        </Self>
+            {bottomText != null ? (
+                <p className={styles.text} style={{ color: isError ? 'var(--red600)' : 'var(--grey600)' }}>
+                    {bottomText}
+                </p>
+            ) : null}
+        </div>
     );
 };
 
 export default Input;
-
-const Self = styled.div`
-    width: 100%;
-`;
-
-const Label = styled.label`
-    display: inline-block;
-    padding: 5px 0;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 1.6;
-    color: ${(props) => props.theme.colors.grey700};
-`;
-
-const Text = styled.p<{ isError?: boolean }>`
-    color: ${(props) => (props.isError ? props.theme.colors.red600 : props.theme.colors.grey600)};
-    margin-top: 4px;
-    display: inline-block;
-    font-weight: 400;
-    font-size: 15px;
-`;

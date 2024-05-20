@@ -1,0 +1,117 @@
+/* badge */
+
+.badge {
+    display: inline-flex;
+    padding: 4px 8px;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.333;
+    border-radius: 10px;
+    font-weight: bold;
+    color: var(--grey700);
+    background-color: var(--greyOpacity200);
+}
+
+/* Input, InputBase */
+
+.container {
+    width: 100%;
+}
+
+.label {
+    display: inline-block;
+    padding: 5px 0;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--grey700);
+}
+
+.text {
+    margin-top: 4px;
+    display: inline-block;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+/* List */
+
+.list {
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid lightgrey;
+    height: 248px;
+}
+
+.box:hover {
+    background-color: var(--greyOpacity100);
+}
+
+/* Text */
+
+.textBase {
+    font-weight: normal;
+    color: inherit;
+    text-align: inherit;
+}
+
+.t1 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.t2 {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.t3 {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.t4 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.t5 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.st1 {
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.st2 {
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.st3 {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.st4 {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.st5 {
+    font-size: 12px;
+    font-weight: normal;
+}

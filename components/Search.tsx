@@ -1,6 +1,6 @@
 'use client';
 
-import useInput from '@/hooks/useInput';
+import { useInput } from '@/hooks/useInput';
 import Input from './common/Input';
 import InputBase from './common/InputBase';
 import { useSearchStore } from '@/store/searchStore';

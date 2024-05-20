@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { ReactNode } from 'react';
+import styles from '../../styles/Common.module.css';
 
 type ListRowProps = {
     left: ReactNode;
@@ -14,52 +14,25 @@ type ListBoxProps = {
 };
 
 const List = ({ children }: { children: React.ReactNode }) => {
-    return <Self>{children}</Self>;
+    return <ul className={styles.list}>{children}</ul>;
 };
 
 export const ListRow = ({ left, right, onClick }: ListRowProps) => {
     return (
-        <Item onClick={onClick}>
+        <li className={styles.item} onClick={onClick}>
             {left}
             {right}
-        </Item>
+        </li>
     );
 };
 
 export const ListBox = ({ top, bottom, onClick }: ListBoxProps) => {
     return (
-        <Box onClick={onClick}>
+        <li className={styles.box} onClick={onClick}>
             {top}
             {bottom}
-        </Box>
+        </li>
     );
 };
 
 export default List;
-
-const Self = styled.ul`
-    display: flex;
-    flex-direction: column;
-    /* > li:not(:first-of-type) {
-        margin-top: 15px;
-    } */
-`;
-
-const Item = styled.li`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
-
-const Box = styled.li`
-    display: flex;
-    flex-direction: column;
-    /* padding: 20px 25px 16px; */
-    border-top: 1px solid lightgrey;
-    /* border-bottom: 1px solid lightgrey; */
-    height: 248px;
-
-    &:hover {
-        background-color: ${(props) => props.theme.colors.greyOpacity100};
-    }
-`;

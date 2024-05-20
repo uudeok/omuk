@@ -17,7 +17,7 @@ type returnType = [string, (e: React.ChangeEvent<HTMLInputElement>) => void, boo
  * type 에 따라 추가 로직 구현 가능
  */
 
-const useInput = (options?: Options): returnType => {
+export const useInput = (options?: Options): returnType => {
     const { initialValue = '', maxLength, minLength = 0, type = 'string' } = options || {};
     const [value, setValue] = useState<string>(initialValue || '');
     const isValid = useRef<boolean>(true);
@@ -60,5 +60,3 @@ const useInput = (options?: Options): returnType => {
 
     return [value, onChangeInput, isValid.current];
 };
-
-export default useInput;
