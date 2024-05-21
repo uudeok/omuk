@@ -4,14 +4,17 @@ import { useInput } from '@/hooks/useInput';
 import Input from './common/Input';
 import InputBase from './common/InputBase';
 import { useSearchStore } from '@/store/searchStore';
+import { useRouter } from 'next/navigation';
 
 const Search = () => {
     const [value, onChangeInput, isValid] = useInput();
+    const router = useRouter();
     const { setKeyword } = useSearchStore();
 
     const handleSubmitSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setKeyword(value);
+        router.push(`/?search=${value}`);
     };
 
     return (

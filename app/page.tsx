@@ -1,5 +1,6 @@
 import Maps from '@/components/Maps';
 import SideBar from '@/components/SideBar';
+import Test from '@/components/Test';
 
 export const getDetail = async (id: string) => {
     const response = await fetch(`https://place.map.kakao.com/m/main/v/${id}`);
@@ -8,10 +9,9 @@ export const getDetail = async (id: string) => {
 
 const HomePage = async () => {
     return (
-        <>
-            <SideBar />
-            <Maps />
-        </>
+        <div>
+            <div></div>
+        </div>
     );
 };
 
