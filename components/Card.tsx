@@ -4,28 +4,18 @@ import List, { ListBox } from './common/List';
 import Text from './common/Text';
 import useMapDataStore from '@/store/mapDataStore';
 import styles from '../styles/Card.module.css';
+import { useRouter } from 'next/navigation';
 
-type CardProps = {
-    setTrue: () => void;
-};
-
-const Card = ({ setTrue }: CardProps) => {
-    const { datas: restaurants, setDetail } = useMapDataStore();
-
-    const handleSetRestaurant = (id: string) => {
-        setTrue();
-        const restaurant = restaurants.find((res) => res.id === id);
-        setDetail(restaurant!);
-    };
-
-    console.log(restaurants);
+const Card = () => {
+    const { datas: restaurants } = useMapDataStore();
+    const router = useRouter();
 
     return (
         <List>
             {restaurants.map((res) => (
                 <ListBox
                     onClick={() => {
-                        handleSetRestaurant(res.id);
+                        router.push(`/${res.id}`);
                     }}
                     key={res.id}
                     top={

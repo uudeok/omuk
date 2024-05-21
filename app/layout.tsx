@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import ClientComponentContainer from '@/components/ClientComponentContainer';
 import ReactQueryProvider from '@/context/ReactQueryProvider';
 import Maps from '@/components/Maps';
+import SideBar from '@/components/layout/SideBar';
 import './global.css';
-import Test from '@/components/Test';
 
 export const metadata: Metadata = {
     title: {
@@ -23,9 +23,9 @@ export default function RootLayout({
             <body style={{ display: 'flex' }}>
                 <ReactQueryProvider>
                     <ClientComponentContainer>
-                        <Test />
-                        <Maps />
                         {children}
+                        <SideBar />
+                        <Maps />
                     </ClientComponentContainer>
                 </ReactQueryProvider>
             </body>
