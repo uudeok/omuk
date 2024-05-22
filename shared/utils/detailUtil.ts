@@ -1,4 +1,4 @@
-import { BasicInfoType } from '@/types/data';
+import { BasicInfoType } from '@/shared/types/data';
 
 type AddressType = BasicInfoType['basicInfo']['address'];
 type FeedbackType = BasicInfoType['basicInfo']['feedback'];

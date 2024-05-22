@@ -3,22 +3,19 @@ import Text from './common/Text';
 import styles from '../styles/Detail.module.css';
 import List, { ListRow } from './common/List';
 import Badge from './common/Badge';
-import { makeAdress, calculateScore } from '@/utils/detailUtil';
+import { makeAdress, calculateScore } from '@/shared/utils/detailUtil';
 import Hastag from '../assets/hashtag.svg';
 import Clock from '../assets/clock.svg';
 import Phone from '../assets/phone.svg';
 import Position from '../assets/position.svg';
 import Menu from '../assets/menu.svg';
 import ArrowRight from '../assets/right-arrow.svg';
+import Image from 'next/image';
 
 const Detail = async ({ id }: { id: string }) => {
     const restaurantData = await getDetail(id);
-    console.log('======================start============================');
     const { basicInfo, blogReview, menuInfo } = restaurantData;
     const { address, openHour, facilityInfo, tags, feedback } = basicInfo;
-
-    console.log(menuInfo);
-    console.log(menuInfo.menuList);
 
     return (
         <div className={styles.container}>

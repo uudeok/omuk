@@ -6,7 +6,7 @@ import GlobalStyle from '@/styles/GlobalStyle';
 import { theme } from '../styles/theme';
 import { ReactNode } from 'react';
 
-function ClientComponentContainer({ children }: { children: ReactNode }) {
+function StyledComponent({ children }: { children: ReactNode }) {
     return (
         <StyledComponentsRegistry>
             <GlobalStyle />
@@ -15,4 +15,4 @@ function ClientComponentContainer({ children }: { children: ReactNode }) {
     );
 }
 
-export default ClientComponentContainer;
+export default StyledComponent;
