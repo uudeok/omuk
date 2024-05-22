@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, Dispatch, SetStateAction } from 'react';
-import { removeNonNumeric } from '@/utils/stringUtils';
+import { removeNonNumeric } from '@/shared/utils/stringUtils';
 
 interface Options {
     initialValue?: string;

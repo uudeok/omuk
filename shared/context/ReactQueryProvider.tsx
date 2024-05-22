@@ -10,7 +10,7 @@ const ReactQueryProvider = ({ children }: { children: React.ReactNode }) => {
             new QueryClient({
                 defaultOptions: {
                     queries: {
-                        retry: 1, // API 요청 실패시 재시도 하는 옵션 (설정값 만큼 재시도)
+                        retry: 1,
                     },
                 },
             })

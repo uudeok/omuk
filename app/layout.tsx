@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import ClientComponentContainer from '@/components/ClientComponentContainer';
-import ReactQueryProvider from '@/context/ReactQueryProvider';
-import Maps from '@/components/Maps';
+import StyledComponent from '@/components/StyledComponent';
+import ReactQueryProvider from '@/shared/context/ReactQueryProvider';
+import Maps from '@/components/layout/Maps';
 import SideBar from '@/components/layout/SideBar';
 import './global.css';
 
@@ -22,11 +22,11 @@ export default function RootLayout({
         <html lang="ko">
             <body style={{ display: 'flex' }}>
                 <ReactQueryProvider>
-                    <ClientComponentContainer>
+                    <StyledComponent>
                         {children}
                         <SideBar />
                         <Maps />
-                    </ClientComponentContainer>
+                    </StyledComponent>
                 </ReactQueryProvider>
             </body>
         </html>

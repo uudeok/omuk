@@ -4,7 +4,7 @@
 import { createContext, useContext, useEffect, useRef, useState, Dispatch, SetStateAction, RefObject } from 'react';
 
 import { useGeoLocation } from '@/hooks/useGeoLocation';
-import { DataResponse, MarkerType, PaginationType } from '@/types';
+import { DataResponse, MarkerType, PaginationType } from '@/shared/types';
 
 type MapType = {
     mapEl: RefObject<HTMLDivElement> | null;
