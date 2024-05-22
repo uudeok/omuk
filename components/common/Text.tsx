@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import styles from '../../styles/Common.module.css';
 import { valueOf } from '@/types/data';
 
@@ -20,16 +20,17 @@ export type TypographyValue = valueOf<typeof Typography>;
 export type TextProps = {
     children: ReactNode;
     color?: string;
-    textAlign?: string;
+    textAlign?: CSSProperties['textAlign'];
     typography: TypographyValue;
+    as?: 'span' | 'div';
 };
 
 const Text = (props: TextProps) => {
-    const { typography, color, textAlign, children, ...rest } = props;
+    const { typography, color, textAlign, children, as: Component = 'span' } = props;
     return (
-        <span className={`${styles.textBase} ${styles[typography]}`} style={{ color }}>
+        <Component className={`${styles.textBase} ${styles[typography]}`} style={{ color, textAlign }}>
             {children}
-        </span>
+        </Component>
     );
 };
 

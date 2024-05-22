@@ -11,7 +11,7 @@ export default function SlideLayout({ children }: { children: React.ReactNode })
     };
 
     return (
-        <Slide styles={{ width: '350px', left: '352px' }} onClickButton={onClickButton}>
+        <Slide styles={{ width: '352px', left: '352px' }} onClickButton={onClickButton}>
             {children}
         </Slide>
     );

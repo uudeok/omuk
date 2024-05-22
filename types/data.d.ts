@@ -59,3 +59,18 @@ export type BasicInfoType = {
         isStation: false;
     };
 };
+
+export type MenuInfoType = {
+    moreyn: 'N' | 'Y';
+    menuList: {
+        price?: string;
+        recommend: boolean;
+        menu: string;
+        desc?: string;
+        img?: string;
+    };
+    productyn: 'N' | 'Y';
+    menuboardphotourl: string;
+    menuboardphotocount: number;
+    timeexp: string;
+};

@@ -47,6 +47,10 @@
     align-items: center;
 }
 
+.spaceBetween {
+    justify-content: initial !important; /* 기본값 초기화 */
+}
+
 .box {
     display: flex;
     flex-direction: column;
