@@ -4,12 +4,17 @@ type AddressType = BasicInfoType['basicInfo']['address'];
 type FeedbackType = BasicInfoType['basicInfo']['feedback'];
 
 export const makeAdress = (address: AddressType) => {
-    const newaddfullname = address.region.newaddrfullname;
-    const fullname = address.region.fullname;
-    const newaddrfull = address.newaddr.newaddrfull;
-    const detail = address.addrdetail;
+    const { region, newaddr, addrdetail } = address;
 
-    return `${newaddfullname} ${fullname} ${newaddrfull} ${detail}`;
+    const fullname = region?.fullname;
+    const newaddrfull = newaddr?.newaddrfull;
+    let detail = addrdetail;
+
+    if (detail === undefined) {
+        detail = '';
+    }
+
+    return ` ${fullname} ${newaddrfull} ${detail}`;
 };
 
 export const calculateScore = (feedback: FeedbackType) => {

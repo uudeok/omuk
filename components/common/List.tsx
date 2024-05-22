@@ -6,6 +6,7 @@ type ListRowProps = {
     right: ReactNode;
     middle?: ReactNode;
     onClick?: () => void;
+    between?: boolean;
 };
 
 type ListBoxProps = {
@@ -18,9 +19,9 @@ const List = ({ children }: { children: React.ReactNode }) => {
     return <ul className={styles.list}>{children}</ul>;
 };
 
-export const ListRow = ({ left, right, middle, onClick }: ListRowProps) => {
+export const ListRow = ({ left, right, middle, onClick, between = true }: ListRowProps) => {
     return (
-        <li className={styles.item} onClick={onClick}>
+        <li className={`${styles.item} ${between ? '' : styles.spaceBetween}`} onClick={onClick}>
             {left}
             {middle}
             {right}
