@@ -127,22 +127,3 @@ export type MarkerType = {
     close: () => void;
     open: (arg: { [key: string]: any } | undefined) => void;
 };
-
-export type IClusters = _.List<any>;
-
-export type IClusterer = {
-    _clusters: _.List<any> | null | undefined;
-    clear: () => void;
-    addMarkers: (arg: any) => void;
-};
-
-export type IFollow = {
-    followerId: string;
-    followingId: string;
-};
-
-export type IProfileUpdate = {
-    id: string;
-    name: string;
-    profile?: string | null;
-};

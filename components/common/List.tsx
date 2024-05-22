@@ -4,6 +4,7 @@ import styles from '../../styles/Common.module.css';
 type ListRowProps = {
     left: ReactNode;
     right: ReactNode;
+    middle?: ReactNode;
     onClick?: () => void;
 };
 
@@ -17,10 +18,11 @@ const List = ({ children }: { children: React.ReactNode }) => {
     return <ul className={styles.list}>{children}</ul>;
 };
 
-export const ListRow = ({ left, right, onClick }: ListRowProps) => {
+export const ListRow = ({ left, right, middle, onClick }: ListRowProps) => {
     return (
         <li className={styles.item} onClick={onClick}>
             {left}
+            {middle}
             {right}
         </li>
     );

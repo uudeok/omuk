@@ -2,10 +2,9 @@
 
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useEffect, useState } from 'react';
-import useKakaoLoader from '@/hooks/useKakaoLoader';
 import { useSearchStore } from '@/store/searchStore';
 import useMapDataStore from '@/store/mapDataStore';
-import { useGeoLocation } from '@/hooks/useGeoLocation';
+import { useKakaoLoader, useGeoLocation } from '@/hooks';
 
 /** 24.05.15
  * Next.js 14 인포윈도우가 안보이는 이슈
