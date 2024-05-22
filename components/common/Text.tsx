@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import styles from '../../styles/Common.module.css';
-import { valueOf } from '@/types/common';
+import { valueOf } from '@/types/data';
 
 export const Typography = {
     T1: 't1',
