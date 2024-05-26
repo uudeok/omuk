@@ -75,8 +75,10 @@
     padding: 5px;
 }
 
-.tag li > span {
-    margin-right: 5px;
+.taglist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 /* 메뉴 */
@@ -97,4 +99,5 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-bottom: 10px;
 }
