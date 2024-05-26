@@ -46,14 +46,15 @@ const Detail = async ({ id }: { id: string }) => {
                         }
                         right={<p>{openHour?.realtime?.open === 'N' ? '영업마감' : '영업중'}</p>}
                     />
-                    {openHour?.periodList[0]?.timeList.map((per: any, idx: number) => (
-                        <ListRow
-                            key={idx}
-                            left={<div>{per.timeName}</div>}
-                            middle={<div>{per.dayOfWeek}</div>}
-                            right={<div>{per.timeSE}</div>}
-                        />
-                    ))}
+                    {openHour?.periodList &&
+                        openHour.periodList[0].timeList.map((per: any, idx: number) => (
+                            <ListRow
+                                key={idx}
+                                left={<div>{per.timeName}</div>}
+                                middle={<div>{per.dayOfWeek}</div>}
+                                right={<div>{per.timeSE}</div>}
+                            />
+                        ))}
                     <ListRow
                         left=""
                         right={
@@ -108,7 +109,7 @@ const Detail = async ({ id }: { id: string }) => {
                     />
                     <ListRow
                         between={false}
-                        left={tags.map((tag: string) => (
+                        left={tags?.map((tag: string) => (
                             <Badge key={tag}>{tag}</Badge>
                         ))}
                         right=""

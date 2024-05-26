@@ -1,7 +1,7 @@
 'use client';
 
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchStore } from '@/store/searchStore';
 import useMapDataStore from '@/store/mapDataStore';
 import { useKakaoLoader, useGeoLocation } from '@/hooks';
@@ -20,6 +20,9 @@ const Maps = () => {
     const [map, setMap] = useState<any>();
     const { curLocation } = useGeoLocation();
 
+    const [page, setPage] = useState<number>(1);
+    const containerRef = useRef<HTMLDivElement>(null);
+
     const handleClickMarker = (e: any, marker: any) => {
         setInfo(marker);
         map.panTo(e.getPosition());
@@ -35,8 +38,8 @@ const Maps = () => {
         ps.keywordSearch(
             searchPlace,
             (data, status, pagintaion) => {
-                // console.log('data', data);
-                // console.log('pagintaion', pagintaion);
+                console.log('data', data);
+                console.log('pagintaion', pagintaion);
 
                 if (status === kakao.maps.services.Status.OK) {
                     const bounds = new kakao.maps.LatLngBounds();
