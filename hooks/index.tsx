@@ -1,4 +1,5 @@
 export { useBoolean } from './useBoolean';
 export { useGeoLocation } from './useGeoLocation';
 export { useInput } from './useInput';
-export { useKakaoLoader } from './useKakaoLoader';
+export { useKeyword } from './useKeyword';
+export { useCategory } from './useCategory';

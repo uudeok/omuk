@@ -8,25 +8,33 @@
 }
 
 .container {
-    position: absolute;
+    position: fixed;
     top: 0;
     height: 100%;
+    width: 100%;
     background-color: white;
     z-index: 99;
     animation: slideIn 0.3s forwards;
-    overflow-y: auto;
-    scrollbar-width: thin;
-}
-
-.container::-webkit-scrollbar {
-    width: 10px;
 }
 
 .closeButton {
-    position: fixed;
-    right: 0%;
-    z-index: 150;
-    /* right: -13%; */
+    position: absolute;
+    right: -45px;
     top: 0;
+    z-index: 150;
     width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    overflow-y: auto;
+    height: 100%;
+    scrollbar-width: thin;
+}
+
+.content::-webkit-scrollbar {
+    width: 10px;
 }

@@ -13,12 +13,12 @@ type SlideProps = {
 const Slide = ({ children, styles, onClickButton }: SlideProps) => {
     return (
         <div className={module.container} style={{ ...styles }}>
-            <main>{children}</main>
             <div className={module.closeButton}>
                 <Button size="lg" onClick={() => onClickButton && onClickButton()}>
                     x
                 </Button>
             </div>
+            <main className={module.content}>{children}</main>
         </div>
     );
 };
