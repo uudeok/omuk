@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, Dispatch, SetStateAction } from 'react';
+import { useState, useRef } from 'react';
 import { removeNonNumeric } from '@/shared/utils/stringUtils';
 
 interface Options {

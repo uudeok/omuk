@@ -5,7 +5,7 @@ import Script from 'next/script';
 import StyledComponent from '@/components/StyledComponent';
 import ReactQueryProvider from '@/shared/context/ReactQueryProvider';
 import SideBar from '@/components/layout/SideBar';
-import Test from '@/components/Test';
+import Map from '@/components/layout/Map';
 import MapProvider from '@/shared/context/MapProvider';
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export default function RootLayout({
                     <StyledComponent>
                         <MapProvider>
                             <SideBar />
-                            <Test />
+                            <Map />
                             {children}
                         </MapProvider>
                     </StyledComponent>

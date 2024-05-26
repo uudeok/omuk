@@ -11,7 +11,7 @@ const SideBar = () => {
             <div className={styles.layout}>
                 <div className={styles.search}>
                     <Search />
-                    <ButtonController />
+                    {/* <ButtonController /> */}
                 </div>
 
                 <Card />

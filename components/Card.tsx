@@ -1,18 +1,17 @@
 'use client';
 
+import styles from '../styles/Card.module.css';
 import List, { ListBox } from './common/List';
 import Text from './common/Text';
-import styles from '../styles/Card.module.css';
 import { useRouter } from 'next/navigation';
 import { useMap } from '@/shared/context/MapProvider';
-import { useCategory } from '@/hooks/useCategory';
-import { useEffect, useState } from 'react';
+import { useCategory } from '@/hooks';
+import { useEffect } from 'react';
 
 const Card = () => {
     const router = useRouter();
     const { searchCategory } = useCategory();
     const { restaurantData } = useMap();
-    const [isKakaoLoaded, setIsKakaoLoaded] = useState(false);
 
     useEffect(() => {
         const { kakao } = window;
@@ -22,23 +21,6 @@ const Card = () => {
             searchCategory();
         });
     }, [searchCategory]);
-
-    // useEffect(() => {
-    //     const script = document.createElement('script');
-    //     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer,drawing&autoload=false`;
-    //     script.onload = () => {
-    //         kakao.maps.load(() => {
-    //             setIsKakaoLoaded(true);
-    //         });
-    //     };
-    //     document.head.appendChild(script);
-    // }, []);
-
-    // useEffect(() => {
-    //     if (isKakaoLoaded) {
-    //         searchCategory();
-    //     }
-    // }, [isKakaoLoaded, searchCategory]);
 
     return (
         <List>

@@ -2,7 +2,7 @@
 
 import { useMap } from '@/shared/context/MapProvider';
 import { useGeoLocation } from './useGeoLocation';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 
 export const useCategory = () => {
     const { curLocation } = useGeoLocation();

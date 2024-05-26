@@ -1,9 +1,9 @@
 'use client';
 
-import Button from './common/Button';
-import { useBoolean } from '@/hooks/useBoolean';
-import { useState } from 'react';
 import styles from '../styles/ButtonController.module.css';
+import Button from './common/Button';
+import { useState } from 'react';
+import { useBoolean } from '@/hooks';
 
 const ButtonController = () => {
     const { value, setValue, setTrue, setFalse, toggle } = useBoolean();
