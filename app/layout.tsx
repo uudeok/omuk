@@ -1,9 +1,12 @@
+import './global.css';
 import type { Metadata } from 'next';
+import Script from 'next/script';
+
 import StyledComponent from '@/components/StyledComponent';
 import ReactQueryProvider from '@/shared/context/ReactQueryProvider';
-import Maps from '@/components/layout/Maps';
 import SideBar from '@/components/layout/SideBar';
-import './global.css';
+import Test from '@/components/Test';
+import MapProvider from '@/shared/context/MapProvider';
 
 export const metadata: Metadata = {
     title: {
@@ -13,6 +16,12 @@ export const metadata: Metadata = {
     description: 'The best way to find a good restaurant',
 };
 
+declare global {
+    interface Window {
+        Kakao: any;
+    }
+}
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -20,15 +29,33 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ko">
+            <head>
+                <Script
+                    type="text/javascript"
+                    src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer,drawing&autoload=false`}
+                />
+            </head>
             <body style={{ display: 'flex' }}>
                 <ReactQueryProvider>
                     <StyledComponent>
-                        {children}
-                        <SideBar />
-                        <Maps />
+                        <MapProvider>
+                            <SideBar />
+                            <Test />
+                            {children}
+                        </MapProvider>
                     </StyledComponent>
                 </ReactQueryProvider>
             </body>
         </html>
     );
+}
+
+{
+    /* <Script
+type="text/javascript"
+src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer,drawing&autoload=false`}
+strategy="afterInteractive"
+
+  strategy="beforeInteractive"
+/> */
 }
