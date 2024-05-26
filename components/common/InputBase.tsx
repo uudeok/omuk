@@ -4,6 +4,7 @@ const InputBase = styled.input<{ hasError?: boolean }>`
     width: 100%;
     color: ${(props) => props.theme.colors.grey800};
     padding: 0 0 8px;
+
     color: ${(props) => props.theme.colors.grey900};
     height: 40px;
     font-weight: 500;
@@ -13,6 +14,7 @@ const InputBase = styled.input<{ hasError?: boolean }>`
     outline: none;
     border: 0 none;
     cursor: pointer;
+
     /* border-bottom: 2px solid ${(props) => props.theme.colors.grey300}; */
 
     :focus {

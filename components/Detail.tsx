@@ -1,6 +1,6 @@
+import styles from '../styles/Detail.module.css';
 import { getDetail } from '@/app/(detail)/[id]/page';
 import Text from './common/Text';
-import styles from '../styles/Detail.module.css';
 import List, { ListRow } from './common/List';
 import Badge from './common/Badge';
 import { makeAdress, calculateScore } from '@/shared/utils/detailUtil';
@@ -10,7 +10,6 @@ import Phone from '../assets/phone.svg';
 import Position from '../assets/position.svg';
 import Menu from '../assets/menu.svg';
 import ArrowRight from '../assets/right-arrow.svg';
-import Image from 'next/image';
 
 const Detail = async ({ id }: { id: string }) => {
     const restaurantData = await getDetail(id);
@@ -107,13 +106,11 @@ const Detail = async ({ id }: { id: string }) => {
                         }
                         right=""
                     />
-                    <ListRow
-                        between={false}
-                        left={tags?.map((tag: string) => (
+                    <div className={styles.taglist}>
+                        {tags?.map((tag: string) => (
                             <Badge key={tag}>{tag}</Badge>
                         ))}
-                        right=""
-                    />
+                    </div>
                 </List>
             </div>
 
@@ -143,7 +140,9 @@ const Detail = async ({ id }: { id: string }) => {
                                 right={<Text typography="st3">{item.price}</Text>}
                             />
 
-                            <Text typography="st5">{item.desc}</Text>
+                            <Text typography="st4" color="var(--grey700)">
+                                {item.desc}
+                            </Text>
                         </div>
                     ))}
                 </List>

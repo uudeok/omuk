@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Input from './common/Input';
 import InputBase from './common/InputBase';
 import { useInput, useKeyword } from '@/hooks';
+import SearchIcon from '../assets/search.svg';
 
 const Search = () => {
     const [value, onChangeInput, isValid] = useInput();
