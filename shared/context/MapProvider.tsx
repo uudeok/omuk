@@ -10,7 +10,6 @@ import {
     useContext,
     createContext,
     ReactNode,
-    MutableRefObject,
 } from 'react';
 import { useGeoLocation } from '@/hooks';
 import { PaginationType, ResponseType } from '../types';
@@ -42,7 +41,6 @@ const MapContext = createContext<MapType>({
 const MapProvider = ({ children }: { children: ReactNode }) => {
     const mapEl = useRef<HTMLDivElement>(null);
     const { curLocation } = useGeoLocation();
-    const [restaurantData, setRestaurantData] = useState<ResponseType[]>();
     const [markers, setMarkers] = useState<MarkerType[]>([]);
     const [pagination, setPagination] = useState<PaginationType>();
     const [map, setMap] = useState<kakao.maps.Map>();
@@ -66,64 +64,16 @@ const MapProvider = ({ children }: { children: ReactNode }) => {
         });
     }, [curLocation]);
 
-    // useEffect(() => {
-    //     const script = document.createElement('script');
-    //     script.async = false;
-    //     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer,drawing&autoload=false`;
-    //     document.head.appendChild(script);
-
-    //     script.onload = () => {
-    //         kakao.maps.load(() => {
-    //             if (!mapEl.current || !curLocation) return;
-    //             const { latitude, longitude } = curLocation;
-
-    //             const center = new kakao.maps.LatLng(latitude, longitude);
-    //             const options = {
-    //                 center,
-    //                 level: 3,
-    //             };
-    //             const map = new kakao.maps.Map(mapEl.current!, options);
-    //             setTest(map);
-    //         });
-    //     };
-    // }, [curLocation]);
-
-    // useEffect(() => {
-    //     const script = document.createElement('script');
-    //     script.async = false;
-    //     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer,drawing&autoload=false`;
-    //     document.head.appendChild(script);
-
-    //     const onLoadKakapApi = () => {
-    //         window.kakao.maps.load(() => {
-    //             if (!mapEl.current || !curLocation) return;
-    //             const { latitude, longitude } = curLocation;
-
-    //             const center = new kakao.maps.LatLng(latitude, longitude);
-    //             const options = {
-    //                 center,
-    //                 level: 3,
-    //             };
-    //             const map = new kakao.maps.Map(mapEl.current!, options);
-    //             setTest(map);
-    //         });
-    //     };
-
-    //     script.addEventListener('load', onLoadKakapApi);
-    // }, [curLocation]);
-
     return (
         <MapContext.Provider
             value={{
                 mapEl,
-
                 setMarkers,
                 markers,
                 pagination,
                 setPagination,
                 setMap,
                 map,
-
                 resData,
             }}
         >

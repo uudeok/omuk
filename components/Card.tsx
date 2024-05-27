@@ -15,9 +15,6 @@ const Card = () => {
     const [isLoading, setIsLoading] = useState(false);
     const observerEl = useRef<HTMLDivElement>(null);
 
-    console.log('card page', pagination);
-    console.log('resData', resData.current);
-
     useEffect(() => {
         const { kakao } = window;
         if (!kakao) return;
@@ -57,31 +54,31 @@ const Card = () => {
         };
     }, [handleObserver]);
 
+    console.log('card', resData.current);
+
     return (
-        <>
-            <List>
-                {resData.current?.map((res: any) => (
-                    <ListBox
-                        onClick={() => {
-                            router.push(`/${res.id}`);
-                        }}
-                        key={res.id}
-                        top={
-                            <div className={styles.title}>
-                                <Text typography="t4">{res.place_name}</Text>
-                                <Text typography="st3">{res.road_address_name}</Text>
-                            </div>
-                        }
-                        bottom={
-                            <div>
-                                <Text typography="st3">{res.phone}</Text>
-                            </div>
-                        }
-                    />
-                ))}
-                <div ref={observerEl} />
-            </List>
-        </>
+        <List>
+            {resData.current?.map((res: any) => (
+                <ListBox
+                    onClick={() => {
+                        router.push(`/${res.id}`);
+                    }}
+                    key={res.id}
+                    top={
+                        <div className={styles.title}>
+                            <Text typography="t4">{res.place_name}</Text>
+                            <Text typography="st3">{res.road_address_name}</Text>
+                        </div>
+                    }
+                    bottom={
+                        <div>
+                            <Text typography="st3">{res.phone}</Text>
+                        </div>
+                    }
+                />
+            ))}
+            <div ref={observerEl} />
+        </List>
     );
 };
 
