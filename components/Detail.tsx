@@ -13,8 +13,8 @@ import ArrowRight from '../assets/right-arrow.svg';
 
 const Detail = async ({ id }: { id: string }) => {
     const restaurantData = await getDetail(id);
-    const { basicInfo, blogReview, menuInfo } = restaurantData;
-    const { address, openHour, facilityInfo, tags, feedback } = basicInfo;
+    const { basicInfo, menuInfo } = restaurantData;
+    const { address, openHour, tags, feedback } = basicInfo;
 
     return (
         <div className={styles.container}>

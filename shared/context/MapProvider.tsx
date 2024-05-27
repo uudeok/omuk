@@ -24,7 +24,9 @@ type MapType = {
     setPagination: Dispatch<SetStateAction<PaginationType | undefined>>;
     map: kakao.maps.Map | undefined;
     setMap: Dispatch<SetStateAction<kakao.maps.Map | undefined>>;
-    resData: { current: ResponseType[] };
+    resData: ResponseType[];
+    setResData: Dispatch<SetStateAction<ResponseType[]>>;
+    // resData: { current: ResponseType[] };
 };
 
 const MapContext = createContext<MapType>({
@@ -35,7 +37,9 @@ const MapContext = createContext<MapType>({
     setPagination: () => null,
     map: undefined,
     setMap: () => [],
-    resData: { current: [] },
+    // resData: { current: [] },
+    resData: [], // 변경된 부분
+    setResData: () => [], // 추가된 부분
 });
 
 const MapProvider = ({ children }: { children: ReactNode }) => {
@@ -44,7 +48,8 @@ const MapProvider = ({ children }: { children: ReactNode }) => {
     const [markers, setMarkers] = useState<MarkerType[]>([]);
     const [pagination, setPagination] = useState<PaginationType>();
     const [map, setMap] = useState<kakao.maps.Map>();
-    const resData = useRef<ResponseType[]>([]);
+    // const resData = useRef<ResponseType[]>([]);
+    const [resData, setResData] = useState<ResponseType[]>([]);
 
     useEffect(() => {
         const { kakao } = window;
@@ -75,6 +80,7 @@ const MapProvider = ({ children }: { children: ReactNode }) => {
                 setMap,
                 map,
                 resData,
+                setResData,
             }}
         >
             {children}

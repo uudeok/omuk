@@ -2,7 +2,7 @@ import { useMap } from '@/shared/context/MapProvider';
 import { useCallback } from 'react';
 
 export const useKeyword = () => {
-    const { map, setMarkers, setPagination, resData } = useMap();
+    const { map, setMarkers, setPagination, resData, setResData } = useMap();
 
     const searchKeyword = useCallback(
         (keyword: string) => {
@@ -11,8 +11,8 @@ export const useKeyword = () => {
 
             const ps = new kakao.maps.services.Places();
 
-            if (resData.current.length > 0) {
-                resData.current = [];
+            if (resData.length > 0) {
+                setResData([]);
             }
 
             ps.keywordSearch(
@@ -41,7 +41,9 @@ export const useKeyword = () => {
 
                         setPagination(pagination);
 
-                        resData.current = [...resData.current, ...data];
+                        setResData((prev) => [...prev, ...data]);
+
+                        // resData.current = [...resData.current, ...data];
 
                         map.setBounds(bounds);
                     }
@@ -52,7 +54,7 @@ export const useKeyword = () => {
                 }
             );
         },
-        [setPagination, resData, setMarkers, map]
+        [setPagination, setResData, resData, setMarkers, map]
     );
 
     return { searchKeyword };
