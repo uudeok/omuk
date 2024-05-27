@@ -18,7 +18,6 @@ const Card = () => {
     useEffect(() => {
         const { kakao } = window;
         if (!kakao) return;
-
         kakao.maps.load(() => {
             searchCategory();
         });
@@ -55,11 +54,9 @@ const Card = () => {
         };
     }, [handleObserver]);
 
-    console.log('Card', resData.current);
-
     return (
         <List>
-            {resData.current?.map((res: any) => (
+            {resData.map((res: any) => (
                 <ListBox
                     onClick={() => {
                         router.push(`/${res.id}`);
