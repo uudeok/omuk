@@ -6,7 +6,7 @@ import { useCallback } from 'react';
 
 export const useCategory = () => {
     const { curLocation } = useGeoLocation();
-    const { setPagination, resData } = useMap();
+    const { resData } = useMap();
 
     const searchCategory = useCallback(() => {
         const { kakao } = window;
@@ -19,13 +19,6 @@ export const useCategory = () => {
             'FD6',
             (result, status, pagination) => {
                 if (status === kakao.maps.services.Status.OK) {
-                    // console.log('useCategory', result);
-                    // console.log(pagination);
-                    setPagination(pagination);
-
-                    console.log('=================start==========================');
-
-                    // resData.current = result;
                     resData.current = [...resData.current, ...result];
                 }
             },
@@ -33,7 +26,7 @@ export const useCategory = () => {
                 location: new kakao.maps.LatLng(latitude, longitude),
             }
         );
-    }, [curLocation, setPagination, resData]);
+    }, [curLocation, resData]);
 
     return { searchCategory };
 };
