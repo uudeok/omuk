@@ -8,7 +8,7 @@ export type PaginationType = {
     hasPrevPage: boolean;
     last: number;
     nextPage: () => void;
-    perPage: number;
+    perPage?: number;
     prevPage: () => void;
     totalCount: number;
 };
