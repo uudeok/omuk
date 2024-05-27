@@ -10,6 +10,7 @@ import {
     useContext,
     createContext,
     ReactNode,
+    MutableRefObject,
 } from 'react';
 import { useGeoLocation } from '@/hooks';
 import { PaginationType, ResponseType } from '../types';
@@ -18,26 +19,24 @@ type MarkerType = { position: { lat: string; lng: string }; content: string };
 
 type MapType = {
     mapEl: RefObject<HTMLDivElement> | null;
-    restaurantData: ResponseType[] | undefined;
-    setRestaurantData: Dispatch<SetStateAction<ResponseType[] | undefined>>;
     markers: MarkerType[];
     setMarkers: Dispatch<SetStateAction<MarkerType[]>>;
     pagination: PaginationType | undefined;
     setPagination: Dispatch<SetStateAction<PaginationType | undefined>>;
     map: kakao.maps.Map | undefined;
     setMap: Dispatch<SetStateAction<kakao.maps.Map | undefined>>;
+    resData: { current: ResponseType[] };
 };
 
 const MapContext = createContext<MapType>({
     mapEl: null,
-    restaurantData: [],
-    setRestaurantData: () => [],
     markers: [],
     setMarkers: () => [],
     pagination: undefined,
     setPagination: () => null,
     map: undefined,
     setMap: () => [],
+    resData: { current: [] },
 });
 
 const MapProvider = ({ children }: { children: ReactNode }) => {
@@ -47,6 +46,7 @@ const MapProvider = ({ children }: { children: ReactNode }) => {
     const [markers, setMarkers] = useState<MarkerType[]>([]);
     const [pagination, setPagination] = useState<PaginationType>();
     const [map, setMap] = useState<kakao.maps.Map>();
+    const resData = useRef<ResponseType[]>([]);
 
     useEffect(() => {
         const { kakao } = window;
@@ -116,14 +116,15 @@ const MapProvider = ({ children }: { children: ReactNode }) => {
         <MapContext.Provider
             value={{
                 mapEl,
-                restaurantData,
+
                 setMarkers,
                 markers,
                 pagination,
                 setPagination,
                 setMap,
                 map,
-                setRestaurantData,
+
+                resData,
             }}
         >
             {children}

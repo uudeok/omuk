@@ -1,8 +1,8 @@
 import { useMap } from '@/shared/context/MapProvider';
 import { useCallback } from 'react';
 
-export function useKeyword() {
-    const { setRestaurantData, map, setMarkers, setPagination, pagination } = useMap();
+export const useKeyword = () => {
+    const { map, setMarkers, setPagination, resData } = useMap();
 
     const searchKeyword = useCallback(
         (keyword: string) => {
@@ -10,6 +10,10 @@ export function useKeyword() {
             if (!map || !kakao) return;
 
             const ps = new kakao.maps.services.Places();
+
+            if (resData.current.length > 0) {
+                resData.current = [];
+            }
 
             ps.keywordSearch(
                 keyword,
@@ -32,13 +36,12 @@ export function useKeyword() {
                             // @ts-ignore
                             bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
                         }
-                        console.log('data', data);
 
                         setMarkers(markers);
 
                         setPagination(pagination);
 
-                        setRestaurantData(data);
+                        resData.current = [...resData.current, ...data];
 
                         map.setBounds(bounds);
                     }
@@ -49,8 +52,8 @@ export function useKeyword() {
                 }
             );
         },
-        [setPagination, setRestaurantData, setMarkers, map]
+        [setPagination, resData, setMarkers, map]
     );
 
     return { searchKeyword };
-}
+};

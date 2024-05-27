@@ -6,12 +6,17 @@ import Text from './common/Text';
 import { useRouter } from 'next/navigation';
 import { useMap } from '@/shared/context/MapProvider';
 import { useCategory } from '@/hooks';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const Card = () => {
     const router = useRouter();
     const { searchCategory } = useCategory();
-    const { restaurantData } = useMap();
+    const { pagination, resData } = useMap();
+    const [isLoading, setIsLoading] = useState(false);
+    const observerEl = useRef<HTMLDivElement>(null);
+
+    console.log('card page', pagination);
+    console.log('resData', resData.current);
 
     useEffect(() => {
         const { kakao } = window;
@@ -22,28 +27,61 @@ const Card = () => {
         });
     }, [searchCategory]);
 
+    const fetchNextPage = useCallback(() => {
+        if (pagination?.hasNextPage) {
+            setIsLoading(true);
+            pagination.gotoPage(pagination.current + 1);
+            setIsLoading(false);
+        }
+    }, [pagination]);
+
+    const handleObserver = useCallback(
+        (entries: IntersectionObserverEntry[]) => {
+            const target = entries[0];
+            if (target.isIntersecting && !isLoading && pagination?.hasNextPage) {
+                fetchNextPage();
+            }
+        },
+        [fetchNextPage, isLoading, pagination]
+    );
+    useEffect(() => {
+        const observer = new IntersectionObserver(handleObserver, { threshold: 0 });
+        const currentEl = observerEl.current;
+        if (currentEl) {
+            observer.observe(currentEl);
+        }
+        return () => {
+            if (currentEl) {
+                observer.unobserve(currentEl);
+            }
+        };
+    }, [handleObserver]);
+
     return (
-        <List>
-            {restaurantData?.map((res: any) => (
-                <ListBox
-                    onClick={() => {
-                        router.push(`/${res.id}`);
-                    }}
-                    key={res.id}
-                    top={
-                        <div className={styles.title}>
-                            <Text typography="t4">{res.place_name}</Text>
-                            <Text typography="st3">{res.road_address_name}</Text>
-                        </div>
-                    }
-                    bottom={
-                        <div>
-                            <Text typography="st3">{res.phone}</Text>
-                        </div>
-                    }
-                />
-            ))}
-        </List>
+        <>
+            <List>
+                {resData.current?.map((res: any) => (
+                    <ListBox
+                        onClick={() => {
+                            router.push(`/${res.id}`);
+                        }}
+                        key={res.id}
+                        top={
+                            <div className={styles.title}>
+                                <Text typography="t4">{res.place_name}</Text>
+                                <Text typography="st3">{res.road_address_name}</Text>
+                            </div>
+                        }
+                        bottom={
+                            <div>
+                                <Text typography="st3">{res.phone}</Text>
+                            </div>
+                        }
+                    />
+                ))}
+                <div ref={observerEl} />
+            </List>
+        </>
     );
 };
 
