@@ -11,9 +11,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 const Card = () => {
     const router = useRouter();
     const { searchCategory } = useCategory();
-    const { pagination, resData } = useMap();
     const [isLoading, setIsLoading] = useState(false);
     const observerEl = useRef<HTMLDivElement>(null);
+    const { pagination, resData } = useMap();
 
     useEffect(() => {
         const { kakao } = window;
@@ -41,6 +41,7 @@ const Card = () => {
         },
         [fetchNextPage, isLoading, pagination]
     );
+
     useEffect(() => {
         const observer = new IntersectionObserver(handleObserver, { threshold: 0 });
         const currentEl = observerEl.current;
@@ -54,7 +55,7 @@ const Card = () => {
         };
     }, [handleObserver]);
 
-    console.log('card', resData.current);
+    console.log('Card', resData.current);
 
     return (
         <List>

@@ -19,6 +19,7 @@ export const useCategory = () => {
             'FD6',
             (result, status, pagination) => {
                 if (status === kakao.maps.services.Status.OK) {
+                    console.log('useCategory', result);
                     resData.current = [...resData.current, ...result];
                 }
             },
