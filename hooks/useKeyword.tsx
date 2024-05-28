@@ -1,8 +1,14 @@
+'use client';
+
 import { useMap } from '@/shared/context/MapProvider';
 import { useCallback } from 'react';
+import { useMarker } from './useMarker';
+import { useRemove } from './useRemove';
 
 export const useKeyword = () => {
-    const { map, setMarkers, setPagination, resData, setResData, pagination } = useMap();
+    const { map, setPagination, resData, setResData } = useMap();
+    const { addMarker } = useMarker();
+    const { removeMarker } = useRemove();
 
     const searchKeyword = useCallback(
         (keyword: string) => {
@@ -14,40 +20,18 @@ export const useKeyword = () => {
             if (resData.length > 0) {
                 setResData([]);
                 setPagination(null);
+                removeMarker();
             }
 
             ps.keywordSearch(
                 keyword,
                 (data, status, pagination: any) => {
                     if (status === kakao.maps.services.Status.OK) {
-                        const bounds = new kakao.maps.LatLngBounds();
-                        console.log(data);
-
-                        let markers = [];
-
-                        for (let i = 0; i < data.length; i++) {
-                            // @ts-ignore
-                            markers.push({
-                                position: {
-                                    lat: data[i].y,
-                                    lng: data[i].x,
-                                },
-                                content: data[i].place_name,
-                            });
-
-                            // @ts-ignore
-                            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-                        }
-
-                        setMarkers(markers);
+                        addMarker(data);
 
                         setPagination(pagination);
 
                         setResData((prev) => [...prev, ...data]);
-
-                        // resData.current = [...resData.current, ...data];
-
-                        map.setBounds(bounds);
                     }
                 },
                 {
@@ -56,7 +40,7 @@ export const useKeyword = () => {
                 }
             );
         },
-        [setPagination, setResData, resData, setMarkers, map]
+        [setPagination, setResData, resData, addMarker, map, removeMarker]
     );
 
     return { searchKeyword };

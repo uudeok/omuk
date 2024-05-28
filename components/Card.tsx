@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useMap } from '@/shared/context/MapProvider';
 import { useCategory, useInfiniteScroll } from '@/hooks';
 import { useEffect } from 'react';
+import { ResponseType } from '@/shared/types';
 
 const Card = () => {
     const router = useRouter();
@@ -16,6 +17,7 @@ const Card = () => {
     useEffect(() => {
         const { kakao } = window;
         if (!kakao) return;
+
         kakao.maps.load(() => {
             searchCategory();
         });
@@ -29,7 +31,7 @@ const Card = () => {
 
     return (
         <List>
-            {resData.map((res: any) => (
+            {resData.map((res: ResponseType) => (
                 <ListBox
                     onClick={() => {
                         router.push(`/${res.id}`);

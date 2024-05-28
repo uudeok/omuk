@@ -12,18 +12,23 @@ import {
     ReactNode,
 } from 'react';
 import { useGeoLocation } from '@/hooks';
-import { PaginationType, ResponseType } from '../types';
+import { PaginationType, ResponseType, IMarker } from '../types';
 
 type MarkerType = { position: { lat: string; lng: string }; content: string };
 
 type MapType = {
     mapEl: RefObject<HTMLDivElement> | null;
-    markers: MarkerType[];
-    setMarkers: Dispatch<SetStateAction<MarkerType[]>>;
 
+    markers: IMarker[];
+    setMarkers: Dispatch<SetStateAction<IMarker[]>>;
+
+    // markers: kakao.maps.Marker | null;
+    // setMarkers: Dispatch<SetStateAction<kakao.maps.Marker | null>>;
+
+    // markers: MarkerType[] | null;
+    // setMarkers: Dispatch<SetStateAction<MarkerType[] | null>>;
     pagination: PaginationType | null;
     setPagination: Dispatch<SetStateAction<PaginationType | null>>;
-
     map: kakao.maps.Map | undefined;
     setMap: Dispatch<SetStateAction<kakao.maps.Map | undefined>>;
     resData: ResponseType[];
@@ -34,10 +39,10 @@ const MapContext = createContext<MapType>({
     mapEl: null,
     markers: [],
     setMarkers: () => [],
+    // markers: null,
+    // setMarkers: () => [],
     pagination: null,
     setPagination: () => null,
-    // pagination: undefined,
-    // setPagination: () => null,
     map: undefined,
     setMap: () => [],
     resData: [],
@@ -47,9 +52,9 @@ const MapContext = createContext<MapType>({
 const MapProvider = ({ children }: { children: ReactNode }) => {
     const mapEl = useRef<HTMLDivElement>(null);
     const { curLocation } = useGeoLocation();
-    const [markers, setMarkers] = useState<MarkerType[]>([]);
+    const [markers, setMarkers] = useState<IMarker[]>([]);
+    // const [markers, setMarkers] = useState<kakao.maps.Marker | null>(null);
     const [pagination, setPagination] = useState<PaginationType | null>(null);
-    // const [pagination, setPagination] = useState<PaginationType>();
     const [map, setMap] = useState<kakao.maps.Map>();
     const [resData, setResData] = useState<ResponseType[]>([]);
 
