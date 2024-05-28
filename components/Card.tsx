@@ -5,14 +5,12 @@ import List, { ListBox } from './common/List';
 import Text from './common/Text';
 import { useRouter } from 'next/navigation';
 import { useMap } from '@/shared/context/MapProvider';
-import { useCategory } from '@/hooks';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCategory, useInfiniteScroll } from '@/hooks';
+import { useEffect } from 'react';
 
 const Card = () => {
     const router = useRouter();
     const { searchCategory } = useCategory();
-    const [isLoading, setIsLoading] = useState(false);
-    const observerEl = useRef<HTMLDivElement>(null);
     const { pagination, resData } = useMap();
 
     useEffect(() => {
@@ -23,36 +21,11 @@ const Card = () => {
         });
     }, [searchCategory]);
 
-    const fetchNextPage = useCallback(() => {
-        if (pagination?.hasNextPage) {
-            setIsLoading(true);
-            pagination.gotoPage(pagination.current + 1);
-            setIsLoading(false);
-        }
-    }, [pagination]);
+    const fetchNextPage = () => {
+        pagination?.gotoPage(pagination.current + 1);
+    };
 
-    const handleObserver = useCallback(
-        (entries: IntersectionObserverEntry[]) => {
-            const target = entries[0];
-            if (target.isIntersecting && !isLoading && pagination?.hasNextPage) {
-                fetchNextPage();
-            }
-        },
-        [fetchNextPage, isLoading, pagination]
-    );
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(handleObserver, { threshold: 0 });
-        const currentEl = observerEl.current;
-        if (currentEl) {
-            observer.observe(currentEl);
-        }
-        return () => {
-            if (currentEl) {
-                observer.unobserve(currentEl);
-            }
-        };
-    }, [handleObserver]);
+    const { observerEl } = useInfiniteScroll({ callbackFn: fetchNextPage, hasNextPage: pagination?.hasNextPage! });
 
     return (
         <List>
