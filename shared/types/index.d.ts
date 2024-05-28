@@ -27,3 +27,38 @@ export type ResponseType = {
     x: string;
     y: string;
 };
+
+export interface IMarker {
+    setMap(arg0: any): any;
+    $a: number;
+    Ba: number;
+    Gb: string;
+    Ha: number;
+    Hb: boolean;
+    K: any | undefined;
+    Kj: number;
+    Na: boolean;
+    Rc: ICoord;
+    T: {
+        Qd: ICoord;
+        Wh: string;
+        Xj: ICoord;
+        de: string;
+        lf: { width: number; height: number };
+        mk: string;
+        n: string;
+    };
+    a: any;
+    ai: number;
+    ca: any;
+    ej: number;
+    f: { [key: string]: any };
+    fa: { [key: string]: any };
+    fj: number;
+    h: { [key: string]: any };
+    n: IPolyline;
+    o: { [key: string]: string };
+    yi: number;
+    close: () => void;
+    open: (arg: { [key: string]: any } | undefined) => void;
+}
