@@ -20,35 +20,37 @@ type MapType = {
     mapEl: RefObject<HTMLDivElement> | null;
     markers: MarkerType[];
     setMarkers: Dispatch<SetStateAction<MarkerType[]>>;
-    pagination: PaginationType | undefined;
-    setPagination: Dispatch<SetStateAction<PaginationType | undefined>>;
+
+    pagination: PaginationType | null;
+    setPagination: Dispatch<SetStateAction<PaginationType | null>>;
+
     map: kakao.maps.Map | undefined;
     setMap: Dispatch<SetStateAction<kakao.maps.Map | undefined>>;
     resData: ResponseType[];
     setResData: Dispatch<SetStateAction<ResponseType[]>>;
-    // resData: { current: ResponseType[] };
 };
 
 const MapContext = createContext<MapType>({
     mapEl: null,
     markers: [],
     setMarkers: () => [],
-    pagination: undefined,
+    pagination: null,
     setPagination: () => null,
+    // pagination: undefined,
+    // setPagination: () => null,
     map: undefined,
     setMap: () => [],
-    // resData: { current: [] },
-    resData: [], // 변경된 부분
-    setResData: () => [], // 추가된 부분
+    resData: [],
+    setResData: () => [],
 });
 
 const MapProvider = ({ children }: { children: ReactNode }) => {
     const mapEl = useRef<HTMLDivElement>(null);
     const { curLocation } = useGeoLocation();
     const [markers, setMarkers] = useState<MarkerType[]>([]);
-    const [pagination, setPagination] = useState<PaginationType>();
+    const [pagination, setPagination] = useState<PaginationType | null>(null);
+    // const [pagination, setPagination] = useState<PaginationType>();
     const [map, setMap] = useState<kakao.maps.Map>();
-    // const resData = useRef<ResponseType[]>([]);
     const [resData, setResData] = useState<ResponseType[]>([]);
 
     useEffect(() => {
