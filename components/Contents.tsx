@@ -2,7 +2,8 @@
 
 import styles from '../styles/Detail.module.css';
 import { useBoolean } from '@/hooks';
-import { makeAdress, calculateScore } from '@/shared/utils/detailUtil';
+import { makeAdress } from '@/shared/utils/detailUtil';
+import { useRouter } from 'next/navigation';
 import Text from './common/Text';
 import List, { ListRow } from './common/List';
 import Hastag from '../assets/hashtag.svg';
@@ -18,41 +19,40 @@ import Pencil from '../assets/pencil.svg';
 type PropsType = {
     basicInfo: any;
     menuInfo: any;
+    id: string;
 };
 
-const Contents = ({ basicInfo, menuInfo }: PropsType) => {
-    const { value, toggle } = useBoolean();
-    const { value: isBookmark, setValue, setTrue, setFalse, toggle: setBookmark } = useBoolean();
+const Contents = ({ basicInfo, menuInfo, id }: PropsType) => {
+    const router = useRouter();
+    const { value: isShowMenu, toggle: setMenu } = useBoolean();
+    const { value: isBookmark, toggle: setBookmark } = useBoolean();
+
+    const handleBookmarkToggle = () => {
+        // 여기서 bookmark api 호출 필요
+        // 로그인 여부 확인 필요
+        setBookmark();
+    };
+
+    const handleReviewToggle = () => {
+        // 로그인 여부 확인 필요
+        router.push(`/${id}/review`);
+    };
 
     return (
         <div className={styles.container}>
-            <div className={styles.header}>
-                <Text typography="t5">{basicInfo?.placenamefull}</Text>
-                <List>
-                    <ListRow
-                        left={<Text typography="st4">리뷰수</Text>}
-                        right={<Text typography="st4">{basicInfo?.feedback?.comntcnt}</Text>}
-                    />
-                    <ListRow
-                        left={<Text typography="st4">별점</Text>}
-                        right={<Text typography="st4">{calculateScore(basicInfo?.feedback)}/5.0</Text>}
-                    />
-                </List>
-            </div>
-
             <img src={basicInfo?.mainphotourl} alt={basicInfo?.placenamefull} width="100%" className={styles.mainImg} />
 
             <div className={styles.bookmark}>
                 <List>
                     <ListRow
                         left={
-                            <div onClick={() => setBookmark()}>
+                            <div onClick={() => handleBookmarkToggle()}>
                                 {isBookmark ? <FillStar width={24} /> : <Star width={24} />}
                                 <Text typography="t5">즐겨찾기</Text>
                             </div>
                         }
                         right={
-                            <div>
+                            <div onClick={() => handleReviewToggle()}>
                                 <Pencil width={24} />
                                 <Text typography="t5">리뷰쓰기</Text>
                             </div>
@@ -139,14 +139,14 @@ const Contents = ({ basicInfo, menuInfo }: PropsType) => {
                             </div>
                         }
                         right={
-                            <div onClick={() => toggle()} className={styles.menuBtn}>
+                            <div onClick={() => setMenu()} className={styles.menuBtn}>
                                 <ArrowRight width={9} />
                                 <Text typography="st4">메뉴 상세보기</Text>
                             </div>
                         }
                     />
 
-                    {value &&
+                    {isShowMenu &&
                         menuInfo?.menuList?.map((item: any) => (
                             <div key={item.menu} className={styles.menuList}>
                                 {item.img && <img src={item.img} alt={item.menu} width="100%" />}

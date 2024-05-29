@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
-import Detail from '@/components/Detail';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
+import Detail from '@/components/Detail';
 
 export const getDetail = async (id: string) => {
     const response = await fetch(`https://place.map.kakao.com/m/main/v/${id}`);
