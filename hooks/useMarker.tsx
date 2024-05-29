@@ -19,6 +19,7 @@ export const useMarker = () => {
 
             data.forEach((res) => {
                 const position = new kakao.maps.LatLng(Number(res.y), Number(res.x));
+                const name = res.place_name;
 
                 const marker = new kakao.maps.Marker({
                     map: map,
@@ -28,7 +29,23 @@ export const useMarker = () => {
                 bounds.extend(new kakao.maps.LatLng(Number(res.y), Number(res.x)));
 
                 /* marker 생성 */
-                marker.setMap(map);
+                // marker.setMap(map);
+
+                const content = `<div style="font-weight : bold; border-radius : 15px; padding: 10px; background-color: #fbc62e; color: white; font-size: 14px;">${name}</div>`;
+
+                const customOverlay = new kakao.maps.CustomOverlay({
+                    position: position,
+                    content: content,
+                    yAnchor: 2.2,
+                });
+
+                kakao.maps.event.addListener(marker, 'mouseover', function () {
+                    customOverlay.setMap(map);
+                });
+
+                kakao.maps.event.addListener(marker, 'mouseout', function () {
+                    customOverlay.setMap(null);
+                });
 
                 /* 화면 안에 전부 보이도록  */
                 map.setBounds(bounds);
