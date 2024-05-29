@@ -29,8 +29,6 @@ const Card = () => {
 
     const { observerEl } = useInfiniteScroll({ callbackFn: fetchNextPage, hasNextPage: pagination?.hasNextPage! });
 
-    console.log('card', resData);
-
     return (
         <List>
             {resData.map((res: ResponseType) => (
