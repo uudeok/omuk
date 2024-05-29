@@ -25,8 +25,12 @@ export const useCategory = () => {
             'FD6',
             (result, status, pagination) => {
                 if (status === kakao.maps.services.Status.OK) {
-                    // addMarker(result);
+                    console.log('실행');
+
+                    addMarker(result);
+
                     setPagination(pagination);
+
                     setResData((prev) => [...prev, ...result]);
                 }
             },
@@ -34,7 +38,7 @@ export const useCategory = () => {
                 location: new kakao.maps.LatLng(latitude, longitude),
             }
         );
-    }, [curLocation, setResData, setPagination]);
+    }, [curLocation, setResData, setPagination, addMarker]);
 
     return { searchCategory };
 };

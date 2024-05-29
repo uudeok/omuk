@@ -1,5 +1,7 @@
 'use client';
 
+/** 검색어로 주변 음식점 검색 기능 */
+
 import { useMap } from '@/shared/context/MapProvider';
 import { useCallback } from 'react';
 import { useMarker } from './useMarker';
@@ -17,6 +19,7 @@ export const useKeyword = () => {
 
             const ps = new kakao.maps.services.Places();
 
+            /** keyword 변경 시, 작업 초기화 */
             if (resData.length > 0) {
                 setResData([]);
                 setPagination(null);
@@ -25,13 +28,13 @@ export const useKeyword = () => {
 
             ps.keywordSearch(
                 keyword,
-                (data, status, pagination: any) => {
+                (result, status, pagination: any) => {
                     if (status === kakao.maps.services.Status.OK) {
-                        addMarker(data);
+                        addMarker(result);
 
                         setPagination(pagination);
 
-                        setResData((prev) => [...prev, ...data]);
+                        setResData((prev) => [...prev, ...result]);
                     }
                 },
                 {

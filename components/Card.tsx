@@ -12,22 +12,24 @@ import { ResponseType } from '@/shared/types';
 const Card = () => {
     const router = useRouter();
     const { searchCategory } = useCategory();
-    const { pagination, resData } = useMap();
+    const { pagination, resData, map } = useMap();
 
     useEffect(() => {
         const { kakao } = window;
-        if (!kakao) return;
+        if (!kakao || !map) return;
 
         kakao.maps.load(() => {
             searchCategory();
         });
-    }, [searchCategory]);
+    }, [searchCategory, map]);
 
     const fetchNextPage = () => {
         pagination?.gotoPage(pagination.current + 1);
     };
 
     const { observerEl } = useInfiniteScroll({ callbackFn: fetchNextPage, hasNextPage: pagination?.hasNextPage! });
+
+    console.log('card', resData);
 
     return (
         <List>

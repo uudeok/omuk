@@ -10,7 +10,8 @@ export const useMarker = () => {
     const addMarker = useCallback(
         (data: ResponseType[]) => {
             const { kakao } = window;
-            if (!kakao || !data || !map) return;
+
+            if (!kakao || !map) return;
 
             const bounds = new kakao.maps.LatLngBounds();
 
@@ -24,14 +25,12 @@ export const useMarker = () => {
                     position: position,
                 });
 
-                console.log('각자', marker);
-
                 bounds.extend(new kakao.maps.LatLng(Number(res.y), Number(res.x)));
 
                 /* marker 생성 */
                 marker.setMap(map);
 
-                /* map bound 생성 */
+                /* 화면 안에 전부 보이도록  */
                 map.setBounds(bounds);
 
                 /* marker 객체 생성 */

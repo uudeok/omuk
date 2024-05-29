@@ -4,3 +4,5 @@ export { useKeyword } from './useKeyword';
 export { useCategory } from './useCategory';
 export { useGeoLocation } from './useGeoLocation';
 export { useInfiniteScroll } from './useInfiniteScroll';
+export { useRemove } from './useRemove';
+export { useMarker } from './useMarker';
