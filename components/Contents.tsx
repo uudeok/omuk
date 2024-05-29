@@ -1,5 +1,7 @@
 'use client';
 
+import styles from '../styles/Detail.module.css';
+import { useBoolean } from '@/hooks';
 import { makeAdress, calculateScore } from '@/shared/utils/detailUtil';
 import Text from './common/Text';
 import List, { ListRow } from './common/List';
@@ -9,8 +11,9 @@ import Position from '../assets/position.svg';
 import Menu from '../assets/menu.svg';
 import ArrowRight from '../assets/right-arrow.svg';
 import Badge from './common/Badge';
-import styles from '../styles/Detail.module.css';
-import { useBoolean } from '@/hooks';
+import FillStar from '../assets/fillStar.svg';
+import Star from '../assets/star.svg';
+import Pencil from '../assets/pencil.svg';
 
 type PropsType = {
     basicInfo: any;
@@ -19,6 +22,7 @@ type PropsType = {
 
 const Contents = ({ basicInfo, menuInfo }: PropsType) => {
     const { value, toggle } = useBoolean();
+    const { value: isBookmark, setValue, setTrue, setFalse, toggle: setBookmark } = useBoolean();
 
     return (
         <div className={styles.container}>
@@ -36,7 +40,26 @@ const Contents = ({ basicInfo, menuInfo }: PropsType) => {
                 </List>
             </div>
 
-            <img src={basicInfo?.mainphotourl} alt={basicInfo?.placenamefull} width="100%" />
+            <img src={basicInfo?.mainphotourl} alt={basicInfo?.placenamefull} width="100%" className={styles.mainImg} />
+
+            <div className={styles.bookmark}>
+                <List>
+                    <ListRow
+                        left={
+                            <div onClick={() => setBookmark()}>
+                                {isBookmark ? <FillStar width={24} /> : <Star width={24} />}
+                                <Text typography="t5">즐겨찾기</Text>
+                            </div>
+                        }
+                        right={
+                            <div>
+                                <Pencil width={24} />
+                                <Text typography="t5">리뷰쓰기</Text>
+                            </div>
+                        }
+                    />
+                </List>
+            </div>
 
             <div className={styles.openHour}>
                 <List>
