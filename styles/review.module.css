@@ -1,0 +1,27 @@
+.review {
+    padding: 10px;
+}
+
+.review li {
+    /* border: 1px solid red; */
+    padding: 5px;
+    margin: 10px;
+}
+
+.positive {
+    /* padding: 10px; */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.negative {
+    /* padding: 10px; */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px;
+    cursor: pointer;
+}

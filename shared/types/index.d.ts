@@ -62,3 +62,14 @@ export interface IMarker {
     close: () => void;
     open: (arg: { [key: string]: any } | undefined) => void;
 }
+
+export type FeedBackItem = {
+    id: number;
+    label: string;
+    selected: boolean;
+};
+
+export type FeedBackType = {
+    type: 'positive' | 'negative';
+    items: FeedBackItem[];
+};

@@ -1,15 +1,8 @@
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
-import { getDetail } from '../page';
+import Review from '@/components/Review';
 
-const Review = async ({ params: { id } }: { params: Params }) => {
-    const restaurantData = await getDetail(id);
-    const { basicInfo, menuInfo } = restaurantData;
-
-    return (
-        <div>
-            <div>review</div>
-        </div>
-    );
+const ReviewPage = async ({ params: { id } }: { params: Params }) => {
+    return <Review />;
 };
 
-export default Review;
+export default ReviewPage;

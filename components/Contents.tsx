@@ -12,9 +12,8 @@ import Position from '../assets/position.svg';
 import Menu from '../assets/menu.svg';
 import ArrowRight from '../assets/right-arrow.svg';
 import Badge from './common/Badge';
-import FillStar from '../assets/fillStar.svg';
-import Star from '../assets/star.svg';
 import Pencil from '../assets/pencil.svg';
+import Bookmark from './Bookmark';
 
 type PropsType = {
     basicInfo: any;
@@ -25,13 +24,6 @@ type PropsType = {
 const Contents = ({ basicInfo, menuInfo, id }: PropsType) => {
     const router = useRouter();
     const { value: isShowMenu, toggle: setMenu } = useBoolean();
-    const { value: isBookmark, toggle: setBookmark } = useBoolean();
-
-    const handleBookmarkToggle = () => {
-        // 여기서 bookmark api 호출 필요
-        // 로그인 여부 확인 필요
-        setBookmark();
-    };
 
     const handleReviewToggle = () => {
         // 로그인 여부 확인 필요
@@ -45,12 +37,7 @@ const Contents = ({ basicInfo, menuInfo, id }: PropsType) => {
             <div className={styles.bookmark}>
                 <List>
                     <ListRow
-                        left={
-                            <div onClick={() => handleBookmarkToggle()}>
-                                {isBookmark ? <FillStar width={24} /> : <Star width={24} />}
-                                <Text typography="t5">즐겨찾기</Text>
-                            </div>
-                        }
+                        left={<Bookmark />}
                         right={
                             <div onClick={() => handleReviewToggle()}>
                                 <Pencil width={24} />
