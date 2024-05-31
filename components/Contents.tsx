@@ -12,8 +12,10 @@ import Position from '../assets/position.svg';
 import Menu from '../assets/menu.svg';
 import ArrowRight from '../assets/right-arrow.svg';
 import Badge from './common/Badge';
-import Pencil from '../assets/pencil.svg';
-import Bookmark from './Bookmark';
+import Comment from '../assets/comment.svg';
+import Button from './common/Button';
+import Bookmark from './common/Bookmark';
+import Star from '../assets/star.svg';
 
 type PropsType = {
     basicInfo: any;
@@ -37,13 +39,13 @@ const Contents = ({ basicInfo, menuInfo, id }: PropsType) => {
             <div className={styles.bookmark}>
                 <List>
                     <ListRow
-                        left={<Bookmark />}
-                        right={
-                            <div onClick={() => handleReviewToggle()}>
-                                <Pencil width={24} />
-                                <Text typography="t5">리뷰쓰기</Text>
+                        left={
+                            <div>
+                                <Star width={15} />
+                                <Text typography="st3">즐겨찾기</Text>
                             </div>
                         }
+                        right={<Bookmark />}
                     />
                 </List>
             </div>
@@ -148,6 +150,26 @@ const Contents = ({ basicInfo, menuInfo, id }: PropsType) => {
                                 </Text>
                             </div>
                         ))}
+                </List>
+            </div>
+
+            <div className={styles.review}>
+                <List>
+                    <ListRow
+                        left={
+                            <div>
+                                <Comment width={15} />
+                                <Text typography="st3">나의 후기</Text>
+                            </div>
+                        }
+                        right=""
+                    />
+                    <div className={styles.myreview}>
+                        <Text typography="st3">등록된 후기가 없습니다.</Text>
+                        <Button size="sm" role="round" onClick={() => router.push(`${id}/review`)}>
+                            후기 작성하기
+                        </Button>
+                    </div>
                 </List>
             </div>
         </div>

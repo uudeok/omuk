@@ -1,7 +1,6 @@
-import FillStar from '../assets/fillStar.svg';
-import Star from '../assets/star.svg';
-import Text from './common/Text';
 import { useBoolean } from '@/hooks';
+import NonBookmark from '../assets/nonBookmark.svg';
+import FillBookmark from '../assets/bookmark.svg';
 
 const Bookmark = () => {
     const { value: isBookmark, toggle: setBookmark } = useBoolean();
@@ -15,10 +14,16 @@ const Bookmark = () => {
 
     return (
         <div onClick={() => handleBookmarkToggle()}>
-            {isBookmark ? <FillStar width={24} /> : <Star width={24} />}
-            <Text typography="t5">즐겨찾기</Text>
+            {isBookmark ? <FillBookmark width={17} /> : <NonBookmark width={17} />}
         </div>
     );
 };
 
 export default Bookmark;
+
+{
+    /* <div onClick={() => handleBookmarkToggle()}>
+{isBookmark ? <FillStar width={24} /> : <Star width={24} />}
+<Text typography="t5">즐겨찾기</Text>
+</div> */
+}

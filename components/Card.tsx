@@ -8,6 +8,7 @@ import { useMap } from '@/shared/context/MapProvider';
 import { useCategory, useInfiniteScroll } from '@/hooks';
 import { useEffect } from 'react';
 import { ResponseType } from '@/shared/types';
+import Comment from '../assets/comment.svg';
 
 const Card = () => {
     const router = useRouter();
@@ -38,16 +39,13 @@ const Card = () => {
                     }}
                     key={res.id}
                     top={
-                        <div className={styles.title}>
+                        <div className={styles.information}>
                             <Text typography="t4">{res.place_name}</Text>
                             <Text typography="st3">{res.road_address_name}</Text>
-                        </div>
-                    }
-                    bottom={
-                        <div>
                             <Text typography="st3">{res.phone}</Text>
                         </div>
                     }
+                    bottom={''}
                 />
             ))}
             <div ref={observerEl} />
