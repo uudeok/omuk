@@ -1,6 +1,6 @@
 import { useBoolean } from '@/hooks';
-import NonBookmark from '../assets/nonBookmark.svg';
-import FillBookmark from '../assets/bookmark.svg';
+import NonBookmark from '../../assets/nonBookmark.svg';
+import FillBookmark from '../../assets/bookmark.svg';
 
 const Bookmark = () => {
     const { value: isBookmark, toggle: setBookmark } = useBoolean();
