@@ -164,12 +164,22 @@ const Contents = ({ basicInfo, menuInfo, id }: PropsType) => {
                         }
                         right=""
                     />
-                    <div className={styles.myreview}>
-                        <Text typography="st3">등록된 후기가 없습니다.</Text>
-                        <Button size="sm" role="round" onClick={() => router.push(`${id}/review`)}>
-                            후기 작성하기
-                        </Button>
-                    </div>
+
+                    {Number(id) % 2 === 0 ? (
+                        <div className={styles.emptyReview}>
+                            <Text typography="st3">등록된 후기가 없습니다.</Text>
+                            <Button size="sm" role="round" onClick={() => router.push(`${id}/review`)}>
+                                후기 작성하기
+                            </Button>
+                        </div>
+                    ) : (
+                        <div className={styles.myreview}>
+                            <Text typography="st3">맛있어서 또 가고싶다</Text>
+                            <Button size="sm" role="none">
+                                자세히 보기
+                            </Button>
+                        </div>
+                    )}
                 </List>
             </div>
         </div>
@@ -177,3 +187,19 @@ const Contents = ({ basicInfo, menuInfo, id }: PropsType) => {
 };
 
 export default Contents;
+
+{
+    /* <div className={styles.myreview}>
+<Text typography="st3">등록된 후기가 없습니다.</Text>
+<Button size="sm" role="round" onClick={() => router.push(`${id}/review`)}>
+    후기 작성하기
+</Button>
+</div> 
+
+<div className={styles.myreview}>
+<Text typography="st3">맛있어서 또 가고싶다</Text>
+<Button size="sm" role="none">
+    자세히 보기
+</Button>
+</div> */
+}

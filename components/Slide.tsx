@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation';
 type SlideProps = {
     children: ReactNode;
     styles?: React.CSSProperties;
-    // onClickButton?: () => void;
 };
 
 const Slide = ({ children, styles }: SlideProps) => {

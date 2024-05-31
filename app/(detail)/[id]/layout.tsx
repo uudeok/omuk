@@ -19,7 +19,10 @@ const SlideLayout = async ({ children, params: { id } }: PropsType) => {
     return (
         <Slide styles={{ width: '352px', left: '352px' }}>
             <div className={styles.header}>
-                <Text typography="t5">{basicInfo?.placenamefull}</Text>
+                <div className={styles.title}>
+                    <Text typography="t5">{basicInfo?.placenamefull}</Text>
+                </div>
+
                 <List>
                     <ListRow
                         left={<Text typography="st4">리뷰수</Text>}
@@ -31,7 +34,7 @@ const SlideLayout = async ({ children, params: { id } }: PropsType) => {
                     />
                 </List>
             </div>
-            {children}
+            <main className={styles.content}>{children}</main>
         </Slide>
     );
 };

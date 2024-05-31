@@ -54,8 +54,8 @@ export const buttonRoleStyle = css<{ role?: Role }>`
                 font-weight: normal;
 
                 &:hover {
-                    /* color: ${(props) => props.theme.palette.grey}; */
                     background-color: transparent;
+                    color: var(--mainColorDk);
                 }
             `;
         }
