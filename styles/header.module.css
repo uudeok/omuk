@@ -1,0 +1,18 @@
+.header {
+    /* border: 1px solid black; */
+    color: white;
+    padding: 5px;
+    /* color: var(--grey100); */
+}
+
+.header svg {
+    margin-right: 5px;
+}
+
+.mypage {
+    cursor: pointer;
+
+    &:hover {
+        color: var(--grey100);
+    }
+}
