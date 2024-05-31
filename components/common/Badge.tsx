@@ -1,6 +1,6 @@
 import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 
-import styles from '../../styles/Common.module.css';
+import styles from '../../styles/common.module.css';
 
 interface Props extends HTMLAttributes<HTMLSpanElement> {
     children: ReactNode;

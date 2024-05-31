@@ -1,9 +1,8 @@
 'use client';
 
 import Search from '../Search';
-import ButtonController from '../ButtonController';
 import Card from '../Card';
-import styles from '../../styles/SideBar.module.css';
+import styles from '../../styles/sideBar.module.css';
 
 const SideBar = () => {
     return (

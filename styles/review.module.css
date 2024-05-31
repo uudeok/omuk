@@ -1,15 +1,28 @@
-.review {
+.container {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
 }
 
-.review li {
+.content {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    min-height: 100%;
+    position: relative;
+}
+
+.container svg {
+    margin-right: 3px;
+}
+
+.container li {
     /* border: 1px solid red; */
     padding: 5px;
     margin: 10px;
 }
 
-.positive {
-    /* padding: 10px; */
+.positive,
+.negative {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -17,11 +30,14 @@
     cursor: pointer;
 }
 
-.negative {
-    /* padding: 10px; */
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 10px;
-    cursor: pointer;
+.rate input {
+    width: 50px;
+    margin-right: 5px;
+}
+
+.registerBtn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
 }
