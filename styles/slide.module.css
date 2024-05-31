@@ -29,13 +29,8 @@
     align-items: center;
 }
 
-.content {
-    /* overflow-y: auto; */
+/* .content {
+    overflow-y: auto;
     height: 100%;
-    /* border: 1px solid red; */
-    /* scrollbar-width: thin; */
-}
-
-/* .content::-webkit-scrollbar {
-    width: 10px;
+    scrollbar-width: thin;
 } */

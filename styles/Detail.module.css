@@ -1,3 +1,7 @@
+/* .container {
+    border: 2px solid red;
+} */
+
 .container svg {
     margin-right: 5px;
 }
@@ -120,6 +124,18 @@
 }
 
 .myreview {
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.myreview span {
+    padding: 5px;
+}
+
+.emptyReview {
     text-align: center;
     padding: 10px;
     margin: 30px auto;
