@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/Card.module.css';
+import styles from '../styles/card.module.css';
 import List, { ListBox } from './common/List';
 import Text from './common/Text';
 import { useRouter } from 'next/navigation';

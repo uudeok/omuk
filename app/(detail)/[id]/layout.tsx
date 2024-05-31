@@ -1,4 +1,4 @@
-import styles from '../../../styles/SlideLayout.module.css';
+import styles from '../../../styles/slideLayout.module.css';
 import Slide from '@/components/Slide';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { ReactNode } from 'react';

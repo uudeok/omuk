@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/Detail.module.css';
+import styles from '../styles/detail.module.css';
 import { useBoolean } from '@/hooks';
 import { makeAdress } from '@/shared/utils/detailUtil';
 import { useRouter } from 'next/navigation';

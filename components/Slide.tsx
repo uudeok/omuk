@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 import Button from './common/Button';
-import module from '../styles/Slide.module.css';
+import module from '../styles/slide.module.css';
 import { useRouter } from 'next/navigation';
 
 type SlideProps = {
