@@ -6,7 +6,6 @@ import List, { ListRow } from '@/components/common/List';
 import Text from '@/components/common/Text';
 import { FEEDBACK_LIST } from '@/constants/review';
 import Badge from '@/components/common/Badge';
-import Bookmark from './Bookmark';
 import Button from './common/Button';
 import FillStar from '../assets/fillStar.svg';
 import Pencil from '../assets/pencil.svg';
@@ -14,7 +13,7 @@ import Input from './common/Input';
 import InputBase from './common/InputBase';
 import { useInput } from '@/hooks';
 
-const Review = () => {
+const ReviewForm = () => {
     const [positiveList, setPositiveList] = useState<any>([]);
     const [negativeList, setNegativeList] = useState<any>([]);
     const [value, onChangeInput, isValid] = useInput({ maxLength: 50, minLength: 1 });
@@ -98,12 +97,6 @@ const Review = () => {
                         />
                     </List>
                 </div>
-
-                <div>
-                    <List>
-                        <ListRow left={<Text typography="t5">또 방문하고 싶다면?</Text>} right={<Bookmark />} />
-                    </List>
-                </div>
             </div>
             <div className={styles.registerBtn}>
                 <Button size="lg">등록하기</Button>
@@ -112,25 +105,4 @@ const Review = () => {
     );
 };
 
-export default Review;
-
-{
-    /* <div className={styles.rate}>
-<List>
-    <ListRow
-        left={
-            <div>
-                <FillStar width={20} />
-                <Text typography="t5">별점</Text>
-            </div>
-        }
-        right={
-            <div>
-                <input type="text" placeholder="0.0" />
-                /5.0
-            </div>
-        }
-    />
-</List>
-</div> */
-}
+export default ReviewForm;

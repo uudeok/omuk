@@ -8,7 +8,6 @@ const Detail = async ({ id }: { id: string }) => {
     return (
         <>
             <Contents basicInfo={basicInfo} menuInfo={menuInfo} id={id} />
-            <div>test</div>
         </>
     );
 };

@@ -1,8 +1,8 @@
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
-import Review from '@/components/Review';
+import ReviewForm from '@/components/ReviewForm';
 
 const ReviewPage = async ({ params: { id } }: { params: Params }) => {
-    return <Review />;
+    return <ReviewForm />;
 };
 
 export default ReviewPage;

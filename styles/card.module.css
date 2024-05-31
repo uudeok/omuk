@@ -1,5 +1,10 @@
-.title {
+.information {
     display: flex;
     flex-direction: column;
     line-height: 1.5;
+}
+
+.review {
+    padding: 10px;
+    border: 1px solid black;
 }
