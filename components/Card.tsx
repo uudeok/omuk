@@ -8,7 +8,6 @@ import { useMap } from '@/shared/context/MapProvider';
 import { useCategory, useInfiniteScroll } from '@/hooks';
 import { useEffect } from 'react';
 import { ResponseType } from '@/shared/types';
-import Comment from '../assets/comment.svg';
 
 const Card = () => {
     const router = useRouter();
