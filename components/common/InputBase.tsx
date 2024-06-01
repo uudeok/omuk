@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-const InputBase = styled.input<{ hasError?: boolean }>`
+const InputBase = styled.input<{ $hasError?: boolean }>`
     width: 100%;
     color: ${(props) => props.theme.colors.grey800};
     padding: 0 0 8px;
@@ -15,12 +15,10 @@ const InputBase = styled.input<{ hasError?: boolean }>`
     border: 0 none;
     cursor: pointer;
 
-    /* border-bottom: 2px solid ${(props) => props.theme.colors.grey300}; */
-
     :focus {
         border-bottom-color: ${(props) => props.theme.colors.mainColorlg};
     }
-    ${({ hasError }) => (hasError ? errorStyle : '')}
+    ${({ $hasError }) => ($hasError ? errorStyle : '')}
     transition: background-color 0.2s ease;
 `;
 

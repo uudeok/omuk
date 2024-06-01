@@ -21,7 +21,7 @@ const Input = ({ label, children, bottomText, ...props }: InputProps) => {
     const child = Children.only(children);
     const generatedId = useId();
     const id = child.props.id ?? generatedId;
-    const isError: boolean = child.props.hasError ?? false;
+    const isError: boolean = child.props.$hasError ?? false;
 
     return (
         <div className={styles.container} {...props}>

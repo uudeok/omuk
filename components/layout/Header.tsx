@@ -5,14 +5,19 @@ import { useRouter } from 'next/navigation';
 import List, { ListRow } from '../common/List';
 import Utensils from '../../assets/utensils.svg';
 import Text from '../common/Text';
+import { checkLogin } from '@/shared/utils/loginUtil';
 
 const Header = () => {
     const router = useRouter();
 
-    const handleMypage = () => {
-        /** 로그인 여부 확인 후 마이페이지 이동 */
-        // router.push('/mypage');
-        router.push('/login');
+    const redirectPage = async () => {
+        // 로그인 여부 확인 후 페이지 이동
+        const isLogin = await checkLogin();
+        if (isLogin) {
+            router.push('/mypage');
+        } else {
+            router.push('/login');
+        }
     };
 
     return (
@@ -26,7 +31,7 @@ const Header = () => {
                         </div>
                     }
                     right={
-                        <div className={styles.mypage} onClick={handleMypage}>
+                        <div className={styles.mypage} onClick={redirectPage}>
                             MyPage
                         </div>
                     }

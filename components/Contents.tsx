@@ -16,6 +16,7 @@ import Comment from '../assets/comment.svg';
 import Button from './common/Button';
 import Bookmark from './common/Bookmark';
 import Star from '../assets/star.svg';
+import { checkLogin } from '@/shared/utils/loginUtil';
 
 type PropsType = {
     basicInfo: any;
@@ -27,9 +28,14 @@ const Contents = ({ basicInfo, menuInfo, id }: PropsType) => {
     const router = useRouter();
     const { value: isShowMenu, toggle: setMenu } = useBoolean();
 
-    const handleReviewToggle = () => {
-        // 로그인 여부 확인 필요
-        router.push(`/${id}/review`);
+    const redirectPage = async () => {
+        // 로그인 여부 확인 후 페이지 이동
+        const isLogin = await checkLogin();
+        if (isLogin) {
+            router.push(`/${id}/review`);
+        } else {
+            router.push('/login');
+        }
     };
 
     return (
@@ -168,7 +174,7 @@ const Contents = ({ basicInfo, menuInfo, id }: PropsType) => {
                     {Number(id) % 2 === 0 ? (
                         <div className={styles.emptyReview}>
                             <Text typography="st3">등록된 후기가 없습니다.</Text>
-                            <Button size="sm" role="round" onClick={() => router.push(`${id}/review`)}>
+                            <Button size="sm" role="round" onClick={redirectPage}>
                                 후기 작성하기
                             </Button>
                         </div>

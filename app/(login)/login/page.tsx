@@ -4,7 +4,6 @@ import styles from '../../../styles/login.module.css';
 import Button from '@/components/common/Button';
 import Text from '@/components/common/Text';
 import { supabase } from '@/shared/lib/supabase';
-import Google from '../../../assets/google.svg';
 
 const LoginPage = () => {
     const handleLogin = async () => {
@@ -12,7 +11,7 @@ const LoginPage = () => {
             provider: 'kakao',
         });
         if (error) {
-            console.log('kakao login error :', error);
+            throw error.message;
         }
     };
 
