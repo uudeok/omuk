@@ -14,7 +14,7 @@ const Header = () => {
         // 로그인 여부 확인 후 페이지 이동
         const isLogin = await checkLogin();
         if (isLogin) {
-            router.push('/mypage');
+            router.push('/my');
         } else {
             router.push('/login');
         }

@@ -1,0 +1,16 @@
+.header {
+    background-color: var(--mainColor);
+    height: 75px;
+    z-index: 1000;
+    width: 100%;
+
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+}
+
+.header img {
+    border-radius: 50px;
+    margin-left: 5px;
+}
