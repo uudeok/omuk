@@ -11,7 +11,8 @@ const Header = () => {
 
     const handleMypage = () => {
         /** 로그인 여부 확인 후 마이페이지 이동 */
-        router.push('/mypage');
+        // router.push('/mypage');
+        router.push('/login');
     };
 
     return (

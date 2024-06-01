@@ -1,0 +1,17 @@
+.login {
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    gap: 5px;
+    line-height: 1.2;
+}
+
+.loginBtn {
+    padding: 7px;
+}
