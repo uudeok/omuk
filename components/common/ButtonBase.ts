@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export type Role = 'round' | 'kakao' | 'cancel' | 'none';
+export type Role = 'round' | 'kakao' | 'cancel' | 'none' | 'google';
 export type Size = 'sm' | 'lg';
 
 export const buttonRoleStyle = css<{ role?: Role }>`
@@ -13,9 +13,9 @@ export const buttonRoleStyle = css<{ role?: Role }>`
 
         if (role === 'kakao') {
             return css`
-                background: url(//storage.keepgrow.com/admin/campaign/20200611043456590.svg) no-repeat center;
+                background: url(//storage.keepgrow.com/admin/campaign/20200611043456590.svg) no-repeat;
                 background-position: 28px;
-                /* background-color: ${(props) => props.theme.palette.kakaoColor}; */
+                background-color: #fee600;
                 font-size: 1rem;
                 cursor: pointer;
                 margin-top: 1rem;
@@ -27,7 +27,27 @@ export const buttonRoleStyle = css<{ role?: Role }>`
                 padding: 1rem;
 
                 &:hover {
-                    /* background-color: ${(props) => props.theme.palette.kakaoColor}; */
+                    background-color: rgba(254, 230, 0, 0.8);
+                }
+            `;
+        }
+
+        if (role === 'google') {
+            return css`
+                background: url('/google.svg') no-repeat;
+                background-position: 18px center;
+                font-size: 1rem;
+                cursor: pointer;
+                margin-top: 1rem;
+                background-color: #f2f2f2;
+                width: 100%;
+                color: black;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                padding: 1rem;
+
+                &:hover {
+                    background-color: var(--whitesmoke);
                 }
             `;
         }
