@@ -87,7 +87,7 @@ const ReviewForm = () => {
                                 <Input bottomText="50자 이내로 작성해주세요">
                                     <InputBase
                                         onChange={onChangeInput}
-                                        hasError={!isValid}
+                                        $hasError={!isValid}
                                         placeholder="한줄평을 작성해주세요"
                                         value={value}
                                     />
