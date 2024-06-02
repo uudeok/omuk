@@ -3,9 +3,14 @@
 import { useMap } from '@/shared/context/MapProvider';
 
 const Map = () => {
-    const { mapEl } = useMap();
+    const { mapEl, isLoading } = useMap();
 
-    return <div ref={mapEl} style={{ width: '100%', height: '100%' }}></div>;
+    return (
+        <>
+            {isLoading && <span>Loading...</span>}
+            <div ref={mapEl} style={{ width: '100%', height: '100%' }}></div>
+        </>
+    );
 };
 
 export default Map;

@@ -11,7 +11,7 @@ import { ResponseType } from '@/shared/types';
 
 const Card = () => {
     const router = useRouter();
-    const { searchCategory } = useCategory();
+    const { searchCategory, isLoading, errorMsg } = useCategory();
     const { pagination, resData, map } = useMap();
 
     useEffect(() => {
@@ -27,10 +27,15 @@ const Card = () => {
         pagination?.gotoPage(pagination.current + 1);
     };
 
-    const { observerEl } = useInfiniteScroll({ callbackFn: fetchNextPage, hasNextPage: pagination?.hasNextPage! });
+    const { observerEl } = useInfiniteScroll({
+        callbackFn: fetchNextPage,
+        hasNextPage: pagination?.hasNextPage!,
+    });
 
     return (
         <List>
+            {isLoading && <span>음식점 리스트를 불러오고 있어요...</span>}
+            {errorMsg && <span>{errorMsg}</span>}
             {resData.map((res: ResponseType) => (
                 <ListBox
                     onClick={() => {
