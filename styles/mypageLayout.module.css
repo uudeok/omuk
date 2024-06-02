@@ -3,14 +3,26 @@
     height: 75px;
     z-index: 1000;
     width: 100%;
-
     display: flex;
-    justify-content: left;
-    align-items: center;
-    gap: 10px;
 }
 
 .header img {
     border-radius: 50px;
     margin-left: 5px;
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.logout {
+    padding: 7px;
+    cursor: pointer;
+}
+
+.logout span:hover {
+    color: var(--grey600);
 }

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useBoolean } from '@/hooks';
 import List, { ListRow } from './common/List';
 import Text from './common/Text';
-import { checkLogin } from '@/shared/utils/loginUtil';
+import { checkLogin } from '@/shared/utils/authUtil';
 import { makeAdress } from '@/shared/utils/detailUtil';
 import Hastag from '../assets/hashtag.svg';
 import Clock from '../assets/clock.svg';
