@@ -6,19 +6,22 @@
 
 import { useMap } from '@/shared/context/MapProvider';
 import { useGeoLocation } from './useGeoLocation';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useMarker } from './useMarker';
 
 export const useCategory = () => {
-    const { curLocation } = useGeoLocation();
+    const { curLocation, errorMsg } = useGeoLocation();
     const { setResData, setPagination } = useMap();
     const { addMarker } = useMarker();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const searchCategory = useCallback(() => {
         const { kakao } = window;
-        if (!curLocation || !kakao) return;
-        const ps = new kakao.maps.services.Places();
 
+        if (!curLocation || !kakao) return;
+
+        setIsLoading(true);
+        const ps = new kakao.maps.services.Places();
         const { latitude, longitude } = curLocation;
 
         ps.categorySearch(
@@ -31,6 +34,7 @@ export const useCategory = () => {
 
                     setResData((prev) => [...prev, ...result]);
                 }
+                setIsLoading(false);
             },
             {
                 location: new kakao.maps.LatLng(latitude, longitude),
@@ -38,5 +42,5 @@ export const useCategory = () => {
         );
     }, [curLocation, setResData, setPagination, addMarker]);
 
-    return { searchCategory };
+    return { searchCategory, isLoading, errorMsg };
 };

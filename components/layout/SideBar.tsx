@@ -6,16 +6,14 @@ import Header from './Header';
 
 const SideBar = () => {
     return (
-        <div className={styles.continaer}>
-            <div className={styles.layout}>
-                <div className={styles.search}>
-                    <Header />
-                    <Search />
-                    <Controller />
-                </div>
-
-                <Card />
+        <div className={styles.layout}>
+            <div className={styles.search}>
+                <Header />
+                <Search />
+                <Controller />
             </div>
+
+            <Card />
         </div>
     );
 };
