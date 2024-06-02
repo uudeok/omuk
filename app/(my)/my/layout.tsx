@@ -4,8 +4,7 @@ import { ReactNode } from 'react';
 import styles from '../../../styles/mypageLayout.module.css';
 import Slide from '@/components/Slide';
 import Text from '@/components/common/Text';
-
-import { useUserInfo } from '@/hooks/useUserInfo';
+import { useUserInfo } from '@/hooks';
 
 const MypageLayout = ({ children }: { children: ReactNode }) => {
     const userInfo = useUserInfo();

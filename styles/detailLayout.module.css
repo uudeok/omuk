@@ -45,5 +45,11 @@
 .content {
     margin-top: 60px;
     overflow-y: auto;
-    height: calc(100vh - 65px); /* Adjust based on the header height */
+    height: calc(100vh - 65px);
 }
+
+/* .content {
+    margin-top: 60px;
+    overflow-y: auto;
+    height: calc(100vh - 65px); 
+} */

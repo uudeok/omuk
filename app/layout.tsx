@@ -1,7 +1,7 @@
 import './global.css';
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import StyledComponent from '@/components/StyledComponent';
+import StyledProvider from '@/shared/context/StyledProvider';
 import MapProvider from '@/shared/context/MapProvider';
 import ReactQueryProvider from '@/shared/context/ReactQueryProvider';
 import SideBar from '@/components/layout/SideBar';
@@ -30,13 +30,13 @@ export default function RootLayout({
             </head>
             <body style={{ display: 'flex' }}>
                 <ReactQueryProvider>
-                    <StyledComponent>
+                    <StyledProvider>
                         <MapProvider>
                             <SideBar />
                             <Map />
                             {children}
                         </MapProvider>
-                    </StyledComponent>
+                    </StyledProvider>
                 </ReactQueryProvider>
             </body>
         </html>

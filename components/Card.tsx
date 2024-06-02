@@ -53,6 +53,7 @@ const Card = () => {
                     bottom={''}
                 />
             ))}
+
             <div ref={observerEl} />
         </List>
     );
