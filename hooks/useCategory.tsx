@@ -1,8 +1,6 @@
 'use client';
 
-/** 초기 진입시
- *  위치 기반 주변 음식점 검색 기능
- */
+/*  초기 진입시 위치 기반 주변 음식점 검색 기능  */
 
 import { useMap } from '@/shared/context/MapProvider';
 import { useGeoLocation } from './useGeoLocation';

@@ -1,4 +1,4 @@
-import styles from '../../../styles/slideLayout.module.css';
+import styles from '../../../styles/detailLayout.module.css';
 import Slide from '@/components/Slide';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { ReactNode } from 'react';
@@ -12,7 +12,7 @@ type PropsType = {
     params: Params;
 };
 
-const SlideLayout = async ({ children, params: { id } }: PropsType) => {
+const DetailLayout = async ({ children, params: { id } }: PropsType) => {
     const resData = await getDetail(id);
     const { basicInfo } = resData;
 
@@ -39,4 +39,4 @@ const SlideLayout = async ({ children, params: { id } }: PropsType) => {
     );
 };
 
-export default SlideLayout;
+export default DetailLayout;
