@@ -36,6 +36,7 @@ const Card = () => {
         <List>
             {isLoading && <span>음식점 리스트를 불러오고 있어요...</span>}
             {errorMsg && <span>{errorMsg}</span>}
+
             {resData.map((res: ResponseType) => (
                 <ListBox
                     onClick={() => {

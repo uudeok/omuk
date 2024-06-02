@@ -1,3 +1,5 @@
+'use client';
+
 import Search from '../Search';
 import Card from '../Card';
 import styles from '../../styles/sideBar.module.css';
