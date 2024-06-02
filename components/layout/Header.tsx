@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import List, { ListRow } from '../common/List';
 import Utensils from '../../assets/utensils.svg';
 import Text from '../common/Text';
-import { checkLogin } from '@/shared/utils/loginUtil';
+import { checkLogin } from '@/shared/utils/authUtil';
 
 const Header = () => {
     const router = useRouter();

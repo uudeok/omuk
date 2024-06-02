@@ -19,3 +19,7 @@ export const getUserInfo = async () => {
 
     localStorage.setItem('userInfo', JSON.stringify(userObject));
 };
+
+export const signOut = async () => {
+    await supabase.auth.signOut();
+};
