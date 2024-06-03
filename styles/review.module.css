@@ -29,15 +29,3 @@
     margin: 10px;
     cursor: pointer;
 }
-
-.rate input {
-    width: 50px;
-    margin-right: 5px;
-}
-
-.registerBtn {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-}

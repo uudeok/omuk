@@ -1,4 +1,4 @@
-import { FeedBackType } from '@/shared/types';
+import { FeedBackType, StarRateType } from '@/shared/types';
 
 export const FEEDBACK_LIST: FeedBackType[] = [
     {
@@ -40,19 +40,15 @@ export const FEEDBACK_LIST: FeedBackType[] = [
     },
 ];
 
-const feedback = [
-    {
-        item: [
-            {
-                id: 1,
-                label: '맛있어요',
-                selected: false,
-                restaurant_id: 1000, // 음식점 id 예를들어 폴렌 id : 27602012
-                user_id: 533, // 사용자 id
-                createdAt: '2024-05-30',
-                updatedAt: '2024-05-30',
-                type: 'positive',
-            },
-        ],
-    },
+export const STAR_RATE: StarRateType[] = [
+    { value: 5, isHalf: false },
+    { value: 4.5, isHalf: true },
+    { value: 4, isHalf: false },
+    { value: 3.5, isHalf: true },
+    { value: 3, isHalf: false },
+    { value: 2.5, isHalf: true },
+    { value: 2, isHalf: false },
+    { value: 1.5, isHalf: true },
+    { value: 1, isHalf: false },
+    { value: 0.5, isHalf: true },
 ];

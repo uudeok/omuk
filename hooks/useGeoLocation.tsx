@@ -52,7 +52,7 @@ export const useGeoLocation = () => {
                 });
             },
             (err) => showError(err),
-            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+            { enableHighAccuracy: true, maximumAge: 0 }
         );
     }, [showError]);
 

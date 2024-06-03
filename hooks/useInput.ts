@@ -1,21 +1,18 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { removeNonNumeric } from '@/shared/utils/stringUtils';
+import { removeNonNumeric, keepNumericAndDot } from '@/shared/utils/stringUtils';
+
+/* 간단한 유효성 검사 가능 type 에 따라 추가 로직 구현 가능 */
 
 interface Options {
+    type?: 'number' | 'string';
     initialValue?: string;
     maxLength?: number;
     minLength?: number;
-    type?: 'number' | 'string';
 }
 
 type returnType = [string, (e: React.ChangeEvent<HTMLInputElement>) => void, boolean];
-
-/**
- * 간단한 유효성 검사 가능
- * type 에 따라 추가 로직 구현 가능
- */
 
 export const useInput = (options?: Options): returnType => {
     const { initialValue = '', maxLength, minLength = 0, type = 'string' } = options || {};
@@ -24,10 +21,6 @@ export const useInput = (options?: Options): returnType => {
 
     const handleNumber = (receivedValue: string) => {
         let result: string = receivedValue;
-
-        if (type === 'number') {
-            result = removeNonNumeric(result);
-        }
 
         if (maxLength && result.length > maxLength) {
             result = result.slice(0, maxLength);
@@ -53,7 +46,7 @@ export const useInput = (options?: Options): returnType => {
 
         if (type === 'number') {
             handleNumber(removeNonNumeric(targetValue));
-        } else {
+        } else if (type === 'string') {
             handleString(targetValue);
         }
     };

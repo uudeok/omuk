@@ -1,0 +1,9 @@
+.rate {
+    display: flex;
+    text-align: center;
+    margin: 10px 0px;
+}
+
+.rate svg {
+    cursor: pointer;
+}

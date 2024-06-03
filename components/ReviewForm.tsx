@@ -12,23 +12,14 @@ import Pencil from '../assets/pencil.svg';
 import Input from './common/Input';
 import InputBase from './common/InputBase';
 import { useInput } from '@/hooks';
+import Rating from './common/Rating';
 
 const ReviewForm = () => {
-    const [positiveList, setPositiveList] = useState<any>([]);
-    const [negativeList, setNegativeList] = useState<any>([]);
     const [value, onChangeInput, isValid] = useInput({ maxLength: 50, minLength: 1 });
+    const [rate, setRate] = useState(0);
 
     const positiveFeedback = FEEDBACK_LIST.find((feedback) => feedback.type === 'positive')!;
     const negativeFeedback = FEEDBACK_LIST.find((feedback) => feedback.type === 'negative')!;
-
-    const handlePositiveReview = (id: number) => {
-        const updatedList = positiveFeedback.items.map((item) =>
-            item.id === id ? { ...item, selected: !item.selected } : { item }
-        );
-        setPositiveList(updatedList);
-    };
-
-    const handleNegativeReview = (id: number) => {};
 
     return (
         <div className={styles.container}>
@@ -37,22 +28,18 @@ const ReviewForm = () => {
                     <ListRow left={<Text typography="t5">이런 점이 좋아용!😁</Text>} right="" />
                     <div className={styles.positive}>
                         {positiveFeedback?.items.map((positive) => (
-                            <Badge key={positive.id} onClick={() => handlePositiveReview(positive.id)}>
-                                {positive.label}
-                            </Badge>
+                            <Badge key={positive.id}>{positive.label}</Badge>
                         ))}
                     </div>
                     <ListRow left={<Text typography="t5">이런 점이 아쉬워용!😅</Text>} right="" />
                     <div className={styles.negative}>
                         {negativeFeedback?.items.map((negative) => (
-                            <Badge key={negative.id} onClick={() => handleNegativeReview(negative.id)}>
-                                {negative.label}
-                            </Badge>
+                            <Badge key={negative.id}>{negative.label}</Badge>
                         ))}
                     </div>
                 </List>
 
-                <div className={styles.rate}>
+                <div>
                     <List>
                         <ListRow
                             left={
@@ -61,12 +48,7 @@ const ReviewForm = () => {
                                     <Text typography="t5">별점</Text>
                                 </div>
                             }
-                            right={
-                                <div>
-                                    <input type="text" placeholder="0.0" />
-                                    /5.0
-                                </div>
-                            }
+                            right={<Rating ratingIndex={rate} setRatingIndex={setRate} />}
                         />
                     </List>
                 </div>
@@ -106,3 +88,58 @@ const ReviewForm = () => {
 };
 
 export default ReviewForm;
+
+{
+    /* <div className={styles.rate}>
+<List>
+    <ListRow
+        left={
+            <div>
+                <FillStar width={20} />
+                <Text typography="t5">별점</Text>
+            </div>
+        }
+        right={
+            <div>
+                <input type="text" placeholder="0.0" />
+                /5.0
+            </div>
+        }
+    />
+</List>
+</div> */
+}
+
+/// 최신
+
+{
+    /* <div className={styles.rate}>
+<Input>
+    <InputBase placeholder="0.0" />
+</Input>
+<div className={styles.standard}>/5.0</div>
+</div> */
+}
+
+{
+    /* <div>
+<List>
+    <ListRow
+        left={
+            <div>
+                <FillStar width={20} />
+                <Text typography="t5">별점</Text>
+            </div>
+        }
+        right={
+            <div className={styles.rate}>
+                <Input>
+                    <InputBase placeholder="0.0" value={rate} onChange={onChangeRate} />
+                </Input>
+                <div>/5.0</div>
+            </div>
+        }
+    />
+</List>
+</div> */
+}
