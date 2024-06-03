@@ -73,3 +73,8 @@ export type FeedBackType = {
     type: 'positive' | 'negative';
     items: FeedBackItem[];
 };
+
+export type StarRateType = {
+    value: number;
+    isHalf: boolean;
+};
