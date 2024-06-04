@@ -1,4 +1,4 @@
-import { FeedBackType, StarRateType } from '@/shared/types';
+import { FeedBackType } from '@/shared/types';
 
 export const FEEDBACK_LIST: FeedBackType[] = [
     {
@@ -38,17 +38,4 @@ export const FEEDBACK_LIST: FeedBackType[] = [
             { id: 27, label: '찾아가기 어려워요', selected: false },
         ],
     },
-];
-
-export const STAR_RATE: StarRateType[] = [
-    { value: 5, isHalf: false },
-    { value: 4.5, isHalf: true },
-    { value: 4, isHalf: false },
-    { value: 3.5, isHalf: true },
-    { value: 3, isHalf: false },
-    { value: 2.5, isHalf: true },
-    { value: 2, isHalf: false },
-    { value: 1.5, isHalf: true },
-    { value: 1, isHalf: false },
-    { value: 0.5, isHalf: true },
 ];

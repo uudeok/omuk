@@ -16,7 +16,7 @@ import Rating from './common/Rating';
 
 const ReviewForm = () => {
     const [value, onChangeInput, isValid] = useInput({ maxLength: 50, minLength: 1 });
-    const [rate, setRate] = useState(0);
+    const [rate, setRate] = useState<number>(0);
 
     const positiveFeedback = FEEDBACK_LIST.find((feedback) => feedback.type === 'positive')!;
     const negativeFeedback = FEEDBACK_LIST.find((feedback) => feedback.type === 'negative')!;
@@ -88,58 +88,3 @@ const ReviewForm = () => {
 };
 
 export default ReviewForm;
-
-{
-    /* <div className={styles.rate}>
-<List>
-    <ListRow
-        left={
-            <div>
-                <FillStar width={20} />
-                <Text typography="t5">별점</Text>
-            </div>
-        }
-        right={
-            <div>
-                <input type="text" placeholder="0.0" />
-                /5.0
-            </div>
-        }
-    />
-</List>
-</div> */
-}
-
-/// 최신
-
-{
-    /* <div className={styles.rate}>
-<Input>
-    <InputBase placeholder="0.0" />
-</Input>
-<div className={styles.standard}>/5.0</div>
-</div> */
-}
-
-{
-    /* <div>
-<List>
-    <ListRow
-        left={
-            <div>
-                <FillStar width={20} />
-                <Text typography="t5">별점</Text>
-            </div>
-        }
-        right={
-            <div className={styles.rate}>
-                <Input>
-                    <InputBase placeholder="0.0" value={rate} onChange={onChangeRate} />
-                </Input>
-                <div>/5.0</div>
-            </div>
-        }
-    />
-</List>
-</div> */
-}

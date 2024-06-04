@@ -9,28 +9,30 @@ type RatingType = {
 };
 
 const Rating = ({ ratingIndex, setRatingIndex }: RatingType) => {
-    const ArrayIndexes = [1, 2, 3, 4, 5];
+    const rateArray = [1, 2, 3, 4, 5];
+
     return (
         <div className={styles.rate}>
-            {ArrayIndexes.map((arrayindex, index) =>
-                arrayindex <= ratingIndex ? (
+            {rateArray.map((rate, index) =>
+                rate <= ratingIndex ? (
                     <FillStar
                         width={25}
                         key={`rating_${index}`}
                         className={styles.fillStar}
-                        onClick={() => setRatingIndex(arrayindex)}
+                        onClick={() => setRatingIndex(rate)}
                     />
                 ) : (
                     <GreyStar
                         width={25}
                         key={`rating_${index}`}
                         className={styles.star}
-                        onClick={() => setRatingIndex(arrayindex)}
+                        onClick={() => setRatingIndex(rate)}
                     />
                 )
             )}
-            <p>
-                {/* {ratingIndex === 5
+
+            <p className={styles.evalue}>
+                {ratingIndex === 5
                     ? '아주 좋아요'
                     : ratingIndex === 4
                     ? '맘에 들어요'
@@ -38,7 +40,7 @@ const Rating = ({ ratingIndex, setRatingIndex }: RatingType) => {
                     ? '보통이에요'
                     : ratingIndex === 2
                     ? '그냥 그래요'
-                    : '별로에요'} */}
+                    : '별로에요'}
             </p>
         </div>
     );
