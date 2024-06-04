@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation';
 import styles from '../../../styles/mypageLayout.module.css';
 import Slide from '@/components/Slide';
 import Text from '@/components/common/Text';
-import { useUserInfo } from '@/hooks';
 import { signOut } from '@/shared/utils/authUtil';
+import { useUserInfo } from '@/hooks';
 
 const MypageLayout = ({ children }: { children: ReactNode }) => {
-    const userInfo = useUserInfo();
+    const { userInfo } = useUserInfo();
     const router = useRouter();
 
     const handleLogout = async () => {

@@ -14,10 +14,11 @@ import InputBase from './common/InputBase';
 import Rating from './common/Rating';
 import { FEEDBACK_LIST } from '@/constants/review';
 import { FeedBackItem } from '@/shared/types';
-import { supabase } from '@/shared/lib/supabase';
+import { useUserInfo } from '@/hooks';
 
-const ReviewForm = () => {
+const ReviewForm = ({ resId }: { resId: string }) => {
     const [value, onChangeInput, isValid] = useInput({ maxLength: 30, minLength: 2 });
+    const { userInfo } = useUserInfo();
     const [rate, setRate] = useState<number>(0);
     const [selectedPositives, setSelectedPositives] = useState<FeedBackItem[]>([]);
     const [selectedNegatives, setSelectedNegatives] = useState<FeedBackItem[]>([]);
@@ -36,23 +37,6 @@ const ReviewForm = () => {
 
     const isFormValid = () =>
         !isValid || rate === 0 || !value || selectedPositives.length === 0 || selectedNegatives.length === 0;
-
-    const handleSubmit = async () => {
-        // const { data, error } = await supabase.from('review')
-        //     .insert({
-        //         user_id:
-        //         res_id:
-        //         rate,
-        //         comment: value,
-        //         positive: selectedPositives.map((item) => item.value),
-        //         negative: selectedNegatives.map((item) => item.value),
-        //     });
-        // if (error) {
-        //     console.error('Error inserting data:', error);
-        // } else {
-        //     console.log('Data inserted successfully:', data);
-        // }
-    };
 
     return (
         <div className={styles.container}>
@@ -126,7 +110,7 @@ const ReviewForm = () => {
                 </div>
             </div>
             <div className={styles.registerBtn}>
-                <Button size="lg" disabled={isFormValid()} onClick={handleSubmit}>
+                <Button size="lg" disabled={isFormValid()}>
                     등록하기
                 </Button>
             </div>
