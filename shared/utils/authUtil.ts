@@ -1,5 +1,9 @@
 import { supabase } from '../lib/supabase';
 
+export const signOut = async () => {
+    await supabase.auth.signOut();
+};
+
 export const checkLogin = async () => {
     const authInfo = await supabase.auth.getSession();
 
@@ -17,9 +21,5 @@ export const getUserInfo = async () => {
     const { avatar_url, email, name } = userInfo;
     const userObject = { avatar_url, email, name };
 
-    localStorage.setItem('userInfo', JSON.stringify(userObject));
-};
-
-export const signOut = async () => {
-    await supabase.auth.signOut();
+    // localStorage.setItem('userInfo', JSON.stringify(userObject));
 };
