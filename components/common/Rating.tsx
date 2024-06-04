@@ -40,10 +40,25 @@ const Rating = ({ ratingIndex, setRatingIndex }: RatingType) => {
                     ? '보통이에요'
                     : ratingIndex === 2
                     ? '그냥 그래요'
-                    : '별로에요'}
+                    : ratingIndex === 1
+                    ? '별로예요'
+                    : '나의 별점'}
             </p>
         </div>
     );
 };
 
 export default Rating;
+
+// const { data, error } = await supabase
+//   .from('review')
+//   .update({ other_column: 'otherValue' })
+//   .eq('some_column', 'someValue')
+//   .select()
+
+// const { data, error } = await supabase
+//   .from('review')
+//   .insert([
+//     { some_column: 'someValue', other_column: 'otherValue' },
+//   ])
+//   .select()

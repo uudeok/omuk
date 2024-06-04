@@ -27,6 +27,7 @@ export default function RootLayout({
                     type="text/javascript"
                     src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer,drawing&autoload=false`}
                 />
+                <link rel="shortcut icon" href="#" />
             </head>
             <body style={{ display: 'flex' }}>
                 <ReactQueryProvider>
