@@ -66,6 +66,7 @@ export interface IMarker {
 export type FeedBackItem = {
     id: number;
     label: string;
+    value: string;
     selected: boolean;
 };
 

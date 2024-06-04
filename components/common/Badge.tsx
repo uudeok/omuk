@@ -1,5 +1,4 @@
 import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
-
 import styles from '../../styles/common.module.css';
 
 interface Props extends HTMLAttributes<HTMLSpanElement> {
@@ -9,9 +8,7 @@ interface Props extends HTMLAttributes<HTMLSpanElement> {
     isSelected?: boolean;
 }
 
-/* aria-label 의 역할이 뭐지 ?*/
-
-function Badge(props: Props) {
+const Badge = (props: Props) => {
     const { children, color, backgroundColor, isSelected, ...rest } = props;
 
     const selectedStyle = isSelected
@@ -23,6 +20,6 @@ function Badge(props: Props) {
             {children}
         </span>
     );
-}
+};
 
 export default Badge;
