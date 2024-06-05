@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useBoolean } from '@/hooks';
 import List, { ListRow } from './common/List';
 import Text from './common/Text';
-import { checkLogin } from '@/shared/utils/authUtil';
+import { useContext } from 'react';
+import { AuthContext } from '@/shared/context/AuthProvider';
 import { makeAdress } from '@/shared/utils/detailUtil';
 import Hastag from '../assets/hashtag.svg';
 import Clock from '../assets/clock.svg';
@@ -24,14 +25,15 @@ type Props = {
 };
 
 const Detail = ({ resData, id }: Props) => {
+    const session = useContext(AuthContext);
     const router = useRouter();
     const { basicInfo, menuInfo } = resData;
     const { value: isShowMenu, toggle: setMenu } = useBoolean();
 
     const redirectPage = async () => {
         // 로그인 여부 확인 후 페이지 이동
-        const isLogin = await checkLogin();
-        if (isLogin) {
+
+        if (session) {
             router.push(`/${id}/review`);
         } else {
             router.push('/login');

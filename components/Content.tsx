@@ -1,12 +1,13 @@
 'use client';
 
 import styles from '../styles/detail.module.css';
+import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import { useBoolean } from '@/hooks';
 import List, { ListRow } from './common/List';
 import Text from './common/Text';
-import { checkLogin } from '@/shared/utils/authUtil';
 import { makeAdress } from '@/shared/utils/detailUtil';
+import { AuthContext } from '@/shared/context/AuthProvider';
 import Hastag from '../assets/hashtag.svg';
 import Clock from '../assets/clock.svg';
 import Position from '../assets/position.svg';
@@ -24,6 +25,7 @@ type Props = {
 };
 
 const Content = ({ id, resData }: Props) => {
+    const session = useContext(AuthContext);
     const { basicInfo, menuInfo } = resData;
 
     const router = useRouter();
@@ -31,8 +33,8 @@ const Content = ({ id, resData }: Props) => {
 
     const redirectPage = async () => {
         // 로그인 여부 확인 후 페이지 이동
-        const isLogin = await checkLogin();
-        if (isLogin) {
+
+        if (session) {
             router.push(`/${id}/review`);
         } else {
             router.push('/login');

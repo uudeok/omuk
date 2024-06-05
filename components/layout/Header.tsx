@@ -5,15 +5,15 @@ import { useRouter } from 'next/navigation';
 import List, { ListRow } from '../common/List';
 import Utensils from '../../assets/utensils.svg';
 import Text from '../common/Text';
-import { checkLogin } from '@/shared/utils/authUtil';
+import { useContext } from 'react';
+import { AuthContext } from '@/shared/context/AuthProvider';
 
 const Header = () => {
     const router = useRouter();
+    const session = useContext(AuthContext);
 
     const redirectPage = async () => {
-        // 로그인 여부 확인 후 페이지 이동
-        const isLogin = await checkLogin();
-        if (isLogin) {
+        if (session) {
             router.push('/my');
         } else {
             router.push('/login');

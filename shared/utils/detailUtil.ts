@@ -1,4 +1,5 @@
 import { BasicInfoType } from '@/shared/types/data';
+import { supabase } from '../lib/supabase';
 
 type AddressType = BasicInfoType['basicInfo']['address'];
 type FeedbackType = BasicInfoType['basicInfo']['feedback'];
@@ -23,4 +24,19 @@ export const calculateScore = (feedback: FeedbackType) => {
     if (feedback.scorecnt === 0) return 0;
     const score = feedback.scoresum / feedback.scorecnt;
     return score.toFixed(1);
+};
+
+export const checkReview = async (user_id: string, res_id: string) => {
+    const { data: review, error } = await supabase
+        .from('review')
+        .select('*')
+        .eq('user_id', user_id)
+        .eq('res_id', res_id)
+        .single();
+
+    console.log(review);
+
+    if (error) {
+        throw new Error(error.message);
+    }
 };
