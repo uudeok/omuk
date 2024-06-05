@@ -4,21 +4,18 @@ import styles from '../../../styles/login.module.css';
 import Button from '@/components/common/Button';
 import Text from '@/components/common/Text';
 import { supabase } from '@/shared/lib/supabase';
+import { useRouter } from 'next/navigation';
 
 const LoginPage = () => {
+    const router = useRouter();
+
     const handleLogin = async () => {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'kakao',
         });
         if (error) {
-            throw error.message;
+            throw new Error(error.message);
         }
-    };
-
-    const checkLogin = async () => {
-        const authInfo = await supabase.auth.getSession();
-
-        console.log(authInfo);
     };
 
     return (
@@ -33,7 +30,7 @@ const LoginPage = () => {
                 <Button size="lg" role="kakao" onClick={handleLogin}>
                     카카오 로그인
                 </Button>
-                <Button size="lg" role="google" onClick={checkLogin}>
+                <Button size="lg" role="google">
                     구글로 로그인
                 </Button>
             </div>

@@ -1,5 +1,5 @@
 export const removeNonNumeric = (value: string): string => {
-    //
+    // 숫자 외 모두 제거
     return value.replace(/\D/g, '');
 };
 

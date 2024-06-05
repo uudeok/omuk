@@ -4,6 +4,7 @@ import Script from 'next/script';
 import StyledProvider from '@/shared/context/StyledProvider';
 import MapProvider from '@/shared/context/MapProvider';
 import ReactQueryProvider from '@/shared/context/ReactQueryProvider';
+import AuthProvider from '@/shared/context/AuthProvider';
 import SideBar from '@/components/layout/SideBar';
 import Map from '@/components/layout/Map';
 
@@ -27,16 +28,18 @@ export default function RootLayout({
                     type="text/javascript"
                     src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer,drawing&autoload=false`}
                 />
-                <link rel="shortcut icon" href="#" />
+                <link rel="shortcut icon" href="/" />
             </head>
             <body style={{ display: 'flex' }}>
                 <ReactQueryProvider>
                     <StyledProvider>
-                        <MapProvider>
-                            <SideBar />
-                            <Map />
-                            {children}
-                        </MapProvider>
+                        <AuthProvider>
+                            <MapProvider>
+                                <SideBar />
+                                <Map />
+                                {children}
+                            </MapProvider>
+                        </AuthProvider>
                     </StyledProvider>
                 </ReactQueryProvider>
             </body>
