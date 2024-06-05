@@ -12,13 +12,14 @@ import Pencil from '../assets/pencil.svg';
 import Input from './common/Input';
 import InputBase from './common/InputBase';
 import Rating from './common/Rating';
+import { useRouter } from 'next/navigation';
 import { FEEDBACK_LIST } from '@/constants/review';
 import { FeedBackItem } from '@/shared/types';
-import { useUserInfo } from '@/hooks';
+import { supabase } from '@/shared/lib/supabase';
 
 const ReviewForm = ({ resId }: { resId: string }) => {
+    const router = useRouter();
     const [value, onChangeInput, isValid] = useInput({ maxLength: 30, minLength: 2 });
-    const { userInfo } = useUserInfo();
     const [rate, setRate] = useState<number>(0);
     const [selectedPositives, setSelectedPositives] = useState<FeedBackItem[]>([]);
     const [selectedNegatives, setSelectedNegatives] = useState<FeedBackItem[]>([]);
@@ -35,8 +36,28 @@ const ReviewForm = ({ resId }: { resId: string }) => {
         );
     };
 
-    const isFormValid = () =>
-        !isValid || rate === 0 || !value || selectedPositives.length === 0 || selectedNegatives.length === 0;
+    const handleSubmitReview = async () => {
+        const { data, error } = await supabase
+            .from('review')
+            .insert([
+                {
+                    rate: rate,
+                    comment: value,
+                    positive: selectedPositives.map((item) => item.value),
+                    negative: selectedNegatives.map((item) => item.value),
+                    res_id: resId,
+                },
+            ])
+            .select();
+
+        if (error) {
+            throw new Error(error.message);
+        }
+        router.replace('/my');
+        return data;
+    };
+
+    const isFormValid = () => !isValid || rate === 0 || !value;
 
     return (
         <div className={styles.container}>
@@ -110,7 +131,7 @@ const ReviewForm = ({ resId }: { resId: string }) => {
                 </div>
             </div>
             <div className={styles.registerBtn}>
-                <Button size="lg" disabled={isFormValid()}>
+                <Button size="lg" disabled={isFormValid()} onClick={handleSubmitReview}>
                     등록하기
                 </Button>
             </div>

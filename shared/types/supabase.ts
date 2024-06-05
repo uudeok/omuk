@@ -54,37 +54,34 @@ export type Database = {
       }
       review: {
         Row: {
-          comment: string | null
+          comment: string
           created_at: string
           id: number
-          negative: string | null
-          positive: string | null
-          rate: number | null
+          negative: string[]
+          positive: string[]
+          rate: number
           res_id: string
-          updated_at: string | null
-          user_id: string | null
+          user_id: string
         }
         Insert: {
-          comment?: string | null
+          comment: string
           created_at?: string
           id?: number
-          negative?: string | null
-          positive?: string | null
-          rate?: number | null
+          negative: string[]
+          positive: string[]
+          rate: number
           res_id: string
-          updated_at?: string | null
-          user_id?: string | null
+          user_id?: string
         }
         Update: {
-          comment?: string | null
+          comment?: string
           created_at?: string
           id?: number
-          negative?: string | null
-          positive?: string | null
-          rate?: number | null
+          negative?: string[]
+          positive?: string[]
+          rate?: number
           res_id?: string
-          updated_at?: string | null
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {

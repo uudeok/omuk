@@ -24,9 +24,8 @@ type Props = {
 };
 
 const Detail = ({ resData, id }: Props) => {
-    const { basicInfo, menuInfo } = resData;
-
     const router = useRouter();
+    const { basicInfo, menuInfo } = resData;
     const { value: isShowMenu, toggle: setMenu } = useBoolean();
 
     const redirectPage = async () => {
