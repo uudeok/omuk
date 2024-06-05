@@ -21,10 +21,10 @@ import Star from '../assets/star.svg';
 
 type Props = {
     resData: any;
-    id: string;
+    res_id: string;
 };
 
-const Detail = ({ resData, id }: Props) => {
+const Detail = ({ resData, res_id }: Props) => {
     const session = useContext(AuthContext);
     const router = useRouter();
     const { basicInfo, menuInfo } = resData;
@@ -32,9 +32,8 @@ const Detail = ({ resData, id }: Props) => {
 
     const redirectPage = async () => {
         // 로그인 여부 확인 후 페이지 이동
-
         if (session) {
-            router.push(`/${id}/review`);
+            router.push(`/${res_id}/review`);
         } else {
             router.push('/login');
         }
@@ -173,7 +172,7 @@ const Detail = ({ resData, id }: Props) => {
                         right=""
                     />
 
-                    {Number(id) % 2 === 0 ? (
+                    {Number(res_id) % 2 === 0 ? (
                         <div className={styles.emptyReview}>
                             <Text typography="st3">등록된 후기가 없습니다.</Text>
                             <Button size="sm" role="round" onClick={redirectPage}>

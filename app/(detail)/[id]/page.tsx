@@ -16,7 +16,7 @@ const DetailPage = async ({ params: { id } }: Params) => {
 
     return (
         <Suspense fallback={<h1>Loading...</h1>}>
-            <Detail resData={resData} id={id} />
+            <Detail resData={resData} res_id={id} />
         </Suspense>
     );
 };
