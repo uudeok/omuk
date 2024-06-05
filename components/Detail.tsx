@@ -1,6 +1,7 @@
 'use client';
 
 import styles from '../styles/detail.module.css';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useBoolean } from '@/hooks';
 import List, { ListRow } from './common/List';
@@ -18,6 +19,7 @@ import Comment from '../assets/comment.svg';
 import Button from './common/Button';
 import Bookmark from './common/Bookmark';
 import Star from '../assets/star.svg';
+import useSupabaseData from '@/hooks/useSupabaseData';
 
 type Props = {
     resData: any;
@@ -29,6 +31,15 @@ const Detail = ({ resData, res_id }: Props) => {
     const router = useRouter();
     const { basicInfo, menuInfo } = resData;
     const { value: isShowMenu, toggle: setMenu } = useBoolean();
+    const { getReviewData } = useSupabaseData();
+
+    const { data, error } = useQuery({
+        queryKey: ['review', res_id],
+        queryFn: ({ queryKey }) => getReviewData(queryKey[1]),
+        enabled: !!session,
+    });
+
+    console.log('Data', data);
 
     const redirectPage = async () => {
         // 로그인 여부 확인 후 페이지 이동
