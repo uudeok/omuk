@@ -4,14 +4,15 @@ import styles from '../../../styles/login.module.css';
 import Button from '@/components/common/Button';
 import Text from '@/components/common/Text';
 import { supabase } from '@/shared/lib/supabase';
+import { Provider } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 
 const LoginPage = () => {
     const router = useRouter();
 
-    const handleLogin = async () => {
+    const handleLogin = async (provider: Provider) => {
         const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'kakao',
+            provider: provider,
         });
         if (error) {
             throw new Error(error.message);
@@ -27,10 +28,10 @@ const LoginPage = () => {
             </div>
 
             <div className={styles.loginBtn}>
-                <Button size="lg" role="kakao" onClick={handleLogin}>
+                <Button size="lg" role="kakao" onClick={() => handleLogin('kakao')}>
                     카카오 로그인
                 </Button>
-                <Button size="lg" role="google">
+                <Button size="lg" role="google" onClick={() => handleLogin('google')}>
                     구글로 로그인
                 </Button>
             </div>
