@@ -2,7 +2,7 @@ import { AuthContext } from '@/shared/context/AuthProvider';
 import { useCallback, useContext } from 'react';
 import { supabase } from '@/shared/lib/supabase';
 
-const useSupabaseData = () => {
+export const useReviewData = () => {
     const session = useContext(AuthContext);
 
     const getReviewData = useCallback(
@@ -19,6 +19,7 @@ const useSupabaseData = () => {
             if (error) {
                 throw new Error(error.message);
             }
+
             return data;
         },
         [session]
@@ -26,5 +27,3 @@ const useSupabaseData = () => {
 
     return { getReviewData };
 };
-
-export default useSupabaseData;

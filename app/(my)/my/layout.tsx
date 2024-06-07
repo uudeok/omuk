@@ -7,11 +7,9 @@ import Slide from '@/components/Slide';
 import Text from '@/components/common/Text';
 import { signOut } from '@/shared/utils/authUtil';
 import { useUserInfo } from '@/hooks';
-import useTest from '@/hooks/useSupabaseData';
 
 const MypageLayout = ({ children }: { children: ReactNode }) => {
     const { userInfo } = useUserInfo();
-
     const router = useRouter();
 
     const handleLogout = async () => {

@@ -54,31 +54,34 @@ export type Database = {
       }
       review: {
         Row: {
+          bookmark: boolean
           comment: string
           created_at: string
           id: number
-          negative: string[]
-          positive: string[]
+          negative: string[] | null
+          positive: string[] | null
           rate: number
           res_id: string
           user_id: string
         }
         Insert: {
+          bookmark?: boolean
           comment: string
           created_at?: string
           id?: number
-          negative: string[]
-          positive: string[]
+          negative?: string[] | null
+          positive?: string[] | null
           rate: number
           res_id: string
           user_id?: string
         }
         Update: {
+          bookmark?: boolean
           comment?: string
           created_at?: string
           id?: number
-          negative?: string[]
-          positive?: string[]
+          negative?: string[] | null
+          positive?: string[] | null
           rate?: number
           res_id?: string
           user_id?: string

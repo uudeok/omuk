@@ -67,15 +67,15 @@ export const buttonRoleStyle = css<{ role?: Role }>`
 
         if (role === 'none') {
             return css`
-                background-color: transparent;
-                color: black;
+                color: var(--mainColorDk);
                 font-size: 1rem;
                 justify-content: left;
-                font-weight: normal;
+                font-weight: bold;
+                background-color: transparent;
 
                 &:hover {
+                    color: var(--mainColorLg);
                     background-color: transparent;
-                    color: var(--mainColorDk);
                 }
             `;
         }
@@ -133,3 +133,18 @@ export const ButtonBase = styled.button<{ role?: Role; size: Size }>`
     ${buttonRoleStyle};
     ${buttonSizeStyle}
 `;
+
+// if (role === 'none') {
+//     return css`
+//         background-color: transparent;
+//         color: black;
+//         font-size: 1rem;
+//         justify-content: left;
+//         font-weight: normal;
+
+//         &:hover {
+//             background-color: transparent;
+//             color: var(--mainColorDk);
+//         }
+//     `;
+// }

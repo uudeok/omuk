@@ -6,9 +6,11 @@ import { useRouter } from 'next/navigation';
 import { useBoolean } from '@/hooks';
 import List, { ListRow } from './common/List';
 import Text from './common/Text';
+import Button from './common/Button';
 import { useContext } from 'react';
 import { AuthContext } from '@/shared/context/AuthProvider';
 import { makeAdress } from '@/shared/utils/detailUtil';
+import { getReviewData } from '@/services/reviewService';
 import Hastag from '../assets/hashtag.svg';
 import Clock from '../assets/clock.svg';
 import Position from '../assets/position.svg';
@@ -16,10 +18,8 @@ import Menu from '../assets/menu.svg';
 import ArrowRight from '../assets/right-arrow.svg';
 import Badge from './common/Badge';
 import Comment from '../assets/comment.svg';
-import Button from './common/Button';
 import Bookmark from './common/Bookmark';
 import Star from '../assets/star.svg';
-import useSupabaseData from '@/hooks/useSupabaseData';
 
 type Props = {
     resData: any;
@@ -31,15 +31,12 @@ const Detail = ({ resData, res_id }: Props) => {
     const router = useRouter();
     const { basicInfo, menuInfo } = resData;
     const { value: isShowMenu, toggle: setMenu } = useBoolean();
-    const { getReviewData } = useSupabaseData();
 
-    const { data, error } = useQuery({
+    const { data: reviewData, error } = useQuery({
         queryKey: ['review', res_id],
-        queryFn: ({ queryKey }) => getReviewData(queryKey[1]),
+        queryFn: () => getReviewData(res_id),
         enabled: !!session,
     });
-
-    console.log('Data', data);
 
     const redirectPage = async () => {
         // 로그인 여부 확인 후 페이지 이동
@@ -63,7 +60,7 @@ const Detail = ({ resData, res_id }: Props) => {
                                 <Text typography="st3">즐겨찾기</Text>
                             </div>
                         }
-                        right={<Bookmark />}
+                        right={<Bookmark res_id={res_id} />}
                     />
                 </List>
             </div>
@@ -182,19 +179,18 @@ const Detail = ({ resData, res_id }: Props) => {
                         }
                         right=""
                     />
-
-                    {Number(res_id) % 2 === 0 ? (
+                    {reviewData && reviewData.length > 0 ? (
+                        <div className={styles.myreview}>
+                            <Text typography="st3">{reviewData[0].comment}</Text>
+                            <Button size="sm" role="none" onClick={() => router.push(`/${res_id}/review`)}>
+                                자세히 보기
+                            </Button>
+                        </div>
+                    ) : (
                         <div className={styles.emptyReview}>
                             <Text typography="st3">등록된 후기가 없습니다.</Text>
                             <Button size="sm" role="round" onClick={redirectPage}>
                                 후기 작성하기
-                            </Button>
-                        </div>
-                    ) : (
-                        <div className={styles.myreview}>
-                            <Text typography="st3">맛있당</Text>
-                            <Button size="sm" role="none">
-                                자세히 보기
                             </Button>
                         </div>
                     )}
