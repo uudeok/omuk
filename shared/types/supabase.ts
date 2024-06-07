@@ -34,23 +34,34 @@ export type Database = {
   }
   public: {
     Tables: {
-      notice: {
+      bookmark: {
         Row: {
-          content: string | null
           created_at: string
           id: number
+          res_id: string
+          user_id: string | null
         }
         Insert: {
-          content?: string | null
           created_at?: string
           id?: number
+          res_id: string
+          user_id?: string | null
         }
         Update: {
-          content?: string | null
           created_at?: string
           id?: number
+          res_id?: string
+          user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "bookmark_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       review: {
         Row: {
