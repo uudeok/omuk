@@ -7,3 +7,4 @@ export { useInfiniteScroll } from './useInfiniteScroll';
 export { useRemove } from './useRemove';
 export { useMarker } from './useMarker';
 export { useUserInfo } from './useUserInfo';
+export { useReviewData } from './useReviewData';
