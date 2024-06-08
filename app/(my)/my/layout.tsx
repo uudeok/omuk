@@ -1,8 +1,8 @@
 'use client';
 
+import styles from '../../../styles/mypageLayout.module.css';
 import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from '../../../styles/mypageLayout.module.css';
 import Slide from '@/components/Slide';
 import Text from '@/components/common/Text';
 import { signOut } from '@/shared/utils/authUtil';
@@ -29,7 +29,7 @@ const MypageLayout = ({ children }: { children: ReactNode }) => {
                 </div>
             </div>
 
-            <main>{children}</main>
+            <main className={styles.content}>{children}</main>
         </Slide>
     );
 };

@@ -1,0 +1,12 @@
+.layout {
+    margin-top: 10px;
+}
+
+.bottom {
+    /* border: 1px solid red; */
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    line-height: 1.2;
+}

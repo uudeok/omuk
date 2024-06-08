@@ -26,3 +26,9 @@
 .logout span:hover {
     color: var(--grey600);
 }
+
+.content {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    height: calc(100vh - 75px);
+}
