@@ -21,7 +21,7 @@ export const getReviewData = async (res_id: string) => {
     return review;
 };
 
-type PostReviewType = {
+type ReviewType = {
     rate: number;
     value: string;
     positive: string[];
@@ -29,7 +29,7 @@ type PostReviewType = {
     res_id: string;
 };
 
-export const postReview = async ({ rate, value, positive, negative, res_id }: PostReviewType) => {
+export const postReview = async ({ rate, value, positive, negative, res_id }: ReviewType) => {
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
@@ -54,7 +54,7 @@ export const postReview = async ({ rate, value, positive, negative, res_id }: Po
     return review;
 };
 
-export const updateReview = async ({ rate, value, positive, negative, res_id }: PostReviewType) => {
+export const updateReview = async ({ rate, value, positive, negative, res_id }: ReviewType) => {
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
@@ -78,4 +78,20 @@ export const updateReview = async ({ rate, value, positive, negative, res_id }: 
     }
 
     return review;
+};
+
+export const getReviewList = async () => {
+    const { data } = await supabase.auth.getSession();
+
+    if (!data.session) return;
+
+    const user_id = data.session.user.id;
+
+    const { data: reviewList, error } = await supabase.from('review').select('*').eq('user_id', user_id).select();
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return reviewList;
 };
