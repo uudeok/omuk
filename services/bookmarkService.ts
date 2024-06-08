@@ -50,3 +50,19 @@ export const deleteBookmark = async (res_id: string) => {
 
     const { error } = await supabase.from('bookmark').delete().eq('user_id', user_id).eq('res_id', res_id).select();
 };
+
+export const getBookmarkList = async () => {
+    const { data } = await supabase.auth.getSession();
+
+    if (!data.session) return;
+
+    const user_id = data.session.user.id;
+
+    const { data: bookmarkList, error } = await supabase.from('bookmark').select('*').eq('user_id', user_id).select();
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return bookmarkList;
+};
