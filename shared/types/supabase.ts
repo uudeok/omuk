@@ -69,6 +69,7 @@ export type Database = {
           created_at: string
           id: number
           negative: string[] | null
+          placeName: string
           positive: string[] | null
           rate: number
           res_id: string
@@ -79,6 +80,7 @@ export type Database = {
           created_at?: string
           id?: number
           negative?: string[] | null
+          placeName: string
           positive?: string[] | null
           rate: number
           res_id: string
@@ -89,6 +91,7 @@ export type Database = {
           created_at?: string
           id?: number
           negative?: string[] | null
+          placeName?: string
           positive?: string[] | null
           rate?: number
           res_id?: string

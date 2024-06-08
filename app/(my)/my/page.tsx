@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import List, { ListRow } from '@/components/common/List';
 import styles from '../../../styles/mypage.module.css';
 import Text from '@/components/common/Text';
@@ -10,6 +11,8 @@ import { useQueries } from '@tanstack/react-query';
 import { getReviewList } from '@/services/reviewService';
 
 const MyPage = () => {
+    const router = useRouter();
+
     const fetchData = [
         { queryKey: 'bookmarkList', queryFn: getBookmarkList },
         { queryKey: 'reviewList', queryFn: getReviewList },
@@ -44,6 +47,7 @@ const MyPage = () => {
             <div className={styles.mypage}>
                 <List>
                     <ListRow
+                        onClick={() => router.push('/my/bookmark')}
                         left={
                             <div>
                                 <FillStar width={20} />
@@ -53,6 +57,7 @@ const MyPage = () => {
                         right={bookmarkList ? `${bookmarkList.length}개` : '아직 없어용'}
                     />
                     <ListRow
+                        onClick={() => router.push('/my/review')}
                         left={
                             <div>
                                 <Pencil width={20} />
@@ -70,15 +75,3 @@ const MyPage = () => {
 };
 
 export default MyPage;
-
-{
-    /* <ListRow
-left={
-    <div>
-        <FillHeart width={20} />
-        <Text typography="st3">방문한 음식점</Text>
-    </div>
-}
-right="5명"
-/> */
-}

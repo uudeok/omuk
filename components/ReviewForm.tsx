@@ -19,7 +19,7 @@ import { getReviewData, postReview, updateReview } from '@/services/reviewServic
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '@/shared/context/AuthProvider';
 
-const ReviewForm = ({ res_id }: { res_id: string }) => {
+const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) => {
     const session = useContext(AuthContext);
     const router = useRouter();
     const [value, onChangeInput, isValid, setValue] = useInput({ maxLength: 30, minLength: 2 });
@@ -54,6 +54,7 @@ const ReviewForm = ({ res_id }: { res_id: string }) => {
         );
     };
 
+    // review 생성
     const handlePostReview = async () => {
         await postReview({
             rate: rate,
@@ -61,19 +62,20 @@ const ReviewForm = ({ res_id }: { res_id: string }) => {
             positive: selectedPositives.map((item) => item.value),
             negative: selectedNegatives.map((item) => item.value),
             res_id: res_id,
+            placeName: resName,
         });
         router.replace(`/${res_id}`);
     };
 
+    // review 수정
     const handleUpdateReview = async () => {
-        console.log(value);
-        console.log(selectedPositives);
         await updateReview({
             rate: rate,
             value: value,
             positive: selectedPositives.map((item) => item.value),
             negative: selectedNegatives.map((item) => item.value),
             res_id: res_id,
+            placeName: resName,
         });
         router.replace(`/${res_id}`);
     };
