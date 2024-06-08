@@ -27,9 +27,10 @@ type ReviewType = {
     positive: string[];
     negative: string[];
     res_id: string;
+    placeName: string;
 };
 
-export const postReview = async ({ rate, value, positive, negative, res_id }: ReviewType) => {
+export const postReview = async ({ rate, value, positive, negative, res_id, placeName }: ReviewType) => {
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
@@ -43,6 +44,7 @@ export const postReview = async ({ rate, value, positive, negative, res_id }: Re
                 positive: positive,
                 negative: negative,
                 res_id: res_id,
+                placeName: placeName,
             },
         ])
         .select();
@@ -54,7 +56,7 @@ export const postReview = async ({ rate, value, positive, negative, res_id }: Re
     return review;
 };
 
-export const updateReview = async ({ rate, value, positive, negative, res_id }: ReviewType) => {
+export const updateReview = async ({ rate, value, positive, negative, res_id, placeName }: ReviewType) => {
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
@@ -69,6 +71,7 @@ export const updateReview = async ({ rate, value, positive, negative, res_id }: 
             positive: positive,
             negative: negative,
             res_id: res_id,
+            placeName: placeName,
         })
         .eq('user_id', user_id)
         .eq('res_id', res_id);
