@@ -19,6 +19,17 @@ const MyReviewList = () => {
         queryFn: () => getReviewList(),
     });
 
+    if (reviewList && reviewList.length === 0) {
+        return (
+            <div className={styles.nonReview}>
+                <Text typography="st2">아직 리뷰가 없어요😢</Text>
+                <Button size="sm" role="round" onClick={() => router.push('/')}>
+                    작성하러 가기
+                </Button>
+            </div>
+        );
+    }
+
     return (
         <div>
             <Button size="sm" role="none" onClick={() => router.back()}>

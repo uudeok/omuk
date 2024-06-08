@@ -7,7 +7,15 @@ import { getBookmark, deleteBookmark, postBookmark } from '@/services/bookmarkSe
 import { useContext } from 'react';
 import { AuthContext } from '@/shared/context/AuthProvider';
 
-const Bookmark = ({ res_id }: { res_id: string }) => {
+type BookmarkProps = {
+    res_id: string;
+    placeName: string;
+    commentCount: string;
+    score: string | 0;
+    category: string;
+};
+
+const Bookmark = ({ res_id, placeName, commentCount, score, category }: BookmarkProps) => {
     const queryClient = useQueryClient();
     const session = useContext(AuthContext);
 
