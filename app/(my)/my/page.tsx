@@ -1,8 +1,8 @@
 'use client';
 
+import styles from '../../../styles/mypage.module.css';
 import { useRouter } from 'next/navigation';
 import List, { ListRow } from '@/components/common/List';
-import styles from '../../../styles/mypage.module.css';
 import Text from '@/components/common/Text';
 import FillStar from '../../../assets/fillStar.svg';
 import Pencil from '../../../assets/pencil.svg';
