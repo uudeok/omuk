@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { removeNonNumeric, keepNumericAndDot } from '@/shared/utils/stringUtils';
+import { useState, useRef, Dispatch, SetStateAction } from 'react';
+import { removeNonNumeric } from '@/shared/utils/stringUtils';
 
 /* 간단한 유효성 검사 가능 type 에 따라 추가 로직 구현 가능 */
 
@@ -12,7 +12,7 @@ interface Options {
     minLength?: number;
 }
 
-type returnType = [string, (e: React.ChangeEvent<HTMLInputElement>) => void, boolean];
+type returnType = [string, (e: React.ChangeEvent<HTMLInputElement>) => void, boolean, Dispatch<SetStateAction<string>>];
 
 export const useInput = (options?: Options): returnType => {
     const { initialValue = '', maxLength, minLength = 0, type = 'string' } = options || {};
@@ -51,5 +51,5 @@ export const useInput = (options?: Options): returnType => {
         }
     };
 
-    return [value, onChangeInput, isValid.current];
+    return [value, onChangeInput, isValid.current, setValue];
 };

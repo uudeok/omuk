@@ -32,7 +32,7 @@ const Detail = ({ resData, res_id }: Props) => {
     const { basicInfo, menuInfo } = resData;
     const { value: isShowMenu, toggle: setMenu } = useBoolean();
 
-    const { data: reviewData, error } = useQuery({
+    const { data: reviewData } = useQuery({
         queryKey: ['review', res_id],
         queryFn: () => getReviewData(res_id),
         enabled: !!session,
@@ -179,9 +179,9 @@ const Detail = ({ resData, res_id }: Props) => {
                         }
                         right=""
                     />
-                    {reviewData && reviewData.length > 0 ? (
+                    {reviewData ? (
                         <div className={styles.myreview}>
-                            <Text typography="st3">{reviewData[0].comment}</Text>
+                            <Text typography="st3">{reviewData.comment}</Text>
                             <Button size="sm" role="none" onClick={() => router.push(`/${res_id}/review`)}>
                                 자세히 보기
                             </Button>

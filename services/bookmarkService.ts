@@ -20,6 +20,7 @@ export const getBookmark = async (res_id: string) => {
     return isBookmark;
 };
 
+// bookmark 생성하기
 export const postBookmark = async (res_id: string) => {
     const { data } = await supabase.auth.getSession();
 
@@ -32,9 +33,14 @@ export const postBookmark = async (res_id: string) => {
         .insert([{ res_id: res_id, user_id: user_id }])
         .select();
 
+    if (error) {
+        throw new Error(error.message);
+    }
+
     return bookmark;
 };
 
+// bookmark 지우기
 export const deleteBookmark = async (res_id: string) => {
     const { data } = await supabase.auth.getSession();
 

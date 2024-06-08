@@ -1,7 +1,7 @@
 'use client';
 
 import styles from '../styles/review.module.css';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import List, { ListRow } from '@/components/common/List';
 import { useInput } from '@/hooks';
 import Text from '@/components/common/Text';
@@ -15,17 +15,35 @@ import Rating from './common/Rating';
 import { useRouter } from 'next/navigation';
 import { FEEDBACK_LIST } from '@/constants/review';
 import { FeedBackItem } from '@/shared/types';
-import { supabase } from '@/shared/lib/supabase';
+import { getReviewData, postReview, updateReview } from '@/services/reviewService';
+import { useQuery } from '@tanstack/react-query';
+import { AuthContext } from '@/shared/context/AuthProvider';
 
-const ReviewForm = ({ resId }: { resId: string }) => {
+const ReviewForm = ({ res_id }: { res_id: string }) => {
+    const session = useContext(AuthContext);
     const router = useRouter();
-    const [value, onChangeInput, isValid] = useInput({ maxLength: 30, minLength: 2 });
+    const [value, onChangeInput, isValid, setValue] = useInput({ maxLength: 30, minLength: 2 });
     const [rate, setRate] = useState<number>(0);
     const [selectedPositives, setSelectedPositives] = useState<FeedBackItem[]>([]);
     const [selectedNegatives, setSelectedNegatives] = useState<FeedBackItem[]>([]);
 
     const positiveFeedback = FEEDBACK_LIST.find((feedback) => feedback.type === 'positive')!;
     const negativeFeedback = FEEDBACK_LIST.find((feedback) => feedback.type === 'negative')!;
+
+    const { data: reviewData } = useQuery({
+        queryKey: ['review', res_id],
+        queryFn: () => getReviewData(res_id),
+        enabled: !!session,
+    });
+
+    useEffect(() => {
+        if (reviewData) {
+            setRate(reviewData.rate);
+            setValue(reviewData.comment);
+            setSelectedPositives(positiveFeedback.items.filter((item) => reviewData.positive?.includes(item.value)));
+            setSelectedNegatives(negativeFeedback.items.filter((item) => reviewData.negative?.includes(item.value)));
+        }
+    }, [reviewData, setValue, positiveFeedback.items, negativeFeedback.items]);
 
     const handleFeedbackClick = (feedback: FeedBackItem, isPositive: boolean) => {
         const setSelected = isPositive ? setSelectedPositives : setSelectedNegatives;
@@ -36,25 +54,28 @@ const ReviewForm = ({ resId }: { resId: string }) => {
         );
     };
 
-    const handleSubmitReview = async () => {
-        const { data, error } = await supabase
-            .from('review')
-            .insert([
-                {
-                    rate: rate,
-                    comment: value,
-                    positive: selectedPositives.map((item) => item.value),
-                    negative: selectedNegatives.map((item) => item.value),
-                    res_id: resId,
-                },
-            ])
-            .select();
+    const handlePostReview = async () => {
+        await postReview({
+            rate: rate,
+            value: value,
+            positive: selectedPositives.map((item) => item.value),
+            negative: selectedNegatives.map((item) => item.value),
+            res_id: res_id,
+        });
+        router.replace(`/${res_id}`);
+    };
 
-        if (error) {
-            throw new Error(error.message);
-        }
-        router.replace('/my');
-        return data;
+    const handleUpdateReview = async () => {
+        console.log(value);
+        console.log(selectedPositives);
+        await updateReview({
+            rate: rate,
+            value: value,
+            positive: selectedPositives.map((item) => item.value),
+            negative: selectedNegatives.map((item) => item.value),
+            res_id: res_id,
+        });
+        router.replace(`/${res_id}`);
     };
 
     const isFormValid = () => !isValid || rate === 0 || !value;
@@ -130,10 +151,16 @@ const ReviewForm = ({ resId }: { resId: string }) => {
                     </List>
                 </div>
             </div>
-            <div className={styles.registerBtn}>
-                <Button size="lg" disabled={isFormValid()} onClick={handleSubmitReview}>
-                    등록하기
-                </Button>
+            <div>
+                {reviewData ? (
+                    <Button size="lg" onClick={handleUpdateReview}>
+                        수정하기
+                    </Button>
+                ) : (
+                    <Button size="lg" disabled={isFormValid()} onClick={handlePostReview}>
+                        등록하기
+                    </Button>
+                )}
             </div>
         </div>
     );

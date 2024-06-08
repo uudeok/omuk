@@ -65,7 +65,6 @@ export type Database = {
       }
       review: {
         Row: {
-          bookmark: boolean
           comment: string
           created_at: string
           id: number
@@ -76,7 +75,6 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          bookmark?: boolean
           comment: string
           created_at?: string
           id?: number
@@ -87,7 +85,6 @@ export type Database = {
           user_id?: string
         }
         Update: {
-          bookmark?: boolean
           comment?: string
           created_at?: string
           id?: number
