@@ -6,7 +6,7 @@ const InputBase = styled.input<{ $hasError?: boolean }>`
     padding: 0 0 8px;
 
     color: ${(props) => props.theme.colors.grey900};
-    height: 40px;
+    height: 30px;
     font-weight: 500;
     font-size: 20px;
     border-radius: 1px;

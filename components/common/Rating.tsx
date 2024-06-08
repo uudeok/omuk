@@ -49,16 +49,3 @@ const Rating = ({ ratingIndex, setRatingIndex }: RatingType) => {
 };
 
 export default Rating;
-
-// const { data, error } = await supabase
-//   .from('review')
-//   .update({ other_column: 'otherValue' })
-//   .eq('some_column', 'someValue')
-//   .select()
-
-// const { data, error } = await supabase
-//   .from('review')
-//   .insert([
-//     { some_column: 'someValue', other_column: 'otherValue' },
-//   ])
-//   .select()

@@ -25,7 +25,15 @@
 }
 
 .content {
-    margin-top: 60px;
+    margin-top: 75px;
     overflow-y: auto;
-    height: calc(100vh - 65px);
+    scrollbar-width: thin;
+    height: calc(100vh - 75px);
 }
+
+/* .content {
+    margin-top: 75px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    height: calc(100vh - 75px);
+} */
