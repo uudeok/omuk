@@ -32,6 +32,7 @@ const Detail = ({ resData, res_id }: Props) => {
     const { basicInfo, menuInfo } = resData;
     const { value: isShowMenu, toggle: setMenu } = useBoolean();
 
+    // bookmark props
     const placeName = basicInfo?.placenamefull;
     const commentCount = basicInfo?.feedback?.comntcnt;
     const score = calculateScore(basicInfo?.feedback);
@@ -65,15 +66,7 @@ const Detail = ({ resData, res_id }: Props) => {
                                 <Text typography="st3">즐겨찾기</Text>
                             </div>
                         }
-                        right={
-                            <Bookmark
-                                res_id={res_id}
-                                placeName={placeName}
-                                commentCount={commentCount}
-                                score={score}
-                                category={category}
-                            />
-                        }
+                        right={<Bookmark res_id={res_id} />}
                     />
                 </List>
             </div>

@@ -7,6 +7,7 @@ import ReactQueryProvider from '@/shared/context/ReactQueryProvider';
 import AuthProvider from '@/shared/context/AuthProvider';
 import SideBar from '@/components/layout/SideBar';
 import Map from '@/components/layout/Map';
+import Providers from '@/shared/context/QueryProvider';
 
 export const metadata: Metadata = {
     title: {
@@ -45,4 +46,54 @@ export default function RootLayout({
             </body>
         </html>
     );
+}
+
+{
+    /* <html lang="ko">
+<head>
+    <Script
+        type="text/javascript"
+        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer,drawing&autoload=false`}
+    />
+    <link rel="shortcut icon" href="/" />
+</head>
+<body style={{ display: 'flex' }}>
+   <ReactQueryProvider> 
+        <StyledProvider>
+            <AuthProvider>
+                <MapProvider>
+                    <SideBar />
+                    <Map />
+                    {children}
+                </MapProvider>
+            </AuthProvider>
+        </StyledProvider>
+    </ReactQueryProvider>
+</body>
+</html> */
+}
+
+{
+    /* <html lang="ko">
+<head>
+    <Script
+        type="text/javascript"
+        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer,drawing&autoload=false`}
+    />
+    <link rel="shortcut icon" href="/" />
+</head>
+<body style={{ display: 'flex' }}>
+    <Providers>
+        <StyledProvider>
+            <AuthProvider>
+                <MapProvider>
+                    <SideBar />
+                    <Map />
+                    {children}
+                </MapProvider>
+            </AuthProvider>
+        </StyledProvider>
+    </Providers>
+</body>
+</html> */
 }

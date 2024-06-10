@@ -1,0 +1,32 @@
+.layout {
+    margin-top: 10px;
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bottom div {
+    gap: 10px;
+    display: flex;
+}
+
+.bottom {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    line-height: 1.2;
+    /* border: 1px solid black; */
+}
+
+.nonReview {
+    margin: 50px auto;
+    width: 60%;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
