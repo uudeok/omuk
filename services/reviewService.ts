@@ -98,3 +98,44 @@ export const getReviewList = async () => {
 
     return reviewList;
 };
+
+// review 페이지네이션을 위한 정보
+export const getReviewPageInfo = async () => {
+    const { data } = await supabase.auth.getSession();
+
+    if (!data.session) return;
+
+    const user_id = data.session.user.id;
+
+    const { data: reviewData, error } = await supabase
+        .from('review')
+        .select('*')
+        .eq('user_id', user_id)
+        .explain({ format: 'json', analyze: true });
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return reviewData;
+};
+
+export const getReviewList2 = async (page: number, limit: number) => {
+    const { data } = await supabase.auth.getSession();
+
+    if (!data.session) return;
+
+    const user_id = data.session.user.id;
+
+    const { data: reviewList, error } = await supabase
+        .from('review')
+        .select('*')
+        .eq('user_id', user_id)
+        .range(page, page + limit - 1);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return reviewList;
+};

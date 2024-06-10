@@ -15,7 +15,7 @@ type BookmarkProps = {
     category: string;
 };
 
-const Bookmark = ({ res_id, placeName, commentCount, score, category }: BookmarkProps) => {
+const Bookmark = ({ res_id }: { res_id: string }) => {
     const queryClient = useQueryClient();
     const session = useContext(AuthContext);
 
