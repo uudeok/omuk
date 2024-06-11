@@ -14,7 +14,6 @@ const SideBar = () => {
                 <Search />
                 <Controller />
             </div>
-
             <Card />
         </div>
     );
