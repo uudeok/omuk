@@ -6,102 +6,42 @@ import Button from '@/components/common/Button';
 import List, { ListBox } from '@/components/common/List';
 import Text from '@/components/common/Text';
 import Rating from '@/components/common/Rating';
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { getUserReviewsPaginated, getReviewPageInfo } from '@/services/reviewService';
+import { usePagination } from '@/hooks/usePagination';
 import { useInfiniteScroll } from '@/hooks';
-import { supabase } from '@/shared/lib/supabase';
 
 const MyReviewList = () => {
     const router = useRouter();
-    const pageNumber = 15;
+    const pageSize = 15;
     const [rate, setRate] = useState<number>(0);
-    const [page, setPage] = useState<number>(0);
-    const [hasNextPage, setHasNextPage] = useState<boolean>(false);
-    const [reviewList, setReviewList] = useState<any>([]);
-    const [pagination, setPagination] = useState<any>();
 
-    const getReviewPageInfo = async () => {
-        const { data } = await supabase.auth.getSession();
-
-        if (!data.session) return;
-
-        const user_id = data.session.user.id;
-
-        const { data: pagination, error } = await supabase
-            .from('review')
-            .select('*')
-            .eq('user_id', user_id)
-            .explain({ format: 'json', analyze: true });
-
-        if (error) {
-            throw new Error(error.message);
-        }
-
-        setPagination(pagination);
-    };
-
-    useEffect(() => {
-        getReviewPageInfo();
-    }, []);
-
-    useEffect(() => {
-        if (Array.isArray(pagination)) {
-            const plan = pagination[0].Plan as any;
-            const totalRows = plan.Plans[0]['Actual Rows'];
-            const hasNextPage = page < totalRows - page;
-
-            setHasNextPage(hasNextPage);
-        }
-    }, [page, pagination]);
-
-    const getReviewList = async (page: number, limit: number) => {
-        const { data } = await supabase.auth.getSession();
-
-        if (!data.session) return;
-
-        const user_id = data.session.user.id;
-
-        const { data: reviewList, error } = await supabase
-            .from('review')
-            .select('*')
-            .eq('user_id', user_id)
-            .range(page, page + limit - 1);
-
-        if (error) {
-            throw new Error(error.message);
-        }
-
-        if (page === 0) {
-            setReviewList(reviewList);
-        } else {
-            setReviewList((prev: any) => [...prev, ...reviewList]);
-        }
-    };
-
-    useEffect(() => {
-        getReviewList(page, pageNumber);
-    }, [page]);
-
-    const loadNextPage = useCallback(() => {
-        setPage((prePage) => prePage + 15);
-    }, []);
-
-    const { observerEl } = useInfiniteScroll({
-        callbackFn: loadNextPage,
-        hasNextPage: hasNextPage,
+    const { data: pageInfo } = useQuery({
+        queryKey: ['reviewPagination'],
+        queryFn: () => getReviewPageInfo(),
     });
 
-    console.log(reviewList);
+    const { totalPage } = usePagination(pageInfo, pageSize);
 
-    if (reviewList && reviewList.length === 0) {
-        return (
-            <div className={styles.nonReview}>
-                <Text typography="st2">아직 리뷰가 없어요😢</Text>
-                <Button size="sm" role="round" onClick={() => router.push('/')}>
-                    작성하러 가기
-                </Button>
-            </div>
-        );
-    }
+    const { data, hasNextPage, fetchNextPage } = useInfiniteQuery({
+        queryKey: ['reviewList'],
+        queryFn: ({ pageParam }) => getUserReviewsPaginated(pageParam, pageSize),
+        initialPageParam: 1,
+        getNextPageParam: (lastPage, allPages, lastPageParam) => {
+            if (lastPageParam < totalPage) {
+                return lastPageParam + 1;
+            }
+        },
+        select: (data) => {
+            return data.pages.map((page) => page).flat();
+        },
+    });
+
+    const { observerEl } = useInfiniteScroll({
+        callbackFn: fetchNextPage,
+        hasNextPage: hasNextPage,
+    });
 
     return (
         <div>
@@ -111,7 +51,7 @@ const MyReviewList = () => {
 
             <div className={styles.layout}>
                 <List>
-                    {reviewList?.map((item: any) => (
+                    {data?.map((item: any) => (
                         <ListBox
                             key={item.id}
                             top={

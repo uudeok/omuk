@@ -16,6 +16,7 @@ const Header = () => {
     const redirectPage = async () => {
         if (session) {
             await signOut();
+            router.replace('/');
         } else {
             router.push('/login');
         }
