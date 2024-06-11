@@ -6,6 +6,7 @@ import { getDetail } from './page';
 import Text from '@/components/common/Text';
 import List, { ListRow } from '@/components/common/List';
 import { calculateScore } from '@/shared/utils/detailUtil';
+import Card from '@/components/Card';
 
 type PropsType = {
     children: ReactNode;
@@ -34,6 +35,7 @@ const DetailLayout = async ({ children, params: { id } }: PropsType) => {
                     />
                 </List>
             </div>
+
             <main className={styles.content}>{children}</main>
         </Slide>
     );

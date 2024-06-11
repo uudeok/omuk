@@ -2,8 +2,6 @@
 
 import styles from '../../../../styles/myreview.module.css';
 import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import { getReviewList, getReviewList2, getReviewPageInfo } from '@/services/reviewService';
 import Button from '@/components/common/Button';
 import List, { ListBox } from '@/components/common/List';
 import Text from '@/components/common/Text';
@@ -47,20 +45,15 @@ const MyReviewList = () => {
 
     useEffect(() => {
         if (Array.isArray(pagination)) {
-            console.log('page', page);
             const plan = pagination[0].Plan as any;
             const totalRows = plan.Plans[0]['Actual Rows'];
-            console.log('totalReview', totalRows);
-
-            const totalPages = Math.ceil(totalRows / pageNumber);
-            console.log('totalPages', totalPages);
             const hasNextPage = page < totalRows - page;
-            console.log('hasNextpage', hasNextPage);
+
             setHasNextPage(hasNextPage);
         }
     }, [page, pagination]);
 
-    const getReviewList2 = async (page: number, limit: number) => {
+    const getReviewList = async (page: number, limit: number) => {
         const { data } = await supabase.auth.getSession();
 
         if (!data.session) return;
@@ -85,11 +78,10 @@ const MyReviewList = () => {
     };
 
     useEffect(() => {
-        getReviewList2(page, pageNumber);
+        getReviewList(page, pageNumber);
     }, [page]);
 
     const loadNextPage = useCallback(() => {
-        console.log('실행');
         setPage((prePage) => prePage + 15);
     }, []);
 

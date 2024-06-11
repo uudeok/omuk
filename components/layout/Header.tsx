@@ -7,6 +7,7 @@ import Utensils from '../../assets/utensils.svg';
 import Text from '../common/Text';
 import { useContext } from 'react';
 import { AuthContext } from '@/shared/context/AuthProvider';
+import { signOut } from '@/shared/utils/authUtil';
 
 const Header = () => {
     const router = useRouter();
@@ -14,7 +15,7 @@ const Header = () => {
 
     const redirectPage = async () => {
         if (session) {
-            router.push('/my');
+            await signOut();
         } else {
             router.push('/login');
         }
@@ -32,7 +33,7 @@ const Header = () => {
                     }
                     right={
                         <div className={styles.mypage} onClick={redirectPage}>
-                            MyPage
+                            {session ? '로그아웃' : '로그인'}
                         </div>
                     }
                 />
@@ -42,3 +43,17 @@ const Header = () => {
 };
 
 export default Header;
+
+// const redirectPage = async () => {
+//     if (session) {
+//         router.push('/my');
+//     } else {
+//         router.push('/login');
+//     }
+// };
+
+// right={
+//     <div className={styles.mypage} onClick={redirectPage}>
+//         MyPage
+//     </div>
+// }
