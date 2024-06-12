@@ -1,11 +1,16 @@
 'use client';
 
+import Loading from '@/app/(detail)/[id]/loading';
 import styled from 'styled-components';
 
-const LoadingBar = () => {
+type Props = {
+    status?: string;
+};
+
+const LoadingBar = ({ status }: Props) => {
     return (
         <LoadingBarStyle>
-            <h1>Loading...</h1>
+            <h1>{status ? status : 'Loading...'}</h1>
             <span></span>
             <span></span>
             <span></span>

@@ -6,7 +6,6 @@ import { useInput, useKeyword } from '@/hooks';
 
 const Search = () => {
     const [value, onChangeInput] = useInput();
-
     const { searchKeyword } = useKeyword();
 
     const handleSubmitSearch = (e: React.FormEvent<HTMLFormElement>) => {
