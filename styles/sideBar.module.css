@@ -6,7 +6,7 @@
     height: 100%;
     background-color: white;
     border: 1px solid lightgrey;
-    width: 15%;
+    /* width: 15%; */
     min-width: 350px;
     overflow-y: auto;
     scrollbar-width: thin;
@@ -19,6 +19,7 @@
 
 .search {
     height: 250px;
-    padding: 20px 10px;
+    padding: 20px 15px;
+    /* padding: 20px 10px; */
     background-color: var(--mainColor);
 }

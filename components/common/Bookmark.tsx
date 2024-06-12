@@ -4,8 +4,9 @@ import NonBookmark from '../../assets/nonBookmark.svg';
 import FillBookmark from '../../assets/bookmark.svg';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getBookmark, deleteBookmark, postBookmark } from '@/services/bookmarkService';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '@/shared/context/AuthProvider';
+import Button from './Button';
 
 type BookmarkProps = {
     res_id: string;
@@ -17,6 +18,7 @@ type BookmarkProps = {
 const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
     const queryClient = useQueryClient();
     const session = useContext(AuthContext);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const { data: bookmark } = useQuery({
         queryKey: ['bookmark', res_id],
@@ -26,15 +28,20 @@ const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
 
     const mutation = useMutation({
         mutationFn: async () => {
-            if (bookmark && bookmark.length > 0) {
-                await deleteBookmark(res_id);
-            } else {
-                await postBookmark({
-                    res_id: res_id,
-                    category: category,
-                    placeName: placeName,
-                    address: address,
-                });
+            setIsLoading(true);
+            try {
+                if (bookmark && bookmark.length > 0) {
+                    await deleteBookmark(res_id);
+                } else {
+                    await postBookmark({
+                        res_id: res_id,
+                        category: category,
+                        placeName: placeName,
+                        address: address,
+                    });
+                }
+            } finally {
+                setIsLoading(false);
             }
         },
         onSuccess: () => {
@@ -54,3 +61,9 @@ const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
 };
 
 export default Bookmark;
+
+{
+    /* <Button size="sm" role="none" onClick={handleBookmarkToggle} disabled={isLoading}>
+{bookmark && bookmark.length > 0 ? <FillBookmark width={17} /> : <NonBookmark width={17} />}
+</Button> */
+}
