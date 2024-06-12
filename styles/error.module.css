@@ -1,0 +1,9 @@
+.error {
+    margin: 50px auto;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    gap: 10px;
+}

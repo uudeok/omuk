@@ -1,6 +1,5 @@
 'use client';
 
-import Loading from '@/app/(detail)/[id]/loading';
 import styled from 'styled-components';
 
 type Props = {
