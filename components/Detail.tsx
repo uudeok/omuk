@@ -9,7 +9,7 @@ import Text from './common/Text';
 import Button from './common/Button';
 import { useContext } from 'react';
 import { AuthContext } from '@/shared/context/AuthProvider';
-import { calculateScore, makeAdress } from '@/shared/utils/detailUtil';
+import { makeAdress } from '@/shared/utils/detailUtil';
 import { getReviewData } from '@/services/reviewService';
 import Hastag from '../assets/hashtag.svg';
 import Clock from '../assets/clock.svg';
@@ -34,9 +34,8 @@ const Detail = ({ resData, res_id }: Props) => {
 
     // bookmark props
     const placeName = basicInfo?.placenamefull;
-    const commentCount = basicInfo?.feedback?.comntcnt;
-    const score = calculateScore(basicInfo?.feedback);
     const category = basicInfo?.category.catename;
+    const address = makeAdress(basicInfo?.address);
 
     const { data: reviewData } = useQuery({
         queryKey: ['review', res_id],
@@ -66,7 +65,7 @@ const Detail = ({ resData, res_id }: Props) => {
                                 <Text typography="st3">즐겨찾기</Text>
                             </div>
                         }
-                        right={<Bookmark res_id={res_id} />}
+                        right={<Bookmark res_id={res_id} placeName={placeName} category={category} address={address} />}
                     />
                 </List>
             </div>

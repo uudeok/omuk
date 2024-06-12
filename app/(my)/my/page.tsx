@@ -51,7 +51,7 @@ const MyPage = () => {
                         left={
                             <div>
                                 <FillStar width={20} />
-                                <Text typography="st3">찜한 곳</Text>
+                                <Text typography="st3">즐겨찾기</Text>
                             </div>
                         }
                         right={bookmarkList ? `${bookmarkList.length}개` : '아직 없어용'}
