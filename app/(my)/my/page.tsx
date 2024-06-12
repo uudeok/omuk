@@ -9,6 +9,7 @@ import Pencil from '../../../assets/pencil.svg';
 import { getBookmarkList } from '@/services/bookmarkService';
 import { useQueries } from '@tanstack/react-query';
 import { getReviewList } from '@/services/reviewService';
+import LoadingBar from '@/components/common/LoadingBar';
 
 const MyPage = () => {
     const router = useRouter();
@@ -31,7 +32,7 @@ const MyPage = () => {
         },
     });
 
-    if (combinedQueries.pending) return <span>Loading....</span>;
+    if (combinedQueries.pending) return <LoadingBar />;
 
     const [bookmarkList, reviewList] = combinedQueries.data;
 
