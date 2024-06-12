@@ -36,20 +36,29 @@ export type Database = {
     Tables: {
       bookmark: {
         Row: {
+          address: string | null
+          category: string | null
           created_at: string
           id: number
+          placeName: string | null
           res_id: string
           user_id: string | null
         }
         Insert: {
+          address?: string | null
+          category?: string | null
           created_at?: string
           id?: number
+          placeName?: string | null
           res_id: string
           user_id?: string | null
         }
         Update: {
+          address?: string | null
+          category?: string | null
           created_at?: string
           id?: number
+          placeName?: string | null
           res_id?: string
           user_id?: string | null
         }

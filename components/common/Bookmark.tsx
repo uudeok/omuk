@@ -10,12 +10,11 @@ import { AuthContext } from '@/shared/context/AuthProvider';
 type BookmarkProps = {
     res_id: string;
     placeName: string;
-    commentCount: string;
-    score: string | 0;
     category: string;
+    address: string | undefined;
 };
 
-const Bookmark = ({ res_id }: { res_id: string }) => {
+const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
     const queryClient = useQueryClient();
     const session = useContext(AuthContext);
 
@@ -30,7 +29,12 @@ const Bookmark = ({ res_id }: { res_id: string }) => {
             if (bookmark && bookmark.length > 0) {
                 await deleteBookmark(res_id);
             } else {
-                await postBookmark(res_id);
+                await postBookmark({
+                    res_id: res_id,
+                    category: category,
+                    placeName: placeName,
+                    address: address,
+                });
             }
         },
         onSuccess: () => {

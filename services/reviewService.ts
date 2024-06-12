@@ -132,8 +132,6 @@ export const getUserReviewsPaginated = async (pageParam: number, pageSize: numbe
 
     const user_id = data.session.user.id;
 
-    console.log('pageParam', pageParam);
-
     const { data: reviewList, error } = await supabase
         .from('review')
         .select('*')

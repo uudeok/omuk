@@ -6,20 +6,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-.bottom div {
-    gap: 10px;
-    display: flex;
-}
-
-.bottom {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    line-height: 1.2;
-    /* border: 1px solid black; */
+    padding: 5px;
 }
 
 .nonReview {
@@ -29,4 +16,10 @@
     display: flex;
     flex-direction: column;
     text-align: center;
+}
+
+.bottom button {
+    display: flex;
+    justify-content: right;
+    margin-top: 5px;
 }

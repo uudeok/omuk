@@ -24,7 +24,12 @@ const MyReviewList = () => {
 
     const { totalPage } = usePagination(pageInfo, pageSize);
 
-    const { data, hasNextPage, fetchNextPage } = useInfiniteQuery({
+    const {
+        data: reviewList,
+        hasNextPage,
+        fetchNextPage,
+        isFetchingNextPage,
+    } = useInfiniteQuery({
         queryKey: ['reviewList'],
         queryFn: ({ pageParam }) => getUserReviewsPaginated(pageParam, pageSize),
         initialPageParam: 1,
@@ -34,7 +39,7 @@ const MyReviewList = () => {
             }
         },
         select: (data) => {
-            return data.pages.map((page) => page).flat();
+            return data.pages.flat();
         },
     });
 
@@ -50,12 +55,17 @@ const MyReviewList = () => {
             </Button>
 
             <div className={styles.layout}>
+                {reviewList?.length === 0 && (
+                    <div className={styles.nonReview}>
+                        <Text typography="st3">작성한 리뷰가 없어요🥲</Text>
+                    </div>
+                )}
                 <List>
-                    {data?.map((item: any) => (
+                    {reviewList?.map((item: any) => (
                         <ListBox
                             key={item.id}
                             top={
-                                <div>
+                                <div className={styles.top}>
                                     <Text typography="t4">{item.placeName}</Text>
                                     <Rating ratingIndex={item.rate} setRatingIndex={setRate} />
                                 </div>
@@ -72,6 +82,7 @@ const MyReviewList = () => {
                     ))}
                 </List>
             </div>
+
             <div ref={observerEl} />
         </div>
     );
