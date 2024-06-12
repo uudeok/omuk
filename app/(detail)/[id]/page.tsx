@@ -1,6 +1,7 @@
-import { Suspense } from 'react';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import Detail from '@/components/Detail';
+import styles from '../../../styles/test.module.css';
+import LoadingBar from '@/components/common/LoadingBar';
 
 export const getDetail = async (id: string) => {
     const response = await fetch(`https://place.map.kakao.com/m/main/v/${id}/`);
@@ -14,11 +15,7 @@ export const getDetail = async (id: string) => {
 const DetailPage = async ({ params: { id } }: Params) => {
     const resData = await getDetail(id);
 
-    return (
-        <Suspense fallback={<h1>Loading...</h1>}>
-            <Detail resData={resData} res_id={id} />
-        </Suspense>
-    );
+    return <Detail resData={resData} res_id={id} />;
 };
 
 export default DetailPage;
