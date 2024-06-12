@@ -20,6 +20,7 @@ import Badge from './common/Badge';
 import Comment from '../assets/comment.svg';
 import Bookmark from './common/Bookmark';
 import Star from '../assets/star.svg';
+import LoadingBar from './common/LoadingBar';
 
 type Props = {
     resData: any;
@@ -37,7 +38,7 @@ const Detail = ({ resData, res_id }: Props) => {
     const category = basicInfo?.category.catename;
     const address = makeAdress(basicInfo?.address);
 
-    const { data: reviewData } = useQuery({
+    const { data: reviewData, isLoading } = useQuery({
         queryKey: ['review', res_id],
         queryFn: () => getReviewData(res_id),
         enabled: !!session,
@@ -51,6 +52,8 @@ const Detail = ({ resData, res_id }: Props) => {
             router.push('/login');
         }
     };
+
+    console.log(reviewData);
 
     return (
         <div className={styles.container}>
@@ -191,6 +194,8 @@ const Detail = ({ resData, res_id }: Props) => {
                                 자세히 보기
                             </Button>
                         </div>
+                    ) : isLoading ? (
+                        <LoadingBar status="리뷰 찾는 중" />
                     ) : (
                         <div className={styles.emptyReview}>
                             <Text typography="st3">등록된 후기가 없습니다.</Text>
