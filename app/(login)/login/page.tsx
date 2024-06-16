@@ -3,9 +3,9 @@
 import styles from '../../../styles/login.module.css';
 import Button from '@/components/common/Button';
 import Text from '@/components/common/Text';
-import { supabase } from '@/shared/lib/supabase';
 import { Provider } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
+import { supabase } from '@/shared/lib/supabase';
 
 const LoginPage = () => {
     const router = useRouter();
