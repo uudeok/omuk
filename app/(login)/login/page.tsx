@@ -5,15 +5,25 @@ import Button from '@/components/common/Button';
 import Text from '@/components/common/Text';
 import { Provider } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/shared/lib/supabase';
+// import { supabase } from '@/shared/lib/supabase';
+import { redirect } from 'next/navigation';
+import { createClient } from '@/shared/lib/supabase/brower-client';
 
-const LoginPage = () => {
-    const router = useRouter();
+const LoginPage = (props: { nextUrl?: string }) => {
+    const supabase = createClient();
 
     const handleLogin = async (provider: Provider) => {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: provider,
+            options: {
+                redirectTo: `${location.origin}/auth/callback?next=${props.nextUrl || ''}`,
+            },
         });
+
+        if (data.url) {
+            redirect(data.url);
+        }
+
         if (error) {
             throw new Error(error.message);
         }
@@ -40,3 +50,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+// options: {
+//     redirectTo: `${location.origin}/auth/callback?next=${props.nextUrl || ''}`,
+// },

@@ -1,7 +1,9 @@
-import { supabase } from '@/shared/lib/supabase';
+// import { supabase } from '@/shared/lib/supabase';
+import { createClient } from '@/shared/lib/supabase/brower-client';
 
 // 특정 음식점 리뷰 데이터 가져오기
 export const getReviewData = async (res_id: string) => {
+    const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
@@ -33,6 +35,7 @@ type ReviewType = {
 
 // 리뷰 작성
 export const postReview = async ({ rate, value, positive, negative, res_id, placeName }: ReviewType) => {
+    const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
@@ -60,6 +63,7 @@ export const postReview = async ({ rate, value, positive, negative, res_id, plac
 
 // 리뷰 수정
 export const updateReview = async ({ rate, value, positive, negative, res_id, placeName }: ReviewType) => {
+    const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
@@ -88,6 +92,7 @@ export const updateReview = async ({ rate, value, positive, negative, res_id, pl
 
 // user_id 로 작성한 모든 리뷰 가져오기 >  총 리뷰 갯수 확인용 수정 필요
 export const getReviewList = async () => {
+    const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
@@ -105,6 +110,7 @@ export const getReviewList = async () => {
 
 // review 페이지네이션을 위한 정보
 export const getReviewPageInfo = async () => {
+    const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
@@ -126,6 +132,7 @@ export const getReviewPageInfo = async () => {
 
 // 사용자에 대한 리뷰 목록을 페이지 단위로 가져오기
 export const getUserReviewsPaginated = async (pageParam: number, pageSize: number) => {
+    const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;

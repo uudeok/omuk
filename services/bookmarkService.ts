@@ -1,8 +1,11 @@
-import { supabase } from '@/shared/lib/supabase';
+// import { supabase } from '@/shared/lib/supabase';
+import { createClient } from '@/shared/lib/supabase/brower-client';
 
 // bookmark 특정 음식점의 북마크 데이터 가져오기
 export const getBookmark = async (res_id: string) => {
+    const supabase = createClient();
     const { data } = await supabase.auth.getSession();
+    console.log(data);
     if (!data.session) return;
 
     const user_id = data.session.user.id;
@@ -29,6 +32,7 @@ type BookmarkType = {
 
 // bookmark 생성하기
 export const postBookmark = async ({ res_id, category, address, placeName }: BookmarkType) => {
+    const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
@@ -57,6 +61,7 @@ export const postBookmark = async ({ res_id, category, address, placeName }: Boo
 
 // bookmark 지우기
 export const deleteBookmark = async (res_id: string) => {
+    const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
@@ -68,6 +73,7 @@ export const deleteBookmark = async (res_id: string) => {
 
 // bookmark 유저 북마크 리스트 가져오기
 export const getBookmarkList = async () => {
+    const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
@@ -85,6 +91,7 @@ export const getBookmarkList = async () => {
 
 // bookmark 페이지네이션을 위한 정보
 export const getBookmarkPageInfo = async () => {
+    const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
@@ -106,6 +113,7 @@ export const getBookmarkPageInfo = async () => {
 
 // // 사용자에 대한 북마크 목록을 페이지 단위로 가져오기
 export const getUserBookmarksPaginated = async (pageParam: number, pageSize: number) => {
+    const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;

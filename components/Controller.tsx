@@ -9,6 +9,7 @@ import { AuthContext } from '@/shared/context/AuthProvider';
 const Controller = () => {
     const router = useRouter();
     const session = useContext(AuthContext);
+    console.log('session', session);
 
     const redirectPage = (param: string) => {
         if (session) {

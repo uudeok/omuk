@@ -5,18 +5,22 @@ import { useRouter } from 'next/navigation';
 import List, { ListRow } from '../common/List';
 import Utensils from '../../assets/utensils.svg';
 import Text from '../common/Text';
+import { signOut } from '@/shared/utils/authUtil';
+import { Session } from '@supabase/supabase-js';
 import { useContext } from 'react';
 import { AuthContext } from '@/shared/context/AuthProvider';
-import { signOut } from '@/shared/utils/authUtil';
 
 const Header = () => {
     const router = useRouter();
+
+    // console.log('header session', session);
+
     const session = useContext(AuthContext);
 
     const redirectPage = async () => {
         if (session) {
             await signOut();
-            router.replace('/');
+            window.location.href = '/';
         } else {
             router.push('/login');
         }
@@ -44,6 +48,8 @@ const Header = () => {
 };
 
 export default Header;
+
+// const Header = ({ session }: { session: Session | null }) => {
 
 // const redirectPage = async () => {
 //     if (session) {
