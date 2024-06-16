@@ -4,10 +4,11 @@ import styles from '../../../styles/mypageLayout.module.css';
 import { ReactNode } from 'react';
 import Slide from '@/components/Slide';
 import Text from '@/components/common/Text';
-import { useUserInfo } from '@/hooks';
+import { useSession } from '@/hooks/useSession';
 
 const MypageLayout = ({ children }: { children: ReactNode }) => {
-    const { userInfo } = useUserInfo();
+    const session = useSession();
+    const userInfo = session?.user.user_metadata;
 
     return (
         <Slide styles={{ width: '352px', left: '352px' }}>

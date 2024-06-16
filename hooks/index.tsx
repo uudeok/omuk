@@ -6,5 +6,5 @@ export { useGeoLocation } from './useGeoLocation';
 export { useInfiniteScroll } from './useInfiniteScroll';
 export { useRemove } from './useRemove';
 export { useMarker } from './useMarker';
-export { useUserInfo } from './useUserInfo';
-export { useReviewData } from './useReviewData';
+export { usePagination } from './usePagination';
+export { useSession } from './useSession';
