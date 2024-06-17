@@ -1,4 +1,4 @@
-import { FeedBackType } from '@/shared/types';
+import { CompanionsType, FeedBackType } from '@/shared/types';
 
 export const FEEDBACK_LIST2 = [
     {
@@ -78,4 +78,13 @@ export const FEEDBACK_LIST: FeedBackType[] = [
             { id: 27, label: '찾아가기 어려워요', value: 'hard_to_find', selected: false },
         ],
     },
+];
+
+export const COMPANIONS: CompanionsType[] = [
+    { key: 'parents', value: '부모님' },
+    { key: 'lover', value: '애인' },
+    { key: 'friends', value: '친구' },
+    { key: 'alone', value: '혼자' },
+    { key: 'pet', value: '반려동물' },
+    { key: 'else', value: '기타' },
 ];

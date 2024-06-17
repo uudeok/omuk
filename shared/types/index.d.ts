@@ -89,3 +89,8 @@ export type UserInfoType = {
     user_id: string;
     user_name: string;
 };
+
+export type CompanionsType = {
+    key: string;
+    value: string;
+};

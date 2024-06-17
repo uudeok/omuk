@@ -22,6 +22,29 @@
     margin: 10px;
 }
 
+.companions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.date {
+    cursor: pointer;
+    padding: 7px;
+    border-radius: 15px;
+    background-color: var(--mainColor);
+}
+
+.date span {
+    font-weight: bold;
+}
+
+.date:hover {
+    background-color: var(--mainColorLg);
+}
+
 .positive,
 .negative {
     display: flex;
@@ -31,17 +54,10 @@
     cursor: pointer;
 }
 
-/* .registerBtn {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-} */
+.comment {
+    padding: 7px;
+}
 
-/* 
-.content {
-     overflow-y: auto;
-    scrollbar-width: thin;
-    min-height: 100%;
-    position: relative; 
-} */
+.comment input {
+    box-sizing: border-box;
+}

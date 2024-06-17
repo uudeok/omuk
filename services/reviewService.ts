@@ -30,10 +30,21 @@ type ReviewType = {
     negative: string[];
     res_id: string;
     placeName: string;
+    visitDate: Date;
+    companions: string | null;
 };
 
 // 리뷰 작성
-export const postReview = async ({ rate, value, positive, negative, res_id, placeName }: ReviewType) => {
+export const postReview = async ({
+    rate,
+    value,
+    positive,
+    negative,
+    res_id,
+    placeName,
+    visitDate,
+    companions,
+}: ReviewType) => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
@@ -49,6 +60,8 @@ export const postReview = async ({ rate, value, positive, negative, res_id, plac
                 negative: negative,
                 res_id: res_id,
                 placeName: placeName,
+                visitDate: visitDate,
+                companions: companions,
             },
         ])
         .select();
@@ -61,7 +74,16 @@ export const postReview = async ({ rate, value, positive, negative, res_id, plac
 };
 
 // 리뷰 수정
-export const updateReview = async ({ rate, value, positive, negative, res_id, placeName }: ReviewType) => {
+export const updateReview = async ({
+    rate,
+    value,
+    positive,
+    negative,
+    res_id,
+    placeName,
+    visitDate,
+    companions,
+}: ReviewType) => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
@@ -78,6 +100,8 @@ export const updateReview = async ({ rate, value, positive, negative, res_id, pl
             negative: negative,
             res_id: res_id,
             placeName: placeName,
+            visitDate: visitDate,
+            companions: companions,
         })
         .eq('user_id', user_id)
         .eq('res_id', res_id);
