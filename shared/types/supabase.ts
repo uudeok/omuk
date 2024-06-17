@@ -75,6 +75,7 @@ export type Database = {
       review: {
         Row: {
           comment: string
+          companions: string | null
           created_at: string
           id: number
           negative: string[] | null
@@ -83,9 +84,11 @@ export type Database = {
           rate: number
           res_id: string
           user_id: string
+          visitDate: string
         }
         Insert: {
           comment: string
+          companions?: string | null
           created_at?: string
           id?: number
           negative?: string[] | null
@@ -94,9 +97,11 @@ export type Database = {
           rate: number
           res_id: string
           user_id?: string
+          visitDate: string
         }
         Update: {
           comment?: string
+          companions?: string | null
           created_at?: string
           id?: number
           negative?: string[] | null
@@ -105,6 +110,7 @@ export type Database = {
           rate?: number
           res_id?: string
           user_id?: string
+          visitDate?: string
         }
         Relationships: [
           {
@@ -406,6 +412,10 @@ export type Database = {
           metadata: Json
           updated_at: string
         }[]
+      }
+      operation: {
+        Args: Record<PropertyKey, never>
+        Returns: string
       }
       search: {
         Args: {

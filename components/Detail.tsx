@@ -53,7 +53,7 @@ const Detail = ({ resData, res_id }: Props) => {
         }
     };
 
-    console.log(reviewData);
+    // console.log(reviewData);
 
     return (
         <div className={styles.container}>

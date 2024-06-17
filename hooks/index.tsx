@@ -8,3 +8,4 @@ export { useRemove } from './useRemove';
 export { useMarker } from './useMarker';
 export { usePagination } from './usePagination';
 export { useSession } from './useSession';
+export { useCalendar } from './useCalendar';
