@@ -34,13 +34,13 @@ export default function RootLayout({
             <body style={{ display: 'flex' }}>
                 <ReactQueryProvider>
                     <StyledProvider>
-                        <AuthProvider>
-                            <MapProvider>
-                                <SideBar />
-                                <Map />
-                                {children}
-                            </MapProvider>
-                        </AuthProvider>
+                        {/* <AuthProvider> */}
+                        <MapProvider>
+                            <SideBar />
+                            <Map />
+                            {children}
+                        </MapProvider>
+                        {/* </AuthProvider> */}
                     </StyledProvider>
                 </ReactQueryProvider>
             </body>

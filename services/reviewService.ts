@@ -1,4 +1,3 @@
-// import { supabase } from '@/shared/lib/supabase';
 import { createClient } from '@/shared/lib/supabase/brower-client';
 
 // 특정 음식점 리뷰 데이터 가져오기

@@ -1,9 +1,9 @@
 'use client';
 
 import styles from '../styles/review.module.css';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import List, { ListRow } from '@/components/common/List';
-import { useInput } from '@/hooks';
+import { useInput, useSession } from '@/hooks';
 import Text from '@/components/common/Text';
 import Badge from '@/components/common/Badge';
 import Button from './common/Button';
@@ -17,10 +17,9 @@ import { FEEDBACK_LIST } from '@/constants/review';
 import { FeedBackItem } from '@/shared/types';
 import { getReviewData, postReview, updateReview } from '@/services/reviewService';
 import { useQuery } from '@tanstack/react-query';
-import { AuthContext } from '@/shared/context/AuthProvider';
 
 const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) => {
-    const session = useContext(AuthContext);
+    const session = useSession();
     const router = useRouter();
     const [value, onChangeInput, isValid, setValue] = useInput({ maxLength: 30, minLength: 2 });
     const [rate, setRate] = useState<number>(0);

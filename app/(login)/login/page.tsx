@@ -4,9 +4,6 @@ import styles from '../../../styles/login.module.css';
 import Button from '@/components/common/Button';
 import Text from '@/components/common/Text';
 import { Provider } from '@supabase/supabase-js';
-import { useRouter } from 'next/navigation';
-// import { supabase } from '@/shared/lib/supabase';
-import { redirect } from 'next/navigation';
 import { createClient } from '@/shared/lib/supabase/brower-client';
 
 const LoginPage = (props: { nextUrl?: string }) => {
@@ -20,9 +17,9 @@ const LoginPage = (props: { nextUrl?: string }) => {
             },
         });
 
-        if (data.url) {
-            redirect(data.url);
-        }
+        // if (data.url) {
+        //     redirect(data.url); // use the redirect API for your server framework
+        // }
 
         if (error) {
             throw new Error(error.message);
@@ -50,7 +47,3 @@ const LoginPage = (props: { nextUrl?: string }) => {
 };
 
 export default LoginPage;
-
-// options: {
-//     redirectTo: `${location.origin}/auth/callback?next=${props.nextUrl || ''}`,
-// },

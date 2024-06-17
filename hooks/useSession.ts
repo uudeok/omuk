@@ -1,50 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Session } from '@supabase/supabase-js';
 import { createClient } from '@/shared/lib/supabase/brower-client';
-// import { supabase } from '@/shared/lib/supabase';
 
 export function useSession() {
     const supabase = createClient();
     const [session, setSession] = useState<Session | null>(null);
 
+    const getSession = useCallback(async () => {
+        const {
+            data: { session },
+        } = await supabase.auth.getSession();
+
+        setSession(session);
+    }, [supabase.auth]);
+
     useEffect(() => {
-        const getSession = async () => {
-            const {
-                data: { session },
-            } = await supabase.auth.getSession();
-
-            setSession(session);
-        };
-
         getSession();
-    }, []);
+    }, [getSession]);
 
     return session;
 }
-
-// 'use client';
-
-// import { useEffect, useState } from 'react';
-// import { createSupabaseBrowserClient } from '@/shared/lib/supabase/browser-client';
-// import { Session } from '@supabase/supabase-js';
-// import { supabase } from '@/shared/lib/supabase/supabase';
-
-// export default function useSession() {
-//     const [session, setSession] = useState<Session | null>(null);
-
-//     useEffect(() => {
-//         const getSession = async () => {
-//             const {
-//                 data: { session },
-//             } = await supabase.auth.getSession();
-
-//             setSession(session);
-//         };
-
-//         getSession();
-//     }, []);
-
-//     return session;
-// }

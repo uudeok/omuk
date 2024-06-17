@@ -3,12 +3,10 @@
 import styles from '../styles/detail.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useBoolean } from '@/hooks';
+import { useBoolean, useSession } from '@/hooks';
 import List, { ListRow } from './common/List';
 import Text from './common/Text';
 import Button from './common/Button';
-import { useContext } from 'react';
-import { AuthContext } from '@/shared/context/AuthProvider';
 import { makeAdress } from '@/shared/utils/detailUtil';
 import { getReviewData } from '@/services/reviewService';
 import Hastag from '../assets/hashtag.svg';
@@ -28,7 +26,7 @@ type Props = {
 };
 
 const Detail = ({ resData, res_id }: Props) => {
-    const session = useContext(AuthContext);
+    const session = useSession();
     const router = useRouter();
     const { basicInfo, menuInfo } = resData;
     const { value: isShowMenu, toggle: setMenu } = useBoolean();
@@ -43,6 +41,8 @@ const Detail = ({ resData, res_id }: Props) => {
         queryFn: () => getReviewData(res_id),
         enabled: !!session,
     });
+
+    console.log('123', reviewData);
 
     const redirectPage = async () => {
         // 로그인 여부 확인 후 페이지 이동

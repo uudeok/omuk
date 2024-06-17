@@ -6,16 +6,11 @@ import List, { ListRow } from '../common/List';
 import Utensils from '../../assets/utensils.svg';
 import Text from '../common/Text';
 import { signOut } from '@/shared/utils/authUtil';
-import { Session } from '@supabase/supabase-js';
-import { useContext } from 'react';
-import { AuthContext } from '@/shared/context/AuthProvider';
+import { useSession } from '@/hooks';
 
 const Header = () => {
     const router = useRouter();
-
-    // console.log('header session', session);
-
-    const session = useContext(AuthContext);
+    const session = useSession();
 
     const redirectPage = async () => {
         if (session) {
