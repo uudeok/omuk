@@ -1,4 +1,3 @@
-// import { supabase } from '@/shared/lib/supabase';
 import { createClient } from '@/shared/lib/supabase/brower-client';
 
 // bookmark 특정 음식점의 북마크 데이터 가져오기

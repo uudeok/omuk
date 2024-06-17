@@ -4,8 +4,8 @@ import NonBookmark from '../../assets/nonBookmark.svg';
 import FillBookmark from '../../assets/bookmark.svg';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getBookmark, deleteBookmark, postBookmark } from '@/services/bookmarkService';
-import { useContext, useState } from 'react';
-import { AuthContext } from '@/shared/context/AuthProvider';
+import { useState } from 'react';
+import { useSession } from '@/hooks';
 
 type BookmarkProps = {
     res_id: string;
@@ -16,7 +16,7 @@ type BookmarkProps = {
 
 const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
     const queryClient = useQueryClient();
-    const session = useContext(AuthContext);
+    const session = useSession();
     const [debouncedClick, setDebouncedClick] = useState<boolean>(true);
 
     const { data: bookmark } = useQuery({
