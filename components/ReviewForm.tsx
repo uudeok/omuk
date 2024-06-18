@@ -19,7 +19,7 @@ import { FeedBackItem } from '@/shared/types';
 import { getReviewData, postReview, updateReview } from '@/services/reviewService';
 import { useQuery } from '@tanstack/react-query';
 import Modal from './common/Modal';
-import Calendar from './Calendar';
+import CalendarModal from './CalendarModal';
 
 const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) => {
     const session = useSession();
@@ -205,7 +205,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
             </div>
 
             <Modal isOpen={isOpen} onClose={closeModal}>
-                <Calendar setSelectedDate={setSelectedDate} onClose={closeModal} />
+                <CalendarModal setSelectedDate={setSelectedDate} onClose={closeModal} />
             </Modal>
         </div>
     );

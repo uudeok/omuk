@@ -10,9 +10,18 @@ import { getBookmarkList } from '@/services/bookmarkService';
 import { useQueries } from '@tanstack/react-query';
 import { getReviewList } from '@/services/reviewService';
 import LoadingBar from '@/components/common/LoadingBar';
+import Input from '@/components/common/Input';
+import InputBase from '@/components/common/InputBase';
+import { useInput } from '@/hooks';
+import { ProfileType, searchUserData } from '@/services/userService';
+import { useState } from 'react';
+import Avatar from '@/components/common/\bAvatar';
+import Button from '@/components/common/Button';
 
 const MyPage = () => {
     const router = useRouter();
+    const [value, onChangeInput] = useInput();
+    const [profile, setProfile] = useState<ProfileType>();
 
     const fetchData = [
         { queryKey: 'bookmarkList', queryFn: getBookmarkList },
@@ -36,8 +45,20 @@ const MyPage = () => {
 
     const [bookmarkList, reviewList] = combinedQueries.data;
 
+    const handleSearchUser = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const profiles = await searchUserData(value);
+        setProfile(profiles);
+    };
+
     return (
         <div>
+            <form className={styles.search} onSubmit={handleSearchUser}>
+                <Input>
+                    <InputBase placeholder="이메일 또는 이름으로 검색하세요" onChange={onChangeInput} />
+                </Input>
+            </form>
+
             <div className={styles.follow}>
                 <List>
                     <ListRow left={<Text typography="st3">팔로워</Text>} right="5명" />
@@ -70,7 +91,22 @@ const MyPage = () => {
                 </List>
             </div>
 
-            <div></div>
+            {profile && (
+                <div className={styles.profile}>
+                    <List>
+                        <ListRow
+                            left={<Avatar profile={profile} />}
+                            right={
+                                <div>
+                                    <Button role="round" size="sm">
+                                        팔로우
+                                    </Button>
+                                </div>
+                            }
+                        />
+                    </List>
+                </div>
+            )}
         </div>
     );
 };

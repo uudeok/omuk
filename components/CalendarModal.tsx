@@ -12,7 +12,7 @@ type Props = {
     onClose: () => void;
 };
 
-const Calendar = ({ setSelectedDate, onClose }: Props) => {
+const CalendarModal = ({ setSelectedDate, onClose }: Props) => {
     const [selected, setSelected] = useState<Date>();
 
     const handleDate = (date: Date) => {
@@ -54,6 +54,7 @@ const Calendar = ({ setSelectedDate, onClose }: Props) => {
                                     <button
                                         className={`${styles.dateCell} ${row.date === selected ? styles.selected : ''}`}
                                         onClick={() => handleDate(row.date)}
+                                        disabled={row.date > new Date()}
                                     >
                                         {row.date.getDate()}
                                     </button>
@@ -68,4 +69,4 @@ const Calendar = ({ setSelectedDate, onClose }: Props) => {
     );
 };
 
-export default Calendar;
+export default CalendarModal;
