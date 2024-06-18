@@ -4,12 +4,7 @@ import styles from '../../styles/sideBar.module.css';
 import Controller from '../Controller';
 import Header from './Header';
 
-const SideBar = async () => {
-    // const {
-    //     data: { session },
-    //     error,
-    // } = await createClient().auth.getSession();
-
+const SideBar = () => {
     return (
         <div className={styles.layout}>
             <div className={styles.search}>

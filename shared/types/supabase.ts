@@ -72,6 +72,35 @@ export type Database = {
           },
         ]
       }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          email: string | null
+          id: string
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          email?: string | null
+          id: string
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          email?: string | null
+          id?: string
+          username?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       review: {
         Row: {
           comment: string
