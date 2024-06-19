@@ -42,8 +42,6 @@ const Detail = ({ resData, res_id }: Props) => {
         enabled: !!session,
     });
 
-    console.log('123', reviewData);
-
     const redirectPage = async () => {
         // 로그인 여부 확인 후 페이지 이동
         if (session) {
@@ -52,8 +50,6 @@ const Detail = ({ resData, res_id }: Props) => {
             router.push('/login');
         }
     };
-
-    // console.log(reviewData);
 
     return (
         <div className={styles.container}>
