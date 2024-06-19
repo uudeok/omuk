@@ -7,30 +7,34 @@ import AngleLeft from '../assets/angle-left.svg';
 import { useState } from 'react';
 import Text from './common/Text';
 import { useCalendar } from '@/hooks';
-import { ReviewType } from '@/services/reviewService';
+import { ReviewType, getReviewList } from '@/services/reviewService';
 import { cutText } from '@/shared/utils/stringUtils';
 import Review from './Review';
+import { useQuery } from '@tanstack/react-query';
+import LoadingBar from './common/LoadingBar';
 
-type Props = {
-    reviewList: ReviewType[] | undefined;
-};
-
-const MyCalendar = ({ reviewList }: Props) => {
+const MyCalendar = () => {
     const { prevController, nextController, body, curMonth, curYear, weeks } = useCalendar();
 
     const [selectedReivewList, setSelectedReviewList] = useState<ReviewType[] | undefined>([]);
     const [selectedDate, setSelectedDate] = useState<Date>();
+
     const displayDate = dayjs(selectedDate).format('YYYY-MM-DD');
+
+    const { data: reviewList, isFetching } = useQuery({
+        queryKey: ['reviewList'],
+        queryFn: getReviewList,
+    });
 
     const handleReview = (date: Date) => {
         setSelectedDate(date);
-        const data = reviewList?.filter((review) => dayjs(review.visitDate).isSame(date));
-        setSelectedReviewList(data);
+        const result = reviewList?.filter((review) => dayjs(review.visitDate).isSame(date));
+        setSelectedReviewList(result);
     };
 
     return (
         <>
-            <div className={styles.container}>
+            <div className={styles.calendar}>
                 <div className={styles.header}>
                     <div className={styles.controller} onClick={prevController}>
                         <AngleLeft width={15} />
@@ -42,7 +46,6 @@ const MyCalendar = ({ reviewList }: Props) => {
                         <AngleRight width={15} />
                     </div>
                 </div>
-
                 <table className={styles.table}>
                     <thead>
                         <tr>
@@ -63,7 +66,7 @@ const MyCalendar = ({ reviewList }: Props) => {
                                     return (
                                         <td key={row.value}>
                                             <button
-                                                className={`${styles.dateCell} ${review && styles.reviewed}`}
+                                                className={`${styles.dateCell} ${review && styles.visited}`}
                                                 onClick={() => handleReview(row.date)}
                                                 disabled={row.date > new Date()}
                                             >
@@ -80,8 +83,17 @@ const MyCalendar = ({ reviewList }: Props) => {
                     </tbody>
                 </table>
             </div>
+
             <div>
-                {selectedDate && <Text typography="t5">{displayDate} 에 방문했어요😋</Text>}
+                {selectedDate && selectedReivewList && selectedReivewList.length > 0 && (
+                    <div className={styles.review}>
+                        <Text typography="t5">{displayDate} 에 방문했어요😋</Text>
+                    </div>
+                )}
+
+                {selectedDate && selectedReivewList && selectedReivewList.length === 0 && (
+                    <Text typography="t5">{displayDate} 리뷰가 없어요</Text>
+                )}
                 {selectedReivewList && <Review reviewList={selectedReivewList} />}
             </div>
         </>

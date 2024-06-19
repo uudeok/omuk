@@ -6,9 +6,9 @@ import List, { ListRow } from '@/components/common/List';
 import Text from '@/components/common/Text';
 import FillStar from '../../../assets/fillStar.svg';
 import Pencil from '../../../assets/pencil.svg';
-import { getBookmarkList } from '@/services/bookmarkService';
+import { getBookmarkPageInfo } from '@/services/bookmarkService';
 import { useQueries } from '@tanstack/react-query';
-import { getReviewList } from '@/services/reviewService';
+import { getReviewPageInfo } from '@/services/reviewService';
 import LoadingBar from '@/components/common/LoadingBar';
 import Input from '@/components/common/Input';
 import InputBase from '@/components/common/InputBase';
@@ -18,6 +18,7 @@ import { useState } from 'react';
 import Avatar from '@/components/common/\bAvatar';
 import Button from '@/components/common/Button';
 import MyCalendar from '@/components/MyCalendar';
+import { getTotalRows } from '@/shared/utils/detailUtil';
 
 const MyPage = () => {
     const router = useRouter();
@@ -27,8 +28,8 @@ const MyPage = () => {
     const [hasSearched, setHasSearched] = useState<boolean>(false);
 
     const fetchData = [
-        { queryKey: 'bookmarkList', queryFn: getBookmarkList },
-        { queryKey: 'reviewList', queryFn: getReviewList },
+        { queryKey: 'bookmarkPagination', queryFn: getBookmarkPageInfo },
+        { queryKey: 'reviewPagination', queryFn: getReviewPageInfo },
     ];
 
     const combinedQueries = useQueries({
@@ -46,7 +47,7 @@ const MyPage = () => {
 
     if (combinedQueries.pending) return <LoadingBar />;
 
-    const [bookmarkList, reviewList] = combinedQueries.data;
+    const [bookmarkPagination, reviewPagination] = combinedQueries.data;
 
     const handleSearchUser = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -63,6 +64,9 @@ const MyPage = () => {
         setProfile(null);
         setHasSearched(false);
     };
+
+    const totalBookmark = getTotalRows(bookmarkPagination);
+    const totalReview = getTotalRows(reviewPagination);
 
     return (
         <div>
@@ -120,7 +124,7 @@ const MyPage = () => {
                                 <Text typography="st3">즐겨찾기</Text>
                             </div>
                         }
-                        right={bookmarkList ? `${bookmarkList.length}개` : '아직 없어용'}
+                        right={totalBookmark ? `${totalBookmark}개` : '아직 없어용'}
                     />
                     <ListRow
                         onClick={() => router.push('/my/review')}
@@ -130,14 +134,14 @@ const MyPage = () => {
                                 <Text typography="st3">나의 리뷰</Text>
                             </div>
                         }
-                        right={reviewList ? `${reviewList.length}개` : '아직 없어용'}
+                        right={totalReview ? `${totalReview}개` : '아직 없어용'}
                     />
                 </List>
             </div>
 
             <div className={styles.diary}>
-                <Text typography="t5">음식 일기를 작성해보세요</Text>
-                <MyCalendar reviewList={reviewList} />
+                <Text typography="t5">날짜를 클릭해보세요</Text>
+                <MyCalendar />
             </div>
         </div>
     );

@@ -24,3 +24,9 @@ export const calculateScore = (feedback: FeedbackType) => {
     const score = feedback.scoresum / feedback.scorecnt;
     return score.toFixed(1);
 };
+
+export const getTotalRows = (pagination: any) => {
+    const plan = pagination[0].Plan as any;
+    const totalRows = plan.Plans[0]['Actual Rows'];
+    return totalRows;
+};
