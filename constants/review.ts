@@ -47,4 +47,13 @@ export const COMPANIONS: CompanionsType[] = [
     { key: 'alone', value: '혼자' },
     { key: 'pet', value: '반려동물' },
     { key: 'else', value: '기타' },
-];
+] as const;
+
+export const COMPANION: { [key: string]: string } = {
+    parents: '부모님과 방문했어요',
+    lover: '애인과 방문했어요',
+    friends: '친구와 방문했어요',
+    alone: '혼자서 방문했어요',
+    pet: '반려동물와 방문했어요',
+    else: '기타',
+};

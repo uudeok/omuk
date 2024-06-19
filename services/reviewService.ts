@@ -23,21 +23,21 @@ export const getReviewData = async (res_id: string) => {
     return review;
 };
 
-type ReviewType = {
+export type ReviewType = {
     rate: number;
-    value: string;
     positive: string[];
     negative: string[];
     res_id: string;
     placeName: string;
     visitDate: Date;
     companions: string | null;
+    comment: string;
 };
 
 // 리뷰 작성
 export const postReview = async ({
     rate,
-    value,
+    comment,
     positive,
     negative,
     res_id,
@@ -55,7 +55,7 @@ export const postReview = async ({
         .insert([
             {
                 rate: rate,
-                comment: value,
+                comment: comment,
                 positive: positive,
                 negative: negative,
                 res_id: res_id,
@@ -76,7 +76,7 @@ export const postReview = async ({
 // 리뷰 수정
 export const updateReview = async ({
     rate,
-    value,
+    comment,
     positive,
     negative,
     res_id,
@@ -95,7 +95,7 @@ export const updateReview = async ({
         .from('review')
         .update({
             rate: rate,
-            comment: value,
+            comment: comment,
             positive: positive,
             negative: negative,
             res_id: res_id,
@@ -114,7 +114,7 @@ export const updateReview = async ({
 };
 
 // user_id 로 작성한 모든 리뷰 가져오기 >  총 리뷰 갯수 확인용 수정 필요
-export const getReviewList = async () => {
+export const getReviewList = async (): Promise<ReviewType[] | undefined | []> => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
@@ -154,7 +154,10 @@ export const getReviewPageInfo = async () => {
 };
 
 // 사용자에 대한 리뷰 목록을 페이지 단위로 가져오기
-export const getUserReviewsPaginated = async (pageParam: number, pageSize: number) => {
+export const getUserReviewsPaginated = async (
+    pageParam: number,
+    pageSize: number
+): Promise<ReviewType[] | undefined> => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
