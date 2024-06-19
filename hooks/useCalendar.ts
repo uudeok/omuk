@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import dayjs from 'dayjs';
-import { calculateMonthInfo, MONTH_LABEL_VALUES, MONTH_LABEL } from '@/shared/utils/calendarUtil';
+import { calculateMonthInfo } from '@/shared/utils/calendarUtil';
+import { MONTH_LABEL_VALUES } from '@/shared/types';
+import { MONTH_LABEL } from '@/constants/calendar';
 
 export interface WeekLabels {
     ko: string[];

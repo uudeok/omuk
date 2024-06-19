@@ -17,6 +17,7 @@ import { ProfileType, searchUserData } from '@/services/userService';
 import { useState } from 'react';
 import Avatar from '@/components/common/\bAvatar';
 import Button from '@/components/common/Button';
+import CalendarModal from '@/components/CalendarModal';
 
 const MyPage = () => {
     const router = useRouter();
@@ -133,6 +134,8 @@ const MyPage = () => {
                     />
                 </List>
             </div>
+
+            <div></div>
         </div>
     );
 };

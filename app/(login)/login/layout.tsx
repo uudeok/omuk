@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import Slide from '@/components/Slide';
+import Slide from '@/components/layout/Slide';
 
 const LoginLayout = ({ children }: { children: ReactNode }) => {
     return (
