@@ -1,8 +1,8 @@
 'use client';
 
+import module from '../../styles/slide.module.css';
 import { ReactNode } from 'react';
-import Button from './common/Button';
-import module from '../styles/slide.module.css';
+import Button from '../common/Button';
 import { useRouter } from 'next/navigation';
 
 type SlideProps = {

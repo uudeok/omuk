@@ -1,5 +1,5 @@
 import styles from '../../../styles/detailLayout.module.css';
-import Slide from '@/components/Slide';
+import Slide from '@/components/layout/Slide';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { ReactNode } from 'react';
 import { getDetail } from './page';

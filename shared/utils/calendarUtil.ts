@@ -1,3 +1,6 @@
+import { MONTH_LABEL } from '@/constants/calendar';
+import { MONTH_LABEL_VALUES } from '../types';
+
 export const calculateMonthInfo = (year: number, month: number) => {
     const firstDay = new Date(year, month).getDay();
     const lastDate = new Date(year, month + 1, 0).getDate();
@@ -16,19 +19,3 @@ export const getSelectedMonth = (month: MONTH_LABEL_VALUES, curMonth: number) =>
             throw new Error('error : Calendar.invalid Month Name');
     }
 };
-
-export type MONTH_LABEL_TYPE = typeof MONTH_LABEL;
-export type MONTH_LABEL_KEYS = keyof MONTH_LABEL_TYPE;
-export type MONTH_LABEL_VALUES = MONTH_LABEL_TYPE[MONTH_LABEL_KEYS];
-
-export type Time = {
-    label: string;
-    value: Date;
-    selectable: boolean;
-};
-
-export const MONTH_LABEL = {
-    MONTH_PREV: 'prev',
-    MONTH_CURRENT: 'current',
-    MONTH_NEXT: 'next',
-} as const;

@@ -1,7 +1,7 @@
 'use client';
 
 import styles from '../../../styles/mypageLayout.module.css';
-import Slide from '@/components/Slide';
+import Slide from '@/components/layout/Slide';
 import { ReactNode } from 'react';
 import Text from '@/components/common/Text';
 import { useSession } from '@/hooks';
