@@ -75,3 +75,14 @@
     text-align: center;
     margin-top: 5px;
 }
+
+.diary {
+    margin-top: 20px;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* border-radius: 15px; */
+    /* background-color: var(--blue20); */
+    margin: 5px;
+}
