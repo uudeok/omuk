@@ -18,6 +18,7 @@ import { useState } from 'react';
 import Avatar from '@/components/common/\bAvatar';
 import Button from '@/components/common/Button';
 import CalendarModal from '@/components/CalendarModal';
+import MyCalendar from '@/components/MyCalendar';
 
 const MyPage = () => {
     const router = useRouter();
@@ -135,7 +136,10 @@ const MyPage = () => {
                 </List>
             </div>
 
-            <div></div>
+            <div className={styles.diary}>
+                <Text typography="t5">음식 일기를 작성해보세요</Text>
+                <MyCalendar />
+            </div>
         </div>
     );
 };
