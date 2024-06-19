@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/review.module.css';
+import styles from '../styles/reviewform.module.css';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import List, { ListRow } from '@/components/common/List';
@@ -20,6 +20,7 @@ import { getReviewData, postReview, updateReview } from '@/services/reviewServic
 import { useQuery } from '@tanstack/react-query';
 import Modal from './common/Modal';
 import CalendarModal from './CalendarModal';
+import { initializeDate } from '@/shared/utils/calendarUtil';
 
 const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) => {
     const session = useSession();
@@ -32,7 +33,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
     const [selectedPositives, setSelectedPositives] = useState<FeedBackItem[]>([]);
     const [selectedNegatives, setSelectedNegatives] = useState<FeedBackItem[]>([]);
     const [selectedCompanions, setSelectedCompanions] = useState<string | null>(null);
-    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+    const [selectedDate, setSelectedDate] = useState<Date>(initializeDate);
 
     const date = dayjs(selectedDate).format('YYYY-MM-DD');
     const positiveFeedback = FEEDBACK_LIST.find((feedback) => feedback.type === 'positive')!;
@@ -72,13 +73,13 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
     const handleUpdateReview = async (method: 'post' | 'update') => {
         const reviewData = {
             rate: rate,
-            value: value,
             positive: selectedPositives.map((item) => item.value),
             negative: selectedNegatives.map((item) => item.value),
             res_id: res_id,
             placeName: resName,
             visitDate: selectedDate,
             companions: selectedCompanions,
+            comment: value,
         };
 
         if (method === 'post') {
@@ -205,7 +206,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
             </div>
 
             <Modal isOpen={isOpen} onClose={closeModal}>
-                <CalendarModal setSelectedDate={setSelectedDate} onClose={closeModal} />
+                <CalendarModal setSelectedDate={setSelectedDate} onClose={closeModal} selectedDate={selectedDate} />
             </Modal>
         </div>
     );

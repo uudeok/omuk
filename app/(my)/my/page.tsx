@@ -17,7 +17,6 @@ import { ProfileType, searchUserData } from '@/services/userService';
 import { useState } from 'react';
 import Avatar from '@/components/common/\bAvatar';
 import Button from '@/components/common/Button';
-import CalendarModal from '@/components/CalendarModal';
 import MyCalendar from '@/components/MyCalendar';
 
 const MyPage = () => {
@@ -138,7 +137,7 @@ const MyPage = () => {
 
             <div className={styles.diary}>
                 <Text typography="t5">음식 일기를 작성해보세요</Text>
-                <MyCalendar />
+                <MyCalendar reviewList={reviewList} />
             </div>
         </div>
     );

@@ -19,3 +19,9 @@ export const getSelectedMonth = (month: MONTH_LABEL_VALUES, curMonth: number) =>
             throw new Error('error : Calendar.invalid Month Name');
     }
 };
+
+export const initializeDate = () => {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    return date;
+};

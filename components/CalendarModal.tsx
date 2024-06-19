@@ -8,16 +8,15 @@ import AngleRight from '../assets/angle-right.svg';
 import AngleLeft from '../assets/angle-left.svg';
 
 type Props = {
+    selectedDate: Date;
     setSelectedDate: Dispatch<SetStateAction<Date>>;
     onClose: () => void;
 };
 
-const CalendarModal = ({ setSelectedDate, onClose }: Props) => {
-    const [selected, setSelected] = useState<Date>();
-
+const CalendarModal = ({ setSelectedDate, onClose, selectedDate }: Props) => {
     const handleDate = (date: Date) => {
-        setSelected(date);
         setSelectedDate(date);
+
         onClose();
     };
 
@@ -52,7 +51,9 @@ const CalendarModal = ({ setSelectedDate, onClose }: Props) => {
                             {rows.map((row) => (
                                 <td key={row.value}>
                                     <button
-                                        className={`${styles.dateCell} ${row.date === selected ? styles.selected : ''}`}
+                                        className={`${styles.dateCell} ${
+                                            row.date === selectedDate ? styles.selected : ''
+                                        }`}
                                         onClick={() => handleDate(row.date)}
                                         disabled={row.date > new Date()}
                                     >

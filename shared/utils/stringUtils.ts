@@ -8,3 +8,7 @@ export const keepNumericAndDot = (value: string): string => {
     console.log(value.replace(/[^0-9.]/g, ''));
     return value.replace(/[^0-9.]/g, '');
 };
+
+export const cutText = (text: string, maxLength: number) => {
+    return text.length > maxLength ? text.substring(0, maxLength) : text;
+};
