@@ -33,9 +33,11 @@ const Review = ({ reviewList }: Props) => {
                     bottom={
                         <div className={styles.bottom}>
                             <Text typography="st3">{COMPANION[`${review.companions}`]}</Text>
-                            <Text typography="st3">
-                                <Pencil width={15} /> {review.comment}
-                            </Text>
+                            <div className={styles.comment}>
+                                <Text typography="st3">
+                                    <Pencil width={15} /> {review.comment}
+                                </Text>
+                            </div>
                             <Button size="sm" role="none" onClick={() => router.push(`/${review.res_id}`)}>
                                 보러가기 ▶︎
                             </Button>

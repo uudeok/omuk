@@ -27,7 +27,7 @@ const MyReviewList = () => {
         fetchNextPage,
         isFetchingNextPage,
     } = useInfiniteQuery({
-        queryKey: ['reviewList'],
+        queryKey: ['paginatedReview'],
         queryFn: ({ pageParam }) => getUserReviewsPaginated(pageParam, pageSize),
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
@@ -60,7 +60,6 @@ const MyReviewList = () => {
                     <Review reviewList={reviewList as ReviewType[]} />
                 )}
             </div>
-
             <div ref={observerEl} />
         </div>
     );

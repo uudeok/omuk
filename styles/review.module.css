@@ -1,10 +1,14 @@
 .bottom {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .bottom button {
     display: flex;
     justify-content: right;
+}
+
+.comment {
+    line-height: 1.1;
 }
