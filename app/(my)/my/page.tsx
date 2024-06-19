@@ -20,8 +20,10 @@ import Button from '@/components/common/Button';
 
 const MyPage = () => {
     const router = useRouter();
-    const [value, onChangeInput] = useInput();
-    const [profile, setProfile] = useState<ProfileType>();
+    const [value, onChangeInput, isValid] = useInput({ minLength: 2 });
+    const [profile, setProfile] = useState<ProfileType | null>();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [hasSearched, setHasSearched] = useState<boolean>(false);
 
     const fetchData = [
         { queryKey: 'bookmarkList', queryFn: getBookmarkList },
@@ -47,17 +49,58 @@ const MyPage = () => {
 
     const handleSearchUser = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        setHasSearched(true);
+        setIsLoading(true);
         const profiles = await searchUserData(value);
+        setIsLoading(false);
         setProfile(profiles);
+    };
+
+    // 검색창 입력 시, 초기화 작업
+    const resetProfile = () => {
+        setProfile(null);
+        setHasSearched(false);
     };
 
     return (
         <div>
             <form className={styles.search} onSubmit={handleSearchUser}>
                 <Input>
-                    <InputBase placeholder="이메일 또는 이름으로 검색하세요" onChange={onChangeInput} />
+                    <InputBase
+                        placeholder="이메일 또는 이름으로 검색하세요"
+                        onChange={onChangeInput}
+                        onKeyDown={resetProfile}
+                    />
                 </Input>
             </form>
+
+            {hasSearched && (
+                <div>
+                    {isLoading ? (
+                        <LoadingBar />
+                    ) : profile ? (
+                        <div className={styles.profile}>
+                            <List>
+                                <ListRow
+                                    left={<Avatar profile={profile} />}
+                                    right={
+                                        <div>
+                                            <Button role="round" size="sm">
+                                                팔로우
+                                            </Button>
+                                        </div>
+                                    }
+                                />
+                            </List>
+                        </div>
+                    ) : (
+                        <div className={styles.nonProfile}>
+                            <Text typography="st3">검색어를 찾을 수 없습니다😅</Text>
+                        </div>
+                    )}
+                </div>
+            )}
 
             <div className={styles.follow}>
                 <List>
@@ -90,23 +133,6 @@ const MyPage = () => {
                     />
                 </List>
             </div>
-
-            {profile && (
-                <div className={styles.profile}>
-                    <List>
-                        <ListRow
-                            left={<Avatar profile={profile} />}
-                            right={
-                                <div>
-                                    <Button role="round" size="sm">
-                                        팔로우
-                                    </Button>
-                                </div>
-                            }
-                        />
-                    </List>
-                </div>
-            )}
         </div>
     );
 };
