@@ -20,6 +20,7 @@ const MyReviewList = () => {
     });
 
     const { totalPage } = usePagination(pageInfo, pageSize);
+    console.log(totalPage);
 
     const {
         data: reviewList,
