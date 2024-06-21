@@ -72,6 +72,45 @@ export type Database = {
           },
         ]
       }
+      follow: {
+        Row: {
+          created_at: string
+          id: number
+          requestee_id: string
+          requester_id: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          requestee_id?: string
+          requester_id?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          requestee_id?: string
+          requester_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "follow_requestee_id_fkey"
+            columns: ["requestee_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "follow_requester_id_fkey"
+            columns: ["requester_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null

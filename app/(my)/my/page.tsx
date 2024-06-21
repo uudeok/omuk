@@ -10,22 +10,14 @@ import { getBookmarkPageInfo } from '@/services/bookmarkService';
 import { useQueries } from '@tanstack/react-query';
 import { getReviewPageInfo } from '@/services/reviewService';
 import LoadingBar from '@/components/common/LoadingBar';
-import Input from '@/components/common/Input';
-import InputBase from '@/components/common/InputBase';
-import { useInput } from '@/hooks';
-import { ProfileType, searchUserData } from '@/services/userService';
-import { useState } from 'react';
-import Avatar from '@/components/common/\bAvatar';
-import Button from '@/components/common/Button';
 import MyCalendar from '@/components/MyCalendar';
 import { getTotalRows } from '@/shared/utils/detailUtil';
+import Follow from '@/components/Follow';
+
+/** follow, myreview & mybookmark, calendar 3단락 */
 
 const MyPage = () => {
     const router = useRouter();
-    const [value, onChangeInput, isValid] = useInput({ minLength: 2 });
-    const [profile, setProfile] = useState<ProfileType | null>();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [hasSearched, setHasSearched] = useState<boolean>(false);
 
     const fetchData = [
         { queryKey: 'bookmarkPagination', queryFn: getBookmarkPageInfo },
@@ -49,70 +41,12 @@ const MyPage = () => {
 
     const [bookmarkPagination, reviewPagination] = combinedQueries.data;
 
-    const handleSearchUser = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        setHasSearched(true);
-        setIsLoading(true);
-        const profiles = await searchUserData(value);
-        setIsLoading(false);
-        setProfile(profiles);
-    };
-
-    // 검색창 입력 시, 초기화 작업
-    const resetProfile = () => {
-        setProfile(null);
-        setHasSearched(false);
-    };
-
     const totalBookmark = getTotalRows(bookmarkPagination);
     const totalReview = getTotalRows(reviewPagination);
 
     return (
         <div>
-            <form className={styles.search} onSubmit={handleSearchUser}>
-                <Input>
-                    <InputBase
-                        placeholder="이메일 또는 이름으로 검색하세요"
-                        onChange={onChangeInput}
-                        onKeyDown={resetProfile}
-                    />
-                </Input>
-            </form>
-
-            {hasSearched && (
-                <div>
-                    {isLoading ? (
-                        <LoadingBar />
-                    ) : profile ? (
-                        <div className={styles.profile}>
-                            <List>
-                                <ListRow
-                                    left={<Avatar profile={profile} />}
-                                    right={
-                                        <div>
-                                            <Button role="round" size="sm">
-                                                팔로우
-                                            </Button>
-                                        </div>
-                                    }
-                                />
-                            </List>
-                        </div>
-                    ) : (
-                        <div className={styles.nonProfile}>
-                            <Text typography="st3">검색어를 찾을 수 없습니다😅</Text>
-                        </div>
-                    )}
-                </div>
-            )}
-
-            <div className={styles.follow}>
-                <List>
-                    <ListRow left={<Text typography="st3">팔로워</Text>} right="5명" />
-                    <ListRow left={<Text typography="st3">팔로잉</Text>} right="5명" />
-                </List>
-            </div>
+            <Follow />
 
             <div className={styles.mypage}>
                 <List>

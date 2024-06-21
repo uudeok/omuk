@@ -46,6 +46,7 @@ const MyCalendar = () => {
                         <AngleRight width={15} />
                     </div>
                 </div>
+
                 <table className={styles.table}>
                     <thead>
                         <tr>
