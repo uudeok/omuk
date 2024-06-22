@@ -22,7 +22,3 @@ export const searchUserData = async (emailOrUsername: string): Promise<ProfileTy
 
     return profiles;
 };
-
-export const requestFollow = async () => {
-    const supabase = createClient();
-};

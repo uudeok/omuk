@@ -26,7 +26,7 @@ const MyPage = () => {
 
     const combinedQueries = useQueries({
         queries: fetchData.map((data) => ({
-            queryKey: ['getData', data.queryKey],
+            queryKey: [data.queryKey],
             queryFn: () => data.queryFn(),
         })),
         combine: (results) => {
