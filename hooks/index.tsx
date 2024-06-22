@@ -9,3 +9,5 @@ export { useMarker } from './useMarker';
 export { usePagination } from './usePagination';
 export { useSession } from './useSession';
 export { useCalendar } from './useCalendar';
+export { useDebounce } from './useDebounce';
+export { useHover } from './useHover';

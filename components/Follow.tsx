@@ -1,35 +1,37 @@
 'use clinet';
 
 import styles from '../styles/follow.module.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Input from './common/Input';
 import InputBase from './common/InputBase';
 import LoadingBar from './common/LoadingBar';
 import List, { ListRow } from './common/List';
-import Avatar from './common/\bAvatar';
+import Avatar from './common/Avatar';
 import Button from './common/Button';
 import Text from './common/Text';
 import { useInput, useSession } from '@/hooks';
 import { searchUserData, ProfileType } from '@/services/userService';
-import { getFollowerList, getFollowingList, requestFollow, requestUnFollow } from '@/services/followService';
+import { getFollowerInfo, getFollowingInfo } from '@/services/followService';
 import { useQueries } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { getTotalRows } from '@/shared/utils/detailUtil';
 
 const Follow = () => {
     const session = useSession();
+    const router = useRouter();
     const [hasSearched, setHasSearched] = useState<boolean>(false);
     const [value, onChangeInput, isValid] = useInput({ minLength: 2 });
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [profile, setProfile] = useState<ProfileType | null>();
-    const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
     const fetchData = [
-        { queryKey: 'followingList', queryFn: getFollowingList },
-        { queryKey: 'followerList', queryFn: getFollowerList },
+        { queryKey: 'followingInfo', queryFn: getFollowingInfo },
+        { queryKey: 'followerInfo', queryFn: getFollowerInfo },
     ];
 
     const combinedQueries = useQueries({
         queries: fetchData.map((data) => ({
-            queryKey: [data.queryKey, isFollowing],
+            queryKey: [data.queryKey],
             queryFn: () => data.queryFn(),
         })),
         combine: (results) => {
@@ -39,15 +41,6 @@ const Follow = () => {
             };
         },
     });
-
-    const [followingList, followerList] = combinedQueries.data;
-
-    useEffect(() => {
-        if (profile && followingList) {
-            const isFollowed = followingList.some((follow) => follow.requestee_id === profile.id);
-            setIsFollowing(isFollowed);
-        }
-    }, [profile, followingList]);
 
     const handleSearchUser = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -65,38 +58,12 @@ const Follow = () => {
         setHasSearched(false);
     };
 
-    // follow 요청
-    const handleFollowRequest = async () => {
-        if (!profile) return;
-
-        if (!session) {
-            alert('로그인이 필요한 서비스입니다');
-            return;
-        }
-
-        await requestFollow({
-            requester_id: session.user.id,
-            requestee_id: profile.id,
-        });
-
-        setIsFollowing(true);
-    };
-
-    // unfollow
-    const handleUnfollowRequest = async () => {
-        if (!profile) return;
-
-        if (!session) {
-            alert('로그인이 필요한 서비스입니다');
-            return;
-        }
-
-        await requestUnFollow(profile.id);
-
-        setIsFollowing(false);
-    };
-
     if (combinedQueries.pending) return <LoadingBar />;
+
+    const [followingInfo, followerInfo] = combinedQueries.data;
+
+    const totalFollowing = getTotalRows(followingInfo);
+    const totalFollower = getTotalRows(followerInfo);
 
     return (
         <>
@@ -121,15 +88,11 @@ const Follow = () => {
                                     left={<Avatar profile={profile} />}
                                     right={
                                         <div>
-                                            {isFollowing ? (
-                                                <Button role="round" size="sm" onClick={handleUnfollowRequest}>
-                                                    팔로우 취소
+                                            <div>
+                                                <Button role="round" size="sm">
+                                                    방문하기
                                                 </Button>
-                                            ) : (
-                                                <Button role="round" size="sm" onClick={handleFollowRequest}>
-                                                    팔로우
-                                                </Button>
-                                            )}
+                                            </div>
                                         </div>
                                     }
                                 />
@@ -145,12 +108,14 @@ const Follow = () => {
             <div className={styles.follow}>
                 <List>
                     <ListRow
+                        onClick={() => router.push('/my/follower')}
                         left={<Text typography="st3">팔로워</Text>}
-                        right={`${followerList ? followerList.length : 0}명`}
+                        right={totalFollower ? `${totalFollower}명` : '0명'}
                     />
                     <ListRow
+                        onClick={() => router.push('/my/following')}
                         left={<Text typography="st3">팔로잉</Text>}
-                        right={`${followingList ? followingList.length : 0}명`}
+                        right={totalFollowing ? `${totalFollowing}명` : '0명'}
                     />
                 </List>
             </div>

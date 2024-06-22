@@ -1,28 +1,3 @@
-.header {
-    background-color: var(--mainColor);
-    height: 75px;
-    z-index: 1000;
-    width: 100%;
-    display: flex;
-}
-
-.header img {
-    border-radius: 50px;
-    margin-left: 5px;
-}
-
-.content {
-    overflow-y: auto;
-    scrollbar-width: thin;
-    height: calc(100vh - 75px);
-}
-
-.header svg {
-    padding: 5px;
-    margin-right: 5px;
-    cursor: pointer;
-}
-
 @keyframes shake {
     0% {
         transform: translate(1px, 1px) rotate(0deg);

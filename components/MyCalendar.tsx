@@ -33,7 +33,8 @@ const MyCalendar = () => {
     };
 
     return (
-        <>
+        <div className={styles.container}>
+            <Text typography="t5">날짜를 클릭해보세요</Text>
             <div className={styles.calendar}>
                 <div className={styles.header}>
                     <div className={styles.controller} onClick={prevController}>
@@ -97,7 +98,7 @@ const MyCalendar = () => {
                 )}
                 {selectedReivewList && <Review reviewList={selectedReivewList} />}
             </div>
-        </>
+        </div>
     );
 };
 

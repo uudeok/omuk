@@ -73,10 +73,7 @@ const MyPage = () => {
                 </List>
             </div>
 
-            <div className={styles.diary}>
-                <Text typography="t5">날짜를 클릭해보세요</Text>
-                <MyCalendar />
-            </div>
+            <MyCalendar />
         </div>
     );
 };

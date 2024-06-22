@@ -27,12 +27,3 @@
     align-items: center;
     gap: 10px;
 }
-
-.diary {
-    margin-top: 20px;
-    padding: 20px 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin: 5px;
-}
