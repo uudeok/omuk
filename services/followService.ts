@@ -1,13 +1,13 @@
 import { createClient } from '@/shared/lib/supabase/brower-client';
 
+export type FollowStatusType = {
+    status: 'pending' | 'accepted';
+};
+
 export type FollowType = {
     requester_id: string;
     requestee_id: string;
     status: FollowStatusType;
-};
-
-export type FollowStatusType = {
-    status: 'pending' | 'accepted';
 };
 
 // follow 요청하기
@@ -119,7 +119,7 @@ export const getFollowingInfo = async () => {
 
     const user_id = data.session.user.id;
 
-    const { data: followingData, error } = await supabase
+    const { data: followingData, error }: any = await supabase
         .from('follow')
         .select('*')
         .eq('requester_id', user_id)
@@ -129,7 +129,9 @@ export const getFollowingInfo = async () => {
         throw new Error(error.message);
     }
 
-    return followingData;
+    const actualRows = followingData[0].Plan.Plans[0]['Actual Rows'];
+
+    return actualRows;
 };
 
 // follower 페이지 정보 (주쳬 : 다른 사람 > 나)
@@ -141,7 +143,7 @@ export const getFollowerInfo = async () => {
 
     const user_id = data.session.user.id;
 
-    const { data: followerData, error } = await supabase
+    const { data: followerData, error }: any = await supabase
         .from('follow')
         .select('*')
         .eq('requestee_id', user_id)
@@ -151,7 +153,9 @@ export const getFollowerInfo = async () => {
         throw new Error(error.message);
     }
 
-    return followerData;
+    const actualRows = followerData[0].Plan.Plans[0]['Actual Rows'];
+
+    return actualRows;
 };
 
 // 특정인과 팔로우 했는지 확인 (주체 : 나 > 다른 사람)
