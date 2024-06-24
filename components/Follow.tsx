@@ -47,7 +47,6 @@ const Follow = () => {
         combine: (results) => {
             return {
                 data: results.map((result) => result.data),
-                pending: results.some((result) => result.isPending),
             };
         },
     });
@@ -115,9 +114,7 @@ const Follow = () => {
     useEffect(() => {
         setFollowingPagination(followingInfo);
         setFollowerPagination(followerInfo);
-    }, [setFollowingPagination, setFollowerPagination]);
-
-    if (combinedQueries.pending) return <LoadingBar />;
+    }, [followingInfo, followerInfo]);
 
     return (
         <>

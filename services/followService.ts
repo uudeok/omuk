@@ -49,8 +49,8 @@ export const requestUnFollow = async (requestee_id: string) => {
         .select();
 };
 
-// following list 가져오기 (주체 : 나 > 다른 사람)
-export const getFollowingList = async () => {
+// following list pagination 으로 가져오기 (주체 : 나 > 다른 사람)
+export const getFollowingList = async (pageParam: number, pageSize: number): Promise<FollowType[] | undefined> => {
     const supabase = createClient();
 
     const { data } = await supabase.auth.getSession();
@@ -59,7 +59,11 @@ export const getFollowingList = async () => {
 
     const user_id = data.session.user.id;
 
-    const { data: followingList, error } = await supabase.from('follow').select('*').eq('requester_id', user_id);
+    const { data: followingList, error } = await supabase
+        .from('follow')
+        .select('*')
+        .eq('requester_id', user_id)
+        .range((pageParam - 1) * pageSize, pageParam * pageSize - 1);
 
     if (error) {
         throw new Error(error.message);

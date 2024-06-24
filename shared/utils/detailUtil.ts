@@ -30,3 +30,7 @@ export const getTotalRows = (pagination: any) => {
     const totalRows = plan.Plans[0]['Actual Rows'];
     return totalRows;
 };
+
+export const getTotalPages = (totalRows: number, pageSize: number) => {
+    return Math.ceil(totalRows / pageSize);
+};

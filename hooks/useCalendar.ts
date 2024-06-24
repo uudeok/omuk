@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useCallback } from 'react';
 import dayjs from 'dayjs';
 import { calculateMonthInfo } from '@/shared/utils/calendarUtil';

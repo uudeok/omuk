@@ -11,7 +11,6 @@ import { useQueries } from '@tanstack/react-query';
 import { getReviewPageInfo } from '@/services/reviewService';
 import LoadingBar from '@/components/common/LoadingBar';
 import MyCalendar from '@/components/MyCalendar';
-import { getTotalRows } from '@/shared/utils/detailUtil';
 import Follow from '@/components/Follow';
 
 /** follow, myreview & mybookmark, calendar 3단락 */
@@ -41,9 +40,6 @@ const MyPage = () => {
 
     const [bookmarkPagination, reviewPagination] = combinedQueries.data;
 
-    const totalBookmark = getTotalRows(bookmarkPagination);
-    const totalReview = getTotalRows(reviewPagination);
-
     return (
         <div>
             <Follow />
@@ -58,7 +54,7 @@ const MyPage = () => {
                                 <Text typography="st3">즐겨찾기</Text>
                             </div>
                         }
-                        right={totalBookmark ? `${totalBookmark}개` : '아직 없어용'}
+                        right={bookmarkPagination ? `${bookmarkPagination}개` : '아직 없어용'}
                     />
                     <ListRow
                         onClick={() => router.push('/my/review')}
@@ -68,7 +64,7 @@ const MyPage = () => {
                                 <Text typography="st3">나의 리뷰</Text>
                             </div>
                         }
-                        right={totalReview ? `${totalReview}개` : '아직 없어용'}
+                        right={reviewPagination ? `${reviewPagination}개` : '아직 없어용'}
                     />
                 </List>
             </div>

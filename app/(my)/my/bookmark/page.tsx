@@ -4,11 +4,11 @@ import styles from '../../../../styles/mybookmark.module.css';
 import Button from '@/components/common/Button';
 import List, { ListBox } from '@/components/common/List';
 import { useInfiniteScroll } from '@/hooks';
-import { usePagination } from '@/hooks/usePagination';
 import { getBookmarkPageInfo, getUserBookmarksPaginated } from '@/services/bookmarkService';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Text from '@/components/common/Text';
+import { getTotalPages } from '@/shared/utils/detailUtil';
 
 const MyBookmark = () => {
     const router = useRouter();
@@ -19,7 +19,7 @@ const MyBookmark = () => {
         queryFn: () => getBookmarkPageInfo(),
     });
 
-    const { totalPage } = usePagination(pageInfo, pageSize);
+    const totalPage = getTotalPages(pageInfo, pageSize);
 
     const {
         data: bookmarkList,

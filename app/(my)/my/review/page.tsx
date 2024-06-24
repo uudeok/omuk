@@ -6,9 +6,9 @@ import Button from '@/components/common/Button';
 import Text from '@/components/common/Text';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getUserReviewsPaginated, getReviewPageInfo, ReviewType } from '@/services/reviewService';
-import { usePagination } from '@/hooks/usePagination';
 import { useInfiniteScroll } from '@/hooks';
 import Review from '@/components/Review';
+import { getTotalPages } from '@/shared/utils/detailUtil';
 
 const MyReviewList = () => {
     const router = useRouter();
@@ -19,7 +19,7 @@ const MyReviewList = () => {
         queryFn: () => getReviewPageInfo(),
     });
 
-    const { totalPage } = usePagination(pageInfo, pageSize);
+    const totalPage = getTotalPages(pageInfo, pageSize);
 
     const {
         data: reviewList,

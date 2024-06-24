@@ -140,7 +140,7 @@ export const getReviewPageInfo = async () => {
 
     const user_id = data.session.user.id;
 
-    const { data: reviewData, error } = await supabase
+    const { data: reviewData, error }: any = await supabase
         .from('review')
         .select('*')
         .eq('user_id', user_id)
@@ -150,7 +150,9 @@ export const getReviewPageInfo = async () => {
         throw new Error(error.message);
     }
 
-    return reviewData;
+    const actualRows = reviewData[0].Plan.Plans[0]['Actual Rows'];
+
+    return actualRows;
 };
 
 // 사용자에 대한 리뷰 목록을 페이지 단위로 가져오기

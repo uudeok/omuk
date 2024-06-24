@@ -97,7 +97,7 @@ export const getBookmarkPageInfo = async () => {
 
     const user_id = data.session.user.id;
 
-    const { data: bookmarkData, error } = await supabase
+    const { data: bookmarkData, error }: any = await supabase
         .from('bookmark')
         .select('*')
         .eq('user_id', user_id)
@@ -107,7 +107,9 @@ export const getBookmarkPageInfo = async () => {
         throw new Error(error.message);
     }
 
-    return bookmarkData;
+    const actualRows = bookmarkData[0].Plan.Plans[0]['Actual Rows'];
+
+    return actualRows;
 };
 
 // // 사용자에 대한 북마크 목록을 페이지 단위로 가져오기

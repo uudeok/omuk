@@ -1,0 +1,8 @@
+.following {
+    margin-top: 10px;
+}
+
+.following li {
+    display: flex;
+    margin: 5px;
+}
