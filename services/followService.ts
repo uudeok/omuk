@@ -73,7 +73,7 @@ export const getFollowingList = async (pageParam: number, pageSize: number): Pro
 };
 
 // follower list 가져오기 (주체 : 다른 사람 > 나)
-export const getFollowerList = async () => {
+export const getFollowerList = async (pageParam: number, pageSize: number): Promise<FollowType[] | undefined> => {
     const supabase = createClient();
 
     const { data } = await supabase.auth.getSession();
@@ -82,7 +82,11 @@ export const getFollowerList = async () => {
 
     const user_id = data.session.user.id;
 
-    const { data: followerList, error } = await supabase.from('follow').select('*').eq('requestee_id', user_id);
+    const { data: followerList, error } = await supabase
+        .from('follow')
+        .select('*')
+        .eq('requestee_id', user_id)
+        .range((pageParam - 1) * pageSize, pageParam * pageSize - 1);
 
     if (error) {
         throw new Error(error.message);

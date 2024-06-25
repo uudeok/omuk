@@ -19,16 +19,9 @@ export const makeAdress = (address: AddressType) => {
 };
 
 export const calculateScore = (feedback: FeedbackType) => {
-    // if (!feedback) return;
     if (feedback.scorecnt === 0) return 0;
     const score = feedback.scoresum / feedback.scorecnt;
     return score.toFixed(1);
-};
-
-export const getTotalRows = (pagination: any) => {
-    const plan = pagination[0].Plan as any;
-    const totalRows = plan.Plans[0]['Actual Rows'];
-    return totalRows;
 };
 
 export const getTotalPages = (totalRows: number, pageSize: number) => {

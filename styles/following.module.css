@@ -5,4 +5,19 @@
 .following li {
     display: flex;
     margin: 5px;
+    cursor: pointer;
+    padding: 5px;
+
+    &:hover {
+        background-color: var(--blue20);
+    }
+}
+
+.nothing {
+    margin: 50px auto;
+    width: 60%;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }

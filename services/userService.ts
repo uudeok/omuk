@@ -10,7 +10,7 @@ export type ProfileType = {
 export const searchUserData = async (emailOrUsername: string): Promise<ProfileType> => {
     const supabase = createClient();
 
-    const { data: profiles, error } = await supabase
+    const { data: profile, error } = await supabase
         .from('profiles')
         .select('*')
         .or(`email.eq.${emailOrUsername},username.eq.${emailOrUsername}`)
@@ -20,11 +20,11 @@ export const searchUserData = async (emailOrUsername: string): Promise<ProfileTy
         throw new Error(error.message);
     }
 
-    return profiles;
+    return profile;
 };
 
 // 팔로잉한 유저들 정보 가져오기
-export const getFollowingUserListsPaginated = async (requestee_id: string) => {
+export const getFollowUserListsPaginated = async (requestee_id: string) => {
     const supabase = createClient();
 
     const { data: followingList, error } = await supabase.from('profiles').select('*').eq('id', requestee_id);

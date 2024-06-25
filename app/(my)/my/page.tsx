@@ -13,7 +13,7 @@ import LoadingBar from '@/components/common/LoadingBar';
 import MyCalendar from '@/components/MyCalendar';
 import Follow from '@/components/Follow';
 
-/** follow, myreview & mybookmark, calendar 3단락 */
+/** follow, myreview & mybookmark, calendar 3단락으로 구분 */
 
 const MyPage = () => {
     const router = useRouter();

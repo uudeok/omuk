@@ -18,7 +18,7 @@ import {
     requestFollow,
     requestUnFollow,
 } from '@/services/followService';
-import { useQueries } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import useFollowStore from '@/shared/lib/store/useFollowStore';
 
@@ -31,37 +31,33 @@ const Follow = () => {
     const [value, onChangeInput, isValid] = useInput({ minLength: 2 });
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [profile, setProfile] = useState<ProfileType | null>();
-    const [isFollowing, setIsFollowing] = useState(false);
     const [hasFollow, setHasFollow] = useState();
 
-    const fetchData = [
-        { queryKey: 'followingInfo', queryFn: getFollowingInfo },
-        { queryKey: 'followerInfo', queryFn: getFollowerInfo },
-    ];
-
-    const combinedQueries = useQueries({
-        queries: fetchData.map((data) => ({
-            queryKey: [data.queryKey],
-            queryFn: () => data.queryFn(),
-        })),
-        combine: (results) => {
-            return {
-                data: results.map((result) => result.data),
-            };
-        },
+    // 팔로잉 수 불러오는 로직
+    const { data: followingInfo, refetch: refetchFollowingInfo } = useQuery({
+        queryKey: ['followingInfo'],
+        queryFn: getFollowingInfo,
     });
 
-    const checkFollow = useCallback(async () => {
+    // 팔로워 수 불러오는 로직
+    const { data: followerInfo } = useQuery({
+        queryKey: ['followerInfo'],
+        queryFn: getFollowerInfo,
+    });
+
+    // 내가 이미 팔로잉 한 유저인지 검사
+    const checkIfFollowingUser = useCallback(async () => {
         const isFollow = await checkFollowing(profile!.id);
         setHasFollow(isFollow);
     }, [profile, setHasFollow]);
 
     useEffect(() => {
         if (profile) {
-            checkFollow();
+            checkIfFollowingUser();
         }
-    }, [checkFollow, profile]);
+    }, [checkIfFollowingUser, profile]);
 
+    // 유저 검색 시 수행
     const handleSearchUser = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -92,7 +88,7 @@ const Follow = () => {
             requestee_id: profile.id,
         });
 
-        setIsFollowing(true);
+        refetchFollowingInfo();
     };
 
     // unfollow
@@ -106,11 +102,10 @@ const Follow = () => {
 
         await requestUnFollow(profile.id);
 
-        setIsFollowing(false);
+        refetchFollowingInfo();
     };
 
-    const [followingInfo, followerInfo] = combinedQueries.data;
-
+    // 팔로잉, 필로워 수가 바뀔때마다 store 저장
     useEffect(() => {
         setFollowingPagination(followingInfo);
         setFollowerPagination(followerInfo);

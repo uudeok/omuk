@@ -7,8 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useInfiniteQuery, useQueries } from '@tanstack/react-query';
 import { getFollowingList } from '@/services/followService';
 import { useInfiniteScroll } from '@/hooks';
-import { getFollowingUserListsPaginated } from '@/services/userService';
-import LoadingBar from '@/components/common/LoadingBar';
+import { getFollowUserListsPaginated } from '@/services/userService';
 import Avatar from '@/components/common/Avatar';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import List, { ListRow } from '@/components/common/List';
@@ -26,7 +25,7 @@ const FollowingPage = () => {
         fetchNextPage,
         isFetchingNextPage,
     } = useInfiniteQuery({
-        queryKey: ['paginatedReview'],
+        queryKey: ['followingList'],
         queryFn: ({ pageParam }) => getFollowingList(pageParam, pageSize),
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
@@ -39,20 +38,16 @@ const FollowingPage = () => {
         },
     });
 
-    if (isFetchingNextPage) return <LoadingBar />;
-
-    // if (followingIds && followingIds.length === 0) return <div>no data</div>;
-
-    const follwingUserDatas = useQueries({
+    const followingUserDatas = useQueries({
         queries:
             followingIds?.map((id) => ({
                 queryKey: ['followingUser', id],
-                queryFn: () => getFollowingUserListsPaginated(id!),
+                queryFn: () => getFollowUserListsPaginated(id!),
             })) || [],
         combine: (results) => {
             return {
                 data: results.map((result) => result.data).flat(),
-                pending: results.some((result) => result.isPending),
+                // pending: results.some((result) => result.isPending),
             };
         },
     });
@@ -62,8 +57,6 @@ const FollowingPage = () => {
         hasNextPage: hasNextPage,
     });
 
-    if (follwingUserDatas.pending) return <LoadingBar />;
-
     return (
         <div>
             <Button size="sm" role="none" onClick={() => router.back()}>
@@ -72,14 +65,14 @@ const FollowingPage = () => {
 
             <div className={styles.following}>
                 <List>
-                    {follwingUserDatas?.data?.map((user) => (
+                    {followingUserDatas?.data?.map((user, idx) => (
                         <ListRow
-                            key={user.id}
+                            key={idx}
                             left={<Avatar profile={user} />}
                             right={
                                 <div>
                                     <Button size="sm" role="round">
-                                        방문
+                                        취소
                                     </Button>
                                 </div>
                             }
@@ -94,3 +87,10 @@ const FollowingPage = () => {
 };
 
 export default FollowingPage;
+
+//     <div className={styles.nothing}>
+//         <Text typography="st3">아직 친구가 없어용🥲</Text>
+//         <Button size="sm" role="round">
+//             만들러가기
+//         </Button>
+//     </div>
