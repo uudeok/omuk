@@ -1,11 +1,11 @@
 'use client';
 
-import styles from '../styles/calendar.module.css';
+import styles from '../../styles/calendar.module.css';
 import dayjs from 'dayjs';
-import { useState, Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useCalendar } from '@/hooks';
-import AngleRight from '../assets/angle-right.svg';
-import AngleLeft from '../assets/angle-left.svg';
+import AngleRight from '../../assets/angle-right.svg';
+import AngleLeft from '../../assets/angle-left.svg';
 
 type Props = {
     selectedDate: Date;

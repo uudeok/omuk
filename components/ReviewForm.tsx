@@ -19,7 +19,7 @@ import { FeedBackItem } from '@/shared/types';
 import { getReviewData, postReview, updateReview } from '@/services/reviewService';
 import { useQuery } from '@tanstack/react-query';
 import Modal from './common/Modal';
-import CalendarModal from './CalendarModal';
+import CalendarModal from './modal/CalendarModal';
 import { initializeDate } from '@/shared/utils/calendarUtil';
 
 const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) => {

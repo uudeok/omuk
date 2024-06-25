@@ -20,13 +20,13 @@ const Controller = () => {
     return (
         <div className={styles.controller}>
             <Button size="lg" role="round" onClick={() => redirectPage('my')}>
-                MyPage
+                내 페이지
             </Button>
-            <Button size="lg" role="round" onClick={() => redirectPage('my/review')}>
-                오늘 뭐 먹었니?
+            <Button size="lg" role="round" onClick={() => redirectPage('community')}>
+                와글와글
             </Button>
             <Button size="lg" role="round" onClick={() => redirectPage('my/bookmark')}>
-                즐겨찾기한 음식점 보기
+                오늘 뭐먹지?
             </Button>
         </div>
     );
