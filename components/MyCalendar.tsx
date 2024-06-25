@@ -11,7 +11,6 @@ import { ReviewType, getReviewList } from '@/services/reviewService';
 import { cutText } from '@/shared/utils/stringUtils';
 import Review from './Review';
 import { useQuery } from '@tanstack/react-query';
-import LoadingBar from './common/LoadingBar';
 
 const MyCalendar = () => {
     const { prevController, nextController, body, curMonth, curYear, weeks } = useCalendar();

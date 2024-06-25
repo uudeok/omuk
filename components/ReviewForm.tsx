@@ -14,7 +14,7 @@ import Input from './common/Input';
 import InputBase from './common/InputBase';
 import Rating from './common/Rating';
 import { useRouter } from 'next/navigation';
-import { FEEDBACK_LIST, COMPANIONS } from '@/constants/review';
+import { FEEDBACK_LIST, COMPANIONS } from '@/constants';
 import { FeedBackItem } from '@/shared/types';
 import { getReviewData, postReview, updateReview } from '@/services/reviewService';
 import { useQuery } from '@tanstack/react-query';

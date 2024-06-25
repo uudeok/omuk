@@ -11,13 +11,12 @@ import { useInfiniteQuery, useQueries } from '@tanstack/react-query';
 import { getFollowerList } from '@/services/followService';
 import { getFollowUserListsPaginated } from '@/services/userService';
 import { useInfiniteScroll } from '@/hooks';
-
-const pageSize = 20;
+import { FOLLOW_PAGE_SIZE } from '@/constants';
 
 const FollowerPage = () => {
     const router = useRouter();
     const { followerPagination } = useFollowStore();
-    const totalPage = getTotalPages(followerPagination, pageSize);
+    const totalPage = getTotalPages(followerPagination, FOLLOW_PAGE_SIZE);
 
     const {
         data: followerIds,
@@ -26,7 +25,7 @@ const FollowerPage = () => {
         isFetchingNextPage,
     } = useInfiniteQuery({
         queryKey: ['followerList'],
-        queryFn: ({ pageParam }) => getFollowerList(pageParam, pageSize),
+        queryFn: ({ pageParam }) => getFollowerList(pageParam, FOLLOW_PAGE_SIZE),
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
             if (lastPageParam < totalPage) {
@@ -37,8 +36,6 @@ const FollowerPage = () => {
             return data.pages.flat().map((page) => page?.requester_id);
         },
     });
-
-    // if (isFetchingNextPage) return <LoadingBar />;
 
     const followerUserDatas = useQueries({
         queries:

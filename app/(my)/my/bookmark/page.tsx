@@ -9,17 +9,17 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Text from '@/components/common/Text';
 import { getTotalPages } from '@/shared/utils/detailUtil';
+import { DEFAULT_PAGE_SIZE } from '@/constants';
 
 const MyBookmark = () => {
     const router = useRouter();
-    const pageSize = 15;
 
     const { data: pageInfo } = useQuery({
         queryKey: ['bookmarkPagination'],
         queryFn: () => getBookmarkPageInfo(),
     });
 
-    const totalPage = getTotalPages(pageInfo, pageSize);
+    const totalPage = getTotalPages(pageInfo, DEFAULT_PAGE_SIZE);
 
     const {
         data: bookmarkList,
@@ -28,7 +28,7 @@ const MyBookmark = () => {
         isFetchingNextPage,
     } = useInfiniteQuery({
         queryKey: ['bookmarkList'],
-        queryFn: ({ pageParam }) => getUserBookmarksPaginated(pageParam, pageSize),
+        queryFn: ({ pageParam }) => getUserBookmarksPaginated(pageParam, DEFAULT_PAGE_SIZE),
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
             if (lastPageParam < totalPage) {

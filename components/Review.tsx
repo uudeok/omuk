@@ -7,7 +7,7 @@ import { ReviewType } from '@/services/reviewService';
 import Text from './common/Text';
 import List, { ListBox } from './common/List';
 import Rating from './common/Rating';
-import { COMPANION } from '@/constants/review';
+import { COMPANION } from '@/constants';
 import Button from './common/Button';
 import Pencil from '../assets/pencil.svg';
 

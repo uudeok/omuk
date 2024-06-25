@@ -11,13 +11,12 @@ import { getFollowUserListsPaginated } from '@/services/userService';
 import Avatar from '@/components/common/Avatar';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import List, { ListRow } from '@/components/common/List';
-
-const pageSize = 20;
+import { FOLLOW_PAGE_SIZE } from '@/constants';
 
 const FollowingPage = () => {
     const router = useRouter();
     const { followingPagination } = useFollowStore();
-    const totalPage = getTotalPages(followingPagination, pageSize);
+    const totalPage = getTotalPages(followingPagination, FOLLOW_PAGE_SIZE);
 
     const {
         data: followingIds,
@@ -26,7 +25,7 @@ const FollowingPage = () => {
         isFetchingNextPage,
     } = useInfiniteQuery({
         queryKey: ['followingList'],
-        queryFn: ({ pageParam }) => getFollowingList(pageParam, pageSize),
+        queryFn: ({ pageParam }) => getFollowingList(pageParam, FOLLOW_PAGE_SIZE),
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
             if (lastPageParam < totalPage) {
@@ -47,7 +46,6 @@ const FollowingPage = () => {
         combine: (results) => {
             return {
                 data: results.map((result) => result.data).flat(),
-                // pending: results.some((result) => result.isPending),
             };
         },
     });

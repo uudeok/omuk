@@ -1,4 +1,4 @@
-import { MONTH_LABEL } from '@/constants/calendar';
+import { MONTH_LABEL } from '@/constants';
 import { MONTH_LABEL_VALUES } from '../types';
 
 export const calculateMonthInfo = (year: number, month: number) => {

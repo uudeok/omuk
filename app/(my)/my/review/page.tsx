@@ -9,17 +9,17 @@ import { getUserReviewsPaginated, getReviewPageInfo, ReviewType } from '@/servic
 import { useInfiniteScroll } from '@/hooks';
 import Review from '@/components/Review';
 import { getTotalPages } from '@/shared/utils/detailUtil';
+import { DEFAULT_PAGE_SIZE } from '@/constants';
 
 const MyReviewList = () => {
     const router = useRouter();
-    const pageSize = 15;
 
     const { data: pageInfo } = useQuery({
         queryKey: ['reviewPagination'],
         queryFn: () => getReviewPageInfo(),
     });
 
-    const totalPage = getTotalPages(pageInfo, pageSize);
+    const totalPage = getTotalPages(pageInfo, DEFAULT_PAGE_SIZE);
 
     const {
         data: reviewList,
@@ -28,7 +28,7 @@ const MyReviewList = () => {
         isFetchingNextPage,
     } = useInfiniteQuery({
         queryKey: ['paginatedReview'],
-        queryFn: ({ pageParam }) => getUserReviewsPaginated(pageParam, pageSize),
+        queryFn: ({ pageParam }) => getUserReviewsPaginated(pageParam, DEFAULT_PAGE_SIZE),
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
             if (lastPageParam < totalPage) {
