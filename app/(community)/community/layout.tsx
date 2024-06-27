@@ -33,13 +33,9 @@ const CommunityLayout = ({ children }: { children: ReactNode }) => {
                     </div>
                 )}
             </div>
-            <main>{children}</main>
+            <main className={styles.content}>{children}</main>
         </Slide>
     );
 };
 
 export default CommunityLayout;
-
-{
-    /* <main className={styles.content}>{children}</main> */
-}

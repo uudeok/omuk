@@ -1,6 +1,19 @@
 import { createClient } from '@/shared/lib/supabase/brower-client';
 
-// 특정 음식점 리뷰 데이터 가져오기
+export type ReviewType = {
+    rate: number;
+    positive: string[];
+    negative: string[];
+    res_id: string;
+    placeName: string;
+    visitDate: Date;
+    companions: string | null;
+    comment: string;
+    id?: number;
+    created_at?: string;
+};
+
+// 유저_id 로 특정 음식점 리뷰 조회
 export const getReviewData = async (res_id: string) => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
@@ -21,17 +34,6 @@ export const getReviewData = async (res_id: string) => {
     }
 
     return review;
-};
-
-export type ReviewType = {
-    rate: number;
-    positive: string[];
-    negative: string[];
-    res_id: string;
-    placeName: string;
-    visitDate: Date;
-    companions: string | null;
-    comment: string;
 };
 
 // 리뷰 작성
@@ -113,7 +115,7 @@ export const updateReview = async ({
     return review;
 };
 
-// user_id 로 작성한 모든 리뷰 가져오기 >  총 리뷰 갯수 확인용 수정 필요
+// 유저_id 로 작성한 모든 리뷰 가져오기
 export const getReviewList = async (): Promise<ReviewType[] | undefined | []> => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
@@ -131,7 +133,7 @@ export const getReviewList = async (): Promise<ReviewType[] | undefined | []> =>
     return reviewList;
 };
 
-// review 페이지네이션을 위한 정보
+// review 페이지네이션
 export const getReviewPageInfo = async () => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
@@ -156,7 +158,7 @@ export const getReviewPageInfo = async () => {
 };
 
 // 사용자에 대한 리뷰 목록을 페이지 단위로 가져오기
-export const getUserReviewsPaginated = async (
+export const getPaginatedUserReviews = async (
     pageParam: number,
     pageSize: number
 ): Promise<ReviewType[] | undefined> => {
@@ -172,6 +174,23 @@ export const getUserReviewsPaginated = async (
         .select('*')
         .eq('user_id', user_id)
         .range((pageParam - 1) * pageSize, pageParam * pageSize - 1);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return reviewList;
+};
+
+// 리뷰 목록을 최신 순으로 페이지 단위로 가져오기
+export const getPaginatedReviews = async (pageParam: number, pageSize: number): Promise<ReviewType[]> => {
+    const supabase = createClient();
+
+    const { data: reviewList, error } = await supabase
+        .from('review')
+        .select('*')
+        .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
+        .order('created_at', { ascending: false });
 
     if (error) {
         throw new Error(error.message);
