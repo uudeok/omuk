@@ -1,5 +1,5 @@
 import Search from '../Search';
-import Card from '../Card';
+import RestaurantList from '../RestaurantList';
 import styles from '../../styles/sideBar.module.css';
 import Controller from '../Controller';
 import Header from './Header';
@@ -12,7 +12,7 @@ const SideBar = () => {
                 <Search />
                 <Controller />
             </div>
-            <Card />
+            <RestaurantList />
         </div>
     );
 };

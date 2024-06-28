@@ -23,7 +23,7 @@ const Controller = () => {
                 내 페이지
             </Button>
             <Button size="lg" role="round" onClick={() => router.push('/community')}>
-                와글와글
+                커뮤니티
             </Button>
             <Button size="lg" role="round" onClick={() => redirectPage('my/bookmark')}>
                 오늘 뭐먹지?

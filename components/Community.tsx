@@ -11,6 +11,7 @@ import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
 import { useInfiniteScroll } from '@/hooks';
 import { ReviewType } from '@/services/reviewService';
+import Card from './Card';
 
 type Props = {
     totalReviews: number;
@@ -27,7 +28,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
         fetchNextPage,
         isFetchingNextPage,
     } = useInfiniteQuery({
-        queryKey: ['paginatedReview'],
+        queryKey: ['paginatedTotalReview'],
         queryFn: ({ pageParam }) => getPaginatedReviews(pageParam, DEFAULT_PAGE_SIZE),
         initialPageParam: 2,
         enabled,
@@ -70,6 +71,12 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
 
             <List>
                 {initalReviews.map((review) => (
+                    <Card list={review} key={review.id} />
+                ))}
+            </List>
+
+            {/* <List>
+                {initalReviews.map((review) => (
                     <ListBox
                         key={review.id}
                         top={
@@ -80,7 +87,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
                         bottom={<div>{review.comment}</div>}
                     />
                 ))}
-            </List>
+            </List> */}
 
             <List>
                 {reviewList?.map((review) => (

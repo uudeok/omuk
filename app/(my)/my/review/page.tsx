@@ -10,7 +10,6 @@ import { useInfiniteScroll } from '@/hooks';
 import Review from '@/components/Review';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
-import { flattenDeep, compact } from 'lodash';
 
 const MyReviewList = () => {
     const router = useRouter();
@@ -38,7 +37,6 @@ const MyReviewList = () => {
         },
         select: (data) => {
             return data.pages.flatMap((page) => page);
-            // return data.pages.flat();
         },
     });
 
@@ -46,8 +44,6 @@ const MyReviewList = () => {
         callbackFn: fetchNextPage,
         hasNextPage: hasNextPage,
     });
-
-    console.log(reviewList);
 
     return (
         <div>
