@@ -1,4 +1,5 @@
 import { createClient } from '@/shared/lib/supabase/brower-client';
+import { uploadImages, updateImages } from './imageService';
 
 export type ReviewType = {
     rate: number;
@@ -11,6 +12,7 @@ export type ReviewType = {
     comment: string;
     id?: number;
     created_at?: string;
+    files?: string[];
 };
 
 // 유저_id 로 특정 음식점 리뷰 조회
@@ -36,7 +38,7 @@ export const getReviewData = async (res_id: string) => {
     return review;
 };
 
-// 리뷰 작성
+// 새 리뷰 작성
 export const postReview = async ({
     rate,
     comment,
@@ -46,6 +48,7 @@ export const postReview = async ({
     placeName,
     visitDate,
     companions,
+    files = [],
 }: ReviewType) => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
@@ -72,6 +75,11 @@ export const postReview = async ({
         throw new Error(error.message);
     }
 
+    const review_id = review[0].id;
+
+    if (files.length > 0) {
+        await uploadImages(files, review_id);
+    }
     return review;
 };
 
@@ -85,6 +93,7 @@ export const updateReview = async ({
     placeName,
     visitDate,
     companions,
+    files = [],
 }: ReviewType) => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
@@ -106,10 +115,19 @@ export const updateReview = async ({
             companions: companions,
         })
         .eq('user_id', user_id)
-        .eq('res_id', res_id);
+        .eq('res_id', res_id)
+        .select();
 
     if (error) {
         throw new Error(error.message);
+    }
+
+    const review_id = review[0].id;
+
+    console.log('추가된 files', files);
+
+    if (files.length > 0) {
+        await updateImages(files, review_id);
     }
 
     return review;
@@ -198,3 +216,82 @@ export const getPaginatedReviews = async (pageParam: number, pageSize: number): 
 
     return reviewList;
 };
+
+// 리뷰 작성
+// export const postReview = async ({
+//     rate,
+//     comment,
+//     positive,
+//     negative,
+//     res_id,
+//     placeName,
+//     visitDate,
+//     companions,
+// }: ReviewType) => {
+//     const supabase = createClient();
+//     const { data } = await supabase.auth.getSession();
+
+//     if (!data.session) return;
+
+//     const { data: review, error } = await supabase
+//         .from('review')
+//         .insert([
+//             {
+//                 rate: rate,
+//                 comment: comment,
+//                 positive: positive,
+//                 negative: negative,
+//                 res_id: res_id,
+//                 placeName: placeName,
+//                 visitDate: visitDate,
+//                 companions: companions,
+//             },
+//         ])
+//         .select();
+
+//     if (error) {
+//         throw new Error(error.message);
+//     }
+
+//     return review;
+// };
+
+// 리뷰 수정
+// export const updateReview = async ({
+//     rate,
+//     comment,
+//     positive,
+//     negative,
+//     res_id,
+//     placeName,
+//     visitDate,
+//     companions,
+// }: ReviewType) => {
+//     const supabase = createClient();
+//     const { data } = await supabase.auth.getSession();
+
+//     if (!data.session) return;
+
+//     const user_id = data.session.user.id;
+
+//     const { data: review, error } = await supabase
+//         .from('review')
+//         .update({
+//             rate: rate,
+//             comment: comment,
+//             positive: positive,
+//             negative: negative,
+//             res_id: res_id,
+//             placeName: placeName,
+//             visitDate: visitDate,
+//             companions: companions,
+//         })
+//         .eq('user_id', user_id)
+//         .eq('res_id', res_id);
+
+//     if (error) {
+//         throw new Error(error.message);
+//     }
+
+//     return review;
+// };

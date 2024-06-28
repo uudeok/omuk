@@ -61,3 +61,90 @@
 .comment input {
     box-sizing: border-box;
 }
+
+.images {
+    padding: 10px;
+}
+
+.addImg {
+    border: 2px solid var(--mainColorDk);
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+
+    &:hover {
+        color: grey;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.slide {
+    display: flex;
+
+    margin-top: 5px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    scrollbar-width: thin;
+}
+
+.slideImg {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px; /* 이미지 간격 */
+}
+
+.slideImg img {
+    object-fit: cover; /* 이미지가 너비와 높이에 맞춰집니다 */
+}
+
+.slideImg button {
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.slideImg button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* .slideImg {
+    border: 1px solid black;
+    display: flex;
+    width: 180px;
+} */
+
+/* .addImg {
+    border: 3px dotted var(--mainColorDk);
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    margin-top: 5px;
+    border-radius: 15px;
+    cursor: pointer;
+    color: var(--mainColorDk);
+
+    &:hover {
+        color: var(--mainColor);
+    }
+} */

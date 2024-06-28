@@ -83,8 +83,8 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: number
-          requestee_id?: string
-          requester_id?: string
+          requestee_id: string
+          requester_id: string
           status?: string
         }
         Update: {
@@ -103,10 +103,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "follow_requestee_id_fkey1"
+            columns: ["requestee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "follow_requester_id_fkey"
             columns: ["requester_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "follow_requester_id_fkey1"
+            columns: ["requester_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -183,6 +197,45 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "review_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      review_images: {
+        Row: {
+          created_at: string
+          id: number
+          images_url: string[] | null
+          review_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          images_url?: string[] | null
+          review_id: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          images_url?: string[] | null
+          review_id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "review_images_review_id_fkey"
+            columns: ["review_id"]
+            isOneToOne: false
+            referencedRelation: "review"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "review_images_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
