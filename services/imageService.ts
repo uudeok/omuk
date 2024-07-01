@@ -1,5 +1,13 @@
 import { createClient } from '@/shared/lib/supabase/brower-client';
 
+export type ReviewImageType = {
+    id: number;
+    created_at: string;
+    user_id: string;
+    review_id: number;
+    images_url: string[] | Blob[];
+};
+
 // 이미지 업로드 함수
 export const uploadImages = async (files: string[], review_id: string) => {
     const supabase = createClient();
@@ -31,7 +39,11 @@ export const uploadImages = async (files: string[], review_id: string) => {
 export const existingImages = async (review_id: string) => {
     const supabase = createClient();
 
-    const { data: existingImages, error } = await supabase.from('review_images').select('*').eq('review_id', review_id);
+    const { data: existingImages, error } = await supabase
+        .from('review_images')
+        .select('*')
+        .eq('review_id', review_id)
+        .maybeSingle();
 
     if (error) {
         throw new Error(error.message);
@@ -53,7 +65,7 @@ export const updateImages = async (files: string[], review_id: string) => {
 
     // 저장된 이미지가 있다면 수정, 없다면 생성
 
-    if (isExist.length > 0) {
+    if (isExist) {
         const { data: reviewImages, error } = await supabase
             .from('review_images')
             .update({

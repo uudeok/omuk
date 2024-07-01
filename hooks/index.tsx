@@ -9,4 +9,4 @@ export { useMarker } from './useMarker';
 export { useSession } from './useSession';
 export { useCalendar } from './useCalendar';
 export { useDebounce } from './useDebounce';
-export { useHover } from './useHover';
+export { useS3FileUpload } from './useS3FileUpload';

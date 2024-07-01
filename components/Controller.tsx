@@ -25,8 +25,8 @@ const Controller = () => {
             <Button size="lg" role="round" onClick={() => router.push('/community')}>
                 커뮤니티
             </Button>
-            <Button size="lg" role="round" onClick={() => redirectPage('my/bookmark')}>
-                오늘 뭐먹지?
+            <Button size="lg" role="round" onClick={() => redirectPage('my/test')}>
+                가게홍보
             </Button>
         </div>
     );

@@ -48,7 +48,6 @@ export const postReview = async ({
     placeName,
     visitDate,
     companions,
-    files = [],
 }: ReviewType) => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
@@ -77,10 +76,7 @@ export const postReview = async ({
 
     const review_id = review[0].id;
 
-    if (files.length > 0) {
-        await uploadImages(files, review_id);
-    }
-    return review;
+    return review_id;
 };
 
 // 리뷰 수정
@@ -217,7 +213,7 @@ export const getPaginatedReviews = async (pageParam: number, pageSize: number): 
     return reviewList;
 };
 
-// 리뷰 작성
+// 새 리뷰 작성
 // export const postReview = async ({
 //     rate,
 //     comment,
@@ -227,6 +223,7 @@ export const getPaginatedReviews = async (pageParam: number, pageSize: number): 
 //     placeName,
 //     visitDate,
 //     companions,
+//     files = [],
 // }: ReviewType) => {
 //     const supabase = createClient();
 //     const { data } = await supabase.auth.getSession();
@@ -253,45 +250,10 @@ export const getPaginatedReviews = async (pageParam: number, pageSize: number): 
 //         throw new Error(error.message);
 //     }
 
-//     return review;
-// };
+//     const review_id = review[0].id;
 
-// 리뷰 수정
-// export const updateReview = async ({
-//     rate,
-//     comment,
-//     positive,
-//     negative,
-//     res_id,
-//     placeName,
-//     visitDate,
-//     companions,
-// }: ReviewType) => {
-//     const supabase = createClient();
-//     const { data } = await supabase.auth.getSession();
-
-//     if (!data.session) return;
-
-//     const user_id = data.session.user.id;
-
-//     const { data: review, error } = await supabase
-//         .from('review')
-//         .update({
-//             rate: rate,
-//             comment: comment,
-//             positive: positive,
-//             negative: negative,
-//             res_id: res_id,
-//             placeName: placeName,
-//             visitDate: visitDate,
-//             companions: companions,
-//         })
-//         .eq('user_id', user_id)
-//         .eq('res_id', res_id);
-
-//     if (error) {
-//         throw new Error(error.message);
+//     if (files.length > 0) {
+//         await uploadImages(files, review_id);
 //     }
-
 //     return review;
 // };

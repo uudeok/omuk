@@ -2,9 +2,9 @@
 
 import styles from '../styles/reviewform.module.css';
 import dayjs from 'dayjs';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import List, { ListRow } from '@/components/common/List';
-import { useBoolean, useInput, useSession } from '@/hooks';
+import { useBoolean, useInput, useS3FileUpload, useSession } from '@/hooks';
 import Text from '@/components/common/Text';
 import Badge from '@/components/common/Badge';
 import Button from './common/Button';
@@ -21,23 +21,22 @@ import { useQuery } from '@tanstack/react-query';
 import Modal from './common/Modal';
 import CalendarModal from './modal/CalendarModal';
 import { initializeDate } from '@/shared/utils/calendarUtil';
+import { uploadImages } from '@/services/imageService';
 
 const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) => {
-    const MAX_IMAGES = 5;
     const session = useSession();
     const router = useRouter();
     const fileRef = useRef<HTMLInputElement>(null);
+    const { setFiles, files, handleFileInputChange, uploadFiles, alertMessage } = useS3FileUpload({ maxSize: 5 });
 
     const [value, onChangeInput, isValid, setValue] = useInput({ maxLength: 30, minLength: 2 });
     const { value: isOpen, setFalse: closeModal, toggle: ModalToggle } = useBoolean();
 
     const [rate, setRate] = useState<number>(0);
-    const [selectedImages, setSelectedImages] = useState<string[]>([]);
     const [selectedPositives, setSelectedPositives] = useState<FeedBackItem[]>([]);
     const [selectedNegatives, setSelectedNegatives] = useState<FeedBackItem[]>([]);
     const [selectedCompanions, setSelectedCompanions] = useState<string | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date>(initializeDate);
-    const [alertMessage, setAlertMessage] = useState('');
 
     const date = dayjs(selectedDate).format('YYYY-MM-DD');
     const positiveFeedback = FEEDBACK_LIST.find((feedback) => feedback.type === 'positive')!;
@@ -70,10 +69,6 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         );
     };
 
-    const handleCompanionClick = (companion: string) => {
-        setSelectedCompanions(companion);
-    };
-
     const handleUpdateReview = async (method: 'post' | 'update') => {
         const reviewData = {
             rate: rate,
@@ -84,11 +79,12 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
             visitDate: selectedDate,
             companions: selectedCompanions,
             comment: value,
-            files: selectedImages,
         };
 
         if (method === 'post') {
-            await postReview(reviewData);
+            const review_id = await postReview(reviewData);
+            const uploadedUrls = await uploadFiles();
+            await uploadImages(uploadedUrls!, review_id);
         } else if (method === 'update') {
             await updateReview(reviewData);
         }
@@ -96,29 +92,13 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         router.replace(`/${res_id}`);
     };
 
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const targetFiles = (e.target as HTMLInputElement).files as FileList;
-        const targetFilesArray = Array.from(targetFiles);
-
-        if (selectedImages.length + targetFilesArray.length > MAX_IMAGES) {
-            setAlertMessage(`최대 ${MAX_IMAGES}개의 이미지만 업로드할 수 있습니다.`);
-            return;
-        }
-
-        const selectedFiles: string[] = targetFilesArray.map((file) => {
-            return URL.createObjectURL(file);
-        });
-
-        setSelectedImages((prev) => prev.concat(selectedFiles));
-    };
-
     // 가려진 input file 을 trigger 하는 함수
     const triggerFileInput = () => {
         fileRef?.current?.click();
     };
 
-    const removeImage = (imgToRemove: string) => {
-        setSelectedImages((prevImages) => prevImages.filter((img) => img !== imgToRemove));
+    const removeImage = (file: File) => {
+        setFiles((prevImages) => prevImages.filter((img) => img !== file));
     };
 
     const isFormValid = () => !isValid || rate === 0 || !value || !selectedCompanions;
@@ -127,14 +107,19 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         <div className={styles.container}>
             <div className={styles.content}>
                 <List>
-                    <form className={styles.images}>
+                    <form className={styles.images} onSubmit={(e) => e.preventDefault()}>
                         <Text typography="t5">사진첨부</Text>
 
                         <div className={styles.slide}>
-                            {selectedImages.map((img) => (
-                                <div className={styles.slideImg} key={img}>
-                                    <img src={img} width="160px" height="160px" alt={`image${img}`} />
-                                    <Button size="sm" role="round" onClick={() => removeImage(img)}>
+                            {files?.map((file, index) => (
+                                <div className={styles.slideImg} key={index}>
+                                    <img
+                                        src={URL.createObjectURL(file)}
+                                        width="160px"
+                                        height="160px"
+                                        alt={`image${index}`}
+                                    />
+                                    <Button size="sm" role="round" onClick={() => removeImage(file)}>
                                         x
                                     </Button>
                                 </div>
@@ -142,7 +127,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
                         </div>
 
                         <div onClick={triggerFileInput} className={styles.addImg}>
-                            사진을 추가해보세요 ({selectedImages.length}/5)
+                            사진을 추가해보세요
                         </div>
 
                         <Input bottomText={alertMessage && alertMessage}>
@@ -152,8 +137,8 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
                                 className={styles.hidden}
                                 type="file"
                                 multiple
-                                accept="image/jpeg,image/jpg"
-                                onChange={handleImageUpload}
+                                accept="image/*"
+                                onChange={handleFileInputChange}
                             ></InputBase>
                         </Input>
                     </form>
@@ -165,7 +150,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
                         {COMPANIONS.map((item) => (
                             <Badge
                                 key={item.key}
-                                onClick={() => handleCompanionClick(item.key)}
+                                onClick={() => setSelectedCompanions(item.key)}
                                 isSelected={item.key === selectedCompanions}
                             >
                                 {item.value}

@@ -5,12 +5,12 @@ import { removeNonNumeric } from '@/shared/utils/stringUtils';
 
 /* 간단한 유효성 검사 가능 type 에 따라 추가 로직 구현 가능 */
 
-interface Options {
+type Options = {
     type?: 'number' | 'string';
     initialValue?: string;
     maxLength?: number;
     minLength?: number;
-}
+};
 
 type returnType = [string, (e: React.ChangeEvent<HTMLInputElement>) => void, boolean, Dispatch<SetStateAction<string>>];
 
