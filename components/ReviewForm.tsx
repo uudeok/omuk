@@ -68,6 +68,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         }
     }, [reviewData, setValue, positiveFeedback.items, negativeFeedback.items]);
 
+    // 업로드 한 이미지가 있는 경우, 이미지 Url 을 File 객체로 변환작업
     useEffect(() => {
         if (existingImages) {
             convertToFile(existingImages);
@@ -82,6 +83,8 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
                 : [...prev, feedback]
         );
     };
+
+    console.log(existingImages);
 
     const handleUpdateReview = async (method: 'post' | 'update') => {
         const reviewData = {
@@ -102,7 +105,11 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
                 await uploadImages(uploadedUrls, review_id);
             }
         } else if (method === 'update') {
-            await updateReview(reviewData);
+            const review_id = await updateReview(reviewData);
+            const uploadedUrls = await uploadFiles();
+            if (uploadedUrls) {
+                await uploadImages(uploadedUrls, review_id);
+            }
         }
 
         router.replace(`/${res_id}`);
@@ -115,7 +122,6 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
 
     const removeImage = (file: File) => {
         setFiles((prevImages) => prevImages.filter((img) => img !== file));
-        URL.revokeObjectURL(file.name);
     };
 
     const isFormValid = () => !isValid || rate === 0 || !value || !selectedCompanions;

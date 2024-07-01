@@ -89,7 +89,6 @@ export const updateReview = async ({
     placeName,
     visitDate,
     companions,
-    files = [],
 }: ReviewType) => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
@@ -120,13 +119,7 @@ export const updateReview = async ({
 
     const review_id = review[0].id;
 
-    console.log('추가된 files', files);
-
-    if (files.length > 0) {
-        await updateImages(files, review_id);
-    }
-
-    return review;
+    return review_id;
 };
 
 // 유저_id 로 작성한 모든 리뷰 가져오기
@@ -213,8 +206,8 @@ export const getPaginatedReviews = async (pageParam: number, pageSize: number): 
     return reviewList;
 };
 
-// 새 리뷰 작성
-// export const postReview = async ({
+// 리뷰 수정
+// export const updateReview = async ({
 //     rate,
 //     comment,
 //     positive,
@@ -230,20 +223,22 @@ export const getPaginatedReviews = async (pageParam: number, pageSize: number): 
 
 //     if (!data.session) return;
 
+//     const user_id = data.session.user.id;
+
 //     const { data: review, error } = await supabase
 //         .from('review')
-//         .insert([
-//             {
-//                 rate: rate,
-//                 comment: comment,
-//                 positive: positive,
-//                 negative: negative,
-//                 res_id: res_id,
-//                 placeName: placeName,
-//                 visitDate: visitDate,
-//                 companions: companions,
-//             },
-//         ])
+//         .update({
+//             rate: rate,
+//             comment: comment,
+//             positive: positive,
+//             negative: negative,
+//             res_id: res_id,
+//             placeName: placeName,
+//             visitDate: visitDate,
+//             companions: companions,
+//         })
+//         .eq('user_id', user_id)
+//         .eq('res_id', res_id)
 //         .select();
 
 //     if (error) {
@@ -252,8 +247,11 @@ export const getPaginatedReviews = async (pageParam: number, pageSize: number): 
 
 //     const review_id = review[0].id;
 
+//     console.log('추가된 files', files);
+
 //     if (files.length > 0) {
-//         await uploadImages(files, review_id);
+//         await updateImages(files, review_id);
 //     }
+
 //     return review;
 // };
