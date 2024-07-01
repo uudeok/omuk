@@ -2,7 +2,7 @@
 
 import styles from '../styles/reviewform.module.css';
 import dayjs from 'dayjs';
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import List, { ListRow } from '@/components/common/List';
 import { useBoolean, useInput, useS3FileUpload, useSession } from '@/hooks';
 import Text from '@/components/common/Text';
@@ -21,14 +21,16 @@ import { useQuery } from '@tanstack/react-query';
 import Modal from './common/Modal';
 import CalendarModal from './modal/CalendarModal';
 import { initializeDate } from '@/shared/utils/calendarUtil';
-import { uploadImages } from '@/services/imageService';
+import { getImageData, uploadImages } from '@/services/imageService';
 
 const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) => {
     const session = useSession();
     const router = useRouter();
     const fileRef = useRef<HTMLInputElement>(null);
-    const { setFiles, files, handleFileInputChange, uploadFiles, alertMessage } = useS3FileUpload({ maxSize: 5 });
 
+    const { setFiles, files, handleFileInputChange, uploadFiles, alertMessage, convertToFile } = useS3FileUpload({
+        maxSize: 5,
+    });
     const [value, onChangeInput, isValid, setValue] = useInput({ maxLength: 30, minLength: 2 });
     const { value: isOpen, setFalse: closeModal, toggle: ModalToggle } = useBoolean();
 
@@ -48,6 +50,12 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         enabled: !!session,
     });
 
+    const { data: existingImages } = useQuery({
+        queryKey: ['exisitImage', reviewData?.id],
+        queryFn: () => getImageData(reviewData?.id),
+        enabled: !!reviewData,
+    });
+
     // 리뷰가 있는 경우 데이터 채워넣기
     useEffect(() => {
         if (reviewData) {
@@ -59,6 +67,12 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
             setSelectedDate(reviewData.visitDate);
         }
     }, [reviewData, setValue, positiveFeedback.items, negativeFeedback.items]);
+
+    useEffect(() => {
+        if (existingImages) {
+            convertToFile(existingImages);
+        }
+    }, [existingImages, convertToFile]);
 
     const handleFeedbackClick = (feedback: FeedBackItem, isPositive: boolean) => {
         const setSelected = isPositive ? setSelectedPositives : setSelectedNegatives;
@@ -84,7 +98,9 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         if (method === 'post') {
             const review_id = await postReview(reviewData);
             const uploadedUrls = await uploadFiles();
-            await uploadImages(uploadedUrls!, review_id);
+            if (uploadedUrls) {
+                await uploadImages(uploadedUrls, review_id);
+            }
         } else if (method === 'update') {
             await updateReview(reviewData);
         }
@@ -99,6 +115,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
 
     const removeImage = (file: File) => {
         setFiles((prevImages) => prevImages.filter((img) => img !== file));
+        URL.revokeObjectURL(file.name);
     };
 
     const isFormValid = () => !isValid || rate === 0 || !value || !selectedCompanions;
@@ -127,13 +144,13 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
                         </div>
 
                         <div onClick={triggerFileInput} className={styles.addImg}>
-                            사진을 추가해보세요
+                            사진을 추가해보세요 ({files.length}/5)
                         </div>
 
                         <Input bottomText={alertMessage && alertMessage}>
                             <InputBase
                                 ref={fileRef}
-                                name="file"
+                                // name="file"
                                 className={styles.hidden}
                                 type="file"
                                 multiple

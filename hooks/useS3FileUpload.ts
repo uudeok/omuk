@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import AWS from 'aws-sdk';
+import { ReviewImageType } from '@/services/imageService';
 
 type Options = {
     maxSize?: number;
@@ -26,6 +27,34 @@ export const useS3FileUpload = (options?: Options) => {
     const [imageUrls, setImageUrls] = useState<string[]>([]);
     const [alertMessage, setAlertMessage] = useState('');
     const isValid = useRef<boolean>(true);
+
+    const convertToFile = useCallback(async (imageFiles: any) => {
+        if (!imageFiles.images_url || !Array.isArray(imageFiles.images_url)) {
+            console.error('Invalid Image URL Array');
+            return [];
+        }
+
+        const filePromises = imageFiles.images_url.map(async (url: string) => {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const blob = await response.blob();
+                const filename = 'image_' + Date.now() + '.jpg';
+                const options = { type: blob.type, lastModified: new Date().getTime() };
+
+                const file = new File([blob], filename, options);
+                return file;
+            } catch (error) {
+                console.error(`이미지 다운로드 실패: ${url}`, error);
+                return null;
+            }
+        });
+        const files = await Promise.all(filePromises);
+        const validFiles = files.filter((file) => file !== null);
+        setFiles(validFiles);
+
+        return validFiles;
+    }, []);
 
     const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -85,5 +114,6 @@ export const useS3FileUpload = (options?: Options) => {
         uploadFiles,
         isValid,
         alertMessage,
+        convertToFile,
     };
 };

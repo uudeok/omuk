@@ -53,8 +53,6 @@ const TestPage = () => {
         });
     };
 
-    console.log('저장된 Url : ', imageUrl);
-
     return (
         <div>
             <input type="file" onChange={handleFileInputChange} multiple />

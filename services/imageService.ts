@@ -5,7 +5,7 @@ export type ReviewImageType = {
     created_at: string;
     user_id: string;
     review_id: number;
-    images_url: string[] | Blob[];
+    images_url: string[] | File[];
 };
 
 // 이미지 업로드 함수
@@ -36,7 +36,7 @@ export const uploadImages = async (files: string[], review_id: string) => {
 };
 
 // 저장된 이미지 찾기
-export const existingImages = async (review_id: string) => {
+export const getImageData = async (review_id: string) => {
     const supabase = createClient();
 
     const { data: existingImages, error } = await supabase
@@ -61,7 +61,7 @@ export const updateImages = async (files: string[], review_id: string) => {
 
     const user_id = data.session.user.id;
 
-    const isExist = await existingImages(review_id);
+    const isExist = await getImageData(review_id);
 
     // 저장된 이미지가 있다면 수정, 없다면 생성
 
