@@ -2,7 +2,7 @@
 
 import styles from '../styles/community.module.css';
 import { useState, useCallback } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueries } from '@tanstack/react-query';
 import { getPaginatedReviews } from '@/services/reviewService';
 import List, { ListBox } from './common/List';
 import Text from './common/Text';
@@ -76,20 +76,6 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
             </List>
 
             {/* <List>
-                {initalReviews.map((review) => (
-                    <ListBox
-                        key={review.id}
-                        top={
-                            <div>
-                                <Text typography="t5">{review.placeName}</Text>
-                            </div>
-                        }
-                        bottom={<div>{review.comment}</div>}
-                    />
-                ))}
-            </List> */}
-
-            <List>
                 {reviewList?.map((review) => (
                     <ListBox
                         key={review.id}
@@ -101,7 +87,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
                         bottom={<div>{review.comment}</div>}
                     />
                 ))}
-            </List>
+            </List> */}
 
             <div ref={observerEl} />
         </div>

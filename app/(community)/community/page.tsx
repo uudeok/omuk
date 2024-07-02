@@ -14,14 +14,19 @@ export const getPagination = async () => {
     return actualRows;
 };
 
-export const getInitalReviewPage = async (pageParam: number, pageSize: number) => {
+export const fetchReviewsWithImages = async (pageParam: number, pageSize: number) => {
     const supabase = createClient();
-
     const { data, error } = await supabase
         .from('review')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .range(pageParam, pageSize);
+        .select(
+            `
+    *,
+    review_images (images_url),
+    profiles (id, username, avatar_url, email)
+  `
+        )
+        .range(pageParam, pageSize)
+        .order('created_at', { ascending: false });
 
     if (error) {
         throw new Error(error.message);
@@ -31,14 +36,12 @@ export const getInitalReviewPage = async (pageParam: number, pageSize: number) =
 };
 
 const CommunityPage = async () => {
+    const initalPage = 0;
+    const pageSize = 14;
     const totalReviews = await getPagination();
-    const initalReviews = await getInitalReviewPage(0, 14);
+    const initalReviews = await fetchReviewsWithImages(initalPage, pageSize);
 
-    return (
-        <div>
-            <Community totalReviews={totalReviews} initalReviews={initalReviews} />
-        </div>
-    );
+    return <Community totalReviews={totalReviews} initalReviews={initalReviews} />;
 };
 
 export default CommunityPage;

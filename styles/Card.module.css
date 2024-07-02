@@ -1,4 +1,46 @@
 .layout {
-    border: 1px solid black;
-    height: 350px;
+    border: 1px dotted lightgrey;
+    height: 450px;
+}
+
+.header {
+    height: 50px;
+    display: flex;
+}
+
+.image {
+    height: 280px;
+}
+
+.image img {
+    object-fit: cover;
+}
+
+.nonImageWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 280px;
+}
+
+.content {
+    height: 80px;
+    margin-top: 25px;
+    padding: 5px;
+    /* border: 1px solid red; */
+}
+
+.content li {
+    /* border: 1px solid black; */
+    margin: 1px 0px;
+    line-height: 1.1;
+}
+
+.like {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px;
+    cursor: pointer;
 }

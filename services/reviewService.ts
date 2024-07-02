@@ -1,5 +1,5 @@
 import { createClient } from '@/shared/lib/supabase/brower-client';
-import { uploadImages, updateImages } from './imageService';
+import { ProfileType } from './userService';
 
 export type ReviewType = {
     rate: number;
@@ -12,7 +12,12 @@ export type ReviewType = {
     comment: string;
     id?: number;
     created_at?: string;
-    files?: string[];
+    review_images?: ReviewImages[];
+    profiles?: ProfileType;
+};
+
+export type ReviewImages = {
+    images_url: string[];
 };
 
 // 유저_id 로 특정 음식점 리뷰 조회

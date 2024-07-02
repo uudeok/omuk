@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
-import { S3Client, PutObjectCommand, S3 } from '@aws-sdk/client-s3';
+import { S3 } from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
 
 type Options = {
@@ -125,32 +125,3 @@ export const useS3FileUpload = (options?: Options) => {
         convertToFile,
     };
 };
-
-// const convertToFile = useCallback(async (imageFiles: any) => {
-//     if (!imageFiles.images_url || !Array.isArray(imageFiles.images_url)) {
-//         console.error('Invalid Image URL Array');
-//         return [];
-//     }
-
-//     const filePromises = imageFiles.images_url.map(async (url: string) => {
-//         try {
-//             const response = await fetch(url);
-//             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-//             const blob = await response.blob();
-//             const filename = 'image_' + Date.now() + '.jpg';
-//             const options = { type: blob.type, lastModified: new Date().getTime() };
-
-//             const file = new File([blob], filename, options);
-//             return file;
-//         } catch (error: any) {
-//             console.error(`이미지 다운로드 실패: ${url}`, error);
-//             throw new Error(error.message);
-//         }
-//     });
-
-//     const files = await Promise.all(filePromises);
-//     const validFiles = files.filter((file) => file !== null);
-//     setFiles(validFiles);
-
-//     return validFiles;
-// }, []);

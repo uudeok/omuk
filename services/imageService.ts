@@ -9,7 +9,7 @@ export type ReviewImageType = {
 };
 
 // 이미지 업로드 함수
-export const uploadImages = async (files: string[], review_id: string) => {
+export const uploadImages = async (files: string[], review_id: number) => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
@@ -36,7 +36,7 @@ export const uploadImages = async (files: string[], review_id: string) => {
 };
 
 // 저장된 이미지 찾기
-export const getImageData = async (review_id: string) => {
+export const getImageData = async (review_id: number) => {
     const supabase = createClient();
 
     const { data: existingImages, error } = await supabase
@@ -53,7 +53,7 @@ export const getImageData = async (review_id: string) => {
 };
 
 // 이미지 수정 함수
-export const updateImages = async (files: string[], review_id: string) => {
+export const updateImages = async (files: string[], review_id: number) => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
@@ -84,4 +84,21 @@ export const updateImages = async (files: string[], review_id: string) => {
     } else {
         await uploadImages(files, review_id);
     }
+};
+
+// review & image 가져오기
+export const fetchReviewsWithImages = async () => {
+    const supabase = createClient();
+    const { data, error } = await supabase.from('review').select(
+        `
+    *,
+    review_images (images_url)
+  `
+    );
+
+    if (error) {
+        throw new Error('이미지 업로드 중 오류 발생');
+    }
+
+    return data;
 };

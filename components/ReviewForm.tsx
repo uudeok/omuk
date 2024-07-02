@@ -21,7 +21,7 @@ import { useQuery } from '@tanstack/react-query';
 import Modal from './common/Modal';
 import CalendarModal from './modal/CalendarModal';
 import { initializeDate } from '@/shared/utils/calendarUtil';
-import { getImageData, uploadImages } from '@/services/imageService';
+import { getImageData, updateImages, uploadImages } from '@/services/imageService';
 
 const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) => {
     const session = useSession();
@@ -108,7 +108,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
             const review_id = await updateReview(reviewData);
             const uploadedUrls = await uploadFiles();
             if (uploadedUrls) {
-                await uploadImages(uploadedUrls, review_id);
+                await updateImages(uploadedUrls, review_id);
             }
         }
 
