@@ -1,5 +1,6 @@
 import { createClient } from '@/shared/lib/supabase/brower-client';
 import { ProfileType } from './userService';
+import { ReviewLikesType } from './reviewLikeService';
 
 export type ReviewType = {
     rate: number;
@@ -10,10 +11,11 @@ export type ReviewType = {
     visitDate: Date;
     companions: string | null;
     comment: string;
-    id?: number;
+    id: number;
     created_at?: string;
     review_images?: ReviewImages[];
     profiles?: ProfileType;
+    review_likes?: ReviewLikesType[];
 };
 
 export type ReviewImages = {
@@ -59,6 +61,8 @@ export const postReview = async ({
 
     if (!data.session) return;
 
+    const user_id = data.session.user.id;
+
     const { data: review, error } = await supabase
         .from('review')
         .insert([
@@ -71,6 +75,7 @@ export const postReview = async ({
                 placeName: placeName,
                 visitDate: visitDate,
                 companions: companions,
+                user_id: user_id,
             },
         ])
         .select();

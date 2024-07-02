@@ -178,7 +178,7 @@ export type Database = {
           positive?: string[] | null
           rate: number
           res_id: string
-          user_id?: string
+          user_id: string
           visitDate: string
         }
         Update: {
@@ -200,6 +200,13 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "review_user_id_fkey1"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -239,6 +246,35 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      review_likes: {
+        Row: {
+          created_at: string
+          id: number
+          review_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          review_id: number
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          review_id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "review_likes_review_id_fkey"
+            columns: ["review_id"]
+            isOneToOne: false
+            referencedRelation: "review"
             referencedColumns: ["id"]
           },
         ]

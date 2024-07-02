@@ -6,6 +6,9 @@
 .header {
     height: 50px;
     display: flex;
+    width: 100%;
+
+    align-items: center;
 }
 
 .image {
@@ -14,6 +17,7 @@
 
 .image img {
     object-fit: cover;
+    cursor: pointer;
 }
 
 .nonImageWrapper {
@@ -28,6 +32,7 @@
     height: 80px;
     margin-top: 25px;
     padding: 5px;
+    background-color: var(--whitesmoke);
     /* border: 1px solid red; */
 }
 

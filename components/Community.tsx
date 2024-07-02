@@ -10,17 +10,39 @@ import Button from './common/Button';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
 import { useInfiniteScroll } from '@/hooks';
-import { ReviewType } from '@/services/reviewService';
 import Card from './Card';
+import { ReviewImages } from '@/services/reviewService';
+import { ProfileType } from '@/services/userService';
+import { ReviewLikesType } from '@/services/reviewLikeService';
 
 type Props = {
     totalReviews: number;
-    initalReviews: ReviewType[];
+    initalReviews: CommunityReviewType[];
+};
+
+export type CommunityReviewType = {
+    id: number;
+    created_at: string;
+    res_id: string;
+    user_id: string;
+    rate: number;
+    comment: string;
+    positive: string[];
+    negative: string[];
+    placeName: string;
+    companions: string;
+    visitDate: string;
+    review_images: ReviewImages[];
+    profiles: ProfileType;
+    review_likes: ReviewLikesType[];
+    likedByUser: boolean;
 };
 
 const Community = ({ totalReviews, initalReviews }: Props) => {
     const totalPage = getTotalPages(totalReviews, DEFAULT_PAGE_SIZE);
     const [enabled, setEnabled] = useState(false);
+
+    console.log('123', initalReviews);
 
     const {
         data: reviewList,
@@ -70,7 +92,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
             </div>
 
             <List>
-                {initalReviews.map((review) => (
+                {initalReviews.map((review: any) => (
                     <Card list={review} key={review.id} />
                 ))}
             </List>

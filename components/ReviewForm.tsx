@@ -84,8 +84,6 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         );
     };
 
-    console.log(existingImages);
-
     const handleUpdateReview = async (method: 'post' | 'update') => {
         const reviewData = {
             rate: rate,
