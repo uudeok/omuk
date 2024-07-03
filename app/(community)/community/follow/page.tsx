@@ -1,10 +1,10 @@
 'use client';
 
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
-import { fetchFollowerReviewCount } from '@/services/followService';
+import { getFollowerReviewCount } from '@/services/followService';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
-import { fetchFollowerReviewsWithImages } from '@/services/reviewService';
+import { getFollowerReviewsWithImages } from '@/services/reviewService';
 import { useInfiniteScroll } from '@/hooks';
 import List from '@/components/common/List';
 import Card from '@/components/Card';
@@ -12,7 +12,7 @@ import Card from '@/components/Card';
 const FollowCommunityPage = () => {
     const { data: totalReviews } = useQuery({
         queryKey: ['followReviewPagination'],
-        queryFn: () => fetchFollowerReviewCount(),
+        queryFn: () => getFollowerReviewCount(),
     });
 
     const totalPage = getTotalPages(totalReviews, DEFAULT_PAGE_SIZE);
@@ -24,7 +24,7 @@ const FollowCommunityPage = () => {
         isFetchingNextPage,
     } = useInfiniteQuery({
         queryKey: ['paginatedFollowReview'],
-        queryFn: ({ pageParam }) => fetchFollowerReviewsWithImages(pageParam, DEFAULT_PAGE_SIZE),
+        queryFn: ({ pageParam }) => getFollowerReviewsWithImages(pageParam, DEFAULT_PAGE_SIZE),
         initialPageParam: 0,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
             if (lastPageParam < totalPage) {

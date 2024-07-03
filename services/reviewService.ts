@@ -1,7 +1,7 @@
 import { createClient } from '@/shared/lib/supabase/brower-client';
 import { ProfileType } from './userService';
 import { ReviewLikesType } from './reviewLikeService';
-import { CommunityReviewType } from '@/components/Community';
+import { getFollowerUserIds } from './followService';
 
 export type ReviewType = {
     rate: number;
@@ -200,6 +200,24 @@ export const getPaginatedUserReviews = async (
     return reviewList;
 };
 
+export type CommunityReviewType = {
+    id: number;
+    created_at: string;
+    res_id: string;
+    user_id: string;
+    rate: number;
+    comment: string;
+    positive: string[];
+    negative: string[];
+    placeName: string;
+    companions: string;
+    visitDate: string;
+    review_images: ReviewImages[];
+    profiles: ProfileType;
+    review_likes: ReviewLikesType[];
+    likedByUser: boolean;
+};
+
 // 리뷰 목록을 최신 순으로 페이지 단위로 가져오기
 export const getPaginatedReviewsWithImages = async (
     pageParam: number,
@@ -242,7 +260,7 @@ export const getPaginatedReviewsWithImages = async (
 };
 
 // 팔로우한 유저의 ID 를 조회해 해당 유저들의 리뷰를 가져온다
-export const fetchFollowerReviewsWithImages = async (
+export const getFollowerReviewsWithImages = async (
     pageParam: number,
     pageSize: number
 ): Promise<CommunityReviewType[]> => {
@@ -256,21 +274,9 @@ export const fetchFollowerReviewsWithImages = async (
     const user_id = userData.session.user.id;
 
     // Step 1: 팔로우한 유저의 ID를 가져옵니다.
-    const { data: followData, error: followError } = await supabase
-        .from('follow')
-        .select('requestee_id')
-        .eq('requester_id', user_id);
+    const followeeIds = await getFollowerUserIds();
 
-    if (followError) {
-        throw new Error(followError.message);
-    }
-
-    const followeeIds = followData.map((follow) => follow.requestee_id);
-
-    if (followeeIds.length === 0) {
-        // 팔로우한 유저가 없는 경우 빈 배열 반환
-        return [];
-    }
+    if (followeeIds && followeeIds.length === 0) return [];
 
     // Step 2: 해당 유저들의 리뷰를 가져옵니다.
     const { data: reviews, error: reviewError } = await supabase
@@ -283,7 +289,7 @@ export const fetchFollowerReviewsWithImages = async (
             review_likes (user_id, review_id)
             `
         )
-        .in('user_id', followeeIds)
+        .in('user_id', followeeIds!)
         .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
         .order('created_at', { ascending: false });
 

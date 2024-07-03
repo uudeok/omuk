@@ -1,5 +1,6 @@
-import Community, { CommunityReviewType } from '@/components/Community';
+import Community from '@/components/Community';
 import { createClient } from '@/shared/lib/supabase/server-client';
+import { CommunityReviewType } from '@/services/reviewService';
 
 export const getPagination = async () => {
     const supabase = createClient();

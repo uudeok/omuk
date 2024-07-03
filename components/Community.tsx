@@ -8,38 +8,16 @@ import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
 import { useInfiniteScroll } from '@/hooks';
 import Card from './Card';
-import { ReviewImages } from '@/services/reviewService';
-import { ProfileType } from '@/services/userService';
-import { ReviewLikesType } from '@/services/reviewLikeService';
+import { CommunityReviewType } from '@/services/reviewService';
 
 type Props = {
     totalReviews: number;
     initalReviews: CommunityReviewType[];
 };
 
-export type CommunityReviewType = {
-    id: number;
-    created_at: string;
-    res_id: string;
-    user_id: string;
-    rate: number;
-    comment: string;
-    positive: string[];
-    negative: string[];
-    placeName: string;
-    companions: string;
-    visitDate: string;
-    review_images: ReviewImages[];
-    profiles: ProfileType;
-    review_likes: ReviewLikesType[];
-    likedByUser: boolean;
-};
-
 const Community = ({ totalReviews, initalReviews }: Props) => {
     const totalPage = getTotalPages(totalReviews, DEFAULT_PAGE_SIZE);
     const [enabled, setEnabled] = useState(false);
-
-    console.log(initalReviews);
 
     const {
         data: reviewList,
@@ -80,8 +58,6 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
         hasNextPage: hasNextPage,
         customHandleObserver: handleObserver,
     });
-
-    console.log('reviewList', reviewList);
 
     return (
         <div>

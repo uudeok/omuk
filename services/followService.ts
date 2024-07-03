@@ -189,7 +189,8 @@ export const checkFollowing = async (requestee_id: string) => {
     return isFollow;
 };
 
-export const fetchFollowerReviewCount = async () => {
+// 팔로워한 유저들의 id 가져오기
+export const getFollowerUserIds = async () => {
     const supabase = createClient();
     const { data: userData } = await supabase.auth.getSession();
 
@@ -197,19 +198,31 @@ export const fetchFollowerReviewCount = async () => {
 
     const user_id = userData.session.user.id;
 
-    // Step 1: 팔로우한 유저의 ID를 가져옵니다.
-    const { data: followData, error: followError } = await supabase
+    const { data: followData, error } = await supabase
         .from('follow')
         .select('requestee_id')
         .eq('requester_id', user_id);
 
-    if (followError) {
-        throw new Error(followError.message);
+    if (error) {
+        throw new Error(error.message);
     }
-    const followeeIds = followData.map((follow) => follow.requestee_id);
-    console.log(followeeIds);
 
-    if (followeeIds.length === 0) {
+    const followeeIds = followData.map((follow) => follow.requestee_id);
+
+    return followeeIds;
+};
+
+//  팔로우한 유저의 리뷰 갯수 가져오기, 페이지네이션 정보
+export const getFollowerReviewCount = async () => {
+    const supabase = createClient();
+    const { data: userData } = await supabase.auth.getSession();
+
+    if (!userData.session) return;
+
+    // Step 1: 팔로우한 유저의 ID를 가져옵니다.
+    const followeeIds = await getFollowerUserIds();
+
+    if (followeeIds && followeeIds.length === 0) {
         return 0;
     }
 
@@ -217,7 +230,7 @@ export const fetchFollowerReviewCount = async () => {
     const { data, error }: any = await supabase
         .from('review')
         .select('*')
-        .in('user_id', followeeIds)
+        .in('user_id', followeeIds!)
         .explain({ format: 'json', analyze: true });
 
     if (error) {
