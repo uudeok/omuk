@@ -9,6 +9,7 @@ import Avatar from '@/components/common/Avatar';
 import { ProfileType } from '@/services/userService';
 import Text from '@/components/common/Text';
 import User from '../../../assets/user.svg';
+import Button from '@/components/common/Button';
 
 const CommunityLayout = ({ children }: { children: ReactNode }) => {
     const session = useSession();
@@ -32,6 +33,14 @@ const CommunityLayout = ({ children }: { children: ReactNode }) => {
                         <Text typography="t4">로그인 해주세요</Text>
                     </div>
                 )}
+            </div>
+            <div className={styles.controller}>
+                <Button size="sm" onClick={() => router.push('/community')}>
+                    리뷰
+                </Button>
+                <Button size="sm" onClick={() => router.push('/community/follow')}>
+                    팔로워 리뷰
+                </Button>
             </div>
             <main className={styles.content}>{children}</main>
         </Slide>

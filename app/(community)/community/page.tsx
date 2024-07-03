@@ -60,39 +60,3 @@ const CommunityPage = async () => {
 };
 
 export default CommunityPage;
-
-// export const fetchReviewsWithImages = async (pageParam: number, pageSize: number): Promise<CommunityReviewType[]> => {
-//     const supabase = createClient();
-//     const { data: userData } = await supabase.auth.getUser();
-
-//     if (!userData.user) return [];
-
-//     const user_id = userData.user.id;
-
-//     const { data, error } = await supabase
-//         .from('review')
-//         .select(
-//             `
-//     *,
-//     review_images (images_url),
-//     profiles (id, username, avatar_url, email),
-//     review_likes (user_id, review_id)
-//   `
-//         )
-//         .range(pageParam, pageSize)
-//         .order('created_at', { ascending: false });
-
-//     if (error) {
-//         throw new Error(error.message);
-//     }
-
-//     const reviewsWithLikes = data.map((review) => {
-//         const likedByUser = review.review_likes.some((like: { user_id: string }) => like.user_id === user_id);
-//         return {
-//             ...review,
-//             likedByUser: likedByUser,
-//         };
-//     });
-
-//     return reviewsWithLikes;
-// };

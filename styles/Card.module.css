@@ -1,6 +1,7 @@
 .layout {
     border: 1px dotted lightgrey;
-    height: 450px;
+    height: 460px;
+    overflow-x: hidden;
 }
 
 .header {
@@ -11,11 +12,11 @@
     align-items: center;
 }
 
-.image {
+.slide {
     height: 280px;
 }
 
-.image img {
+.slide img {
     object-fit: cover;
     cursor: pointer;
 }
@@ -29,7 +30,7 @@
 }
 
 .content {
-    height: 80px;
+    height: 90px;
     margin-top: 25px;
     padding: 5px;
     background-color: var(--whitesmoke);

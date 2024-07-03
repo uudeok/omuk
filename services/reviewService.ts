@@ -1,6 +1,7 @@
 import { createClient } from '@/shared/lib/supabase/brower-client';
 import { ProfileType } from './userService';
 import { ReviewLikesType } from './reviewLikeService';
+import { CommunityReviewType } from '@/components/Community';
 
 export type ReviewType = {
     rate: number;
@@ -200,68 +201,103 @@ export const getPaginatedUserReviews = async (
 };
 
 // 리뷰 목록을 최신 순으로 페이지 단위로 가져오기
-export const getPaginatedReviews = async (pageParam: number, pageSize: number): Promise<ReviewType[]> => {
+export const getPaginatedReviewsWithImages = async (
+    pageParam: number,
+    pageSize: number
+): Promise<CommunityReviewType[]> => {
     const supabase = createClient();
+    const { data: userData } = await supabase.auth.getSession();
+
+    if (!userData.session) return [];
+
+    const user_id = userData.session.user.id;
 
     const { data: reviewList, error } = await supabase
         .from('review')
-        .select('*')
+        .select(
+            `
+    *,
+    review_images (images_url),
+    profiles (id, username, avatar_url, email),
+    review_likes (user_id, review_id)
+  `
+        )
         .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
         .order('created_at', { ascending: false });
 
     if (error) {
         throw new Error(error.message);
     }
+    console.log(reviewList);
 
-    return reviewList;
+    const reviewsWithLikes = reviewList.map((review) => {
+        const likedByUser = review.review_likes.some((like: { user_id: string }) => like.user_id === user_id);
+        return {
+            ...review,
+            likedByUser: likedByUser,
+        };
+    });
+
+    return reviewsWithLikes;
 };
 
-// 리뷰 수정
-// export const updateReview = async ({
-//     rate,
-//     comment,
-//     positive,
-//     negative,
-//     res_id,
-//     placeName,
-//     visitDate,
-//     companions,
-//     files = [],
-// }: ReviewType) => {
-//     const supabase = createClient();
-//     const { data } = await supabase.auth.getSession();
+// 팔로우한 유저의 ID 를 조회해 해당 유저들의 리뷰를 가져온다
+export const fetchFollowerReviewsWithImages = async (
+    pageParam: number,
+    pageSize: number
+): Promise<CommunityReviewType[]> => {
+    const supabase = createClient();
+    const { data: userData, error: authError } = await supabase.auth.getSession();
 
-//     if (!data.session) return;
+    if (authError || !userData?.session) {
+        throw new Error('User authentication failed');
+    }
 
-//     const user_id = data.session.user.id;
+    const user_id = userData.session.user.id;
 
-//     const { data: review, error } = await supabase
-//         .from('review')
-//         .update({
-//             rate: rate,
-//             comment: comment,
-//             positive: positive,
-//             negative: negative,
-//             res_id: res_id,
-//             placeName: placeName,
-//             visitDate: visitDate,
-//             companions: companions,
-//         })
-//         .eq('user_id', user_id)
-//         .eq('res_id', res_id)
-//         .select();
+    // Step 1: 팔로우한 유저의 ID를 가져옵니다.
+    const { data: followData, error: followError } = await supabase
+        .from('follow')
+        .select('requestee_id')
+        .eq('requester_id', user_id);
 
-//     if (error) {
-//         throw new Error(error.message);
-//     }
+    if (followError) {
+        throw new Error(followError.message);
+    }
 
-//     const review_id = review[0].id;
+    const followeeIds = followData.map((follow) => follow.requestee_id);
 
-//     console.log('추가된 files', files);
+    if (followeeIds.length === 0) {
+        // 팔로우한 유저가 없는 경우 빈 배열 반환
+        return [];
+    }
 
-//     if (files.length > 0) {
-//         await updateImages(files, review_id);
-//     }
+    // Step 2: 해당 유저들의 리뷰를 가져옵니다.
+    const { data: reviews, error: reviewError } = await supabase
+        .from('review')
+        .select(
+            `
+            *,
+            review_images (images_url),
+            profiles!inner (id, username, avatar_url, email),
+            review_likes (user_id, review_id)
+            `
+        )
+        .in('user_id', followeeIds)
+        .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
+        .order('created_at', { ascending: false });
 
-//     return review;
-// };
+    if (reviewError) {
+        throw new Error(reviewError.message);
+    }
+
+    const reviewsWithLikes = reviews.map((review) => {
+        const likedByUser = review.review_likes.some((like: { user_id: string }) => like.user_id === user_id);
+        return {
+            ...review,
+            likedByUser,
+        };
+    });
+
+    return reviewsWithLikes;
+};

@@ -1,12 +1,9 @@
 'use client';
 
-import styles from '../styles/community.module.css';
 import { useState, useCallback } from 'react';
-import { useInfiniteQuery, useQueries } from '@tanstack/react-query';
-import { getPaginatedReviews } from '@/services/reviewService';
-import List, { ListBox } from './common/List';
-import Text from './common/Text';
-import Button from './common/Button';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { getPaginatedReviewsWithImages } from '@/services/reviewService';
+import List from './common/List';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
 import { useInfiniteScroll } from '@/hooks';
@@ -42,7 +39,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
     const totalPage = getTotalPages(totalReviews, DEFAULT_PAGE_SIZE);
     const [enabled, setEnabled] = useState(false);
 
-    console.log('123', initalReviews);
+    console.log(initalReviews);
 
     const {
         data: reviewList,
@@ -51,7 +48,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
         isFetchingNextPage,
     } = useInfiniteQuery({
         queryKey: ['paginatedTotalReview'],
-        queryFn: ({ pageParam }) => getPaginatedReviews(pageParam, DEFAULT_PAGE_SIZE),
+        queryFn: ({ pageParam }) => getPaginatedReviewsWithImages(pageParam, DEFAULT_PAGE_SIZE),
         initialPageParam: 2,
         enabled,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
@@ -84,32 +81,20 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
         customHandleObserver: handleObserver,
     });
 
+    console.log('reviewList', reviewList);
+
     return (
         <div>
-            <div className={styles.controller}>
-                <Button size="sm">리뷰</Button>
-                <Button size="sm">베스트 리뷰</Button>
-            </div>
-
             <List>
-                {initalReviews.map((review: any) => (
+                {initalReviews.map((review: CommunityReviewType) => (
                     <Card list={review} key={review.id} />
                 ))}
             </List>
-
-            {/* <List>
+            <List>
                 {reviewList?.map((review) => (
-                    <ListBox
-                        key={review.id}
-                        top={
-                            <div>
-                                <Text typography="t5">{review.placeName}</Text>
-                            </div>
-                        }
-                        bottom={<div>{review.comment}</div>}
-                    />
+                    <Card list={review} key={review.id} />
                 ))}
-            </List> */}
+            </List>
 
             <div ref={observerEl} />
         </div>

@@ -188,3 +188,42 @@ export const checkFollowing = async (requestee_id: string) => {
 
     return isFollow;
 };
+
+export const fetchFollowerReviewCount = async () => {
+    const supabase = createClient();
+    const { data: userData } = await supabase.auth.getSession();
+
+    if (!userData.session) return;
+
+    const user_id = userData.session.user.id;
+
+    // Step 1: 팔로우한 유저의 ID를 가져옵니다.
+    const { data: followData, error: followError } = await supabase
+        .from('follow')
+        .select('requestee_id')
+        .eq('requester_id', user_id);
+
+    if (followError) {
+        throw new Error(followError.message);
+    }
+    const followeeIds = followData.map((follow) => follow.requestee_id);
+    console.log(followeeIds);
+
+    if (followeeIds.length === 0) {
+        return 0;
+    }
+
+    // Step 2: 해당 유저들의 리뷰 갯수를 가져옵니다.
+    const { data, error }: any = await supabase
+        .from('review')
+        .select('*')
+        .in('user_id', followeeIds)
+        .explain({ format: 'json', analyze: true });
+
+    if (error) {
+        throw new Error(error.message);
+    }
+    const actualRows = data[0].Plan.Plans[0]['Actual Rows'];
+
+    return actualRows;
+};

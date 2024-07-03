@@ -61,7 +61,7 @@ const Card = ({ list }: Props) => {
                 {hasImage ? (
                     <Slider {...settings}>
                         {flattenedImages.map((img) => (
-                            <div key={img} className={styles.image}>
+                            <div key={img} className={styles.slide}>
                                 <img src={img} alt={`img_${img}`} width="100%" height="100%" />
                             </div>
                         ))}

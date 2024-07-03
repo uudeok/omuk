@@ -11,6 +11,8 @@ import Review from '@/components/Review';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
 
+// initalPageParam 1 > 0 으로 변경
+
 const MyReviewList = () => {
     const router = useRouter();
 
@@ -29,7 +31,7 @@ const MyReviewList = () => {
     } = useInfiniteQuery({
         queryKey: ['paginatedReview'],
         queryFn: ({ pageParam }) => getPaginatedUserReviews(pageParam, DEFAULT_PAGE_SIZE),
-        initialPageParam: 1,
+        initialPageParam: 0,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
             if (lastPageParam < totalPage) {
                 return lastPageParam + 1;
