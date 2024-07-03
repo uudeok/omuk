@@ -2,10 +2,9 @@
 
 import styles from '../../../../styles/following.module.css';
 import Button from '@/components/common/Button';
-import useFollowStore from '@/shared/lib/store/useFollowStore';
 import { useRouter } from 'next/navigation';
-import { useInfiniteQuery, useQueries } from '@tanstack/react-query';
-import { getFollowingList } from '@/services/followService';
+import { useInfiniteQuery, useQueries, useQuery } from '@tanstack/react-query';
+import { getFollowingList, getFollowingInfo } from '@/services/followService';
 import { useInfiniteScroll } from '@/hooks';
 import { getFollowUserListsPaginated } from '@/services/userService';
 import Avatar from '@/components/common/Avatar';
@@ -15,8 +14,13 @@ import { FOLLOW_PAGE_SIZE } from '@/constants';
 
 const FollowingPage = () => {
     const router = useRouter();
-    const { followingPagination } = useFollowStore();
-    const totalPage = getTotalPages(followingPagination, FOLLOW_PAGE_SIZE);
+
+    const { data: followingInfo } = useQuery({
+        queryKey: ['followingInfo'],
+        queryFn: getFollowingInfo,
+    });
+
+    const totalPage = getTotalPages(followingInfo, FOLLOW_PAGE_SIZE);
 
     const {
         data: followingIds,

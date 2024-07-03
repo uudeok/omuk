@@ -5,6 +5,8 @@ export type FollowStatusType = {
 };
 
 export type FollowType = {
+    id: number;
+    created_at: string;
     requester_id: string;
     requestee_id: string;
     status: FollowStatusType;
@@ -244,26 +246,3 @@ export const getFollowerReviewCount = async () => {
 
     return actualRows;
 };
-
-// export const getFollowerInfo = async () => {
-//     const supabase = createClient();
-//     const { data } = await supabase.auth.getSession();
-
-//     if (!data.session) return;
-
-//     const user_id = data.session.user.id;
-
-//     const { data: followerData, error }: any = await supabase
-//         .from('follow')
-//         .select('*')
-//         .eq('requestee_id', user_id)
-//         .explain({ format: 'json', analyze: true });
-
-//     if (error) {
-//         throw new Error(error.message);
-//     }
-
-//     const actualRows = followerData[0].Plan.Plans[0]['Actual Rows'];
-
-//     return actualRows;
-// };

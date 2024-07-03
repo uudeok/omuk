@@ -20,12 +20,10 @@ import {
 } from '@/services/followService';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import useFollowStore from '@/shared/lib/store/useFollowStore';
 
 const Follow = () => {
     const session = useSession();
     const router = useRouter();
-    const { setFollowingPagination, setFollowerPagination } = useFollowStore();
 
     const [hasSearched, setHasSearched] = useState<boolean>(false);
     const [value, onChangeInput, isValid] = useInput({ minLength: 2 });
@@ -104,12 +102,6 @@ const Follow = () => {
 
         refetchFollowingInfo();
     };
-
-    // 팔로잉, 필로워 수가 바뀔때마다 store 저장
-    useEffect(() => {
-        setFollowingPagination(followingInfo);
-        setFollowerPagination(followerInfo);
-    }, [followingInfo, followerInfo]);
 
     return (
         <>

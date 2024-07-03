@@ -5,18 +5,22 @@ import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
 import List, { ListRow } from '@/components/common/List';
 import Avatar from '@/components/common/Avatar';
-import useFollowStore from '@/shared/lib/store/useFollowStore';
 import { getTotalPages } from '@/shared/utils/detailUtil';
-import { useInfiniteQuery, useQueries } from '@tanstack/react-query';
-import { getFollowerList } from '@/services/followService';
+import { useInfiniteQuery, useQueries, useQuery } from '@tanstack/react-query';
+import { getFollowerList, getFollowerInfo } from '@/services/followService';
 import { getFollowUserListsPaginated } from '@/services/userService';
 import { useInfiniteScroll } from '@/hooks';
 import { FOLLOW_PAGE_SIZE } from '@/constants';
 
 const FollowerPage = () => {
     const router = useRouter();
-    const { followerPagination } = useFollowStore();
-    const totalPage = getTotalPages(followerPagination, FOLLOW_PAGE_SIZE);
+
+    const { data: followerInfo } = useQuery({
+        queryKey: ['followerInfo', 'all'],
+        queryFn: () => getFollowerInfo(),
+    });
+
+    const totalPage = getTotalPages(followerInfo, FOLLOW_PAGE_SIZE);
 
     const {
         data: followerIds,
@@ -55,6 +59,9 @@ const FollowerPage = () => {
         callbackFn: fetchNextPage,
         hasNextPage: hasNextPage,
     });
+
+    // console.log('ids', followerIds);
+    // console.log(followerUserDatas.data);
 
     return (
         <div>
