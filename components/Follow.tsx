@@ -41,8 +41,8 @@ const Follow = () => {
 
     // 팔로워 수 불러오는 로직
     const { data: followerInfo } = useQuery({
-        queryKey: ['followerInfo'],
-        queryFn: getFollowerInfo,
+        queryKey: ['followerInfo', 'all'],
+        queryFn: () => getFollowerInfo(),
     });
 
     // 내가 이미 팔로잉 한 유저인지 검사

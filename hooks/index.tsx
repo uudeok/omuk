@@ -10,3 +10,4 @@ export { useSession } from './useSession';
 export { useCalendar } from './useCalendar';
 export { useDebounce } from './useDebounce';
 export { useS3FileUpload } from './useS3FileUpload';
+export { useHover } from './useHover';

@@ -143,19 +143,23 @@ export const getFollowingInfo = async () => {
 };
 
 // follower 페이지 정보 (주쳬 : 다른 사람 > 나)
-export const getFollowerInfo = async () => {
+// status 로 조회 기능 추가
+export const getFollowerInfo = async (status?: 'pending' | 'accepted') => {
     const supabase = createClient();
+
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) return;
 
     const user_id = data.session.user.id;
 
-    const { data: followerData, error }: any = await supabase
-        .from('follow')
-        .select('*')
-        .eq('requestee_id', user_id)
-        .explain({ format: 'json', analyze: true });
+    let query = supabase.from('follow').select('*').eq('requestee_id', user_id);
+
+    if (status) {
+        query = supabase.from('follow').select('*').eq('requestee_id', user_id).eq('status', status);
+    }
+
+    const { data: followerData, error }: any = await query.explain({ format: 'json', analyze: true });
 
     if (error) {
         throw new Error(error.message);
@@ -240,3 +244,26 @@ export const getFollowerReviewCount = async () => {
 
     return actualRows;
 };
+
+// export const getFollowerInfo = async () => {
+//     const supabase = createClient();
+//     const { data } = await supabase.auth.getSession();
+
+//     if (!data.session) return;
+
+//     const user_id = data.session.user.id;
+
+//     const { data: followerData, error }: any = await supabase
+//         .from('follow')
+//         .select('*')
+//         .eq('requestee_id', user_id)
+//         .explain({ format: 'json', analyze: true });
+
+//     if (error) {
+//         throw new Error(error.message);
+//     }
+
+//     const actualRows = followerData[0].Plan.Plans[0]['Actual Rows'];
+
+//     return actualRows;
+// };

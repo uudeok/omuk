@@ -23,7 +23,7 @@ const MypageLayout = ({ children }: { children: ReactNode }) => {
         <Slide styles={{ width: '352px', left: '352px' }}>
             <div className={styles.header}>
                 <Avatar profile={profile} />
-                {/* <Alarm hasFollower={hasFollower} /> */}
+                <Alarm />
             </div>
 
             <main className={styles.content}>{children}</main>

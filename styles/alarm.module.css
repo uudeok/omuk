@@ -37,4 +37,54 @@
 .shake {
     animation: shake 0.5s;
     animation-iteration-count: 2;
+    display: flex;
 }
+
+.alarm {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px;
+    margin: 6px;
+}
+
+.tooltip {
+    position: absolute;
+    top: 20px;
+    left: -80px;
+    transform: translateY(-50%);
+    background-color: var(--white);
+    color: var(--mainColorDk);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+    font-weight: bold;
+
+    visibility: hidden;
+}
+
+.shake:hover .tooltip {
+    visibility: visible;
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -10px; /* Adjust this value as needed */
+    transform: translateY(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent var(--white);
+}
+
+/* .alarm {
+    display: flex;
+    margin: 6px;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px;
+    
+} */
