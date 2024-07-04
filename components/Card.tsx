@@ -14,7 +14,7 @@ import Avatar from './common/Avatar';
 import Heart from '../assets/heart.svg';
 import FillHeart from '../assets/fillHeart.svg';
 import { addReviewLike, removeReviewLike } from '@/services/reviewLikeService';
-import { CommunityReviewType } from './Community';
+import { CommunityReviewType } from '@/services/reviewService';
 
 type Props = {
     list: CommunityReviewType;
