@@ -1,8 +1,11 @@
-.following {
+.pending,
+.accepted {
     margin-top: 10px;
+    border-bottom: 1px solid lightgrey;
 }
 
-.following li {
+.pending li,
+.accepted li {
     display: flex;
     margin: 5px;
     cursor: pointer;
@@ -11,6 +14,17 @@
     &:hover {
         background-color: var(--blue20);
     }
+}
+
+.pending span:first-child,
+.accepted span:first-child {
+    /* border: 1px solid red; */
+    padding: 10px;
+}
+
+.button {
+    display: flex;
+    gap: 3px;
 }
 
 .nothing {

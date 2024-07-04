@@ -6,15 +6,16 @@ import { useRouter } from 'next/navigation';
 import List, { ListRow } from '@/components/common/List';
 import Avatar from '@/components/common/Avatar';
 import { getTotalPages } from '@/shared/utils/detailUtil';
-import { useInfiniteQuery, useQueries, useQuery } from '@tanstack/react-query';
-import { getFollowerList, getFollowerInfo } from '@/services/followService';
-import { getFollowUserListsPaginated } from '@/services/userService';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { getFollowerList, getFollowerInfo, acceptedFollowRequest, cancleFollowRequest } from '@/services/followService';
 import { useInfiniteScroll } from '@/hooks';
 import { FOLLOW_PAGE_SIZE } from '@/constants';
+import Text from '@/components/common/Text';
 
 const FollowerPage = () => {
     const router = useRouter();
 
+    // query key 로 캐시 된 데이터 가져오기
     const { data: followerInfo } = useQuery({
         queryKey: ['followerInfo', 'all'],
         queryFn: () => getFollowerInfo(),
@@ -22,11 +23,13 @@ const FollowerPage = () => {
 
     const totalPage = getTotalPages(followerInfo, FOLLOW_PAGE_SIZE);
 
+    // follower list 페이지네이션 가져오기
     const {
-        data: followerIds,
+        data: followerList,
         hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
+        refetch: refetchFollowerList,
     } = useInfiniteQuery({
         queryKey: ['followerList'],
         queryFn: ({ pageParam }) => getFollowerList(pageParam, FOLLOW_PAGE_SIZE),
@@ -37,21 +40,7 @@ const FollowerPage = () => {
             }
         },
         select: (data) => {
-            return data.pages.flat().map((page) => page?.requester_id);
-        },
-    });
-
-    const followerUserDatas = useQueries({
-        queries:
-            followerIds?.map((id) => ({
-                queryKey: ['followerUser', id],
-                queryFn: () => getFollowUserListsPaginated(id!),
-            })) || [],
-        combine: (results) => {
-            return {
-                data: results.map((result) => result.data).flat(),
-                // pending: results.some((result) => result.isPending),
-            };
+            return data.pages.flat().map((page) => page);
         },
     });
 
@@ -60,8 +49,21 @@ const FollowerPage = () => {
         hasNextPage: hasNextPage,
     });
 
-    // console.log('ids', followerIds);
-    // console.log(followerUserDatas.data);
+    const handleAcceptFollower = async (follower_id: string) => {
+        const result = await acceptedFollowRequest(follower_id);
+        refetchFollowerList();
+    };
+
+    const handleRejectFollower = async (follower_id: string) => {
+        const process = window.confirm('팔로우 요청을 거절하시겠습니까?');
+        if (process) {
+            await cancleFollowRequest(follower_id);
+            refetchFollowerList();
+        }
+    };
+
+    const pending = followerList?.filter((follower) => follower.status === 'pending');
+    const accepted = followerList?.filter((follower) => follower.status === 'accepted');
 
     return (
         <div>
@@ -69,21 +71,63 @@ const FollowerPage = () => {
                 뒤로가기
             </Button>
 
-            <div className={styles.following}>
+            <div className={styles.pending}>
                 <List>
-                    {followerUserDatas?.data?.map((user, idx) => (
-                        <ListRow
-                            key={idx}
-                            left={<Avatar profile={user} />}
-                            right={
-                                <div>
-                                    <Button size="sm" role="round">
-                                        방문
-                                    </Button>
-                                </div>
-                            }
-                        ></ListRow>
-                    ))}
+                    <Text typography="t5">팔로우 요청 {pending?.length}개</Text>
+
+                    {followerList?.map(
+                        (follower) =>
+                            follower.status === 'pending' && (
+                                <ListRow
+                                    key={follower.id}
+                                    left={<Avatar profile={follower.profiles} />}
+                                    right={
+                                        <div className={styles.button}>
+                                            <Button
+                                                size="sm"
+                                                role="round"
+                                                onClick={() => handleAcceptFollower(follower.requester_id)}
+                                            >
+                                                확인
+                                            </Button>
+                                            <Button
+                                                size="sm"
+                                                role="round"
+                                                onClick={() => handleRejectFollower(follower.requester_id)}
+                                            >
+                                                취소
+                                            </Button>
+                                        </div>
+                                    }
+                                />
+                            )
+                    )}
+                </List>
+            </div>
+
+            <div className={styles.accepted}>
+                <List>
+                    <Text typography="t5">모든 팔로우 {accepted?.length}개 </Text>
+                    {followerList?.map(
+                        (follower) =>
+                            follower.status === 'accepted' && (
+                                <ListRow
+                                    key={follower.id}
+                                    left={<Avatar profile={follower.profiles} />}
+                                    right={
+                                        <div className={styles.button}>
+                                            <Button
+                                                size="sm"
+                                                role="round"
+                                                onClick={() => handleRejectFollower(follower.requester_id)}
+                                            >
+                                                취소
+                                            </Button>
+                                        </div>
+                                    }
+                                />
+                            )
+                    )}
                 </List>
             </div>
 
@@ -101,3 +145,38 @@ export default FollowerPage;
 //         </Button>
 //     </div>
 // )
+
+{
+    /* <div className={styles.pending}>
+<List>
+    <Text typography="t5">팔로우 요청</Text>
+    {followerList?.map(
+        (follower) =>
+            follower.status === 'pending' && (
+                <ListRow
+                    key={follower.id}
+                    left={<Avatar profile={follower.profiles} />}
+                    right={
+                        <div className={styles.button}>
+                            <Button
+                                size="sm"
+                                role="round"
+                                onClick={() => handleAcceptFollower(follower.requester_id)}
+                            >
+                                확인
+                            </Button>
+                            <Button
+                                size="sm"
+                                role="round"
+                                onClick={() => handleRejectFollower(follower.requester_id)}
+                            >
+                                취소
+                            </Button>
+                        </div>
+                    }
+                />
+            )
+    )}
+</List>
+</div> */
+}

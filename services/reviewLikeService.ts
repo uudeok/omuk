@@ -1,4 +1,3 @@
-import { CommunityReviewType } from '@/components/Community';
 import { createClient } from '@/shared/lib/supabase/brower-client';
 
 export type ReviewLikesType = {

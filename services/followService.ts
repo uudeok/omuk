@@ -74,8 +74,8 @@ export const getFollowingList = async (pageParam: number, pageSize: number): Pro
     return followingList;
 };
 
-// follower list 가져오기 (주체 : 다른 사람 > 나)
-export const getFollowerList = async (pageParam: number, pageSize: number): Promise<FollowType[] | undefined> => {
+// 나를 팔로워한 유저 리스트와 profiles join 해서 가져오기 (주체 : 다른 사람 > 나)
+export const getFollowerList = async (pageParam: number, pageSize: number) => {
     const supabase = createClient();
 
     const { data } = await supabase.auth.getSession();
@@ -86,14 +86,18 @@ export const getFollowerList = async (pageParam: number, pageSize: number): Prom
 
     const { data: followerList, error } = await supabase
         .from('follow')
-        .select('*')
+        .select(
+            `
+        *,
+        profiles!follow_requester_id_fkey1(id, username, avatar_url, email)
+        `
+        )
         .eq('requestee_id', user_id)
         .range((pageParam - 1) * pageSize, pageParam * pageSize - 1);
 
     if (error) {
         throw new Error(error.message);
     }
-
     return followerList;
 };
 
@@ -245,4 +249,49 @@ export const getFollowerReviewCount = async () => {
     const actualRows = data[0].Plan.Plans[0]['Actual Rows'];
 
     return actualRows;
+};
+
+export const acceptedFollowRequest = async (follower_id: string) => {
+    const supabase = createClient();
+    const { data: userData } = await supabase.auth.getSession();
+
+    if (!userData.session) return;
+
+    const user_id = userData.session.user.id;
+
+    const { data, error } = await supabase
+        .from('follow')
+        .update({
+            status: 'accepted',
+        })
+        .eq('requester_id', follower_id)
+        .eq('requestee_id', user_id)
+        .select();
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    console.log('test', data);
+
+    return data;
+};
+
+export const cancleFollowRequest = async (follower_id: string) => {
+    const supabase = createClient();
+    const { data: userData } = await supabase.auth.getSession();
+
+    if (!userData.session) return;
+
+    const user_id = userData.session.user.id;
+
+    const { data, error } = await supabase
+        .from('follow')
+        .delete()
+        .eq('requester_id', follower_id)
+        .eq('requestee_id', user_id);
+
+    if (error) {
+        throw new Error(error.message);
+    }
 };
