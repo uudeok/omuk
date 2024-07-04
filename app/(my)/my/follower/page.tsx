@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../../../styles/following.module.css';
+import styles from '../../../../styles/follower.module.css';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
 import List, { ListRow } from '@/components/common/List';
@@ -73,7 +73,7 @@ const FollowerPage = () => {
 
             <div className={styles.pending}>
                 <List>
-                    <Text typography="t5">팔로우 요청 {pending?.length}개</Text>
+                    <Text typography="t5">팔로우 요청 {pending?.length}명</Text>
 
                     {followerList?.map(
                         (follower) =>
@@ -107,7 +107,7 @@ const FollowerPage = () => {
 
             <div className={styles.accepted}>
                 <List>
-                    <Text typography="t5">모든 팔로우 {accepted?.length}개 </Text>
+                    <Text typography="t5">모든 팔로우 {accepted?.length}명 </Text>
                     {followerList?.map(
                         (follower) =>
                             follower.status === 'accepted' && (

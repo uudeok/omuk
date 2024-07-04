@@ -35,7 +35,7 @@ export const requestFollow = async ({
 };
 
 // unfollow 하기 (follow 데이터 지우기)
-export const requestUnFollow = async (requestee_id: string) => {
+export const requestUnFollow = async (request_id: string) => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
@@ -43,16 +43,15 @@ export const requestUnFollow = async (requestee_id: string) => {
 
     const user_id = data.session.user.id;
 
-    const { error } = await supabase
-        .from('follow')
-        .delete()
-        .eq('requester_id', user_id)
-        .eq('requestee_id', requestee_id)
-        .select();
+    const { error } = await supabase.from('follow').delete().eq('requester_id', user_id).eq('requestee_id', request_id);
+
+    if (error) {
+        throw new Error(error.message);
+    }
 };
 
-// following list pagination 으로 가져오기 (주체 : 나 > 다른 사람)
-export const getFollowingList = async (pageParam: number, pageSize: number): Promise<FollowType[] | undefined> => {
+// 내가 팔로잉한 유저 리브스톼 Profiles join 해서 가져오기(주체 : 나 > 다른 사람)
+export const getFollowingList = async (pageParam: number, pageSize: number) => {
     const supabase = createClient();
 
     const { data } = await supabase.auth.getSession();
@@ -63,7 +62,12 @@ export const getFollowingList = async (pageParam: number, pageSize: number): Pro
 
     const { data: followingList, error } = await supabase
         .from('follow')
-        .select('*')
+        .select(
+            `
+        *,
+        profiles!follow_requestee_id_fkey1(id, username, avatar_url, email)
+        `
+        )
         .eq('requester_id', user_id)
         .range((pageParam - 1) * pageSize, pageParam * pageSize - 1);
 
@@ -295,3 +299,25 @@ export const cancleFollowRequest = async (follower_id: string) => {
         throw new Error(error.message);
     }
 };
+
+// export const getFollowingList = async (pageParam: number, pageSize: number): Promise<FollowType[] | undefined> => {
+//     const supabase = createClient();
+
+//     const { data } = await supabase.auth.getSession();
+
+//     if (!data.session) return;
+
+//     const user_id = data.session.user.id;
+
+//     const { data: followingList, error } = await supabase
+//         .from('follow')
+//         .select('*')
+//         .eq('requester_id', user_id)
+//         .range((pageParam - 1) * pageSize, pageParam * pageSize - 1);
+
+//     if (error) {
+//         throw new Error(error.message);
+//     }
+
+//     return followingList;
+// };
