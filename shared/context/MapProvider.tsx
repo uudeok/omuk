@@ -47,7 +47,7 @@ const MapProvider = ({ children }: { children: ReactNode }) => {
     const [pagination, setPagination] = useState<PaginationType | null>(null);
     const [map, setMap] = useState<kakao.maps.Map>();
     const [resData, setResData] = useState<ResponseType[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const { kakao } = window;
