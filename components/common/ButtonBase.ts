@@ -133,18 +133,3 @@ export const ButtonBase = styled.button<{ role?: Role; size: Size }>`
     ${buttonRoleStyle};
     ${buttonSizeStyle}
 `;
-
-// if (role === 'none') {
-//     return css`
-//         background-color: transparent;
-//         color: black;
-//         font-size: 1rem;
-//         justify-content: left;
-//         font-weight: normal;
-
-//         &:hover {
-//             background-color: transparent;
-//             color: var(--mainColorDk);
-//         }
-//     `;
-// }

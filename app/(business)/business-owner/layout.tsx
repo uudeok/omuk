@@ -9,7 +9,6 @@ import Avatar from '@/components/common/Avatar';
 import Text from '@/components/common/Text';
 import User from '../../../assets/user.svg';
 import { useRouter } from 'next/navigation';
-import Button from '@/components/common/Button';
 
 const BusinessLayout = ({ children }: { children: ReactNode }) => {
     const session = useSession();
@@ -34,7 +33,6 @@ const BusinessLayout = ({ children }: { children: ReactNode }) => {
                     </div>
                 )}
             </div>
-
             <main>{children}</main>
         </Slide>
     );

@@ -15,3 +15,20 @@
 .loginBtn {
     padding: 7px;
 }
+
+.business {
+    /* border: 1px solid black; */
+    padding: 5px;
+    color: var(--mainColorDk);
+    cursor: pointer;
+    display: flex;
+    padding: 5px;
+
+    &:hover {
+        color: var(--mainColor);
+    }
+}
+
+.business button {
+    justify-content: right;
+}

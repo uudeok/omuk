@@ -10,7 +10,7 @@ import Text from '@/components/common/Text';
 import User from '../../../assets/user.svg';
 import { useRouter } from 'next/navigation';
 
-const PromotionLayout = ({ children }: { children: ReactNode }) => {
+const StoreLayout = ({ children }: { children: ReactNode }) => {
     const session = useSession();
     const router = useRouter();
 
@@ -41,4 +41,4 @@ const PromotionLayout = ({ children }: { children: ReactNode }) => {
     );
 };
 
-export default PromotionLayout;
+export default StoreLayout;

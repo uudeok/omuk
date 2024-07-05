@@ -12,7 +12,7 @@ const StorePage = () => {
         fetchNextPage,
         isFetchingNextPage,
     } = useInfiniteQuery({
-        queryKey: ['paginatedTotalReview'],
+        queryKey: ['paginatedTotalReviewss'],
         queryFn: ({ pageParam }) => getPaginatedReviewsWithImages(pageParam, DEFAULT_PAGE_SIZE),
         initialPageParam: 2,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {

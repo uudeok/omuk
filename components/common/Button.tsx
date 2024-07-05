@@ -5,13 +5,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children?: React.ReactNode;
     role?: Role;
     size: Size;
+    className?: string;
 }
 
 const Button = (props: ButtonProps) => {
-    const { size, role, children, ...rest } = props;
+    const { size, role, children, className, ...rest } = props;
 
     return (
-        <ButtonBase size={size} role={role} {...rest}>
+        <ButtonBase size={size} role={role} className={className} {...rest}>
             {children}
         </ButtonBase>
     );

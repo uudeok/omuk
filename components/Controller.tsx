@@ -25,7 +25,7 @@ const Controller = () => {
             <Button size="lg" role="round" onClick={() => router.push('/community')}>
                 커뮤니티
             </Button>
-            <Button size="lg" role="round" onClick={() => router.push('store')}>
+            <Button size="lg" role="round" onClick={() => router.push('/store')}>
                 가게홍보
             </Button>
         </div>

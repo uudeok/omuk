@@ -12,7 +12,7 @@ export type ReviewType = {
     visitDate: Date;
     companions: string | null;
     comment: string;
-    id: number;
+    id?: number;
     created_at?: string;
     review_images?: ReviewImages[];
     profiles?: ProfileType;

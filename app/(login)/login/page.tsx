@@ -5,8 +5,10 @@ import Button from '@/components/common/Button';
 import Text from '@/components/common/Text';
 import { Provider } from '@supabase/supabase-js';
 import { createClient } from '@/shared/lib/supabase/brower-client';
+import { useRouter } from 'next/navigation';
 
 const LoginPage = (props: { nextUrl?: string }) => {
+    const router = useRouter();
     const supabase = createClient();
 
     const handleLogin = async (provider: Provider) => {
@@ -40,6 +42,12 @@ const LoginPage = (props: { nextUrl?: string }) => {
                 </Button>
                 <Button size="lg" role="google" onClick={() => handleLogin('google')}>
                     구글로 로그인
+                </Button>
+            </div>
+
+            <div className={styles.business}>
+                <Button size="sm" role="none" onClick={() => router.push('/business-login')}>
+                    사장님 로그인
                 </Button>
             </div>
         </div>
