@@ -35,3 +35,21 @@ export const getFollowUserListsPaginated = async (requestee_id: string) => {
 
     return followingList;
 };
+
+export const getUserData = async () => {
+    const supabase = createClient();
+
+    const { data: userData } = await supabase.auth.getSession();
+
+    if (!userData.session) return;
+
+    const user_id = userData.session.user.id;
+
+    const { data, error } = await supabase.from('profiles').select('*').eq('id', user_id).maybeSingle();
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return data;
+};

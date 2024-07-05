@@ -17,7 +17,6 @@
 }
 
 .business {
-    /* border: 1px solid black; */
     padding: 5px;
     color: var(--mainColorDk);
     cursor: pointer;

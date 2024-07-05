@@ -12,6 +12,8 @@ const MypageLayout = ({ children }: { children: ReactNode }) => {
     const session = useSession();
     if (!session) return;
 
+    console.log(session);
+
     const profile = {
         avatar_url: session.user.user_metadata.avatar_url,
         email: session.user.email,

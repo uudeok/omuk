@@ -1,10 +1,10 @@
 'use client';
 
-import LoginForm from '@/components/business/loginForm';
 import styles from '../../../styles/businessLogin.module.css';
 import Text from '@/components/common/Text';
 import { useState } from 'react';
 import SignUpForm from '@/components/business/SignUpForm';
+import LoginForm from '@/components/business/LoginForm';
 import Button from '@/components/common/Button';
 
 const TAB = [

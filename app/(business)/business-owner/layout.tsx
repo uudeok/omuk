@@ -7,12 +7,10 @@ import { useSession } from '@/hooks';
 import { ProfileType } from '@/services/userService';
 import Avatar from '@/components/common/Avatar';
 import Text from '@/components/common/Text';
-import User from '../../../assets/user.svg';
-import { useRouter } from 'next/navigation';
+import AddUser from '../../../assets/addUser.svg';
 
 const BusinessLayout = ({ children }: { children: ReactNode }) => {
     const session = useSession();
-    const router = useRouter();
 
     const profile = {
         avatar_url: session?.user.user_metadata.avatar_url,
@@ -24,12 +22,13 @@ const BusinessLayout = ({ children }: { children: ReactNode }) => {
     return (
         <Slide styles={{ width: '352px', left: '352px' }}>
             <div className={styles.header}>
-                {session ? (
+                {profile.avatar_url ? (
                     <Avatar profile={profile} />
                 ) : (
-                    <div className={styles.user} onClick={() => router.push('/login')}>
-                        <User width={27} />
-                        <Text typography="t4">로그인 해주세요</Text>
+                    <div className={styles.user}>
+                        <AddUser width={30} />
+
+                        <Text typography="t4">{profile.username}</Text>
                     </div>
                 )}
             </div>

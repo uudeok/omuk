@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 const BusinessOwnerPage = () => {
     const router = useRouter();
 
+    // role !== owner 이면 접근 불가 로직 작성
+
     return (
         <div>
             <div style={{ display: 'flex' }}>

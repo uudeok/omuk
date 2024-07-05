@@ -21,6 +21,8 @@ const StoreLayout = ({ children }: { children: ReactNode }) => {
         id: session?.user.id,
     } as ProfileType;
 
+    console.log(session);
+
     return (
         <Slide styles={{ width: '352px', left: '352px' }}>
             <div className={styles.header}>
@@ -33,9 +35,10 @@ const StoreLayout = ({ children }: { children: ReactNode }) => {
                     </div>
                 )}
             </div>
-            <div className={styles.business} onClick={() => router.push('/business-owner')}>
+
+            {/* <div className={styles.business} onClick={() => router.push('/business-owner')}>
                 <Text typography="st3">사장님이라면 내 가게 홍보하기 ▶</Text>
-            </div>
+            </div> */}
             <main className={styles.content}>{children}</main>
         </Slide>
     );

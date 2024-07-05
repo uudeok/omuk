@@ -1,0 +1,16 @@
+.signup {
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.signup input {
+    box-sizing: border-box;
+    background-color: var(--blue20);
+    height: 40px;
+}
+
+.signup button {
+    margin-top: 10px;
+}
