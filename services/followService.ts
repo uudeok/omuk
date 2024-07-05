@@ -276,8 +276,6 @@ export const acceptedFollowRequest = async (follower_id: string) => {
         throw new Error(error.message);
     }
 
-    console.log('test', data);
-
     return data;
 };
 
@@ -300,24 +298,24 @@ export const cancleFollowRequest = async (follower_id: string) => {
     }
 };
 
-// export const getFollowingList = async (pageParam: number, pageSize: number): Promise<FollowType[] | undefined> => {
-//     const supabase = createClient();
+export const updateUser = async (url: string) => {
+    const supabase = createClient();
 
-//     const { data } = await supabase.auth.getSession();
+    const { data: userData } = await supabase.auth.getSession();
 
-//     if (!data.session) return;
+    if (!userData.session) return;
 
-//     const user_id = data.session.user.id;
+    const user_id = userData.session.user.id;
 
-//     const { data: followingList, error } = await supabase
-//         .from('follow')
-//         .select('*')
-//         .eq('requester_id', user_id)
-//         .range((pageParam - 1) * pageSize, pageParam * pageSize - 1);
+    const { data, error } = await supabase
+        .from('profiles')
+        .update({
+            avatar_url: url,
+        })
+        .eq('id', user_id);
 
-//     if (error) {
-//         throw new Error(error.message);
-//     }
-
-//     return followingList;
-// };
+    if (error) {
+        throw new Error(error.message);
+    }
+    return data;
+};

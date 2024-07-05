@@ -11,6 +11,29 @@
     height: 40px;
 }
 
-.signup button {
+.upload {
+    /* display: flex; */
+    /* border: 1px solid black; */
     margin-top: 10px;
+    justify-content: space-evenly;
+    /* padding: 10px; */
+    align-items: center;
+}
+
+.preview {
+    background-color: var(--blue20);
+    width: 70px;
+    height: 70px;
+    border-radius: 50px;
+    margin-top: 10px;
+}
+
+.uploadBtn {
+    /* border: 1px solid black; */
+    width: 28%;
+    margin-top: 5px;
+}
+
+.hidden {
+    display: none;
 }

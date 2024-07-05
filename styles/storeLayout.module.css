@@ -6,11 +6,6 @@
     display: flex;
 }
 
-.header img {
-    border-radius: 50px;
-    margin-left: 5px;
-}
-
 .header svg {
     padding: 5px;
     margin-right: 5px;
@@ -40,11 +35,9 @@
 }
 
 .business {
-    height: 50px;
-    background-color: var(--mainColorDk);
     color: white;
     display: flex;
-    align-items: center;
+    padding: 7px;
     cursor: pointer;
     justify-content: center;
 

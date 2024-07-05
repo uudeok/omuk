@@ -6,12 +6,8 @@ import Button from '../common/Button';
 import Input from '../common/Input';
 import InputBase from '../common/InputBase';
 import { signupHandler } from '@/services/loginService';
-import { createClient } from '@/shared/lib/supabase/brower-client';
-import { useRouter } from 'next/navigation';
 
 const SignUpForm = () => {
-    const router = useRouter();
-
     const [emailValue, onChangeEmail, isEmailValid, setEmailValue] = useInput({
         type: 'string',
         minLength: 5,

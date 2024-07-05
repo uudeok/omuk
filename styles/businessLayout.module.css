@@ -1,0 +1,75 @@
+.header {
+    background-color: var(--mainColor);
+    height: 75px;
+    z-index: 1000;
+    width: 100%;
+    display: flex;
+}
+
+.header img {
+    border-radius: 50px;
+    margin-left: 5px;
+}
+
+.header svg {
+    padding: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.content {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    height: calc(100vh - 115px);
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--grey800);
+    }
+}
+
+.user svg {
+    background-color: white;
+    border-radius: 50%;
+}
+
+.controller {
+    display: flex;
+}
+
+.hidden {
+    display: none;
+}
+
+.image img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 5px;
+}
+
+.saveButtonContainer {
+    margin-top: 8px; /* Adjust spacing as needed */
+    position: relative;
+    z-index: 99999;
+    right: 90px;
+    bottom: -40px;
+}
+
+.saveButton {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 30px;
+    border: none;
+    /* padding: 8px 16px; */
+    /* font-size: 14px; */
+    cursor: pointer;
+    width: 45px;
+    height: 24px;
+}

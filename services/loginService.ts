@@ -9,7 +9,7 @@ export const signupHandler = async (email: string, password: string, nickName: s
         options: {
             data: {
                 name: nickName,
-                avatar_url: null,
+                avatar_url: 'https://s3-omuk-images.s3.ap-northeast-2.amazonaws.com/black-user.png',
                 role: role,
             },
         },

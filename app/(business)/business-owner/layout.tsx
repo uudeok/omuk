@@ -1,13 +1,11 @@
 'use client';
 
-import styles from '../../../styles/communityLayout.module.css';
-import { ReactNode } from 'react';
+import styles from '../../../styles/businessLayout.module.css';
 import Slide from '@/components/layout/Slide';
-import { useSession } from '@/hooks';
 import { ProfileType } from '@/services/userService';
 import Avatar from '@/components/common/Avatar';
-import Text from '@/components/common/Text';
-import AddUser from '../../../assets/addUser.svg';
+import { ReactNode } from 'react';
+import { useSession } from '@/hooks';
 
 const BusinessLayout = ({ children }: { children: ReactNode }) => {
     const session = useSession();
@@ -22,16 +20,9 @@ const BusinessLayout = ({ children }: { children: ReactNode }) => {
     return (
         <Slide styles={{ width: '352px', left: '352px' }}>
             <div className={styles.header}>
-                {profile.avatar_url ? (
-                    <Avatar profile={profile} />
-                ) : (
-                    <div className={styles.user}>
-                        <AddUser width={30} />
-
-                        <Text typography="t4">{profile.username}</Text>
-                    </div>
-                )}
+                <Avatar profile={profile} />
             </div>
+
             <main>{children}</main>
         </Slide>
     );

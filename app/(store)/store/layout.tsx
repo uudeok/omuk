@@ -21,7 +21,7 @@ const StoreLayout = ({ children }: { children: ReactNode }) => {
         id: session?.user.id,
     } as ProfileType;
 
-    console.log(session);
+    const isOwner = session?.user.user_metadata.role === 'owner';
 
     return (
         <Slide styles={{ width: '352px', left: '352px' }}>
@@ -34,11 +34,14 @@ const StoreLayout = ({ children }: { children: ReactNode }) => {
                         <Text typography="t4">로그인 해주세요</Text>
                     </div>
                 )}
+
+                {isOwner && (
+                    <div className={styles.business} onClick={() => router.push('/business-owner')}>
+                        <Text typography="st3">관리자 페이지</Text>
+                    </div>
+                )}
             </div>
 
-            {/* <div className={styles.business} onClick={() => router.push('/business-owner')}>
-                <Text typography="st3">사장님이라면 내 가게 홍보하기 ▶</Text>
-            </div> */}
             <main className={styles.content}>{children}</main>
         </Slide>
     );

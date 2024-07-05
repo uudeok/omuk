@@ -69,13 +69,18 @@ export const useS3FileUpload = (options?: Options) => {
             if (e.target.files) {
                 const selectedFiles = Array.from(e.target.files);
 
-                if (maxSize && files.length + selectedFiles.length > maxSize) {
-                    isValid.current = false;
-                    setAlertMessage(`최대 ${maxSize}개의 이미지만 업로드할 수 있습니다.`);
-                    return;
+                if (maxSize === 1) {
+                    // maxSize가 1일 때는 기존 파일을 대체하도록 수정
+                    setFiles(selectedFiles);
+                } else {
+                    // 그 외의 경우는 파일을 추가
+                    if (maxSize && files.length + selectedFiles.length > maxSize) {
+                        isValid.current = false;
+                        setAlertMessage(`최대 ${maxSize}개의 이미지만 업로드할 수 있습니다.`);
+                        return;
+                    }
+                    setFiles((prev) => [...prev, ...selectedFiles]);
                 }
-
-                setFiles((prev) => [...prev, ...selectedFiles]);
             }
         },
         [maxSize, files.length]
