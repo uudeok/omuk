@@ -3,7 +3,7 @@
 import styles from '../styles/detail.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useBoolean, useSession } from '@/hooks';
+import { useBoolean } from '@/hooks';
 import List, { ListRow } from './common/List';
 import Text from './common/Text';
 import Button from './common/Button';
@@ -19,6 +19,8 @@ import Comment from '../assets/comment.svg';
 import Bookmark from './common/Bookmark';
 import Star from '../assets/star.svg';
 import LoadingBar from './common/LoadingBar';
+import { useContext } from 'react';
+import { AuthContext } from '@/shared/context/AuthProvider';
 
 type Props = {
     resData: any;
@@ -26,7 +28,7 @@ type Props = {
 };
 
 const Detail = ({ resData, res_id }: Props) => {
-    const session = useSession();
+    const session = useContext(AuthContext);
     const router = useRouter();
     const { basicInfo, menuInfo } = resData;
     const { value: isShowMenu, toggle: setMenu } = useBoolean();

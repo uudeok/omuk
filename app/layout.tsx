@@ -7,7 +7,6 @@ import ReactQueryProvider from '@/shared/context/ReactQueryProvider';
 import AuthProvider from '@/shared/context/AuthProvider';
 import SideBar from '@/components/layout/SideBar';
 import Map from '@/components/layout/Map';
-import Providers from '@/shared/context/QueryProvider';
 
 export const metadata: Metadata = {
     title: {
@@ -34,14 +33,14 @@ export default function RootLayout({
             <body style={{ display: 'flex' }}>
                 <ReactQueryProvider>
                     <StyledProvider>
-                        {/* <AuthProvider> */}
-                        <MapProvider>
-                            <SideBar />
-                            <Map />
-                            {children}
-                            <div id="modal-root"></div>
-                        </MapProvider>
-                        {/* </AuthProvider> */}
+                        <AuthProvider>
+                            <MapProvider>
+                                <SideBar />
+                                <Map />
+                                {children}
+                                <div id="modal-root"></div>
+                            </MapProvider>
+                        </AuthProvider>
                     </StyledProvider>
                 </ReactQueryProvider>
             </body>

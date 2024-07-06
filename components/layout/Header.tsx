@@ -6,11 +6,12 @@ import List, { ListRow } from '../common/List';
 import Utensils from '../../assets/utensils.svg';
 import Text from '../common/Text';
 import { signOut } from '@/shared/utils/authUtil';
-import { useSession } from '@/hooks';
+import { useContext } from 'react';
+import { AuthContext } from '@/shared/context/AuthProvider';
 
 const Header = () => {
     const router = useRouter();
-    const session = useSession();
+    const session = useContext(AuthContext);
 
     const redirectPage = async () => {
         if (session) {

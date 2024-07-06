@@ -1,13 +1,14 @@
 'use client';
 
+import { useContext } from 'react';
 import styles from '../styles/controller.module.css';
 import Button from './common/Button';
 import { useRouter } from 'next/navigation';
-import { useSession } from '@/hooks';
+import { AuthContext } from '@/shared/context/AuthProvider';
 
 const Controller = () => {
     const router = useRouter();
-    const session = useSession();
+    const session = useContext(AuthContext);
 
     const redirectPage = (param: string) => {
         if (session) {

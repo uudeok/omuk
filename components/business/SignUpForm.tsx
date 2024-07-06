@@ -25,6 +25,8 @@ const SignUpForm = () => {
 
     const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // 로직 비활성화
+        return;
         await signupHandler(emailValue, passwordValue, nickNameValue, 'owner');
         window.location.href = '/business-owner';
     };
@@ -53,7 +55,9 @@ const SignUpForm = () => {
                 <InputBase placeholder="닉네임을 지어주세요" value={nickNameValue} onChange={onChangeNickname} />
             </Input>
 
-            <Button size="lg">회원가입</Button>
+            <Button size="lg" disabled={true}>
+                회원가입
+            </Button>
         </form>
     );
 };

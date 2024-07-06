@@ -4,7 +4,7 @@ import { createClient } from '@/shared/lib/supabase/brower-client';
 export const getBookmark = async (res_id: string) => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
-    console.log(data);
+
     if (!data.session) return;
 
     const user_id = data.session.user.id;

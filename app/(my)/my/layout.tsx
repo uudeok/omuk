@@ -2,17 +2,16 @@
 
 import styles from '../../../styles/mypageLayout.module.css';
 import Slide from '@/components/layout/Slide';
-import { ReactNode } from 'react';
+import { ReactNode, useContext } from 'react';
 import Avatar from '@/components/common/Avatar';
 import Alarm from '@/components/Alarm';
-import { useSession } from '@/hooks';
 import { ProfileType } from '@/services/userService';
+import { AuthContext } from '@/shared/context/AuthProvider';
 
 const MypageLayout = ({ children }: { children: ReactNode }) => {
-    const session = useSession();
-    if (!session) return;
+    const session = useContext(AuthContext);
 
-    console.log(session);
+    if (!session) return;
 
     const profile = {
         avatar_url: session.user.user_metadata.avatar_url,

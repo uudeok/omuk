@@ -2,9 +2,9 @@
 
 import styles from '../styles/reviewform.module.css';
 import dayjs from 'dayjs';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import List, { ListRow } from '@/components/common/List';
-import { useBoolean, useInput, useS3FileUpload, useSession } from '@/hooks';
+import { useBoolean, useInput, useS3FileUpload } from '@/hooks';
 import Text from '@/components/common/Text';
 import Badge from '@/components/common/Badge';
 import Button from './common/Button';
@@ -22,9 +22,10 @@ import Modal from './common/Modal';
 import CalendarModal from './modal/CalendarModal';
 import { initializeDate } from '@/shared/utils/calendarUtil';
 import { getImageData, updateImages, uploadImages } from '@/services/imageService';
+import { AuthContext } from '@/shared/context/AuthProvider';
 
 const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) => {
-    const session = useSession();
+    const session = useContext(AuthContext);
     const router = useRouter();
     const fileRef = useRef<HTMLInputElement>(null);
 
@@ -100,13 +101,13 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
             const review_id = await postReview(reviewData);
             const uploadedUrls = await uploadFiles();
             if (uploadedUrls) {
-                await uploadImages('review_images', uploadedUrls, review_id);
+                await uploadImages(uploadedUrls, review_id);
             }
         } else if (method === 'update') {
             const review_id = await updateReview(reviewData);
             const uploadedUrls = await uploadFiles();
             if (uploadedUrls) {
-                await updateImages('review_images', uploadedUrls, review_id);
+                await updateImages(uploadedUrls, review_id);
             }
         }
 

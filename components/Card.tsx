@@ -15,34 +15,14 @@ import Heart from '../assets/heart.svg';
 import FillHeart from '../assets/fillHeart.svg';
 import { addReviewLike, removeReviewLike } from '@/services/reviewLikeService';
 import { CommunityReviewType } from '@/services/reviewService';
-import { PromoteType } from '@/services/restaurantsService';
-import { ProfileType } from '@/services/userService';
-import { ReviewImagesType } from '@/services/reviewService';
-import { ReviewLikesType } from '@/services/reviewLikeService';
-
-export type CardType = {
-    id: number;
-    created_at: string;
-    res_id: string;
-    content: string;
-    placeName: string;
-    companions?: string;
-    visitDate?: string;
-    review_images?: ReviewImagesType[];
-    profiles: ProfileType;
-    review_likes?: ReviewLikesType[];
-    likedByUser?: boolean;
-};
 
 type Props = {
-    list: CardType;
+    list: CommunityReviewType;
 };
 
 const Card = ({ list }: Props) => {
     const [likedByUser, setLikedByUser] = useState<boolean>(list.likedByUser!);
     const [likeCount, setLikeCount] = useState<number>(list.review_likes?.length || 0);
-
-    console.log(list);
 
     const flattenedImages = _.flatten(list.review_images?.map((imageObj) => imageObj.images_url));
     const hasImage = list.review_images && list.review_images.length > 0;

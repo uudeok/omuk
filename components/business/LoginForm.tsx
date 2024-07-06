@@ -23,8 +23,9 @@ const LoginForm = () => {
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // 로직 비활성화
+        return;
         const result = await signinHandler(emailValue, passwordValue);
-        console.log('result', result);
         window.location.href = '/business-owner';
     };
 
@@ -48,7 +49,9 @@ const LoginForm = () => {
                 />
             </Input>
 
-            <Button size="lg">로그인</Button>
+            <Button size="lg" disabled={true}>
+                로그인
+            </Button>
         </form>
     );
 };

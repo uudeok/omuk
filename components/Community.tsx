@@ -39,8 +39,6 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
         },
     });
 
-    console.log(initalReviews);
-
     // custom handleObserver 생성 - ssr 초기 페이지 받아올땐 실행되지 않도록 구현
     const handleObserver = useCallback(
         (entries: IntersectionObserverEntry[]) => {
@@ -60,8 +58,6 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
         hasNextPage: hasNextPage,
         customHandleObserver: handleObserver,
     });
-
-    console.log(reviewList);
 
     return (
         <div>

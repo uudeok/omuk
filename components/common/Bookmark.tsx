@@ -4,8 +4,8 @@ import NonBookmark from '../../assets/nonBookmark.svg';
 import FillBookmark from '../../assets/bookmark.svg';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getBookmark, deleteBookmark, postBookmark } from '@/services/bookmarkService';
-import { useState } from 'react';
-import { useSession } from '@/hooks';
+import { useContext, useState } from 'react';
+import { AuthContext } from '@/shared/context/AuthProvider';
 
 type BookmarkProps = {
     res_id: string;
@@ -16,7 +16,7 @@ type BookmarkProps = {
 
 const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
     const queryClient = useQueryClient();
-    const session = useSession();
+    const session = useContext(AuthContext);
     const [debouncedClick, setDebouncedClick] = useState<boolean>(true);
 
     const { data: bookmark } = useQuery({
@@ -44,6 +44,8 @@ const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
     });
 
     const handleBookmarkToggle = () => {
+        if (!session) return alert('로그인이 필요한 서비스 입니다.');
+
         if (debouncedClick) {
             setDebouncedClick(false);
             mutation.mutate();

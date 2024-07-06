@@ -1,7 +1,7 @@
 'use clinet';
 
 import styles from '../styles/follow.module.css';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import Input from './common/Input';
 import InputBase from './common/InputBase';
 import LoadingBar from './common/LoadingBar';
@@ -9,7 +9,7 @@ import List, { ListRow } from './common/List';
 import Avatar from './common/Avatar';
 import Button from './common/Button';
 import Text from './common/Text';
-import { useInput, useSession } from '@/hooks';
+import { useInput } from '@/hooks';
 import { searchUserData, ProfileType } from '@/services/userService';
 import {
     checkFollowing,
@@ -20,9 +20,10 @@ import {
 } from '@/services/followService';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { AuthContext } from '@/shared/context/AuthProvider';
 
 const Follow = () => {
-    const session = useSession();
+    const session = useContext(AuthContext);
     const router = useRouter();
 
     const [hasSearched, setHasSearched] = useState<boolean>(false);

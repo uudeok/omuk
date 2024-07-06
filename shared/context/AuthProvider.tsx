@@ -10,6 +10,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const supabase = createClient();
     const [session, setSession] = useState<Session | null>(null);
 
+    console.log('provider session', session);
     useEffect(() => {
         const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
             if (event === 'SIGNED_OUT') {
