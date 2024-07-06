@@ -60,7 +60,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
     useEffect(() => {
         if (reviewData) {
             setRate(reviewData.rate);
-            setValue(reviewData.comment);
+            setValue(reviewData.content);
             setSelectedPositives(positiveFeedback.items.filter((item) => reviewData.positive?.includes(item.value)));
             setSelectedNegatives(negativeFeedback.items.filter((item) => reviewData.negative?.includes(item.value)));
             setSelectedCompanions(reviewData.companions);
@@ -93,20 +93,20 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
             placeName: resName,
             visitDate: selectedDate,
             companions: selectedCompanions,
-            comment: value,
+            content: value,
         };
 
         if (method === 'post') {
             const review_id = await postReview(reviewData);
             const uploadedUrls = await uploadFiles();
             if (uploadedUrls) {
-                await uploadImages(uploadedUrls, review_id);
+                await uploadImages('review_images', uploadedUrls, review_id);
             }
         } else if (method === 'update') {
             const review_id = await updateReview(reviewData);
             const uploadedUrls = await uploadFiles();
             if (uploadedUrls) {
-                await updateImages(uploadedUrls, review_id);
+                await updateImages('review_images', uploadedUrls, review_id);
             }
         }
 

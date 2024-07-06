@@ -25,9 +25,9 @@ const Controller = () => {
             <Button size="lg" role="round" onClick={() => router.push('/community')}>
                 커뮤니티
             </Button>
-            <Button size="lg" role="round" onClick={() => router.push('/store')}>
-                가게홍보
-            </Button>
+            {/* <Button size="lg" role="round">
+                준비중
+            </Button> */}
         </div>
     );
 };

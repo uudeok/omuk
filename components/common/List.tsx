@@ -29,6 +29,16 @@ export const ListRow = ({ left, right, middle, onClick, between = true }: ListRo
     );
 };
 
+export const ListCol = ({ left, right, middle, onClick }: ListRowProps) => {
+    return (
+        <li className={styles.column} onClick={onClick}>
+            {left}
+            {middle}
+            {right}
+        </li>
+    );
+};
+
 export const ListBox = ({ top, bottom, onClick }: ListBoxProps) => {
     return (
         <li className={styles.box} onClick={onClick}>

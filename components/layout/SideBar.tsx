@@ -1,6 +1,6 @@
+import styles from '../../styles/sideBar.module.css';
 import Search from '../Search';
 import RestaurantList from '../RestaurantList';
-import styles from '../../styles/sideBar.module.css';
 import Controller from '../Controller';
 import Header from './Header';
 

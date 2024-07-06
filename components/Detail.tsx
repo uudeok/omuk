@@ -185,7 +185,7 @@ const Detail = ({ resData, res_id }: Props) => {
                     />
                     {reviewData ? (
                         <div className={styles.myreview}>
-                            <Text typography="st3">{reviewData.comment}</Text>
+                            <Text typography="st3">{reviewData.content}</Text>
                             <Button size="sm" role="none" onClick={() => router.push(`/${res_id}/review`)}>
                                 자세히 보기
                             </Button>

@@ -11,15 +11,15 @@ export type ReviewType = {
     placeName: string;
     visitDate: Date;
     companions: string | null;
-    comment: string;
+    content: string;
     id?: number;
     created_at?: string;
-    review_images?: ReviewImages[];
+    review_images?: ReviewImagesType[];
     profiles?: ProfileType;
     review_likes?: ReviewLikesType[];
 };
 
-export type ReviewImages = {
+export type ReviewImagesType = {
     images_url: string[];
 };
 
@@ -49,7 +49,7 @@ export const getReviewData = async (res_id: string) => {
 // 새 리뷰 작성
 export const postReview = async ({
     rate,
-    comment,
+    content,
     positive,
     negative,
     res_id,
@@ -69,7 +69,7 @@ export const postReview = async ({
         .insert([
             {
                 rate: rate,
-                comment: comment,
+                content: content,
                 positive: positive,
                 negative: negative,
                 res_id: res_id,
@@ -93,7 +93,7 @@ export const postReview = async ({
 // 리뷰 수정
 export const updateReview = async ({
     rate,
-    comment,
+    content,
     positive,
     negative,
     res_id,
@@ -112,7 +112,7 @@ export const updateReview = async ({
         .from('review')
         .update({
             rate: rate,
-            comment: comment,
+            content: content,
             positive: positive,
             negative: negative,
             res_id: res_id,
@@ -206,13 +206,13 @@ export type CommunityReviewType = {
     res_id: string;
     user_id: string;
     rate: number;
-    comment: string;
+    content: string;
     positive: string[];
     negative: string[];
     placeName: string;
     companions: string;
     visitDate: string;
-    review_images: ReviewImages[];
+    review_images: ReviewImagesType[];
     profiles: ProfileType;
     review_likes: ReviewLikesType[];
     likedByUser: boolean;

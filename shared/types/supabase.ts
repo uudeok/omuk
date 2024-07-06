@@ -96,24 +96,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "follow_requestee_id_fkey"
-            columns: ["requestee_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "follow_requestee_id_fkey1"
             columns: ["requestee_id"]
             isOneToOne: false
             referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "follow_requester_id_fkey"
-            columns: ["requester_id"]
-            isOneToOne: false
-            referencedRelation: "users"
             referencedColumns: ["id"]
           },
           {
@@ -130,18 +116,21 @@ export type Database = {
           avatar_url: string | null
           email: string | null
           id: string
+          role: string
           username: string | null
         }
         Insert: {
           avatar_url?: string | null
           email?: string | null
           id: string
+          role?: string
           username?: string | null
         }
         Update: {
           avatar_url?: string | null
           email?: string | null
           id?: string
+          role?: string
           username?: string | null
         }
         Relationships: [
@@ -154,10 +143,119 @@ export type Database = {
           },
         ]
       }
+      promote_images: {
+        Row: {
+          created_at: string
+          id: number
+          images_url: string[]
+          review_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          images_url: string[]
+          review_id: number
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          images_url?: string[]
+          review_id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "promote_imges_review_id_fkey"
+            columns: ["review_id"]
+            isOneToOne: false
+            referencedRelation: "promotions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "promote_imges_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      promotions: {
+        Row: {
+          content: string
+          created_at: string
+          id: number
+          owner_id: string
+          placeName: string
+          res_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: number
+          owner_id: string
+          placeName: string
+          res_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: number
+          owner_id?: string
+          placeName?: string
+          res_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "promotions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      restaurants: {
+        Row: {
+          business_license_url: string
+          created_at: string
+          id: number
+          owner_id: string
+          placeName: string | null
+          res_id: string | null
+        }
+        Insert: {
+          business_license_url: string
+          created_at?: string
+          id?: number
+          owner_id: string
+          placeName?: string | null
+          res_id?: string | null
+        }
+        Update: {
+          business_license_url?: string
+          created_at?: string
+          id?: number
+          owner_id?: string
+          placeName?: string | null
+          res_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "restaurants_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       review: {
         Row: {
-          comment: string
           companions: string | null
+          content: string
           created_at: string
           id: number
           negative: string[] | null
@@ -169,8 +267,8 @@ export type Database = {
           visitDate: string
         }
         Insert: {
-          comment: string
           companions?: string | null
+          content: string
           created_at?: string
           id?: number
           negative?: string[] | null
@@ -182,8 +280,8 @@ export type Database = {
           visitDate: string
         }
         Update: {
-          comment?: string
           companions?: string | null
+          content?: string
           created_at?: string
           id?: number
           negative?: string[] | null
@@ -284,7 +382,37 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      execute_sql: {
+        Args: {
+          sql: string
+          params: Json
+        }
+        Returns: Record<string, unknown>[]
+      }
+      fetch_reviews_with_likes: {
+        Args: {
+          page_param: number
+          page_size: number
+          input_user_id: string
+        }
+        Returns: {
+          id: number
+          created_at: string
+          res_id: string
+          user_id: string
+          rate: number
+          comment: string
+          positive: string[]
+          negative: string[]
+          placename: string
+          companions: string
+          visitdate: string
+          review_images: Json
+          profiles: Json
+          review_likes: Json
+          liked_by_user: boolean
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
