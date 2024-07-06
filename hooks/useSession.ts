@@ -8,7 +8,7 @@ export function useSession() {
     const supabase = createClient();
     const [session, setSession] = useState<Session | null>(null);
 
-    // console.log(session);
+    // console.log('session', session);
 
     const getSession = useCallback(async () => {
         const {

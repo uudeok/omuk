@@ -53,3 +53,19 @@ export const getUserData = async () => {
 
     return data;
 };
+
+// updateUser 메서드는 현재 로그인한 사용자의 정보를 업데이트합니다
+export const updateAvatarUrl = async (url: string) => {
+    const supabase = createClient();
+
+    const { data, error } = await supabase.auth.updateUser({
+        data: { avatar_url: url },
+    });
+
+    if (error) {
+        console.error('Error updating user:', error);
+        throw new Error(error.message);
+    }
+
+    return data.user;
+};

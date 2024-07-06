@@ -23,7 +23,7 @@ const BusinessLayout = ({ children }: { children: ReactNode }) => {
                 <Avatar profile={profile} />
             </div>
 
-            <main>{children}</main>
+            <main className={styles.content}>{children}</main>
         </Slide>
     );
 };

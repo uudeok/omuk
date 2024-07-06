@@ -8,4 +8,9 @@
 .avatar img {
     border-radius: 50px;
     margin-left: 5px;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.8;
+    }
 }
