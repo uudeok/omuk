@@ -10,19 +10,20 @@ import { useRouter } from 'next/navigation';
 import Text from '@/components/common/Text';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
+import NonData from '@/components/common/NonData';
 
 const MyBookmark = () => {
     const router = useRouter();
 
-    const { data: pageInfo } = useQuery({
+    const { data: bookmarkTotalRows } = useQuery({
         queryKey: ['bookmarkTotalRows'],
-        queryFn: () => getBookmarkTotalRows(),
+        queryFn: getBookmarkTotalRows,
     });
 
-    const totalPage = getTotalPages(pageInfo, DEFAULT_PAGE_SIZE);
+    const totalPage = getTotalPages(bookmarkTotalRows, DEFAULT_PAGE_SIZE);
 
     const {
-        data: bookmarkList,
+        data: bookmarkList = [],
         hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
@@ -36,7 +37,7 @@ const MyBookmark = () => {
             }
         },
         select: (data) => {
-            return data.pages.flat();
+            return data.pages.flatMap((page) => page);
         },
     });
 
@@ -53,25 +54,29 @@ const MyBookmark = () => {
 
             <div>
                 <List>
-                    {bookmarkList?.map((item: any) => (
-                        <ListBox
-                            key={item.id}
-                            top={
-                                <div className={styles.top}>
-                                    <Text typography="t4">{item.placeName}</Text>
-                                    <Text typography="st3">{item.category}</Text>
-                                    <Text typography="st3">{item.address}</Text>
-                                </div>
-                            }
-                            bottom={
-                                <div className={styles.bottom}>
-                                    <Button size="sm" role="none" onClick={() => router.push(`/${item.res_id}`)}>
-                                        보러가기 ▶︎
-                                    </Button>
-                                </div>
-                            }
-                        />
-                    ))}
+                    {bookmarkList.length === 0 ? (
+                        <NonData label="아직 즐겨찾기한 곳이 없어요" />
+                    ) : (
+                        bookmarkList.map((item: any) => (
+                            <ListBox
+                                key={item.id}
+                                top={
+                                    <div className={styles.top}>
+                                        <Text typography="t4">{item.placeName}</Text>
+                                        <Text typography="st3">{item.category}</Text>
+                                        <Text typography="st3">{item.address}</Text>
+                                    </div>
+                                }
+                                bottom={
+                                    <div className={styles.bottom}>
+                                        <Button size="sm" role="none" onClick={() => router.push(`/${item.res_id}`)}>
+                                            보러가기 ▶︎
+                                        </Button>
+                                    </div>
+                                }
+                            />
+                        ))
+                    )}
                 </List>
             </div>
 

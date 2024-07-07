@@ -84,8 +84,6 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
                 : [...prev, feedback]
         );
     };
-    console.log('한국', selectedDate);
-    console.log('UTC', selectedDate.toISOString());
 
     const handleUpdateReview = async (method: 'post' | 'update') => {
         const reviewData = {

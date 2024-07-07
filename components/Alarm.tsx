@@ -10,9 +10,11 @@ import { useRouter } from 'next/navigation';
 const Alarm = () => {
     const router = useRouter();
 
+    // 팔로워 요청 데이터 조회
     const { data: hasFollower } = useQuery({
         queryKey: ['followerTotalRows', 'pending'],
         queryFn: () => getFollowerTotalRows('pending'),
+        staleTime: 1000 * 600,
     });
 
     return (

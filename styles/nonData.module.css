@@ -1,0 +1,8 @@
+.nonReview {
+    margin: 50px auto;
+    width: 60%;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}

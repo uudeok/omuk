@@ -45,7 +45,7 @@ const FollowerPage = () => {
             }
         },
         select: (data) => {
-            return data.pages.flat().map((page) => page);
+            return data.pages.flatMap((page) => page);
         },
     });
 
