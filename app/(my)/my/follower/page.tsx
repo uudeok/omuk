@@ -55,7 +55,7 @@ const FollowerPage = () => {
     });
 
     const handleAcceptFollower = async (follower_id: string) => {
-        const result = await acceptedFollowRequest(follower_id);
+        await acceptedFollowRequest(follower_id);
         refetchFollowerList();
     };
 
@@ -67,8 +67,8 @@ const FollowerPage = () => {
         }
     };
 
-    const pending = followerList?.filter((follower) => follower.status === 'pending');
-    const accepted = followerList?.filter((follower) => follower.status === 'accepted');
+    const pendingList = followerList?.filter((follower) => follower.status === 'pending');
+    const acceptedList = followerList?.filter((follower) => follower.status === 'accepted');
 
     return (
         <div>
@@ -78,61 +78,55 @@ const FollowerPage = () => {
 
             <div className={styles.pending}>
                 <List>
-                    <Text typography="t5">팔로우 요청 {pending?.length}명</Text>
+                    <Text typography="t5">팔로우 요청 {pendingList?.length}명</Text>
 
-                    {followerList?.map(
-                        (follower) =>
-                            follower.status === 'pending' && (
-                                <ListRow
-                                    key={follower.id}
-                                    left={<Avatar profile={follower.profiles} />}
-                                    right={
-                                        <div className={styles.button}>
-                                            <Button
-                                                size="sm"
-                                                role="round"
-                                                onClick={() => handleAcceptFollower(follower.requester_id)}
-                                            >
-                                                확인
-                                            </Button>
-                                            <Button
-                                                size="sm"
-                                                role="round"
-                                                onClick={() => handleRejectFollower(follower.requester_id)}
-                                            >
-                                                취소
-                                            </Button>
-                                        </div>
-                                    }
-                                />
-                            )
-                    )}
+                    {pendingList?.map((follower) => (
+                        <ListRow
+                            key={follower.id}
+                            left={<Avatar profile={follower.profiles} />}
+                            right={
+                                <div className={styles.button}>
+                                    <Button
+                                        size="sm"
+                                        role="round"
+                                        onClick={() => handleAcceptFollower(follower.requester_id)}
+                                    >
+                                        확인
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        role="round"
+                                        onClick={() => handleRejectFollower(follower.requester_id)}
+                                    >
+                                        취소
+                                    </Button>
+                                </div>
+                            }
+                        />
+                    ))}
                 </List>
             </div>
 
             <div className={styles.accepted}>
                 <List>
-                    <Text typography="t5">모든 팔로우 {accepted?.length}명 </Text>
-                    {followerList?.map(
-                        (follower) =>
-                            follower.status === 'accepted' && (
-                                <ListRow
-                                    key={follower.id}
-                                    left={<Avatar profile={follower.profiles} />}
-                                    right={
-                                        <div className={styles.button}>
-                                            <Button
-                                                size="sm"
-                                                role="round"
-                                                onClick={() => handleRejectFollower(follower.requester_id)}
-                                            >
-                                                취소
-                                            </Button>
-                                        </div>
-                                    }
-                                />
-                            )
-                    )}
+                    <Text typography="t5">모든 팔로우 {acceptedList?.length}명 </Text>
+                    {acceptedList?.map((follower) => (
+                        <ListRow
+                            key={follower.id}
+                            left={<Avatar profile={follower.profiles} />}
+                            right={
+                                <div className={styles.button}>
+                                    <Button
+                                        size="sm"
+                                        role="round"
+                                        onClick={() => handleRejectFollower(follower.requester_id)}
+                                    >
+                                        취소
+                                    </Button>
+                                </div>
+                            }
+                        />
+                    ))}
                 </List>
             </div>
 
@@ -142,46 +136,3 @@ const FollowerPage = () => {
 };
 
 export default FollowerPage;
-
-//     <div className={styles.nothing}>
-//         <Text typography="st3">아직 친구가 없어용🥲</Text>
-//         <Button size="sm" role="round">
-//             만들러가기
-//         </Button>
-//     </div>
-// )
-
-{
-    /* <div className={styles.pending}>
-<List>
-    <Text typography="t5">팔로우 요청</Text>
-    {followerList?.map(
-        (follower) =>
-            follower.status === 'pending' && (
-                <ListRow
-                    key={follower.id}
-                    left={<Avatar profile={follower.profiles} />}
-                    right={
-                        <div className={styles.button}>
-                            <Button
-                                size="sm"
-                                role="round"
-                                onClick={() => handleAcceptFollower(follower.requester_id)}
-                            >
-                                확인
-                            </Button>
-                            <Button
-                                size="sm"
-                                role="round"
-                                onClick={() => handleRejectFollower(follower.requester_id)}
-                            >
-                                취소
-                            </Button>
-                        </div>
-                    }
-                />
-            )
-    )}
-</List>
-</div> */
-}

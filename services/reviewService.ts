@@ -311,3 +311,21 @@ export const getFollowerReviewsWithImages = async (
 
     return reviewsWithLikes;
 };
+
+// 유저_id 로 작성한 모든 리뷰 가져오기
+// export const getReviewList = async (): Promise<ReviewType[] | undefined | []> => {
+//     const supabase = createClient();
+//     const { data } = await supabase.auth.getSession();
+
+//     if (!data.session) return;
+
+//     const user_id = data.session.user.id;
+
+//     const { data: reviewList, error } = await supabase.from('review').select('*').eq('user_id', user_id).select();
+
+//     if (error) {
+//         throw new Error(error.message);
+//     }
+
+//     return reviewList;
+// };

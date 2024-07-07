@@ -20,9 +20,10 @@ const MyCalendar = () => {
 
     const displayDate = dayjs(selectedDate).format('YYYY-MM-DD');
 
-    const { data: reviewList, isFetching } = useQuery({
+    const { data: reviewList } = useQuery({
         queryKey: ['reviewList'],
         queryFn: getReviewList,
+        staleTime: 60 * 1000,
     });
 
     const handleReview = (date: Date) => {

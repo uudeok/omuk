@@ -16,12 +16,12 @@ const FollowingPage = () => {
     const router = useRouter();
 
     // Follow 와 동일한 query key
-    const { data: followingInfo } = useQuery({
+    const { data: followingTotalRows } = useQuery({
         queryKey: ['followingTotalRows'],
         queryFn: getFollowingTotalRows,
     });
 
-    const totalPage = getTotalPages(followingInfo, FOLLOW_PAGE_SIZE);
+    const totalPage = getTotalPages(followingTotalRows, FOLLOW_PAGE_SIZE);
 
     const {
         data: followingList,

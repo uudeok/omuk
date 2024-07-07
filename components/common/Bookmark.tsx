@@ -25,7 +25,7 @@ const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
         enabled: !!session,
     });
 
-    const mutation = useMutation({
+    const bookmarkToggle = useMutation({
         mutationFn: async () => {
             if (bookmark && bookmark.length > 0) {
                 await deleteBookmark(res_id);
@@ -48,7 +48,7 @@ const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
 
         if (debouncedClick) {
             setDebouncedClick(false);
-            mutation.mutate();
+            bookmarkToggle.mutate();
             setTimeout(() => setDebouncedClick(true), 1000);
         }
     };
