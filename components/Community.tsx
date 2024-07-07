@@ -19,6 +19,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
     const totalPage = getTotalPages(totalReviews, DEFAULT_PAGE_SIZE);
     const [enabled, setEnabled] = useState(false);
 
+    // 2페이지부턴 csr 무한스크롤로 데이터 받아온다
     const {
         data: reviewList,
         hasNextPage,
@@ -39,7 +40,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
         },
     });
 
-    // custom handleObserver 생성 - ssr 초기 페이지 받아올땐 실행되지 않도록 구현
+    // custom handleObserver 생성 - ssr 초기 페이지땐 실행되지 않도록 구현
     const handleObserver = useCallback(
         (entries: IntersectionObserverEntry[]) => {
             const target = entries[0];

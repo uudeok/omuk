@@ -2,8 +2,6 @@ import { createClient } from '@/shared/lib/supabase/brower-client';
 import { ProfileType } from './userService';
 import { ReviewLikesType } from './reviewLikeService';
 import { getFollowerUserIds } from './followService';
-import { PostgrestResponse } from '@supabase/supabase-js';
-import { PostgrestBuilder, PostgrestResponseFailure } from '@supabase/postgrest-js';
 
 export type ReviewType = {
     rate: number;
@@ -271,10 +269,9 @@ export const getFollowerReviewsWithImages = async (
     const supabase = createClient();
     const { data: userData, error: authError } = await supabase.auth.getSession();
 
-    if (authError || !userData?.session) {
+    if (!userData?.session) {
         throw new Error('User authentication failed');
     }
-
     const user_id = userData.session.user.id;
 
     // Step 1: 팔로우한 유저의 ID를 가져옵니다.
@@ -311,21 +308,3 @@ export const getFollowerReviewsWithImages = async (
 
     return reviewsWithLikes;
 };
-
-// 유저_id 로 작성한 모든 리뷰 가져오기
-// export const getReviewList = async (): Promise<ReviewType[] | undefined | []> => {
-//     const supabase = createClient();
-//     const { data } = await supabase.auth.getSession();
-
-//     if (!data.session) return;
-
-//     const user_id = data.session.user.id;
-
-//     const { data: reviewList, error } = await supabase.from('review').select('*').eq('user_id', user_id).select();
-
-//     if (error) {
-//         throw new Error(error.message);
-//     }
-
-//     return reviewList;
-// };

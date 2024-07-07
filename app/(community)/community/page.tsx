@@ -2,7 +2,7 @@ import Community from '@/components/Community';
 import { createClient } from '@/shared/lib/supabase/server-client';
 import { CommunityReviewType } from '@/services/reviewService';
 
-export const getPagination = async () => {
+export const getReviewTotalRows = async () => {
     const supabase = createClient();
 
     const { data, error }: any = await supabase.from('review').select('*').explain({ format: 'json', analyze: true });
@@ -54,7 +54,7 @@ export const fetchReviewsWithImages = async (pageParam: number, pageSize: number
 const CommunityPage = async () => {
     const initalPage = 0;
     const pageSize = 14;
-    const totalReviews = await getPagination();
+    const totalReviews = await getReviewTotalRows();
     const initalReviews = await fetchReviewsWithImages(initalPage, pageSize);
 
     return <Community totalReviews={totalReviews} initalReviews={initalReviews} />;

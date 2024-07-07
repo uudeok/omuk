@@ -227,7 +227,7 @@ export const getFollowerUserIds = async () => {
 };
 
 //  팔로우한 유저의 리뷰 갯수 가져오기, 페이지네이션 정보
-export const getFollowerReviewCount = async () => {
+export const getFollowerReviewTotalRows = async () => {
     const supabase = createClient();
     const { data: userData } = await supabase.auth.getSession();
 

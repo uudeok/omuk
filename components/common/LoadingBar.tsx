@@ -33,7 +33,7 @@ const LoadingBarStyle = styled.div`
         display: inline-block;
         width: 15px;
         height: 15px;
-        background-color: gray;
+        background-color: yellow;
         border-radius: 50%;
         animation: loading 1s 0s linear infinite;
     }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
-import { getFollowerReviewCount } from '@/services/followService';
+import { getFollowerReviewTotalRows } from '@/services/followService';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
 import { getFollowerReviewsWithImages } from '@/services/reviewService';
@@ -11,8 +11,8 @@ import Card from '@/components/Card';
 
 const FollowCommunityPage = () => {
     const { data: totalReviews } = useQuery({
-        queryKey: ['followReviewPagination'],
-        queryFn: () => getFollowerReviewCount(),
+        queryKey: ['followReviewTotalRows'],
+        queryFn: getFollowerReviewTotalRows,
     });
 
     const totalPage = getTotalPages(totalReviews, DEFAULT_PAGE_SIZE);
