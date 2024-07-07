@@ -228,9 +228,7 @@ export const getPaginatedReviewsWithImages = async (
     const supabase = createClient();
     const { data: userData } = await supabase.auth.getSession();
 
-    if (!userData.session) return [];
-
-    const user_id = userData.session.user.id;
+    const user_id = userData?.session?.user.id || null;
 
     const { data: reviewList, error } = await supabase
         .from('review')
@@ -269,10 +267,7 @@ export const getFollowerReviewsWithImages = async (
     const supabase = createClient();
     const { data: userData, error: authError } = await supabase.auth.getSession();
 
-    if (!userData?.session) {
-        throw new Error('User authentication failed');
-    }
-    const user_id = userData.session.user.id;
+    const user_id = userData?.session?.user.id || null;
 
     // Step 1: 팔로우한 유저의 ID를 가져옵니다.
     const followeeIds = await getFollowerUserIds();

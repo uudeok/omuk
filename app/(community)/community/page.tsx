@@ -19,9 +19,7 @@ export const fetchReviewsWithImages = async (pageParam: number, pageSize: number
     const supabase = createClient();
     const { data: userData } = await supabase.auth.getUser();
 
-    if (!userData.user) return [];
-
-    const user_id = userData.user.id;
+    const user_id = userData?.user?.id || null;
 
     const { data, error } = await supabase
         .from('review')
