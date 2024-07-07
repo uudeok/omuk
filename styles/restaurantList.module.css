@@ -8,3 +8,8 @@
     padding: 10px;
     border: 1px solid black;
 }
+
+.error {
+    display: flex;
+    text-align: center;
+}

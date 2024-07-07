@@ -19,13 +19,14 @@ export const requestFollow = async ({
 }: {
     requester_id: string;
     requestee_id: string;
-}): Promise<FollowType[]> => {
+}): Promise<FollowType> => {
     const supabase = createClient();
 
     const { data: follow, error } = await supabase
         .from('follow')
         .insert([{ requester_id: requester_id, requestee_id: requestee_id }])
-        .select();
+        .select()
+        .maybeSingle();
 
     if (error) {
         throw new Error(error.message);
@@ -128,8 +129,8 @@ export const getFollowListByStatus = async (status: string) => {
     return followList;
 };
 
-// following 페이지 정보 (주쳬 : 나 > 다른사람)
-export const getFollowingInfo = async () => {
+// following 데이터 총 갯수 가져오기 (주체 나 > 타인)
+export const getFollowingTotalRows = async () => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
@@ -152,9 +153,8 @@ export const getFollowingInfo = async () => {
     return actualRows;
 };
 
-// follower 페이지 정보 (주쳬 : 다른 사람 > 나)
-// status 로 조회 기능 추가
-export const getFollowerInfo = async (status?: 'pending' | 'accepted') => {
+// follower 데이터 총 갯수 가져오기 (주쳬 : 타인 > 나) (+ status 로 조회 기능)
+export const getFollowerTotalRows = async (status?: 'pending' | 'accepted') => {
     const supabase = createClient();
 
     const { data } = await supabase.auth.getSession();

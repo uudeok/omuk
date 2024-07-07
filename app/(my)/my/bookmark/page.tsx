@@ -4,7 +4,7 @@ import styles from '../../../../styles/mybookmark.module.css';
 import Button from '@/components/common/Button';
 import List, { ListBox } from '@/components/common/List';
 import { useInfiniteScroll } from '@/hooks';
-import { getBookmarkPageInfo, getUserBookmarksPaginated } from '@/services/bookmarkService';
+import { getBookmarkTotalRows, getUserBookmarksPaginated } from '@/services/bookmarkService';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Text from '@/components/common/Text';
@@ -15,8 +15,8 @@ const MyBookmark = () => {
     const router = useRouter();
 
     const { data: pageInfo } = useQuery({
-        queryKey: ['bookmarkPagination'],
-        queryFn: () => getBookmarkPageInfo(),
+        queryKey: ['bookmarkTotalRows'],
+        queryFn: () => getBookmarkTotalRows(),
     });
 
     const totalPage = getTotalPages(pageInfo, DEFAULT_PAGE_SIZE);

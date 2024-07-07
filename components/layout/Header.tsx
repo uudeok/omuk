@@ -44,19 +44,3 @@ const Header = () => {
 };
 
 export default Header;
-
-// const Header = ({ session }: { session: Session | null }) => {
-
-// const redirectPage = async () => {
-//     if (session) {
-//         router.push('/my');
-//     } else {
-//         router.push('/login');
-//     }
-// };
-
-// right={
-//     <div className={styles.mypage} onClick={redirectPage}>
-//         MyPage
-//     </div>
-// }

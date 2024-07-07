@@ -2,6 +2,8 @@ import { createClient } from '@/shared/lib/supabase/brower-client';
 import { ProfileType } from './userService';
 import { ReviewLikesType } from './reviewLikeService';
 import { getFollowerUserIds } from './followService';
+import { PostgrestResponse } from '@supabase/supabase-js';
+import { PostgrestBuilder, PostgrestResponseFailure } from '@supabase/postgrest-js';
 
 export type ReviewType = {
     rate: number;
@@ -151,8 +153,8 @@ export const getReviewList = async (): Promise<ReviewType[] | undefined | []> =>
     return reviewList;
 };
 
-// review 페이지네이션
-export const getReviewPageInfo = async () => {
+// review 데이터 총 갯수 가져오기
+export const getReviewTotalReviews = async () => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
@@ -169,6 +171,8 @@ export const getReviewPageInfo = async () => {
     if (error) {
         throw new Error(error.message);
     }
+
+    console.log(reviewData);
 
     const actualRows = reviewData[0].Plan.Plans[0]['Actual Rows'];
 

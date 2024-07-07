@@ -88,8 +88,8 @@ export const getBookmarkList = async () => {
     return bookmarkList;
 };
 
-// bookmark 페이지네이션을 위한 정보
-export const getBookmarkPageInfo = async () => {
+// bookmark 데이터 총 갯수 가져오기
+export const getBookmarkTotalRows = async () => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 

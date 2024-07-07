@@ -7,7 +7,12 @@ import List, { ListRow } from '@/components/common/List';
 import Avatar from '@/components/common/Avatar';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { getFollowerList, getFollowerInfo, acceptedFollowRequest, cancleFollowRequest } from '@/services/followService';
+import {
+    getFollowerList,
+    getFollowerTotalRows,
+    acceptedFollowRequest,
+    cancleFollowRequest,
+} from '@/services/followService';
 import { useInfiniteScroll } from '@/hooks';
 import { FOLLOW_PAGE_SIZE } from '@/constants';
 import Text from '@/components/common/Text';
@@ -16,12 +21,12 @@ const FollowerPage = () => {
     const router = useRouter();
 
     // query key 로 캐시 된 데이터 가져오기
-    const { data: followerInfo } = useQuery({
-        queryKey: ['followerInfo', 'all'],
-        queryFn: () => getFollowerInfo(),
+    const { data: followerTotalRows } = useQuery({
+        queryKey: ['followerTotalRows', 'all'],
+        queryFn: () => getFollowerTotalRows(),
     });
 
-    const totalPage = getTotalPages(followerInfo, FOLLOW_PAGE_SIZE);
+    const totalPage = getTotalPages(followerTotalRows, FOLLOW_PAGE_SIZE);
 
     // follower list 페이지네이션 가져오기
     const {

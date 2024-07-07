@@ -1,7 +1,7 @@
 'use client';
 
-import { useContext } from 'react';
 import styles from '../styles/controller.module.css';
+import { useContext } from 'react';
 import Button from './common/Button';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '@/shared/context/AuthProvider';

@@ -4,7 +4,7 @@ import styles from '../../../../styles/following.module.css';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { getFollowingList, getFollowingInfo, requestUnFollow } from '@/services/followService';
+import { getFollowingList, getFollowingTotalRows, requestUnFollow } from '@/services/followService';
 import { useInfiniteScroll } from '@/hooks';
 import Avatar from '@/components/common/Avatar';
 import { getTotalPages } from '@/shared/utils/detailUtil';
@@ -15,10 +15,10 @@ import Text from '@/components/common/Text';
 const FollowingPage = () => {
     const router = useRouter();
 
-    // query key 로 캐시 된 데이터 가져오기
+    // Follow 와 동일한 query key
     const { data: followingInfo } = useQuery({
-        queryKey: ['followingInfo'],
-        queryFn: getFollowingInfo,
+        queryKey: ['followingTotalRows'],
+        queryFn: getFollowingTotalRows,
     });
 
     const totalPage = getTotalPages(followingInfo, FOLLOW_PAGE_SIZE);

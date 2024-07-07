@@ -8,6 +8,7 @@ import { useMap } from '@/shared/context/MapProvider';
 import { useCategory, useInfiniteScroll } from '@/hooks';
 import { useEffect } from 'react';
 import { ResponseType } from '@/shared/types';
+import LoadingBar from './common/LoadingBar';
 
 const RestaurantList = () => {
     const router = useRouter();
@@ -34,8 +35,8 @@ const RestaurantList = () => {
 
     return (
         <List>
-            {isLoading && <span>음식점 리스트를 불러오고 있어요...</span>}
-            {errorMsg && <span>{errorMsg}</span>}
+            {isLoading && <LoadingBar />}
+            {errorMsg && <div className={styles.error}>{errorMsg}</div>}
 
             {resData.map((res: ResponseType) => (
                 <ListBox

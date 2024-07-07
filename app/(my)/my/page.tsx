@@ -6,9 +6,9 @@ import List, { ListRow } from '@/components/common/List';
 import Text from '@/components/common/Text';
 import FillStar from '../../../assets/fillStar.svg';
 import Pencil from '../../../assets/pencil.svg';
-import { getBookmarkPageInfo } from '@/services/bookmarkService';
+import { getBookmarkTotalRows } from '@/services/bookmarkService';
 import { useQueries } from '@tanstack/react-query';
-import { getReviewPageInfo } from '@/services/reviewService';
+import { getReviewTotalReviews } from '@/services/reviewService';
 import LoadingBar from '@/components/common/LoadingBar';
 import MyCalendar from '@/components/MyCalendar';
 import Follow from '@/components/Follow';
@@ -19,8 +19,8 @@ const MyPage = () => {
     const router = useRouter();
 
     const fetchData = [
-        { queryKey: 'bookmarkPagination', queryFn: getBookmarkPageInfo },
-        { queryKey: 'reviewPagination', queryFn: getReviewPageInfo },
+        { queryKey: 'bookmarkTotalRows', queryFn: getBookmarkTotalRows },
+        { queryKey: 'reviewTotalRows', queryFn: getReviewTotalReviews },
     ];
 
     const combinedQueries = useQueries({

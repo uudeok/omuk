@@ -4,15 +4,15 @@ import styles from '../styles/alarm.module.css';
 import FillBell from '../assets/fillBell.svg';
 import Bell from '../assets/bell.svg';
 import { useQuery } from '@tanstack/react-query';
-import { getFollowerInfo } from '@/services/followService';
+import { getFollowerTotalRows } from '@/services/followService';
 import { useRouter } from 'next/navigation';
 
 const Alarm = () => {
     const router = useRouter();
 
     const { data: hasFollower } = useQuery({
-        queryKey: ['followerInfo', 'pending'],
-        queryFn: () => getFollowerInfo('pending'),
+        queryKey: ['followerTotalRows', 'pending'],
+        queryFn: () => getFollowerTotalRows('pending'),
     });
 
     return (

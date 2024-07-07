@@ -58,7 +58,6 @@ export const useGeoLocation = () => {
 
     return {
         curLocation: location,
-
         errorMsg,
     };
 };
