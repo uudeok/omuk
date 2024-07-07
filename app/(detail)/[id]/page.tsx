@@ -1,5 +1,5 @@
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
-import Detail from '@/components/Detail';
+import RestaurantDetail from '@/components/RestaurantDetail';
 
 export const getDetail = async (id: string) => {
     const response = await fetch(`https://place.map.kakao.com/m/main/v/${id}/`);
@@ -13,7 +13,7 @@ export const getDetail = async (id: string) => {
 const DetailPage = async ({ params: { id } }: Params) => {
     const resData = await getDetail(id);
 
-    return <Detail resData={resData} res_id={id} />;
+    return <RestaurantDetail resData={resData} res_id={id} />;
 };
 
 export default DetailPage;

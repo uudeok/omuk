@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
-import { S3 } from '@aws-sdk/client-s3';
+import { DeleteObjectCommand, S3 } from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
 
 type Options = {
@@ -119,6 +119,26 @@ export const useS3FileUpload = (options?: Options) => {
         }
     }, [files]);
 
+    const deleteFile = useCallback(
+        async (fileKey: string) => {
+            const client = new S3(config);
+
+            const command = new DeleteObjectCommand({
+                Bucket: bucketName,
+                Key: `upload/${fileKey}`,
+            });
+
+            try {
+                const response = await client.send(command);
+                console.log('res', response);
+            } catch (err: any) {
+                console.error(err);
+                throw new Error(err.message);
+            }
+        },
+        [config]
+    );
+
     return {
         setFiles,
         files,
@@ -128,5 +148,6 @@ export const useS3FileUpload = (options?: Options) => {
         isValid,
         alertMessage,
         convertToFile,
+        deleteFile,
     };
 };

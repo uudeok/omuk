@@ -6,17 +6,21 @@ type ModalProps = {
     isOpen: boolean;
     onClose: () => void;
     children: ReactNode;
+    showCloseButton?: boolean;
 };
 
-const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+const Modal = ({ isOpen, onClose, showCloseButton = true, children }: ModalProps) => {
     if (!isOpen) return null;
 
     return ReactDOM.createPortal(
         <div className={styles.overlay}>
             <div className={styles.modal}>
-                <button className={styles.closeButton} onClick={onClose}>
-                    &times;
-                </button>
+                {showCloseButton && (
+                    <button className={styles.closeButton} onClick={onClose}>
+                        &times;
+                    </button>
+                )}
+
                 {children}
             </div>
         </div>,

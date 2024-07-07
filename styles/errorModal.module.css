@@ -1,0 +1,21 @@
+.layout {
+    width: 350px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.header {
+    height: 70px;
+    background-color: var(--mainColorDk);
+    align-content: center;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.23;
+}

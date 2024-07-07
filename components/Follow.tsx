@@ -21,6 +21,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '@/shared/context/AuthProvider';
+import Spinner from './common/Spinner';
 
 const Follow = () => {
     const queryClient = useQueryClient();
@@ -132,7 +133,7 @@ const Follow = () => {
                                                     onClick={() => unfollowMutation.mutate()}
                                                     disabled={unfollowMutation.isPending}
                                                 >
-                                                    {unfollowMutation.isPaused ? 'loading..' : '팔로우 취소'}
+                                                    {unfollowMutation.isPaused ? <Spinner size="sm" /> : '팔로우 취소'}
                                                 </Button>
                                             ) : (
                                                 <Button
@@ -141,7 +142,7 @@ const Follow = () => {
                                                     onClick={() => followMutation.mutate()}
                                                     disabled={followMutation.isPending}
                                                 >
-                                                    {followMutation.isPaused ? 'loading..' : '팔로우'}
+                                                    {followMutation.isPaused ? <Spinner size="sm" /> : '팔로우'}
                                                 </Button>
                                             )}
                                         </div>

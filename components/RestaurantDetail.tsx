@@ -21,13 +21,14 @@ import Star from '../assets/star.svg';
 import LoadingBar from './common/LoadingBar';
 import { useContext } from 'react';
 import { AuthContext } from '@/shared/context/AuthProvider';
+import NonData from './common/NonData';
 
 type Props = {
     resData: any;
     res_id: string;
 };
 
-const Detail = ({ resData, res_id }: Props) => {
+const RestaurantDetail = ({ resData, res_id }: Props) => {
     const session = useContext(AuthContext);
     const router = useRouter();
     const { basicInfo, menuInfo } = resData;
@@ -196,7 +197,7 @@ const Detail = ({ resData, res_id }: Props) => {
                         <LoadingBar status="리뷰 찾는 중" />
                     ) : (
                         <div className={styles.emptyReview}>
-                            <Text typography="st3">등록된 후기가 없습니다.</Text>
+                            <NonData label="등록된 후기가 없습니다" />
                             <Button size="sm" role="round" onClick={redirectPage}>
                                 후기 작성하기
                             </Button>
@@ -208,4 +209,4 @@ const Detail = ({ resData, res_id }: Props) => {
     );
 };
 
-export default Detail;
+export default RestaurantDetail;
