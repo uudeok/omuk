@@ -9,11 +9,13 @@ import { useCategory, useInfiniteScroll } from '@/hooks';
 import { useEffect } from 'react';
 import { ResponseType } from '@/shared/types';
 import LoadingBar from './common/LoadingBar';
+import useDeviceType from '@/hooks/useDeviceType';
 
 const RestaurantList = () => {
     const router = useRouter();
     const { searchCategory, isLoading, errorMsg } = useCategory();
     const { pagination, resData, map } = useMap();
+    const isMobile = useDeviceType();
 
     useEffect(() => {
         const { kakao } = window;
@@ -41,7 +43,8 @@ const RestaurantList = () => {
             {resData.map((res: ResponseType) => (
                 <ListBox
                     onClick={() => {
-                        router.push(`/${res.id}`);
+                        router.push(isMobile ? `/m/${res.id}` : `/${res.id}`);
+                        // router.push(`/${res.id}`);
                     }}
                     key={res.id}
                     top={
@@ -62,6 +65,7 @@ const RestaurantList = () => {
 
 export default RestaurantList;
 
+// m 버전 수정 전
 // 'use client';
 
 // import styles from '../styles/restaurantList.module.css';

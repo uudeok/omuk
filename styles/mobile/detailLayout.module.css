@@ -1,0 +1,29 @@
+.header {
+    background-color: var(--mainColorLg);
+    height: 75px;
+    z-index: 1000;
+    width: 100%;
+}
+
+.header ul {
+    margin-top: 8px;
+    color: var(--grey800);
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    padding: 7px;
+}
+
+.header li {
+    gap: 10px;
+}
+
+.title {
+    padding: 10px;
+}
+
+.content {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    height: calc(100vh - 75px);
+}
