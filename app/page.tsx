@@ -1,4 +1,4 @@
-const HomePage = async () => {
+const HomePage = () => {
     return;
 };
 

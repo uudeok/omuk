@@ -133,6 +133,21 @@ export const updateReview = async ({
     return review_id;
 };
 
+export const deleteReview = async (res_id: string) => {
+    const supabase = createClient();
+    const { data } = await supabase.auth.getSession();
+
+    if (!data.session) return;
+
+    const user_id = data.session.user.id;
+
+    const { error } = await supabase.from('review').delete().eq('user_id', user_id).eq('res_id', res_id).select();
+
+    if (error) {
+        throw new Error(error.message);
+    }
+};
+
 // 유저_id 로 작성한 모든 리뷰 가져오기
 export const getReviewList = async (): Promise<ReviewType[] | undefined | []> => {
     const supabase = createClient();
@@ -246,7 +261,6 @@ export const getPaginatedReviewsWithImages = async (
     if (error) {
         throw new Error(error.message);
     }
-    console.log(reviewList);
 
     const reviewsWithLikes = reviewList.map((review) => {
         const likedByUser = review.review_likes.some((like: { user_id: string }) => like.user_id === user_id);

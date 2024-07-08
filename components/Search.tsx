@@ -1,5 +1,6 @@
 'use client';
 
+import styles from '../styles/search.module.css';
 import Input from './common/Input';
 import InputBase from './common/InputBase';
 import { useInput, useKeyword } from '@/hooks';
@@ -14,7 +15,7 @@ const Search = () => {
     };
 
     return (
-        <form onSubmit={handleSubmitSearch}>
+        <form onSubmit={handleSubmitSearch} className={styles.search}>
             <Input>
                 <InputBase placeholder="지역 및 음식점을 검색해주세요" onChange={onChangeInput} />
             </Input>

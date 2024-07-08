@@ -12,6 +12,15 @@ type PropsType = {
     params: Params;
 };
 
+export async function generateMetadata({ params: { id } }: { params: { id: string } }) {
+    const post = await getDetail(id);
+
+    return {
+        title: post.basicInfo?.placenamefull,
+        description: [...post.basicInfo?.tags],
+    };
+}
+
 const DetailLayout = async ({ children, params: { id } }: PropsType) => {
     const resData = await getDetail(id);
     const { basicInfo } = resData;

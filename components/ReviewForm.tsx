@@ -16,7 +16,7 @@ import Rating from './common/Rating';
 import { useRouter } from 'next/navigation';
 import { FEEDBACK_LIST, COMPANIONS } from '@/constants';
 import { FeedBackItem } from '@/shared/types';
-import { getReviewData, postReview, updateReview } from '@/services/reviewService';
+import { deleteReview, getReviewData, postReview, updateReview } from '@/services/reviewService';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Modal from './common/Modal';
 import CalendarModal from './modal/CalendarModal';
@@ -143,9 +143,31 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
 
     const isFormValid = () => !isValid || rate === 0 || !value || !selectedCompanions;
 
+    const handleDeleteReview = async () => {
+        const process = window.confirm('리뷰를 삭제하시겠습니까?');
+        if (process) {
+            try {
+                await deleteReview(res_id);
+                router.replace(`/${res_id}`);
+            } catch (error) {
+                openErrorModal();
+            }
+        }
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.content}>
+                {reviewData && (
+                    <List>
+                        <div className={styles.delete}>
+                            <Button size="sm" role="none" onClick={handleDeleteReview}>
+                                리뷰 삭제하기
+                            </Button>
+                        </div>
+                    </List>
+                )}
+
                 <List>
                     <form className={styles.images} onSubmit={(e) => e.preventDefault()}>
                         <Text typography="t5">사진첨부</Text>

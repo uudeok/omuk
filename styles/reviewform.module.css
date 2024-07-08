@@ -18,6 +18,11 @@
     margin: 10px;
 }
 
+.delete button {
+    /* border: 1px solid black; */
+    justify-content: right;
+}
+
 .companions {
     display: flex;
     flex-wrap: wrap;
