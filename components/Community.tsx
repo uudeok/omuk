@@ -1,14 +1,15 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { getPaginatedReviewsWithImages } from '@/services/reviewService';
+import { useState, useCallback, useEffect } from 'react';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { getFollowerReviewsWithImages, getPaginatedReviewsWithImages } from '@/services/reviewService';
 import List from './common/List';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
 import { useInfiniteScroll } from '@/hooks';
 import Card from './Card';
 import { CommunityReviewType } from '@/services/reviewService';
+import { usePathname } from 'next/navigation';
 
 type Props = {
     totalReviews: number;
@@ -18,6 +19,15 @@ type Props = {
 const Community = ({ totalReviews, initalReviews }: Props) => {
     const totalPage = getTotalPages(totalReviews, DEFAULT_PAGE_SIZE);
     const [enabled, setEnabled] = useState(false);
+    const path = usePathname();
+    const queryClient = useQueryClient();
+
+    const fetchInfiniteQuery = path === '/community' ? getPaginatedReviewsWithImages : getFollowerReviewsWithImages;
+
+    useEffect(() => {
+        queryClient.resetQueries({ queryKey: ['paginatedTotalReview'] });
+        setEnabled(false);
+    }, [path, queryClient]);
 
     // 2페이지부턴 csr 무한스크롤로 데이터 받아온다
     const {
@@ -27,7 +37,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
         isFetchingNextPage,
     } = useInfiniteQuery({
         queryKey: ['paginatedTotalReview'],
-        queryFn: ({ pageParam }) => getPaginatedReviewsWithImages(pageParam, DEFAULT_PAGE_SIZE),
+        queryFn: ({ pageParam }) => fetchInfiniteQuery(pageParam, DEFAULT_PAGE_SIZE),
         initialPageParam: 2,
         enabled,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {

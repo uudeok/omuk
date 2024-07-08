@@ -1,6 +1,8 @@
 import Community from '@/components/Community';
 import { createClient } from '@/shared/lib/supabase/server-client';
 import { CommunityReviewType } from '@/services/reviewService';
+import { Suspense } from 'react';
+import SkeletonCard from '@/components/SkeletonCard';
 
 export const getReviewTotalRows = async () => {
     const supabase = createClient();
@@ -31,7 +33,7 @@ export const fetchReviewsWithImages = async (pageParam: number, pageSize: number
     review_likes (user_id, review_id)
   `
         )
-        .range(pageParam, pageSize)
+        .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
         .order('created_at', { ascending: false });
 
     if (error) {
@@ -51,11 +53,20 @@ export const fetchReviewsWithImages = async (pageParam: number, pageSize: number
 
 const CommunityPage = async () => {
     const initalPage = 0;
-    const pageSize = 14;
+    const pageSize = 15;
     const totalReviews = await getReviewTotalRows();
     const initalReviews = await fetchReviewsWithImages(initalPage, pageSize);
+    const Array = [1, 2, 3, 4, 5];
 
-    return <Community totalReviews={totalReviews} initalReviews={initalReviews} />;
+    return (
+        <Suspense
+            fallback={Array.map((arr: number) => (
+                <SkeletonCard key={arr} />
+            ))}
+        >
+            <Community totalReviews={totalReviews} initalReviews={initalReviews} />
+        </Suspense>
+    );
 };
 
 export default CommunityPage;

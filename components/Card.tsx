@@ -39,11 +39,11 @@ const Card = ({ list }: Props) => {
 
     const handleReviewLike = async (review_id: number) => {
         if (likedByUser) {
-            const result = await removeReviewLike(review_id);
+            await removeReviewLike(review_id);
             setLikedByUser(false);
             setLikeCount((prevCount) => prevCount - 1);
         } else {
-            const result = await addReviewLike(review_id);
+            await addReviewLike(review_id);
             setLikedByUser(true);
             setLikeCount((prevCount) => prevCount + 1);
         }
@@ -57,7 +57,6 @@ const Card = ({ list }: Props) => {
                     {visitedDate}
                 </Text>
             </div>
-
             <div>
                 {hasImage ? (
                     <Slider {...settings}>
@@ -73,7 +72,6 @@ const Card = ({ list }: Props) => {
                     </div>
                 )}
             </div>
-
             <div className={styles.content}>
                 <List>
                     <ListRow
@@ -122,20 +120,18 @@ export default Card;
 // import FillHeart from '../assets/fillHeart.svg';
 // import { addReviewLike, removeReviewLike } from '@/services/reviewLikeService';
 // import { CommunityReviewType } from '@/services/reviewService';
-// import { PromoteType } from '@/services/restaurantsService';
 
 // type Props = {
 //     list: CommunityReviewType;
 // };
 
 // const Card = ({ list }: Props) => {
-//     const [likedByUser, setLikedByUser] = useState<boolean>(list.likedByUser);
+//     const [likedByUser, setLikedByUser] = useState<boolean>(list.likedByUser!);
 //     const [likeCount, setLikeCount] = useState<number>(list.review_likes?.length || 0);
-
-//     console.log(list);
 
 //     const flattenedImages = _.flatten(list.review_images?.map((imageObj) => imageObj.images_url));
 //     const hasImage = list.review_images && list.review_images.length > 0;
+
 //     const visitedDate = dayjs(list.visitDate).format('YYYY-MM-DD');
 
 //     const settings = {
@@ -166,7 +162,6 @@ export default Card;
 //                     {visitedDate}
 //                 </Text>
 //             </div>
-
 //             <div>
 //                 {hasImage ? (
 //                     <Slider {...settings}>
@@ -182,7 +177,6 @@ export default Card;
 //                     </div>
 //                 )}
 //             </div>
-
 //             <div className={styles.content}>
 //                 <List>
 //                     <ListRow

@@ -265,7 +265,7 @@ export const getFollowerReviewsWithImages = async (
     pageSize: number
 ): Promise<CommunityReviewType[]> => {
     const supabase = createClient();
-    const { data: userData, error: authError } = await supabase.auth.getSession();
+    const { data: userData, error } = await supabase.auth.getSession();
 
     const user_id = userData?.session?.user.id || null;
 
@@ -286,7 +286,7 @@ export const getFollowerReviewsWithImages = async (
             `
         )
         .in('user_id', followeeIds!)
-        .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
+        .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
         .order('created_at', { ascending: false });
 
     if (reviewError) {

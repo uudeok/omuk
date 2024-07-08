@@ -1,11 +1,20 @@
 @keyframes slideIn {
     0% {
-        transform: translateX(-50%);
+        transform: translateX(-100%);
     }
     100% {
         transform: translateX(0);
     }
 }
+
+/* @keyframes slideIn {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+} */
 
 .container {
     position: fixed;
