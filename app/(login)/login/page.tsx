@@ -7,7 +7,11 @@ import { Provider } from '@supabase/supabase-js';
 import { createClient } from '@/shared/lib/supabase/brower-client';
 import { useRouter } from 'next/navigation';
 
-const LoginPage = (props: { nextUrl?: string }) => {
+type LoginPageProps = {
+    nextUrl?: string;
+};
+
+const LoginPage = ({ nextUrl }: LoginPageProps) => {
     const router = useRouter();
     const supabase = createClient();
 
@@ -15,7 +19,7 @@ const LoginPage = (props: { nextUrl?: string }) => {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: provider,
             options: {
-                redirectTo: `${location.origin}/auth/callback?next=${props.nextUrl || ''}`,
+                redirectTo: `${location.origin}/auth/callback?next=${nextUrl || ''}`,
             },
         });
 
