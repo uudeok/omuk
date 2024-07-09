@@ -11,8 +11,8 @@ type Options = {
 const config = {
     region: 'ap-northeast-2',
     credentials: {
-        accessKeyId: process.env.NEXT_PUBLIC_ACCESS_KEY!,
-        secretAccessKey: process.env.NEXT_PUBLIC_SCREAT_KEY!,
+        accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY!,
+        secretAccessKey: process.env.NEXT_PUBLIC_AWS_SCREAT_KEY!,
     },
 };
 

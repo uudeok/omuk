@@ -23,7 +23,6 @@ const MyCalendar = () => {
     const { data: reviewList } = useQuery({
         queryKey: ['reviewList'],
         queryFn: getReviewList,
-        staleTime: 60 * 1000,
     });
 
     const handleReview = (date: Date) => {

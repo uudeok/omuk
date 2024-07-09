@@ -19,15 +19,14 @@ const MyPage = () => {
     const router = useRouter();
 
     const fetchData = [
-        { queryKey: 'bookmarkTotalRows', queryFn: getBookmarkTotalRows, staleTime: 1000 * 60 },
-        { queryKey: 'reviewTotalRows', queryFn: getReviewTotalReviews, staleTime: 1000 * 60 },
+        { queryKey: 'bookmarkTotalRows', queryFn: getBookmarkTotalRows },
+        { queryKey: 'reviewTotalRows', queryFn: getReviewTotalReviews },
     ];
 
     const combinedQueries = useQueries({
         queries: fetchData.map((data) => ({
             queryKey: [data.queryKey],
             queryFn: () => data.queryFn(),
-            staleTime: data.staleTime,
         })),
         combine: (results) => {
             return {

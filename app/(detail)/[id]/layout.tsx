@@ -17,7 +17,7 @@ export async function generateMetadata({ params: { id } }: { params: { id: strin
 
     return {
         title: post.basicInfo?.placenamefull,
-        description: [...post.basicInfo?.tags],
+        description: post.basicInfo?.category.catename,
     };
 }
 
