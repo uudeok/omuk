@@ -4,7 +4,7 @@ import { CommunityReviewType } from '@/services/reviewService';
 import { Suspense } from 'react';
 import SkeletonCard from '@/components/SkeletonCard';
 
-export const getReviewTotalRows = async () => {
+const getReviewTotalRows = async () => {
     const supabase = createClient();
 
     const { data, error }: any = await supabase.from('review').select('*').explain({ format: 'json', analyze: true });
@@ -17,7 +17,7 @@ export const getReviewTotalRows = async () => {
     return actualRows;
 };
 
-export const fetchReviewsWithImages = async (pageParam: number, pageSize: number): Promise<CommunityReviewType[]> => {
+const fetchReviewsWithImages = async (pageParam: number, pageSize: number): Promise<CommunityReviewType[]> => {
     const supabase = createClient();
     const { data: userData } = await supabase.auth.getUser();
 

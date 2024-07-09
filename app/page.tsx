@@ -15,7 +15,7 @@ const HomePage = () => {
         if (mobileDevice) {
             router.push('/m');
         } else return;
-    }, []);
+    }, [router]);
 
     return;
 };

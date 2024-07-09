@@ -92,10 +92,3 @@ const FollowingPage = () => {
 };
 
 export default FollowingPage;
-
-//     <div className={styles.nothing}>
-//         <Text typography="st3">아직 친구가 없어용🥲</Text>
-//         <Button size="sm" role="round">
-//             만들러가기
-//         </Button>
-//     </div>
