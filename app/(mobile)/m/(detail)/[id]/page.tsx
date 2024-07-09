@@ -1,4 +1,3 @@
-import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import RestaurantDetail from '@/components/RestaurantDetail';
 
 const getDetail = async (id: string) => {
@@ -10,7 +9,7 @@ const getDetail = async (id: string) => {
     return response.json();
 };
 
-const DetailPage = async ({ params: { id } }: Params) => {
+const DetailPage = async ({ params: { id } }: { params: { id: string } }) => {
     const resData = await getDetail(id);
 
     return <RestaurantDetail resData={resData} res_id={id} />;

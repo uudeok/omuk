@@ -1,7 +1,5 @@
 import styles from '../../../../../styles/mobile/detailLayout.module.css';
 import { ReactNode } from 'react';
-import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
-
 import Text from '@/components/common/Text';
 import List, { ListRow } from '@/components/common/List';
 import { calculateScore } from '@/shared/utils/detailUtil';
@@ -9,7 +7,9 @@ import Controller from '@/components/mobile/Controller';
 
 type PropsType = {
     children: ReactNode;
-    params: Params;
+    params: {
+        id: string;
+    };
 };
 
 const getDetail = async (id: string) => {

@@ -1,6 +1,5 @@
 import styles from '../../../styles/detailLayout.module.css';
 import Slide from '@/components/layout/Slide';
-import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { ReactNode } from 'react';
 import Text from '@/components/common/Text';
 import List, { ListRow } from '@/components/common/List';
@@ -8,7 +7,9 @@ import { calculateScore } from '@/shared/utils/detailUtil';
 
 type PropsType = {
     children: ReactNode;
-    params: Params;
+    params: {
+        id: string;
+    };
 };
 
 const getDetail = async (id: string) => {

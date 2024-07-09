@@ -1,4 +1,3 @@
-import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import ReviewForm from '@/components/ReviewForm';
 
 const getDetail = async (id: string) => {
@@ -10,7 +9,7 @@ const getDetail = async (id: string) => {
     return response.json();
 };
 
-const ReviewPage = async ({ params: { id } }: { params: Params }) => {
+const ReviewPage = async ({ params: { id } }: { params: { id: string } }) => {
     const resData = await getDetail(id);
     const resName = resData.basicInfo.placenamefull;
 
