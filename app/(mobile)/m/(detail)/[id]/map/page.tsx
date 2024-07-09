@@ -1,6 +1,8 @@
 'use client';
 
-const MobileMap = ({ params: { id } }: { params: { id: string } }) => {
+import { ParamType } from '@/shared/types';
+
+const MobileMap = ({ params: { id } }: ParamType) => {
     console.log(id);
     return (
         <div>

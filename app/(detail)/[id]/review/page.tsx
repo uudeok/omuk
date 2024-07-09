@@ -1,4 +1,5 @@
 import ReviewForm from '@/components/ReviewForm';
+import { ParamType } from '@/shared/types';
 
 const getDetail = async (id: string) => {
     const response = await fetch(`https://place.map.kakao.com/m/main/v/${id}/`);
@@ -9,7 +10,7 @@ const getDetail = async (id: string) => {
     return response.json();
 };
 
-const ReviewPage = async ({ params: { id } }: { params: { id: string } }) => {
+const ReviewPage = async ({ params: { id } }: ParamType) => {
     const resData = await getDetail(id);
     const resName = resData.basicInfo.placenamefull;
 

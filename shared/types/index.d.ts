@@ -98,3 +98,9 @@ export type CompanionsType = {
 export type MONTH_LABEL_TYPE = typeof MONTH_LABEL;
 export type MONTH_LABEL_KEYS = keyof MONTH_LABEL_TYPE;
 export type MONTH_LABEL_VALUES = MONTH_LABEL_TYPE[MONTH_LABEL_KEYS];
+
+export type ParamType = {
+    params: {
+        id: string;
+    };
+};
