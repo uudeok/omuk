@@ -1,7 +1,7 @@
 import styles from '../../../../../styles/mobile/detailLayout.module.css';
 import { ReactNode } from 'react';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
-import { getDetail } from './page';
+
 import Text from '@/components/common/Text';
 import List, { ListRow } from '@/components/common/List';
 import { calculateScore } from '@/shared/utils/detailUtil';
@@ -12,7 +12,16 @@ type PropsType = {
     params: Params;
 };
 
-export async function generateMetadata({ params: { id } }: { params: { id: string } }) {
+const getDetail = async (id: string) => {
+    const response = await fetch(`https://place.map.kakao.com/m/main/v/${id}/`);
+
+    if (!response.ok) {
+        throw new Error('데이터 가져오기 실패');
+    }
+    return response.json();
+};
+
+async function generateMetadata({ params: { id } }: { params: { id: string } }) {
     const post = await getDetail(id);
 
     return {
