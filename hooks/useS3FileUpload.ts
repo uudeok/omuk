@@ -31,10 +31,13 @@ export const useS3FileUpload = (options?: Options) => {
             return [];
         }
 
+        console.log(imageFiles.images_url);
         const filePromises = imageFiles.images_url.map(async (url: string) => {
             try {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                console.log('Res', response);
                 const blob = await response.blob();
                 const filename = 'image_' + Date.now();
                 const options = { type: blob.type, lastModified: new Date().getTime() };

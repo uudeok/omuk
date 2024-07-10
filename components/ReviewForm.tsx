@@ -60,6 +60,8 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         enabled: !!reviewData,
     });
 
+    console.log('Test', existingImages);
+
     const reviewObj = {
         rate: rate,
         positive: selectedPositives.map((item) => item.value),
