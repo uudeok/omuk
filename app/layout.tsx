@@ -13,7 +13,7 @@ export const metadata: Metadata = {
         template: '%s | omuk',
         default: 'omuk',
     },
-    description: '오늘 뭐먹지? 고민될 떈',
+    description: '매일 다른 음식과 사람들을 기록하는 일상',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
