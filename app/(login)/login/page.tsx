@@ -14,6 +14,9 @@ const LoginPage = () => {
     const handleLogin = async (provider: Provider) => {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: provider,
+            options: {
+                redirectTo: `${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`,
+            },
         });
 
         if (error) {
