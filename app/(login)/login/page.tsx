@@ -14,9 +14,9 @@ const LoginPage = ({ searchParams }: { searchParams: { nextUrl?: string } }) => 
     const handleLogin = async (provider: Provider) => {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: provider,
-            options: {
-                redirectTo: `${location.origin}/auth/callback?next=${searchParams.nextUrl || ''}`,
-            },
+            // options: {
+            //     redirectTo: `${location.origin}/auth/callback?next=${searchParams.nextUrl || ''}`,
+            // },
         });
 
         if (error) {
