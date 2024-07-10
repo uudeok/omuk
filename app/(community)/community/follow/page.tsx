@@ -4,10 +4,9 @@ import SkeletonCard from '@/components/SkeletonCard';
 import { CommunityReviewType } from '@/services/reviewService';
 import Community from '@/components/Community';
 
-const supabase = createClient();
-
 // STEP1. 팔로워한 유저 ids 가져온다.
 const getFollowerIds = async () => {
+    const supabase = createClient();
     const { data: userData } = await supabase.auth.getUser();
     if (!userData.user) return;
     const user_id = userData.user.id;
@@ -27,6 +26,7 @@ const getFollowerIds = async () => {
 
 // STEP2. 리뷰 테이블에서 해당 유저 ids 가 작성한 리뷰 갯수를 가져온다.
 const getFollowReviewTotalRows = async () => {
+    const supabase = createClient();
     const { data: userData } = await supabase.auth.getUser();
     if (!userData.user) return;
 
@@ -51,6 +51,7 @@ const getFollowReviewTotalRows = async () => {
 
 // STEP3. 리뷰 테이블에서 초기 데이터를 가져온다.
 const fetchFollowerReviewsWithImages = async (pageParam: number, pageSize: number): Promise<CommunityReviewType[]> => {
+    const supabase = createClient();
     const { data: userData } = await supabase.auth.getUser();
 
     const user_id = userData?.user?.id;

@@ -1,7 +1,7 @@
 import LoadingBar from '@/components/common/LoadingBar';
 
 const Loading = () => {
-    return;
+    return <LoadingBar />;
 };
 
 export default Loading;
