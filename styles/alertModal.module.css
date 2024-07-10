@@ -19,3 +19,9 @@
     justify-content: center;
     line-height: 1.23;
 }
+
+.content li {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}

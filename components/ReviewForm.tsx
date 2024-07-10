@@ -24,7 +24,7 @@ import { initializeDate } from '@/shared/utils/calendarUtil';
 import { getImageData, updateImages, uploadImages } from '@/services/imageService';
 import { AuthContext } from '@/shared/context/AuthProvider';
 import Spinner from './common/Spinner';
-import ErrorModal from './modal/ErrorModal';
+import AlertModal from './modal/AlertModal';
 
 const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) => {
     const session = useContext(AuthContext);
@@ -326,7 +326,12 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
             </Modal>
 
             <Modal isOpen={isErrorOpen} onClose={closeErrorModal} showCloseButton={false}>
-                <ErrorModal onClose={closeErrorModal} redirectPath="/" />
+                <AlertModal
+                    onClose={closeErrorModal}
+                    redirectPath="/"
+                    top={<Text typography="t5">오류가 발생했습니다</Text>}
+                    bottom={<Text typography="t5">잠시 후 다시 시도해주세요</Text>}
+                />
             </Modal>
         </div>
     );

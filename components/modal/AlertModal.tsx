@@ -1,17 +1,20 @@
 'use client';
 
-import styles from '../../styles/errorModal.module.css';
+import styles from '../../styles/alertModal.module.css';
 import Button from '../common/Button';
 import Caution from '../../assets/caution.svg';
-import Text from '../common/Text';
 import { useRouter } from 'next/navigation';
+import { ReactNode } from 'react';
 
 type Props = {
     onClose: () => void;
     redirectPath?: string;
+    top: ReactNode;
+    middle?: ReactNode;
+    bottom: ReactNode;
 };
 
-const ErrorModal = ({ onClose, redirectPath }: Props) => {
+const AlertModal = ({ onClose, redirectPath, top, middle, bottom }: Props) => {
     const router = useRouter();
 
     const handleConfirm = () => {
@@ -28,10 +31,13 @@ const ErrorModal = ({ onClose, redirectPath }: Props) => {
             <div className={styles.header}>
                 <Caution width={35} />
             </div>
-            <div className={styles.content}>
-                <Text typography="t5">오류가 발생했습니다</Text>
-                <Text typography="t5">잠시 후 다시 시도해주세요</Text>
-            </div>
+            <ul className={styles.content}>
+                <li>
+                    {top}
+                    {middle}
+                    {bottom}
+                </li>
+            </ul>
             <div>
                 <Button size="lg" onClick={handleConfirm}>
                     확인
@@ -41,4 +47,4 @@ const ErrorModal = ({ onClose, redirectPath }: Props) => {
     );
 };
 
-export default ErrorModal;
+export default AlertModal;
