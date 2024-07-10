@@ -29,7 +29,7 @@ const Header = () => {
                     left={
                         <div onClick={() => router.push('/')}>
                             <Utensils width={18} />
-                            <Text typography="t4">OMUK</Text>
+                            <Text typography="t4">MUKIROK</Text>
                         </div>
                     }
                     right={

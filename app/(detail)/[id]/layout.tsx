@@ -5,6 +5,7 @@ import Text from '@/components/common/Text';
 import List, { ListRow } from '@/components/common/List';
 import { calculateScore } from '@/shared/utils/detailUtil';
 import { ParamType } from '@/shared/types';
+import { getMetadata } from '@/shared/utils/meta';
 
 type PropsType = {
     children: ReactNode;
@@ -22,14 +23,16 @@ const getDetail = async (id: string) => {
     return response.json();
 };
 
-async function generateMetadata({ params: { id } }: ParamType) {
+export const generateMetadata = async ({ params: { id } }: ParamType) => {
     const post = await getDetail(id);
 
-    return {
+    return getMetadata({
         title: post.basicInfo?.placenamefull,
         description: post.basicInfo?.category.catename,
-    };
-}
+        ogImage: post.basicInfo?.mainphotourl,
+        asPath: post.homepage,
+    });
+};
 
 const DetailLayout = async ({ children, params: { id } }: PropsType) => {
     const resData = await getDetail(id);

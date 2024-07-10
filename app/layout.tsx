@@ -6,14 +6,18 @@ import ReactQueryProvider from '@/shared/context/ReactQueryProvider';
 import AuthProvider from '@/shared/context/AuthProvider';
 import SideBar from '@/components/layout/SideBar';
 import Map from '@/components/layout/Map';
-import { Metadata } from 'next';
+import { getMetadata } from '@/shared/utils/meta';
 
-export const metadata: Metadata = {
-    title: {
-        template: '%s | omuk',
-        default: 'omuk',
-    },
-    description: '매일 다른 음식과 사람들을 기록하는 일상',
+// export const metadata: Metadata = {
+//     title: {
+//         template: '%s | omuk',
+//         default: 'omuk',
+//     },
+//     description: '매일 다른 음식과 사람들을 기록하는 일상',
+// };
+
+export const generateMetadata = () => {
+    return getMetadata();
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

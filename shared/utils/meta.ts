@@ -35,5 +35,8 @@ export const getMetadata = (metadataProps?: MetaDataType) => {
                 url: OG_IMAGE,
             },
         },
+        viewport: 'width=device-width, initial-scale=1.0',
     };
+
+    return metadata;
 };
