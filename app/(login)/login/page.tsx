@@ -7,16 +7,13 @@ import { Provider } from '@supabase/supabase-js';
 import { createClient } from '@/shared/lib/supabase/brower-client';
 import { useRouter } from 'next/navigation';
 
-const LoginPage = ({ searchParams }: { searchParams: { nextUrl?: string } }) => {
+const LoginPage = () => {
     const router = useRouter();
     const supabase = createClient();
 
     const handleLogin = async (provider: Provider) => {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: provider,
-            // options: {
-            //     redirectTo: `${location.origin}/auth/callback?next=${searchParams.nextUrl || ''}`,
-            // },
         });
 
         if (error) {
