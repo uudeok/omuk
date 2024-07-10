@@ -15,7 +15,7 @@ const LoginPage = () => {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: provider,
             options: {
-                redirectTo: `${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`,
+                redirectTo: process.env.NEXT_PUBLIC_SUPABASE_REDIRECT_URL,
             },
         });
 
