@@ -26,9 +26,7 @@ const getDetail = async (id: string) => {
 
 export const generateMetadata = async ({ params: { id } }: ParamType) => {
     const post = await getDetail(id);
-    const ogImageUrl = cloudinaryUrl(post.basicInfo?.mainphotourl, { resizeMethod: 'scale', secure: true });
-
-    console.log(ogImageUrl);
+    const ogImageUrl = cloudinaryUrl(post.basicInfo?.mainphotourl, { secure: true });
 
     return getMetadata({
         title: post.basicInfo?.placenamefull,

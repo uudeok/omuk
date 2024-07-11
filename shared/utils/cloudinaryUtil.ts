@@ -1,7 +1,7 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 import { fill, fit, crop, scale, pad, limitFit, minimumFit } from '@cloudinary/url-gen/actions/resize';
 
-type ResizeMethod = 'fill' | 'fit' | 'crop' | 'scale' | 'pad';
+type ResizeMethod = 'fill' | 'thumbnail' | 'fit' | 'crop' | 'scale' | 'pad';
 
 type CloudinaryOptions = {
     width?: number;
@@ -25,8 +25,6 @@ export const cloudinaryUrl = (url: string, options: CloudinaryOptions = {}) => {
         throw new Error('URL is required');
     }
 
-    const encodedUrl = encodeURIComponent(url);
-
     const transformationOptions = {
         fetch_format: 'auto',
         quality: 'auto',
@@ -36,6 +34,9 @@ export const cloudinaryUrl = (url: string, options: CloudinaryOptions = {}) => {
     let resizeAction;
     switch (resizeMethod) {
         case 'fit':
+            resizeAction = fit().width(width).height(height);
+            break;
+        case 'thumbnail':
             resizeAction = fit().width(width).height(height);
             break;
         case 'crop':
@@ -54,7 +55,7 @@ export const cloudinaryUrl = (url: string, options: CloudinaryOptions = {}) => {
     }
 
     return cld
-        .image(encodedUrl)
+        .image(url)
         .resize(resizeAction)
         .format(transformationOptions.fetch_format)
         .quality(transformationOptions.quality)
