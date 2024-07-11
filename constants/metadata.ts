@@ -7,4 +7,5 @@ export const META = {
     url: 'https://omuk-beta.vercel.app/',
     ogImage: 'https://s3-omuk-images.s3.ap-northeast-2.amazonaws.com/main.png',
     naverVerification: '26f9b328438f88ca40b4d18c011e8a5cd0311d05',
+    googleVerification: 'mPAHNowLJztZRgvahjWQKnzYKd5RQPdbBfD-0Aix1fw',
 };

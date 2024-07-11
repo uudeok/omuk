@@ -36,6 +36,7 @@ export const getMetadata = (metadataProps?: MetaDataType) => {
             },
         },
         verification: {
+            google: META.googleVerification,
             other: {
                 'naver-site-verification': META.naverVerification,
             },

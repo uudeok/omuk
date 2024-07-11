@@ -20,7 +20,7 @@ const HomePage = () => {
         if (mobileDevice) {
             openModal();
         } else return;
-    }, []);
+    }, [openModal]);
 
     return (
         <Modal isOpen={isOpen} onClose={closeModal} showCloseButton={false}>
