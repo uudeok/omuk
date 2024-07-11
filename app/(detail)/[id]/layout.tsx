@@ -30,7 +30,7 @@ export const generateMetadata = async ({ params: { id } }: ParamType) => {
         title: post.basicInfo?.placenamefull,
         description: post.basicInfo?.category.catename,
         ogImage: post.basicInfo?.mainphotourl,
-        asPath: post.homepage,
+        asPath: `/${id}`,
     });
 };
 
