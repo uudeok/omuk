@@ -1,5 +1,14 @@
 import { Cloudinary } from '@cloudinary/url-gen';
-import { fill } from '@cloudinary/url-gen/actions/resize';
+import { fill, fit, crop, scale, pad, limitFit, minimumFit } from '@cloudinary/url-gen/actions/resize';
+
+type ResizeMethod = 'fill' | 'fit' | 'crop' | 'scale' | 'pad';
+
+type CloudinaryOptions = {
+    width?: number;
+    height?: number;
+    resizeMethod?: ResizeMethod;
+    secure?: boolean;
+};
 
 const cld = new Cloudinary({
     cloud: {
@@ -9,16 +18,44 @@ const cld = new Cloudinary({
     },
 });
 
-export const cloudinaryUrl = (url: string, options: any = {}) => {
+export const cloudinaryUrl = (url: string, options: CloudinaryOptions = {}) => {
+    const { width = 1200, height = 630, resizeMethod = 'fill', ...restOptions } = options;
+
+    if (!url) {
+        throw new Error('URL is required');
+    }
+
+    const encodedUrl = encodeURIComponent(url);
+
     const transformationOptions = {
-        ...options,
         fetch_format: 'auto',
         quality: 'auto',
+        ...restOptions,
     };
 
+    let resizeAction;
+    switch (resizeMethod) {
+        case 'fit':
+            resizeAction = fit().width(width).height(height);
+            break;
+        case 'crop':
+            resizeAction = crop().width(width).height(height);
+            break;
+        case 'scale':
+            resizeAction = scale().width(width).height(height);
+            break;
+        case 'pad':
+            resizeAction = pad().width(width).height(height);
+            break;
+        case 'fill':
+        default:
+            resizeAction = fill().width(width).height(height);
+            break;
+    }
+
     return cld
-        .image(url)
-        .resize(fill().width(transformationOptions.width).height(transformationOptions.height))
+        .image(encodedUrl)
+        .resize(resizeAction)
         .format(transformationOptions.fetch_format)
         .quality(transformationOptions.quality)
         .toURL();
