@@ -1,9 +1,12 @@
-import { v2 as cloudinary } from 'cloudinary';
+import { Cloudinary } from '@cloudinary/url-gen';
+import { fill } from '@cloudinary/url-gen/actions/resize';
 
-cloudinary.config({
-    cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
-    api_secret: process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET,
+const cld = new Cloudinary({
+    cloud: {
+        cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+        apiKey: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
+        apiSecret: process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET,
+    },
 });
 
 export const cloudinaryUrl = (url: string, options: any = {}) => {
@@ -13,5 +16,10 @@ export const cloudinaryUrl = (url: string, options: any = {}) => {
         quality: 'auto',
     };
 
-    return cloudinary.url(url, transformationOptions);
+    return cld
+        .image(url)
+        .resize(fill().width(transformationOptions.width).height(transformationOptions.height))
+        .format(transformationOptions.fetch_format)
+        .quality(transformationOptions.quality)
+        .toURL();
 };
