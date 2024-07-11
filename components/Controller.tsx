@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/controller.module.css';
+import styles from '../styles/components/controller.module.css';
 import { useContext } from 'react';
 import Button from './common/Button';
 import { useRouter } from 'next/navigation';
@@ -23,12 +23,10 @@ const Controller = () => {
             <Button size="lg" role="round" onClick={() => redirectPage('my')}>
                 내 페이지
             </Button>
+
             <Button size="lg" role="round" onClick={() => router.push('/community')}>
                 커뮤니티
             </Button>
-            {/* <Button size="lg" role="round">
-                준비중
-            </Button> */}
         </div>
     );
 };

@@ -1,5 +1,5 @@
+import styles from '../../styles/common/common.module.css';
 import React, { CSSProperties, ReactNode } from 'react';
-import styles from '../../styles/common.module.css';
 import { valueOf } from '@/shared/types/data';
 
 export const Typography = {

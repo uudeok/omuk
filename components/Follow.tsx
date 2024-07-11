@@ -1,6 +1,6 @@
 'use clinet';
 
-import styles from '../styles/follow.module.css';
+import styles from '../styles/components/myFollow.module.css';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import Input from './common/Input';
 import InputBase from './common/InputBase';

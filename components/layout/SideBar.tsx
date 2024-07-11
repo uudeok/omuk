@@ -1,4 +1,4 @@
-import styles from '../../styles/sideBar.module.css';
+import styles from '../../styles/layouts/sideBar.module.css';
 import Search from '../Search';
 import RestaurantList from '../RestaurantList';
 import Controller from '../Controller';

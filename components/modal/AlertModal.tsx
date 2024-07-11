@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../styles/alertModal.module.css';
+import styles from '../../styles/ui/alertModal.module.css';
 import Button from '../common/Button';
 import Caution from '../../assets/caution.svg';
 import { useRouter } from 'next/navigation';

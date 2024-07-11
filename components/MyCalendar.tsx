@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/mycalendar.module.css';
+import styles from '../styles/components/mycalendar.module.css';
 import dayjs from 'dayjs';
 import AngleRight from '../assets/angle-right.svg';
 import AngleLeft from '../assets/angle-left.svg';

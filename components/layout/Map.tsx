@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../styles/map.module.css';
+import styles from '../../styles/layouts/map.module.css';
 import { useMap } from '@/shared/context/MapProvider';
 import LoadingBar from '../common/LoadingBar';
 

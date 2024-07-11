@@ -2,7 +2,7 @@ import Community from '@/components/Community';
 import { createClient } from '@/shared/lib/supabase/server-client';
 import { CommunityReviewType } from '@/services/reviewService';
 import { Suspense } from 'react';
-import SkeletonCard from '@/components/SkeletonCard';
+import { generateSkeletonCards } from '@/shared/utils/uiUtil';
 
 const getReviewTotalRows = async () => {
     const supabase = createClient();
@@ -56,14 +56,9 @@ const CommunityPage = async () => {
     const pageSize = 15;
     const totalReviews = await getReviewTotalRows();
     const initalReviews = await fetchReviewsWithImages(initalPage, pageSize);
-    const Array = [1, 2, 3, 4, 5];
 
     return (
-        <Suspense
-            fallback={Array.map((arr: number) => (
-                <SkeletonCard key={arr} />
-            ))}
-        >
+        <Suspense fallback={generateSkeletonCards(5)}>
             <Community totalReviews={totalReviews} initalReviews={initalReviews} />
         </Suspense>
     );

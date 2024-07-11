@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/alarm.module.css';
+import styles from '../styles/components/alarm.module.css';
 import FillBell from '../assets/fillBell.svg';
 import Bell from '../assets/bell.svg';
 import { useQuery } from '@tanstack/react-query';

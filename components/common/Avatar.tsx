@@ -1,4 +1,4 @@
-import styles from '../../styles/avatar.module.css';
+import styles from '../../styles/common/avatar.module.css';
 import { ProfileType } from '@/services/userService';
 import Text from './Text';
 

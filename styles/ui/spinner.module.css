@@ -2,8 +2,6 @@
     border: 8px solid rgba(0, 0, 0, 0.1);
     border-top: 8px solid var(--mainColorDk);
     border-radius: 50%;
-    /* width: 25px;
-    height: 25px; */
     z-index: 9999;
     animation: spin 1s linear infinite;
 }

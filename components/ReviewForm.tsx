@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/reviewform.module.css';
+import styles from '../styles/components/reviewform.module.css';
 import dayjs from 'dayjs';
 import { useEffect, useState, useRef, useContext } from 'react';
 import List, { ListRow } from '@/components/common/List';

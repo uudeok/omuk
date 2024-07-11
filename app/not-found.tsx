@@ -1,7 +1,7 @@
 'use client';
 
+import styles from '@/styles/pages/notFound.module.css';
 import Button from '@/components/common/Button';
-import styles from '../styles/notFound.module.css';
 import Text from '@/components/common/Text';
 import Slide from '@/components/layout/Slide';
 import { useRouter } from 'next/navigation';

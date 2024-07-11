@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import styles from '../../styles/common.module.css';
+import styles from '../../styles/common/common.module.css';
 
 type ListRowProps = {
     left: ReactNode;

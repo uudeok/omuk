@@ -1,5 +1,5 @@
+import styles from '../../styles/common/rate.module.css';
 import { SetStateAction, Dispatch } from 'react';
-import styles from '../../styles/rate.module.css';
 import FillStar from '../../assets/fillStar.svg';
 import GreyStar from '../../assets/greyStar.svg';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../../../styles/mybookmark.module.css';
+import styles from '../../../../styles/pages/mybookmark.module.css';
 import Button from '@/components/common/Button';
 import List, { ListBox } from '@/components/common/List';
 import { useInfiniteScroll } from '@/hooks';
@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import Text from '@/components/common/Text';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
-import NonData from '@/components/common/NonData';
+import EmptyState from '@/components/common/EmptyState';
 
 const MyBookmark = () => {
     const router = useRouter();
@@ -55,7 +55,7 @@ const MyBookmark = () => {
             <div>
                 <List>
                     {bookmarkList.length === 0 ? (
-                        <NonData label="아직 즐겨찾기한 곳이 없어요" />
+                        <EmptyState label="아직 즐겨찾기한 곳이 없어요" />
                     ) : (
                         bookmarkList.map((item: any) => (
                             <ListBox

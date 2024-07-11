@@ -1,4 +1,4 @@
-import styles from '../../../styles/detailLayout.module.css';
+import styles from '../../../styles/layouts/detailLayout.module.css';
 import Slide from '@/components/layout/Slide';
 import { ReactNode } from 'react';
 import Text from '@/components/common/Text';
@@ -6,7 +6,6 @@ import List, { ListRow } from '@/components/common/List';
 import { calculateScore } from '@/shared/utils/detailUtil';
 import { ParamType } from '@/shared/types';
 import { getMetadata } from '@/shared/utils/meta';
-import { cloudinaryUrl } from '@/shared/utils/cloudinaryUtil';
 
 type PropsType = {
     children: ReactNode;
@@ -26,12 +25,11 @@ const getDetail = async (id: string) => {
 
 export const generateMetadata = async ({ params: { id } }: ParamType) => {
     const post = await getDetail(id);
-    const ogImageUrl = cloudinaryUrl(post.basicInfo?.mainphotourl, { secure: true });
 
     return getMetadata({
         title: post.basicInfo?.placenamefull,
         description: post.basicInfo?.category.catename,
-        ogImage: ogImageUrl,
+        ogImage: post.basicInfo?.mainphotourl,
         asPath: `/${id}`,
     });
 };
@@ -65,14 +63,3 @@ const DetailLayout = async ({ children, params: { id } }: PropsType) => {
 };
 
 export default DetailLayout;
-
-// export const generateMetadata = async ({ params: { id } }: ParamType) => {
-//     const post = await getDetail(id);
-
-//     return getMetadata({
-//         title: post.basicInfo?.placenamefull,
-//         description: post.basicInfo?.category.catename,
-//         ogImage: post.basicInfo?.mainphotourl,
-//         asPath: `/${id}`,
-//     });
-// };

@@ -1,4 +1,4 @@
-import styles from '../../styles/spinner.module.css';
+import styles from '../../styles/ui/spinner.module.css';
 
 type Props = {
     size: Size;

@@ -1,8 +1,8 @@
 import { createClient } from '@/shared/lib/supabase/server-client';
 import { Suspense } from 'react';
-import SkeletonCard from '@/components/SkeletonCard';
 import { CommunityReviewType } from '@/services/reviewService';
 import Community from '@/components/Community';
+import { generateSkeletonCards } from '@/shared/utils/uiUtil';
 
 // STEP1. 팔로워한 유저 ids 가져온다.
 const getFollowerIds = async () => {
@@ -93,14 +93,9 @@ const FollowCommunityPage = async () => {
     const pageSize = 15;
     const totalReviews = await getFollowReviewTotalRows();
     const initalReviews = await fetchFollowerReviewsWithImages(initalPage, pageSize);
-    const Array = [1, 2, 3, 4, 5];
 
     return (
-        <Suspense
-            fallback={Array.map((arr: number) => (
-                <SkeletonCard key={arr} />
-            ))}
-        >
+        <Suspense fallback={generateSkeletonCards(5)}>
             <Community initalReviews={initalReviews} totalReviews={totalReviews} />
         </Suspense>
     );

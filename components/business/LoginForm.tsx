@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../styles/signup.module.css';
+import styles from '../../styles/business/signup.module.css';
 import Input from '../common/Input';
 import InputBase from '../common/InputBase';
 import Button from '../common/Button';

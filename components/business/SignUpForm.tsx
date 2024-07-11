@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../styles/signup.module.css';
+import styles from '../../styles/business/signup.module.css';
 import { useInput } from '@/hooks';
 import Button from '../common/Button';
 import Input from '../common/Input';

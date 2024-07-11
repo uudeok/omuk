@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../../styles/mypageLayout.module.css';
+import styles from '../../../styles/layouts/mypageLayout.module.css';
 import Slide from '@/components/layout/Slide';
 import { ReactNode, useContext } from 'react';
 import Avatar from '@/components/common/Avatar';

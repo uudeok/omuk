@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/error.module.css';
+import styles from '../styles/pages/errorPage.module.css';
 import Slide from '@/components/layout/Slide';
 import Button from '@/components/common/Button';
 import Text from '@/components/common/Text';

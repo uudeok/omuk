@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/detail.module.css';
+import styles from '../styles/components/restaurantDetail.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useBoolean } from '@/hooks';
@@ -21,7 +21,7 @@ import Star from '../assets/star.svg';
 import LoadingBar from './common/LoadingBar';
 import { useContext } from 'react';
 import { AuthContext } from '@/shared/context/AuthProvider';
-import NonData from './common/NonData';
+import EmptyState from './common/EmptyState';
 
 type Props = {
     resData: any;
@@ -197,7 +197,7 @@ const RestaurantDetail = ({ resData, res_id }: Props) => {
                         <LoadingBar status="리뷰 찾는 중" />
                     ) : (
                         <div className={styles.emptyReview}>
-                            <NonData label="등록된 후기가 없습니다" />
+                            <EmptyState label="등록된 후기가 없습니다" />
                             <Button size="sm" role="round" onClick={redirectPage}>
                                 후기 작성하기
                             </Button>

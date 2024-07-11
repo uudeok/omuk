@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/card.module.css';
+import styles from '../styles/components/reviewCard.module.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import dayjs from 'dayjs';
@@ -20,7 +20,7 @@ type Props = {
     list: CommunityReviewType;
 };
 
-const Card = ({ list }: Props) => {
+const ReviewCard = ({ list }: Props) => {
     const [likedByUser, setLikedByUser] = useState<boolean>(list.likedByUser!);
     const [likeCount, setLikeCount] = useState<number>(list.review_likes?.length || 0);
 
@@ -101,7 +101,7 @@ const Card = ({ list }: Props) => {
     );
 };
 
-export default Card;
+export default ReviewCard;
 
 // 'use client';
 
@@ -144,11 +144,11 @@ export default Card;
 
 //     const handleReviewLike = async (review_id: number) => {
 //         if (likedByUser) {
-//             const result = await removeReviewLike(review_id);
+//             await removeReviewLike(review_id);
 //             setLikedByUser(false);
 //             setLikeCount((prevCount) => prevCount - 1);
 //         } else {
-//             const result = await addReviewLike(review_id);
+//             await addReviewLike(review_id);
 //             setLikedByUser(true);
 //             setLikeCount((prevCount) => prevCount + 1);
 //         }

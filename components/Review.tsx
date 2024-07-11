@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/review.module.css';
+import styles from '../styles/components/review.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ReviewType } from '@/services/reviewService';

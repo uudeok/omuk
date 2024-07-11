@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../styles/calendar.module.css';
+import styles from '../../styles/ui/calendarModal.module.css';
 import dayjs from 'dayjs';
 import { Dispatch, SetStateAction } from 'react';
 import { useCalendar } from '@/hooks';

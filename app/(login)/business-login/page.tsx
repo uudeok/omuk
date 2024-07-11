@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../../styles/businessLogin.module.css';
+import styles from '../../../styles/business/businessLogin.module.css';
 import Text from '@/components/common/Text';
 import { useState } from 'react';
 import SignUpForm from '@/components/business/SignUpForm';

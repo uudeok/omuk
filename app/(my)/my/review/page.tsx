@@ -8,7 +8,7 @@ import { useInfiniteScroll } from '@/hooks';
 import Review from '@/components/Review';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
-import NonData from '@/components/common/NonData';
+import EmptyState from '@/components/common/EmptyState';
 
 const MyReviewList = () => {
     const router = useRouter();
@@ -52,7 +52,7 @@ const MyReviewList = () => {
 
             <div>
                 {reviewList && reviewList.length === 0 ? (
-                    <NonData label="작성한 리뷰가 없어요" />
+                    <EmptyState label="작성한 리뷰가 없어요" />
                 ) : (
                     <Review reviewList={reviewList as ReviewType[]} />
                 )}

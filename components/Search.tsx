@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/search.module.css';
+import styles from '../styles/components/search.module.css';
 import Input from './common/Input';
 import InputBase from './common/InputBase';
 import { useInput, useKeyword } from '@/hooks';

@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../styles/header.module.css';
+import styles from '../../styles/layouts/header.module.css';
 import { useRouter } from 'next/navigation';
 import List, { ListRow } from '../common/List';
 import Utensils from '../../assets/utensils.svg';

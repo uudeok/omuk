@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../../../styles/follower.module.css';
+import styles from '../../../../styles/pages/follower.module.css';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
 import List, { ListRow } from '@/components/common/List';

@@ -1,6 +1,6 @@
 'use client';
 
-import module from '../../styles/slide.module.css';
+import module from '../../styles/layouts/slide.module.css';
 import { ReactNode } from 'react';
 import Button from '../common/Button';
 import { useRouter } from 'next/navigation';

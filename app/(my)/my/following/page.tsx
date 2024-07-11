@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../../../styles/following.module.css';
+import styles from '../../../../styles/pages/following.module.css';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';

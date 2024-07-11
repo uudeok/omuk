@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../../styles/login.module.css';
+import styles from '../../../styles/pages/login.module.css';
 import Button from '@/components/common/Button';
 import Text from '@/components/common/Text';
 import { Provider } from '@supabase/supabase-js';

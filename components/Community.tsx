@@ -7,7 +7,7 @@ import List from './common/List';
 import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
 import { useInfiniteScroll } from '@/hooks';
-import Card from './Card';
+import ReviewCard from './ReviewCard';
 import { CommunityReviewType } from '@/services/reviewService';
 import { usePathname } from 'next/navigation';
 
@@ -74,16 +74,17 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
         <div>
             <List>
                 {initalReviews.map((review: CommunityReviewType) => (
-                    <Card list={review} key={review.id} />
-                ))}
-            </List>
-            <List>
-                {reviewList?.map((review) => (
-                    <Card list={review} key={review.id} />
+                    <ReviewCard list={review} key={review.id} />
                 ))}
             </List>
 
-            <div ref={observerEl} />
+            <div ref={observerEl}>
+                {reviewList?.map((review) => (
+                    <ReviewCard list={review} key={review.id} />
+                ))}
+            </div>
+
+            {/* <div ref={observerEl} /> */}
         </div>
     );
 };
