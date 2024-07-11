@@ -19,6 +19,7 @@
         "@tanstack/react-query-next-experimental": "^5.41.0",
         "@types/react-slick": "^0.23.13",
         "aws-sdk": "^2.1651.0",
+        "cloudinary": "^2.2.0",
         "dayjs": "^1.11.11",
         "dotenv": "^16.4.5",
         "git-filter-repo": "^0.0.30",
