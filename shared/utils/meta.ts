@@ -35,7 +35,11 @@ export const getMetadata = (metadataProps?: MetaDataType) => {
                 url: OG_IMAGE,
             },
         },
-        viewport: 'width=device-width, initial-scale=1.0',
+        verification: {
+            other: {
+                'naver-site-verification': META.naverVerification,
+            },
+        },
     };
 
     return metadata;

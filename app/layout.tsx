@@ -8,14 +8,6 @@ import SideBar from '@/components/layout/SideBar';
 import Map from '@/components/layout/Map';
 import { getMetadata } from '@/shared/utils/meta';
 
-// export const metadata: Metadata = {
-//     title: {
-//         template: '%s | omuk',
-//         default: 'omuk',
-//     },
-//     description: '매일 다른 음식과 사람들을 기록하는 일상',
-// };
-
 export const generateMetadata = () => {
     return getMetadata();
 };
@@ -28,6 +20,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     type="text/javascript"
                     src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer,drawing&autoload=false`}
                 />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link rel="shortcut icon" href="/" />
             </head>
             <body style={{ display: 'flex' }}>

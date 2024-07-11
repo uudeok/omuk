@@ -6,4 +6,5 @@ export const META = {
     siteName: 'MUKIROK | 먹기록',
     url: 'https://omuk-beta.vercel.app/',
     ogImage: 'https://s3-omuk-images.s3.ap-northeast-2.amazonaws.com/main.png',
+    naverVerification: '26f9b328438f88ca40b4d18c011e8a5cd0311d05',
 };
