@@ -11,7 +11,7 @@ const Map = () => {
         <>
             {isLoading && (
                 <div className={styles.loadingOverlay}>
-                    <LoadingBar status="열심히 불러오는 중" />
+                    <LoadingBar status="오늘은 뭐 먹지?" />
                 </div>
             )}
             <div ref={mapEl} className={styles.map}></div>

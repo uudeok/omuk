@@ -60,7 +60,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         enabled: !!reviewData,
     });
 
-    console.log('Test', existingImages);
+    console.log('existingImages', existingImages);
 
     const reviewObj = {
         rate: rate,

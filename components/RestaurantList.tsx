@@ -42,7 +42,6 @@ const RestaurantList = () => {
                 <ListBox
                     onClick={() => {
                         router.push(`/${res.id}`);
-                        // router.push(`/${res.id}`);
                     }}
                     key={res.id}
                     top={

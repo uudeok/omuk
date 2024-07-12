@@ -185,8 +185,6 @@ export const getReviewTotalReviews = async () => {
         throw new Error(error.message);
     }
 
-    console.log(reviewData);
-
     const actualRows = reviewData[0].Plan.Plans[0]['Actual Rows'];
 
     return actualRows;

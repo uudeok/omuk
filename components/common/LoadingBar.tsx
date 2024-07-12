@@ -27,6 +27,7 @@ const LoadingBarStyle = styled.div`
         font-size: 1.3rem;
         margin-bottom: 1rem;
         color: var(--mainColorDk);
+        font-weight: bold;
     }
 
     span {

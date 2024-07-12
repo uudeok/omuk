@@ -34,7 +34,13 @@ export const useS3FileUpload = (options?: Options) => {
         console.log(imageFiles.images_url);
         const filePromises = imageFiles.images_url.map(async (url: string) => {
             try {
-                const response = await fetch(url);
+                const response = await fetch(url, {
+                    headers: {
+                        'Cache-Control': 'no-store',
+                    },
+                });
+                console.log('1');
+
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
                 console.log('Res', response);
