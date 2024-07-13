@@ -2,7 +2,7 @@ import Community from '@/components/Community';
 import { createClient } from '@/shared/lib/supabase/server-client';
 import { CommunityReviewType } from '@/services/reviewService';
 import { Suspense } from 'react';
-import { generateSkeletonCards } from '@/shared/utils/uiUtil';
+import { generateSkeletonCards } from '@/shared/utils';
 
 const getReviewTotalRows = async () => {
     const supabase = createClient();

@@ -6,7 +6,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getPaginatedUserReviews, getReviewTotalReviews, ReviewType } from '@/services/reviewService';
 import { useInfiniteScroll } from '@/hooks';
 import Review from '@/components/Review';
-import { getTotalPages } from '@/shared/utils/detailUtil';
+import { getTotalPages } from '@/shared/utils';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
 import EmptyState from '@/components/common/EmptyState';
 

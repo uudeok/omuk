@@ -5,7 +5,7 @@ import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
 import List, { ListRow } from '@/components/common/List';
 import Avatar from '@/components/common/Avatar';
-import { getTotalPages } from '@/shared/utils/detailUtil';
+import { getTotalPages } from '@/shared/utils';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import {
     getFollowerList,

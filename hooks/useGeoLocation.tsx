@@ -52,7 +52,7 @@ export const useGeoLocation = () => {
                 });
             },
             (err) => showError(err),
-            { enableHighAccuracy: true, maximumAge: 0 }
+            { enableHighAccuracy: false, maximumAge: Infinity, timeout: 10000 }
         );
     }, [showError]);
 
@@ -61,3 +61,7 @@ export const useGeoLocation = () => {
         errorMsg,
     };
 };
+
+// enableHighAccuracy : 위치 정보를 보다 정확하게 가져올지 정할 수 있다. true > false  위치정보의 정확도는 떨어지지만 속도가 빠르다.
+// maximumAge : 캐시된 위치 정보를 사용할 수 있는 시간.
+// timeout : 위치 정보를 가져오는데 허용되는 최대 시간.

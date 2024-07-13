@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, Dispatch, SetStateAction } from 'react';
-import { removeNonNumeric } from '@/shared/utils/stringUtils';
+import { removeNonNumeric } from '@/shared/utils';
 
 /* 간단한 유효성 검사 가능 type 에 따라 추가 로직 구현 가능 */
 

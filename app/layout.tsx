@@ -6,7 +6,7 @@ import ReactQueryProvider from '@/shared/context/ReactQueryProvider';
 import AuthProvider from '@/shared/context/AuthProvider';
 import SideBar from '@/components/layout/SideBar';
 import Map from '@/components/layout/Map';
-import { getMetadata } from '@/shared/utils/meta';
+import { getMetadata } from '@/shared/utils';
 
 export const generateMetadata = () => {
     return getMetadata();

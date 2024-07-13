@@ -2,7 +2,7 @@ import { createClient } from '@/shared/lib/supabase/server-client';
 import { Suspense } from 'react';
 import { CommunityReviewType } from '@/services/reviewService';
 import Community from '@/components/Community';
-import { generateSkeletonCards } from '@/shared/utils/uiUtil';
+import { generateSkeletonCards } from '@/shared/utils';
 
 // STEP1. 팔로워한 유저 ids 가져온다.
 const getFollowerIds = async () => {

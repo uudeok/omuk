@@ -8,9 +8,9 @@ import { getBookmarkTotalRows, getUserBookmarksPaginated } from '@/services/book
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Text from '@/components/common/Text';
-import { getTotalPages } from '@/shared/utils/detailUtil';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
 import EmptyState from '@/components/common/EmptyState';
+import { getTotalPages } from '@/shared/utils';
 
 const MyBookmark = () => {
     const router = useRouter();

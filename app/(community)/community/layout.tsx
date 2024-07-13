@@ -35,7 +35,7 @@ const CommunityLayout = ({ children }: { children: ReactNode }) => {
                     <Avatar profile={profile} />
                 ) : (
                     <div className={styles.user} onClick={() => router.push('/login')}>
-                        <User width={27} />
+                        <User width={30} />
                         <Text typography="t4">로그인 해주세요</Text>
                     </div>
                 )}

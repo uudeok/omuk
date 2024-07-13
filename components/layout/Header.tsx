@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import List, { ListRow } from '../common/List';
 import Utensils from '../../assets/utensils.svg';
 import Text from '../common/Text';
-import { signOut } from '@/shared/utils/authUtil';
+import { signOut } from '@/shared/utils';
 import { useContext } from 'react';
 import { AuthContext } from '@/shared/context/AuthProvider';
 
@@ -16,7 +16,8 @@ const Header = () => {
     const redirectPage = async () => {
         if (session) {
             await signOut();
-            window.location.href = '/';
+            // window.location.href = '/';
+            router.replace('/');
         } else {
             router.push('/login');
         }

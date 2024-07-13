@@ -7,7 +7,7 @@ import { useBoolean } from '@/hooks';
 import List, { ListRow } from './common/List';
 import Text from './common/Text';
 import Button from './common/Button';
-import { makeAdress } from '@/shared/utils/detailUtil';
+import { makeAdress } from '@/shared/utils';
 import { getReviewData } from '@/services/reviewService';
 import Hastag from '../assets/hashtag.svg';
 import Clock from '../assets/clock.svg';

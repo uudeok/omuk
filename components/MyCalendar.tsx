@@ -8,7 +8,7 @@ import { useState } from 'react';
 import Text from './common/Text';
 import { useCalendar } from '@/hooks';
 import { ReviewType, getReviewList } from '@/services/reviewService';
-import { cutText } from '@/shared/utils/stringUtils';
+import { cutText } from '@/shared/utils/stringUtil';
 import Review from './Review';
 import { useQuery } from '@tanstack/react-query';
 

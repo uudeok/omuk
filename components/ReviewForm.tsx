@@ -20,7 +20,7 @@ import { deleteReview, getReviewData, postReview, updateReview } from '@/service
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Modal from './common/Modal';
 import CalendarModal from './modal/CalendarModal';
-import { initializeDate } from '@/shared/utils/calendarUtil';
+import { initializeDate } from '@/shared/utils';
 import { getImageData, updateImages, uploadImages } from '@/services/imageService';
 import { AuthContext } from '@/shared/context/AuthProvider';
 import Spinner from './common/Spinner';
@@ -59,8 +59,6 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         queryFn: () => getImageData(reviewData?.id),
         enabled: !!reviewData,
     });
-
-    console.log('existingImages', existingImages);
 
     const reviewObj = {
         rate: rate,

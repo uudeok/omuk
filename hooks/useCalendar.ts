@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import dayjs from 'dayjs';
-import { calculateMonthInfo } from '@/shared/utils/calendarUtil';
+import { calculateMonthInfo } from '@/shared/utils';
 import { MONTH_LABEL_VALUES } from '@/shared/types';
 import { MONTH_LABEL } from '@/constants/calendar';
 

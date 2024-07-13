@@ -3,9 +3,8 @@ import Slide from '@/components/layout/Slide';
 import { ReactNode } from 'react';
 import Text from '@/components/common/Text';
 import List, { ListRow } from '@/components/common/List';
-import { calculateScore } from '@/shared/utils/detailUtil';
 import { ParamType } from '@/shared/types';
-import { getMetadata } from '@/shared/utils/meta';
+import { getMetadata, calculateScore } from '@/shared/utils';
 
 type PropsType = {
     children: ReactNode;

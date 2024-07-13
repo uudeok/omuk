@@ -25,13 +25,13 @@ export const useS3FileUpload = (options?: Options) => {
     const [alertMessage, setAlertMessage] = useState<string>('');
     const isValid = useRef<boolean>(true);
 
+    // url 을 blob 으로 변환해주는 함수
     const convertToFile = useCallback(async (imageFiles: any) => {
         if (!imageFiles.images_url || !Array.isArray(imageFiles.images_url)) {
             console.error('이미지 URL 배열이 유효하지 않습니다.');
             return [];
         }
 
-        console.log(imageFiles.images_url);
         const filePromises = imageFiles.images_url.map(async (url: string) => {
             try {
                 const response = await fetch(url, {
@@ -39,11 +39,9 @@ export const useS3FileUpload = (options?: Options) => {
                         'Cache-Control': 'no-store',
                     },
                 });
-                console.log('1');
 
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-                console.log('Res', response);
                 const blob = await response.blob();
                 const filename = 'image_' + Date.now();
                 const options = { type: blob.type, lastModified: new Date().getTime() };

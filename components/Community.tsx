@@ -1,15 +1,17 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useContext } from 'react';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { getFollowerReviewsWithImages, getPaginatedReviewsWithImages } from '@/services/reviewService';
 import List from './common/List';
-import { getTotalPages } from '@/shared/utils/detailUtil';
+import { getTotalPages } from '@/shared/utils';
 import { DEFAULT_PAGE_SIZE } from '@/constants';
 import { useInfiniteScroll } from '@/hooks';
 import ReviewCard from './ReviewCard';
 import { CommunityReviewType } from '@/services/reviewService';
 import { usePathname } from 'next/navigation';
+import { AuthContext } from '@/shared/context/AuthProvider';
+import EmptyState from './common/EmptyState';
 
 type Props = {
     totalReviews: number;
@@ -17,6 +19,7 @@ type Props = {
 };
 
 const Community = ({ totalReviews, initalReviews }: Props) => {
+    const session = useContext(AuthContext);
     const totalPage = getTotalPages(totalReviews, DEFAULT_PAGE_SIZE);
     const [enabled, setEnabled] = useState(false);
     const path = usePathname();
@@ -72,6 +75,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
 
     return (
         <div>
+            {!session && path === '/community/follow' && <EmptyState label="로그인이 필요한 서비스 입니다" />}
             <List>
                 {initalReviews.map((review: CommunityReviewType) => (
                     <ReviewCard list={review} key={review.id} />

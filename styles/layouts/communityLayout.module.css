@@ -20,6 +20,9 @@
 .user svg {
     background-color: white;
     border-radius: 50%;
+    /* border: 1px solid black; */
+    padding: 5px;
+    margin-right: 7px;
 }
 
 .controller {

@@ -1,5 +1,4 @@
 .layout {
-    /* border: 1px dotted lightgrey; */
     height: 465px;
     overflow-x: hidden;
 }
@@ -23,6 +22,7 @@
 
 .nonImageWrapper {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -34,11 +34,9 @@
     margin-top: 25px;
     padding: 5px;
     background-color: var(--whitesmoke);
-    /* border: 1px solid red; */
 }
 
 .content li {
-    /* border: 1px solid black; */
     margin: 1px 0px;
     line-height: 1.1;
 }

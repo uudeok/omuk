@@ -7,7 +7,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getFollowingList, getFollowingTotalRows, requestUnFollow } from '@/services/followService';
 import { useInfiniteScroll } from '@/hooks';
 import Avatar from '@/components/common/Avatar';
-import { getTotalPages } from '@/shared/utils/detailUtil';
+import { getTotalPages } from '@/shared/utils';
 import List, { ListRow } from '@/components/common/List';
 import { FOLLOW_PAGE_SIZE } from '@/constants';
 import Text from '@/components/common/Text';

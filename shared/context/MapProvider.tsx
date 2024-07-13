@@ -91,4 +91,4 @@ const MapProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export default MapProvider;
-export const useMap = () => useContext(MapContext);
+export const useMap = (): MapType => useContext(MapContext);
