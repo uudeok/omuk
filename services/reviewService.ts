@@ -249,12 +249,13 @@ export const getPaginatedReviewsWithImages = async (
             `
     *,
     review_images (images_url),
-    profiles (id, username, avatar_url, email),
+    profiles!inner (id, username, avatar_url, email, expose),
     review_likes (user_id, review_id)
   `
         )
         .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .eq('profiles.expose', 'public');
 
     if (error) {
         throw new Error(error.message);
@@ -297,9 +298,10 @@ export const getFollowerReviewsWithImages = async (
             review_likes (user_id, review_id)
             `
         )
-        .in('user_id', followeeIds!)
         .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .in('user_id', followeeIds!)
+        .not('profiles.expose', 'eq', 'privacy');
 
     if (reviewError) {
         throw new Error(reviewError.message);

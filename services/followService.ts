@@ -319,3 +319,44 @@ export const updateUser = async (url: string) => {
     }
     return data;
 };
+
+export const getPrivacySetting = async () => {
+    const supabase = createClient();
+
+    const { data: userData } = await supabase.auth.getSession();
+
+    if (!userData.session) return;
+
+    const user_id = userData.session.user.id;
+
+    const { data, error } = await supabase.from('profiles').select('expose').eq('id', user_id).maybeSingle();
+
+    if (error) {
+        throw new Error(error.message);
+    }
+    return data;
+};
+
+export type ExposeType = 'public' | 'followers' | 'privacy';
+
+export const handlePrivacySetting = async (expose: ExposeType) => {
+    const supabase = createClient();
+
+    const { data: userData } = await supabase.auth.getSession();
+
+    if (!userData.session) return;
+
+    const user_id = userData.session.user.id;
+
+    const { data, error } = await supabase
+        .from('profiles')
+        .update({
+            expose: expose,
+        })
+        .eq('id', user_id);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+    return data;
+};

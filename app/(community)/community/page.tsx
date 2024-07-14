@@ -4,10 +4,18 @@ import { CommunityReviewType } from '@/services/reviewService';
 import { Suspense } from 'react';
 import { generateSkeletonCards } from '@/shared/utils';
 
+// STEP1. 'public' 으로 설정한 유저의 리뷰 총 갯수를 가져온다.
 const getReviewTotalRows = async () => {
     const supabase = createClient();
 
-    const { data, error }: any = await supabase.from('review').select('*').explain({ format: 'json', analyze: true });
+    const { data, error }: any = await supabase
+        .from('review')
+        .select(
+            `*,
+        profiles!inner (id, username, avatar_url, email, expose)`
+        )
+        .eq('profiles.expose', 'public')
+        .explain({ format: 'json', analyze: true });
 
     if (error) {
         throw new Error(error.message);
@@ -17,6 +25,7 @@ const getReviewTotalRows = async () => {
     return actualRows;
 };
 
+// STEP2. 'public' 으로 설정한 유저의 리뷰 데이터를 가져온다.
 const fetchReviewsWithImages = async (pageParam: number, pageSize: number): Promise<CommunityReviewType[]> => {
     const supabase = createClient();
     const { data: userData } = await supabase.auth.getUser();
@@ -29,12 +38,13 @@ const fetchReviewsWithImages = async (pageParam: number, pageSize: number): Prom
             `
     *,
     review_images (images_url),
-    profiles (id, username, avatar_url, email),
+    profiles!inner (id, username, avatar_url, email, expose),
     review_likes (user_id, review_id)
   `
         )
         .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .eq('profiles.expose', 'public');
 
     if (error) {
         throw new Error(error.message);
@@ -53,7 +63,7 @@ const fetchReviewsWithImages = async (pageParam: number, pageSize: number): Prom
 
 const CommunityPage = async () => {
     const initalPage = 0;
-    const pageSize = 15;
+    const pageSize = 5;
     const totalReviews = await getReviewTotalRows();
     const initalReviews = await fetchReviewsWithImages(initalPage, pageSize);
 

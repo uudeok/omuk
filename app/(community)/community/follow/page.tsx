@@ -4,21 +4,30 @@ import { CommunityReviewType } from '@/services/reviewService';
 import Community from '@/components/Community';
 import { generateSkeletonCards } from '@/shared/utils';
 
-// STEP1. 팔로워한 유저 ids 가져온다.
+// STEP1. 비공개로 설정하지 않은 팔로워한 유저 ids 가져온다.
 const getFollowerIds = async () => {
     const supabase = createClient();
+
     const { data: userData } = await supabase.auth.getUser();
+
     if (!userData.user) return;
+
     const user_id = userData.user.id;
 
     const { data: followData, error } = await supabase
         .from('follow')
-        .select('requestee_id')
-        .eq('requester_id', user_id);
+        .select(
+            `requestee_id,
+            profiles!follow_requestee_id_fkey1 !inner(expose)`
+        )
+
+        .eq('requester_id', user_id)
+        .not('profiles.expose', 'eq', 'privacy');
 
     if (error) {
         throw new Error(error.message);
     }
+
     const followeeIds = followData.map((follow) => follow.requestee_id) as string[];
 
     return followeeIds;
@@ -90,7 +99,7 @@ const fetchFollowerReviewsWithImages = async (pageParam: number, pageSize: numbe
 
 const FollowCommunityPage = async () => {
     const initalPage = 0;
-    const pageSize = 15;
+    const pageSize = 5;
     const totalReviews = await getFollowReviewTotalRows();
     const initalReviews = await fetchFollowerReviewsWithImages(initalPage, pageSize);
 
