@@ -14,6 +14,7 @@ export const searchUserData = async (emailOrUsername: string): Promise<ProfileTy
         .from('profiles')
         .select('*')
         .or(`email.eq.${emailOrUsername},username.eq.${emailOrUsername}`)
+        .not('expose', 'eq', 'privacy')
         .maybeSingle();
 
     if (error) {
@@ -69,3 +70,19 @@ export const updateAvatarUrl = async (url: string) => {
 
     return data.user;
 };
+
+// export const searchUserData = async (emailOrUsername: string): Promise<ProfileType> => {
+//     const supabase = createClient();
+
+//     const { data: profile, error } = await supabase
+//         .from('profiles')
+//         .select('*')
+//         .or(`email.eq.${emailOrUsername},username.eq.${emailOrUsername}`)
+//         .maybeSingle();
+
+//     if (error) {
+//         throw new Error(error.message);
+//     }
+
+//     return profile;
+// };

@@ -8,7 +8,7 @@ type Props = {
 const EmptyState = ({ label }: Props) => {
     return (
         <div className={styles.emptyState}>
-            <Text typography="st3">{label}🥲</Text>
+            <Text typography="st3">{label}</Text>
         </div>
     );
 };

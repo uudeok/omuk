@@ -2,6 +2,7 @@ import { createClient } from '@/shared/lib/supabase/brower-client';
 import { ProfileType } from './userService';
 import { ReviewLikesType } from './reviewLikeService';
 import { getFollowerUserIds } from './followService';
+import _ from 'lodash';
 
 export type ReviewType = {
     rate: number;
@@ -231,6 +232,7 @@ export type CommunityReviewType = {
     profiles: ProfileType;
     review_likes: ReviewLikesType[];
     likedByUser: boolean;
+    images_url?: string[];
 };
 
 // 리뷰 목록을 최신 순으로 페이지 단위로 가져오기
@@ -316,4 +318,32 @@ export const getFollowerReviewsWithImages = async (
     });
 
     return reviewsWithLikes;
+};
+
+export const getPreviewReviewData = async (res_id: string): Promise<CommunityReviewType[]> => {
+    const supabase = createClient();
+
+    const { data, error } = await supabase
+        .from('review')
+        .select(
+            `*,
+    review_images (images_url),
+    profiles!inner (id, username, avatar_url, email),
+    review_likes (user_id, review_id)`
+        )
+        .order('created_at', { ascending: false })
+        .range(0, 3)
+        .eq('profiles.expose', 'public')
+        .eq('res_id', res_id);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    const processedData = data.map((review) => ({
+        ...review,
+        images_url: _.flatMap(review.review_images, 'images_url'),
+    }));
+
+    return processedData;
 };

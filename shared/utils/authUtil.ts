@@ -16,3 +16,12 @@ export const getURL = () => {
     url = url.endsWith('/') ? url : `${url}/`;
     return url;
 };
+
+export const maskUsername = (username: string) => {
+    if (!username) return '';
+
+    const visibleChars = 2; // 보여질 글자 수
+    const maskedChars = username.length - visibleChars;
+
+    return `${username.substring(0, visibleChars)}${'*'.repeat(maskedChars)}`;
+};
