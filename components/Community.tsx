@@ -8,7 +8,8 @@ import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import {
     getFollowerReviewsWithImages,
     getPaginatedReviewsWithImages,
-    getReviewCountByKeyword,
+    getPublicReviewCountByKeyword,
+    getFolloweeReviewCountByKeyword,
 } from '@/services/reviewService';
 import List from './common/List';
 import { getTotalPages } from '@/shared/utils';
@@ -22,6 +23,7 @@ import Slider from 'react-slick';
 import Badge from './common/Badge';
 import { BUTTON_TO_FEEDBACK } from '@/constants';
 import LoadingBar from './common/LoadingBar';
+import { ExposeType } from '@/services/followService';
 
 type Props = {
     totalReviews: number;
@@ -45,6 +47,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const fetchInfiniteQuery = path === '/community' ? getPaginatedReviewsWithImages : getFollowerReviewsWithImages;
+    const fetchReviewCount = path === '/community' ? getPublicReviewCountByKeyword : getFolloweeReviewCountByKeyword;
 
     // 2페이지부턴 csr 무한스크롤로 데이터 받아온다
     const {
@@ -103,10 +106,14 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
         setSearchKeyword(keyword);
 
         try {
-            const reviewCount = await getReviewCountByKeyword(keyword);
-            setTotalPage(getTotalPages(reviewCount, PAGE_SIZE));
+            const reviewCount = await fetchReviewCount(keyword);
+            const total = getTotalPages(reviewCount, PAGE_SIZE);
+            setTotalPage(total);
 
-            const result = await getPaginatedReviewsWithImages(1, PAGE_SIZE, keyword);
+            console.log('총 리뷰 갯수', reviewCount);
+
+            const result = await fetchInfiniteQuery(1, PAGE_SIZE, keyword);
+
             setFilteredReviews(result);
             setShowAllReviews(false);
         } catch (error) {

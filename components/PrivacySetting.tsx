@@ -29,8 +29,6 @@ const PrivacySetting = () => {
         },
     });
 
-    console.log(data);
-
     useEffect(() => {
         if (data) {
             if (data.expose === 'public') {

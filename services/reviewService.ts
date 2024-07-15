@@ -1,7 +1,7 @@
 import { createClient } from '@/shared/lib/supabase/brower-client';
 import { ProfileType } from './userService';
 import { ReviewLikesType } from './reviewLikeService';
-import { getFollowerUserIds } from './followService';
+import { ExposeType, getFollowerUserIds } from './followService';
 import _ from 'lodash';
 
 export type ReviewType = {
@@ -282,7 +282,8 @@ review_likes (user_id, review_id)
 // 팔로우한 유저의 ID 를 조회해 해당 유저들의 리뷰를 가져온다
 export const getFollowerReviewsWithImages = async (
     pageParam: number,
-    pageSize: number
+    pageSize: number,
+    filter?: string
 ): Promise<CommunityReviewType[]> => {
     const supabase = createClient();
     const { data: userData, error } = await supabase.auth.getSession();
@@ -295,16 +296,21 @@ export const getFollowerReviewsWithImages = async (
     if (followeeIds && followeeIds.length === 0) return [];
 
     // Step 2: 해당 유저들의 리뷰를 가져옵니다.
-    const { data: reviews, error: reviewError } = await supabase
-        .from('review')
-        .select(
-            `
-            *,
-            review_images (images_url),
-            profiles!inner (id, username, avatar_url, email),
-            review_likes (user_id, review_id)
-            `
-        )
+
+    let query = supabase.from('review').select(
+        `
+        *,
+        review_images (images_url),
+        profiles!inner (id, username, avatar_url, email),
+        review_likes (user_id, review_id)
+        `
+    );
+
+    if (filter) {
+        query = query.contains('positive', [filter]);
+    }
+
+    const { data: reviews, error: reviewError } = await query
         .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
         .order('created_at', { ascending: false })
         .in('user_id', followeeIds!)
@@ -355,8 +361,10 @@ export const getPreviewReviewData = async (res_id: string): Promise<CommunityRev
 };
 
 /// keyword 별로 리뷰 총 갯수 가져오기
-export const getReviewCountByKeyword = async (keyword: string) => {
+
+export const getPublicReviewCountByKeyword = async (keyword: string) => {
     const supabase = createClient();
+    console.log('모두 실행');
 
     const { data, error }: any = await supabase
         .from('review')
@@ -365,6 +373,31 @@ export const getReviewCountByKeyword = async (keyword: string) => {
         profiles!inner (id, username, avatar_url, email, expose)`
         )
         .eq('profiles.expose', 'public')
+        .contains('positive', [keyword])
+        .explain({ format: 'json', analyze: true });
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    const actualRows = data[0].Plan.Plans[0]['Actual Rows'];
+
+    return actualRows;
+};
+
+export const getFolloweeReviewCountByKeyword = async (keyword: string) => {
+    const supabase = createClient();
+
+    const followeeIds = await getFollowerUserIds();
+
+    const { data, error }: any = await supabase
+        .from('review')
+        .select(
+            `*,
+        profiles!inner (id, username, avatar_url, email, expose)`
+        )
+        .in('user_id', followeeIds!)
+        .not('profiles.expose', 'eq', 'privacy')
         .contains('positive', [keyword])
         .explain({ format: 'json', analyze: true });
 
