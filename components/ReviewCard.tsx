@@ -12,6 +12,7 @@ import Slider from 'react-slick';
 import Avatar from './common/Avatar';
 import Heart from '../assets/heart.svg';
 import FillHeart from '../assets/fillHeart.svg';
+import { useRouter } from 'next/navigation';
 import { addReviewLike, removeReviewLike } from '@/services/reviewLikeService';
 import { CommunityReviewType } from '@/services/reviewService';
 
@@ -23,6 +24,7 @@ const ReviewCard = ({ list }: Props) => {
     const [likedByUser, setLikedByUser] = useState<boolean>(list.likedByUser!);
     const [likeCount, setLikeCount] = useState<number>(list.review_likes?.length || 0);
 
+    const router = useRouter();
     const flattenedImages = _.flatten(list.review_images?.map((imageObj) => imageObj.images_url));
     const hasImage = list.review_images && list.review_images.length > 0;
 
@@ -56,7 +58,7 @@ const ReviewCard = ({ list }: Props) => {
                     {visitedDate}
                 </Text>
             </div>
-            <div>
+            <div onClick={() => router.push(`/${list.res_id}`)}>
                 {hasImage ? (
                     <Slider {...settings}>
                         {flattenedImages.map((img) => (
@@ -67,7 +69,7 @@ const ReviewCard = ({ list }: Props) => {
                     </Slider>
                 ) : (
                     <div className={styles.nonImageWrapper}>
-                        <img src="/noimage.png" width="70px" />
+                        <img src="/noimage.png" width="55px" />
                         <Text typography="st5">등록된 이미지가 없습니다.</Text>
                     </div>
                 )}
@@ -85,7 +87,11 @@ const ReviewCard = ({ list }: Props) => {
                         }
                         right={''}
                     />
-                    <ListRow left={<Text typography="t5">{list.placeName}</Text>} right={''} />
+                    <ListRow
+                        onClick={() => router.push(`/${list.res_id}`)}
+                        left={<Text typography="t5">{list.placeName}</Text>}
+                        right={''}
+                    />
                     <ListRow
                         left={
                             <div>

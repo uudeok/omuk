@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode, FC } from 'react';
 import { DropdownMenu, DropdownOption, DropdownToggle } from '@/components/common/Dropdown';
 
 // Dropdown 컴포넌트에서 사용할 Context 타입 정의
@@ -18,7 +18,7 @@ export const DropdownContext = createContext<DropdownContextType>({
 });
 
 // Dropdown 컴포넌트로 감싸서 사용
-const Dropdown: React.FC<{ children: ReactNode }> = ({ children }) => {
+const Dropdown: FC<{ children: ReactNode; className?: string }> = ({ children, className }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<string | null>(null); // 선택된 옵션 상태
 
@@ -33,7 +33,7 @@ const Dropdown: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     return (
         <DropdownContext.Provider value={{ isOpen, toggleDropdown, selectedOption, selectOption }}>
-            {children}
+            <div className={className}>{children}</div>
         </DropdownContext.Provider>
     );
 };

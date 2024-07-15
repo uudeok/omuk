@@ -16,7 +16,6 @@ const Header = () => {
     const redirectPage = async () => {
         if (session) {
             await signOut();
-            // window.location.href = '/';
             router.replace('/');
         } else {
             router.push('/login');
@@ -28,7 +27,7 @@ const Header = () => {
             <List>
                 <ListRow
                     left={
-                        <div onClick={() => router.push('/')}>
+                        <div onClick={() => (window.location.href = '/')}>
                             <Utensils width={18} />
                             <Text typography="t4">MUKIROK</Text>
                         </div>

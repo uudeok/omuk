@@ -99,7 +99,7 @@ const fetchFollowerReviewsWithImages = async (pageParam: number, pageSize: numbe
 
 const FollowCommunityPage = async () => {
     const initalPage = 0;
-    const pageSize = 5;
+    const pageSize = 10;
     const totalReviews = await getFollowReviewTotalRows();
     const initalReviews = await fetchFollowerReviewsWithImages(initalPage, pageSize);
 

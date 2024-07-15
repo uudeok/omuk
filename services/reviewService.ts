@@ -238,23 +238,28 @@ export type CommunityReviewType = {
 // 리뷰 목록을 최신 순으로 페이지 단위로 가져오기
 export const getPaginatedReviewsWithImages = async (
     pageParam: number,
-    pageSize: number
+    pageSize: number,
+    filter?: string
 ): Promise<CommunityReviewType[]> => {
     const supabase = createClient();
     const { data: userData } = await supabase.auth.getSession();
 
     const user_id = userData?.session?.user.id || null;
 
-    const { data: reviewList, error } = await supabase
-        .from('review')
-        .select(
-            `
-    *,
-    review_images (images_url),
-    profiles!inner (id, username, avatar_url, email, expose),
-    review_likes (user_id, review_id)
-  `
-        )
+    let query = supabase.from('review').select(
+        `
+*,
+review_images (images_url),
+profiles!inner (id, username, avatar_url, email, expose),
+review_likes (user_id, review_id)
+`
+    );
+
+    if (filter) {
+        query = query.contains('positive', [filter]);
+    }
+
+    const { data: reviewList, error } = await query
         .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
         .order('created_at', { ascending: false })
         .eq('profiles.expose', 'public');
@@ -320,6 +325,7 @@ export const getFollowerReviewsWithImages = async (
     return reviewsWithLikes;
 };
 
+// res detail 폼에서 리뷰 보여주기 갯수를 변수로 두기
 export const getPreviewReviewData = async (res_id: string): Promise<CommunityReviewType[]> => {
     const supabase = createClient();
 
@@ -346,4 +352,27 @@ export const getPreviewReviewData = async (res_id: string): Promise<CommunityRev
     }));
 
     return processedData;
+};
+
+/// keyword 별로 리뷰 총 갯수 가져오기
+export const getReviewCountByKeyword = async (keyword: string) => {
+    const supabase = createClient();
+
+    const { data, error }: any = await supabase
+        .from('review')
+        .select(
+            `*,
+        profiles!inner (id, username, avatar_url, email, expose)`
+        )
+        .eq('profiles.expose', 'public')
+        .contains('positive', [keyword])
+        .explain({ format: 'json', analyze: true });
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    const actualRows = data[0].Plan.Plans[0]['Actual Rows'];
+
+    return actualRows;
 };

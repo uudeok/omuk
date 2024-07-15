@@ -59,3 +59,13 @@ export const COMPANION: { [key: string]: string } = {
     pet: '반려동물와 방문했어요',
     else: '기타',
 };
+
+export const BUTTON_TO_FEEDBACK: { [key: string]: string } = {
+    '아이와 함께': 'kid_friendly',
+    '부모님 모시고': 'good_for_parents',
+    혼밥가능: 'good_for_solo',
+    가성비최고: 'good_value',
+    분위기좋은: 'special_occasion',
+    뷰맛집: 'good_view',
+    '펫 친화': 'pet_friendly',
+};

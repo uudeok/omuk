@@ -1,10 +1,10 @@
 .layout {
-    height: 465px;
+    height: 470px;
     overflow-x: hidden;
 }
 
 .header {
-    height: 50px;
+    height: 55px;
     display: flex;
     width: 100%;
 
@@ -27,6 +27,15 @@
     align-items: center;
     width: 100%;
     height: 280px;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    /* border: 2px dashed #b0c4de;
+    border-radius: 10px; */
+    opacity: 0.9;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.nonImageWrapper:hover {
+    opacity: 1;
 }
 
 .content {
@@ -39,6 +48,7 @@
 .content li {
     margin: 1px 0px;
     line-height: 1.1;
+    cursor: pointer;
 }
 
 .like {
@@ -48,3 +58,12 @@
     padding: 3px;
     cursor: pointer;
 }
+
+/* .nonImageWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 280px;
+} */

@@ -63,7 +63,7 @@ const fetchReviewsWithImages = async (pageParam: number, pageSize: number): Prom
 
 const CommunityPage = async () => {
     const initalPage = 0;
-    const pageSize = 5;
+    const pageSize = 10;
     const totalReviews = await getReviewTotalRows();
     const initalReviews = await fetchReviewsWithImages(initalPage, pageSize);
 
