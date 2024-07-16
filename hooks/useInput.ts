@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, Dispatch, SetStateAction } from 'react';
+import { useState, useRef, Dispatch, SetStateAction, useCallback } from 'react';
 import { removeNonNumeric } from '@/shared/utils';
 
 /* 간단한 유효성 검사 가능 type 에 따라 추가 로직 구현 가능 */
@@ -46,7 +46,7 @@ export const useInput = (options?: Options): returnType => {
     };
 
     /** 첫번째로 실행되어 type에 따라 함수 호출 */
-    const onChangeInput = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const onChangeInput = useCallback((e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         const targetValue: string = e.target.value || '';
 
         if (type === 'number') {
@@ -54,7 +54,7 @@ export const useInput = (options?: Options): returnType => {
         } else if (type === 'string') {
             handleString(targetValue);
         }
-    };
+    }, []);
 
     return [value, onChangeInput, isValid.current, setValue];
 };

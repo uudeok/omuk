@@ -2,7 +2,7 @@
 
 import styles from '../styles/components/reviewform.module.css';
 import dayjs from 'dayjs';
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useState, useRef, useContext, useCallback, useMemo } from 'react';
 import List, { ListRow } from '@/components/common/List';
 import { useBoolean, useInput, useS3FileUpload } from '@/hooks';
 import Text from '@/components/common/Text';
@@ -45,8 +45,8 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
     const [selectedDate, setSelectedDate] = useState<Date>(initializeDate);
 
     const date = dayjs(selectedDate).format('YYYY-MM-DD');
-    const positiveFeedback = FEEDBACK_LIST.find((feedback) => feedback.type === 'positive')!;
-    const negativeFeedback = FEEDBACK_LIST.find((feedback) => feedback.type === 'negative')!;
+    const positiveFeedback = useMemo(() => FEEDBACK_LIST.find((feedback) => feedback.type === 'positive')!, []);
+    const negativeFeedback = useMemo(() => FEEDBACK_LIST.find((feedback) => feedback.type === 'negative')!, []);
 
     const { data: reviewData } = useQuery({
         queryKey: ['review', res_id],
@@ -58,6 +58,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         queryKey: ['exisitImage', reviewData?.id],
         queryFn: () => getImageData(reviewData?.id),
         enabled: !!reviewData,
+        staleTime: 0,
     });
 
     const reviewObj = {
@@ -124,13 +125,13 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         }
     }, [existingImages, convertToFile]);
 
-    const handleFeedbackClick = (feedback: FeedBackItem, isPositive: boolean) => {
+    const handleFeedbackClick = useCallback((feedback: FeedBackItem, isPositive: boolean) => {
         const setSelected = isPositive ? setSelectedPositives : setSelectedNegatives;
         setSelected((prev) => {
             const isSelected = prev.some((item) => item.id === feedback.id);
             return isSelected ? prev.filter((item) => item.id !== feedback.id) : [...prev, feedback];
         });
-    };
+    }, []);
 
     // 가려진 input file 을 trigger 하는 함수
     const triggerFileInput = () => {
@@ -141,7 +142,10 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         setFiles((prevImages) => prevImages.filter((img) => img !== file));
     };
 
-    const isFormValid = () => !isValid || rate === 0 || !value || !selectedCompanions;
+    const isFormValid = useMemo(
+        () => !isValid || rate === 0 || !value || !selectedCompanions,
+        [isValid, rate, value, selectedCompanions]
+    );
 
     const handleDeleteReview = async () => {
         const process = window.confirm('리뷰를 삭제하시겠습니까?');
@@ -301,13 +305,13 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
 
             <div>
                 {reviewData ? (
-                    <Button size="lg" disabled={isFormValid()} onClick={() => updateReviewMutation.mutate()}>
+                    <Button size="lg" disabled={isFormValid} onClick={() => updateReviewMutation.mutate()}>
                         {updateReviewMutation.isPending ? <Spinner size="md" /> : '수정하기'}
                     </Button>
                 ) : (
                     <Button
                         size="lg"
-                        disabled={isFormValid() || postReviewMutation.isPending}
+                        disabled={isFormValid || postReviewMutation.isPending}
                         onClick={() => postReviewMutation.mutate()}
                     >
                         {postReviewMutation.isPending ? <Spinner size="md" /> : '등록하기'}

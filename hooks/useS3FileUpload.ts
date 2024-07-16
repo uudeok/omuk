@@ -25,7 +25,6 @@ export const useS3FileUpload = (options?: Options) => {
     const [alertMessage, setAlertMessage] = useState<string>('');
     const isValid = useRef<boolean>(true);
 
-    // url 을 blob 으로 변환해주는 함수
     const convertToFile = useCallback(async (imageFiles: any) => {
         if (!imageFiles.images_url || !Array.isArray(imageFiles.images_url)) {
             console.error('이미지 URL 배열이 유효하지 않습니다.');
@@ -107,6 +106,8 @@ export const useS3FileUpload = (options?: Options) => {
                         Key: `upload/${file.name}`,
                         Body: file,
                         Bucket: bucketName,
+                        ContentType: file.type,
+                        CacheControl: 'no-store',
                     },
                 });
 

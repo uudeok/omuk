@@ -15,6 +15,8 @@ import FillHeart from '../assets/fillHeart.svg';
 import { useRouter } from 'next/navigation';
 import { addReviewLike, removeReviewLike } from '@/services/reviewLikeService';
 import { CommunityReviewType } from '@/services/reviewService';
+import Image from 'next/image';
+import NoImage from '../public/noimage.png';
 
 type Props = {
     list: CommunityReviewType;
@@ -58,18 +60,18 @@ const ReviewCard = ({ list }: Props) => {
                     {visitedDate}
                 </Text>
             </div>
-            <div onClick={() => router.push(`/${list.res_id}`)}>
+            <div>
                 {hasImage ? (
                     <Slider {...settings}>
-                        {flattenedImages.map((img) => (
+                        {flattenedImages.map((img, idx) => (
                             <div key={img} className={styles.slide}>
-                                <img src={img} alt={`img_${img}`} width="100%" height="100%" />
+                                <Image src={img} alt={`img_${idx}`} width={350} height={280} />
                             </div>
                         ))}
                     </Slider>
                 ) : (
                     <div className={styles.nonImageWrapper}>
-                        <img src="/noimage.png" width="55px" />
+                        <Image src={NoImage} alt="이미지 없음" width={55} />
                         <Text typography="st5">등록된 이미지가 없습니다.</Text>
                     </div>
                 )}

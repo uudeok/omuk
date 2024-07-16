@@ -29,6 +29,7 @@ import EmptyState from './common/EmptyState';
 import Rating from './common/Rating';
 import dayjs from 'dayjs';
 import Slider from 'react-slick';
+import Image from 'next/image';
 
 type Props = {
     resData: any;
@@ -254,13 +255,14 @@ const RestaurantDetail = ({ resData, res_id }: Props) => {
                                 </div>
                                 <div className={styles.previewImg}>
                                     <Slider {...settings}>
-                                        {preview.images_url?.map((url) => (
+                                        {preview.images_url?.map((url, idx) => (
                                             <div key={url} className={styles.sliderItem}>
-                                                <img
+                                                <Image
                                                     src={url}
-                                                    alt="Review Image"
+                                                    alt={`review image_${idx}`}
                                                     className={styles.reviewImage}
-                                                    width="80%"
+                                                    width={140}
+                                                    height={150}
                                                 />
                                             </div>
                                         ))}
