@@ -148,8 +148,6 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
 
     return (
         <div>
-            {!session && path === '/community/follow' && <EmptyState label="로그인이 필요한 서비스 입니다" />}
-
             <Slider {...settings} className={styles.slider}>
                 <div className={styles.badge} onClick={handleShowAllReviews}>
                     <Badge isSelected={!searchKeyword}>전체</Badge>
@@ -165,6 +163,8 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
                     </div>
                 ))}
             </Slider>
+
+            {!session && path === '/community/follow' && <EmptyState label="로그인이 필요한 서비스 입니다" />}
 
             {isLoading ? (
                 <LoadingBar />
