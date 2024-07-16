@@ -21,7 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer,drawing&autoload=false`}
                 />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <link rel="shortcut icon" href="/" />
+                <link rel="shortcut icon" href="/icon.png" />
             </head>
             <body style={{ display: 'flex' }}>
                 <ReactQueryProvider>

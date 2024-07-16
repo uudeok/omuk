@@ -3,6 +3,7 @@ import { ProfileType } from './userService';
 import { ReviewLikesType } from './reviewLikeService';
 import { ExposeType, getFollowerUserIds } from './followService';
 import _ from 'lodash';
+import { ResponseType } from '@/shared/types';
 
 export type ReviewType = {
     rate: number;
@@ -408,4 +409,20 @@ export const getFolloweeReviewCountByKeyword = async (keyword: string) => {
     const actualRows = data[0].Plan.Plans[0]['Actual Rows'];
 
     return actualRows;
+};
+
+export const getMarkerData = async (resData: ResponseType) => {
+    const supabase = createClient();
+
+    const { data: userData } = await supabase.auth.getSession();
+
+    const user_id = userData?.session?.user.id;
+
+    const { data, error } = await supabase.from('review').select('*').eq('user_id', user_id).eq('res_id', resData.id);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return data;
 };

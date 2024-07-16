@@ -3,6 +3,7 @@
 import { useMap } from '@/shared/context/MapProvider';
 import { useCallback } from 'react';
 import { ResponseType } from '@/shared/types';
+import { getMarkerData } from '@/services/reviewService';
 
 export const useMarker = () => {
     const { map, setMarkers } = useMap();
@@ -17,7 +18,7 @@ export const useMarker = () => {
 
             let markersArr: any[] = [];
 
-            data.forEach((res) => {
+            data.forEach(async (res) => {
                 const position = new kakao.maps.LatLng(Number(res.y), Number(res.x));
                 const name = res.place_name;
 
