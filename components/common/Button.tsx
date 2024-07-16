@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes } from 'react';
-import { ButtonBase, Role, Size } from './ButtonBase';
+import ButtonBase, { Role, Size } from './ButtonBase';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children?: React.ReactNode;

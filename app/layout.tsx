@@ -1,6 +1,5 @@
 import './global.css';
 import Script from 'next/script';
-import StyledProvider from '@/shared/context/StyledProvider';
 import MapProvider from '@/shared/context/MapProvider';
 import ReactQueryProvider from '@/shared/context/ReactQueryProvider';
 import AuthProvider from '@/shared/context/AuthProvider';
@@ -25,16 +24,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             </head>
             <body style={{ display: 'flex' }}>
                 <ReactQueryProvider>
-                    <StyledProvider>
-                        <AuthProvider>
-                            <MapProvider>
-                                <SideBar />
-                                <Map />
-                                {children}
-                                <div id="modal-root"></div>
-                            </MapProvider>
-                        </AuthProvider>
-                    </StyledProvider>
+                    <AuthProvider>
+                        <MapProvider>
+                            <SideBar />
+                            <Map />
+                            {children}
+                            <div id="modal-root"></div>
+                        </MapProvider>
+                    </AuthProvider>
                 </ReactQueryProvider>
             </body>
         </html>

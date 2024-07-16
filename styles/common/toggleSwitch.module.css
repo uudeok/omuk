@@ -8,9 +8,8 @@
     position: relative;
     display: inline-block;
     width: 80px;
-    height: 30px;
+    height: 28px;
     box-sizing: border-box;
-    /* border: 1px solid red; */
 }
 
 .switch input {

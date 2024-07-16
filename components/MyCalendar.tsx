@@ -67,7 +67,9 @@ const MyCalendar = () => {
                                     return (
                                         <td key={row.value}>
                                             <button
-                                                className={`${styles.dateCell} ${review && styles.visited}`}
+                                                className={`${styles.dateCell} ${review && styles.visited} ${
+                                                    selectedDate === row.date && styles.selected
+                                                }`}
                                                 onClick={() => handleReview(row.date)}
                                                 disabled={row.date > new Date()}
                                             >

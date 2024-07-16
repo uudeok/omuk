@@ -64,3 +64,9 @@
 .review {
     margin-bottom: 5px;
 }
+
+.selected {
+    background-color: var(--mainColorDk);
+    border-radius: 50%;
+    color: white;
+}

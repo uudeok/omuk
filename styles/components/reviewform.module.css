@@ -29,11 +29,12 @@
     gap: 8px;
     margin: 10px;
     cursor: pointer;
+    margin-bottom: 20px;
 }
 
 .date {
     cursor: pointer;
-    padding: 7px;
+    padding: 6px;
     border-radius: 15px;
     background-color: var(--mainColor);
 }

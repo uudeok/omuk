@@ -71,9 +71,12 @@ const ReviewCard = ({ list }: Props) => {
                     </Slider>
                 ) : (
                     <div className={styles.nonImageWrapper}>
-                        <Image src={NoImage} alt="이미지 없음" width={55} />
                         <Text typography="st5">등록된 이미지가 없습니다.</Text>
                     </div>
+                    // <div className={styles.nonImageWrapper}>
+                    //     <Image src={NoImage} alt="이미지 없음" width={55} />
+                    //     <Text typography="st5">등록된 이미지가 없습니다.</Text>
+                    // </div>
                 )}
             </div>
             <div className={styles.content}>

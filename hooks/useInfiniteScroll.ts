@@ -28,7 +28,7 @@ export const useInfiniteScroll = ({ callbackFn, hasNextPage, customHandleObserve
     const handleObserver = customHandleObserver || defaultHandleObserver;
 
     useEffect(() => {
-        const observer = new IntersectionObserver(handleObserver, { threshold: 0 });
+        const observer = new IntersectionObserver(handleObserver, { threshold: 0, rootMargin: '10px 20px 30px 40px' });
         const currentEl = observerEl.current;
         if (currentEl) observer.observe(currentEl);
 

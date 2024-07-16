@@ -1,0 +1,105 @@
+/* ButtonBase.module.css */
+
+.buttonBase {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 0 solid transparent;
+    background-color: var(--mainColorDk);
+    color: white;
+    cursor: pointer;
+    font-size: 17px;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 600;
+    transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out;
+    padding: 7px;
+}
+
+.buttonBase:focus {
+    outline: none;
+}
+
+.buttonBase:disabled {
+    opacity: 0.26;
+    cursor: not-allowed;
+}
+
+.buttonBase:hover {
+    background-color: var(--mainColorLg);
+}
+
+.roleround {
+    border-radius: 10px;
+}
+
+.rolekakao {
+    background: url(//storage.keepgrow.com/admin/campaign/20200611043456590.svg) no-repeat;
+    background-position: 28px;
+    background-color: #fee600;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    width: 100%;
+    color: black;
+    border-radius: 10px;
+    text-align: center;
+    border: none;
+    padding: 1rem;
+}
+
+.rolekakao:hover {
+    background-color: rgba(254, 230, 0, 0.8);
+}
+
+.rolegoogle {
+    background: url('/google.svg') no-repeat;
+    background-position: 18px center;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    background-color: #f2f2f2;
+    width: 100%;
+    color: black;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+.rolegoogle:hover {
+    background-color: var(--whitesmoke);
+}
+
+.rolecancel {
+    background-color: whitesmoke;
+    color: grey;
+    border-radius: 10px;
+}
+
+.rolecancel:hover {
+    background-color: whitesmoke;
+    color: black;
+}
+
+.rolenone {
+    color: var(--mainColorDk);
+    font-size: 1rem;
+    justify-content: left;
+    font-weight: bold;
+    background-color: transparent;
+}
+
+.rolenone:hover {
+    color: var(--mainColorLg);
+    background-color: transparent;
+}
+
+.sizesm {
+    height: 35px;
+}
+
+.sizelg {
+    height: 45px;
+}
