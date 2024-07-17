@@ -73,7 +73,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
     useEffect(() => {
         queryClient.resetQueries({ queryKey: ['paginatedTotalReview', searchKeyword] });
         setIsEnabled(false);
-    }, [path, queryClient, searchKeyword]);
+    }, [path, queryClient]);
 
     // custom handleObserver 생성 - ssr 초기 페이지땐 실행되지 않도록 구현
     const handleObserver = useCallback(

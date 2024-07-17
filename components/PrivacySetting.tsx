@@ -44,7 +44,7 @@ const PrivacySetting = () => {
                 setIsReviewFollowersOnly(true);
             }
         }
-    }, [data?.expose]);
+    }, [data]);
 
     // profile 공개 여부
     const handleProfileVisibilityChange = async (checked: boolean) => {
