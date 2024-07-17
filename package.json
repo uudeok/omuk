@@ -36,6 +36,9 @@
         "zustand": "^4.5.2"
     },
     "devDependencies": {
+        "@babel/core": "^7.24.9",
+        "@babel/plugin-transform-private-methods": "^7.24.7",
+        "@babel/preset-react": "^7.24.7",
         "@svgr/webpack": "^8.1.0",
         "@types/lodash": "^4.17.5",
         "@types/node": "^20",
@@ -46,10 +49,5 @@
         "kakao.maps.d.ts": "^0.1.39",
         "supabase": "^1.172.2",
         "typescript": "^5"
-    },
-    "browserslist": [
-        "> 0.25%",
-        "safari >= 13",
-        "not dead"
-    ]
+    }
 }
