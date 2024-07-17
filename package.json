@@ -46,5 +46,11 @@
         "kakao.maps.d.ts": "^0.1.39",
         "supabase": "^1.172.2",
         "typescript": "^5"
-    }
+    },
+    "browserslist": [
+        "> 0.5%",
+        "last 3 major versions",
+        "safari >= 14",
+        "not dead"
+    ]
 }

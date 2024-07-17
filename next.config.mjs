@@ -16,7 +16,6 @@ const nextConfig = {
             use: ['@svgr/webpack'],
         });
 
-        // 폴리필 추가
         const originalEntry = config.entry;
         config.entry = async () => {
             const entries = await originalEntry();
@@ -29,7 +28,7 @@ const nextConfig = {
         return config;
     },
     experimental: {
-        forceSwcTransforms: true, // SWC 트랜스폼 강제 사용
+        forceSwcTransforms: true,
     },
 };
 
