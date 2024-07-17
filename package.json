@@ -50,7 +50,7 @@
     "browserslist": [
         "> 0.5%",
         "last 3 major versions",
-        "safari >= 14",
+        "safari >= 13",
         "not dead"
     ]
 }
