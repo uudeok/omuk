@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
-    experimental: {
-        forceSwcTransforms: true,
-    },
     images: {
         remotePatterns: [
             {
@@ -12,24 +10,26 @@ const nextConfig = {
             },
         ],
     },
-    webpack: (config, { isServer }) => {
+    webpack: (config) => {
         config.module.rules.push({
             test: /\.svg$/,
             use: ['@svgr/webpack'],
         });
 
-        if (!isServer) {
-            const originalEntry = config.entry;
-            config.entry = async () => {
-                const entries = await originalEntry();
-                if (entries['main.js'] && !entries['main.js'].includes('./polyfills.js')) {
-                    entries['main.js'].unshift('./polyfills.js');
-                }
-                return entries;
-            };
-        }
+        // 폴리필 추가
+        const originalEntry = config.entry;
+        config.entry = async () => {
+            const entries = await originalEntry();
+            if (entries['main.js'] && !entries['main.js'].includes(path.resolve('./polyfills.js'))) {
+                entries['main.js'].unshift(path.resolve('./polyfills.js'));
+            }
+            return entries;
+        };
 
         return config;
+    },
+    experimental: {
+        forceSwcTransforms: true, // SWC 트랜스폼 강제 사용
     },
 };
 
