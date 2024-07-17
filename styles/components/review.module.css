@@ -1,8 +1,6 @@
 .bottom {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-top: 2px;
 }
 
 .bottom button {
@@ -11,5 +9,6 @@
 }
 
 .comment {
-    line-height: 1.1;
+    line-height: 1.2;
+    margin-top: 2px;
 }

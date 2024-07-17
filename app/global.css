@@ -88,9 +88,22 @@ button,
 input,
 select,
 textarea {
-    font-family: inherit;
     font-size: 1rem;
-    line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    /* line-height: 1.5; */
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
 }
 
 /* Set default background and text colors */
@@ -99,6 +112,8 @@ body {
     height: 100vh;
 
     overflow-y: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
