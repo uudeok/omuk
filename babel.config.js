@@ -6,6 +6,6 @@ module.exports = {
         '@babel/preset-react',
     ],
     plugins: [
-        ['@babel/plugin-proposal-private-methods', { loose: true }], // loose 옵션 사용
+        ['@babel/plugin-transform-private-methods', { loose: true }], // loose 옵션 사용
     ],
 };
