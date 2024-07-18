@@ -3,18 +3,18 @@
 import styles from '../styles/components/restaurantList.module.css';
 import List, { ListBox } from './common/List';
 import Text from './common/Text';
-import { useRouter } from 'next/navigation';
 import { useMap } from '@/shared/context/MapProvider';
 import { useCategory, useInfiniteScroll } from '@/hooks';
 import { useEffect } from 'react';
 import { ResponseType } from '@/shared/types';
 import LoadingBar from './common/LoadingBar';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const RestaurantList = () => {
-    const router = useRouter();
     const { searchCategory, isLoading, errorMsg } = useCategory();
     const { pagination, resData, map } = useMap();
+    const router = useRouter();
 
     useEffect(() => {
         const { kakao } = window;
@@ -40,19 +40,18 @@ const RestaurantList = () => {
             {errorMsg && <div className={styles.error}>{errorMsg}</div>}
 
             {resData.map((res: ResponseType) => (
-                <Link key={res.id} prefetch href={`/${res.id}`}>
-                    <ListBox
-                        key={res.id}
-                        top={
-                            <div className={styles.information}>
-                                <Text typography="t4">{res.place_name}</Text>
-                                <Text typography="st3">{res.road_address_name}</Text>
-                                <Text typography="st3">{res.phone}</Text>
-                            </div>
-                        }
-                        bottom={''}
-                    />
-                </Link>
+                <ListBox
+                    onClick={() => router.push(`/${res.id}`)}
+                    key={res.id}
+                    top={
+                        <div className={styles.information}>
+                            <Text typography="t4">{res.place_name}</Text>
+                            <Text typography="st3">{res.road_address_name}</Text>
+                            <Text typography="st3">{res.phone}</Text>
+                        </div>
+                    }
+                    bottom={''}
+                />
             ))}
 
             <div ref={observerEl} />
@@ -67,15 +66,14 @@ export default RestaurantList;
 // import styles from '../styles/components/restaurantList.module.css';
 // import List, { ListBox } from './common/List';
 // import Text from './common/Text';
-// import { useRouter } from 'next/navigation';
 // import { useMap } from '@/shared/context/MapProvider';
 // import { useCategory, useInfiniteScroll } from '@/hooks';
 // import { useEffect } from 'react';
 // import { ResponseType } from '@/shared/types';
 // import LoadingBar from './common/LoadingBar';
+// import Link from 'next/link';
 
 // const RestaurantList = () => {
-//     const router = useRouter();
 //     const { searchCategory, isLoading, errorMsg } = useCategory();
 //     const { pagination, resData, map } = useMap();
 
@@ -103,20 +101,19 @@ export default RestaurantList;
 //             {errorMsg && <div className={styles.error}>{errorMsg}</div>}
 
 //             {resData.map((res: ResponseType) => (
-//                 <ListBox
-//                     onClick={() => {
-//                         router.push(`/${res.id}`);
-//                     }}
-//                     key={res.id}
-//                     top={
-//                         <div className={styles.information}>
-//                             <Text typography="t4">{res.place_name}</Text>
-//                             <Text typography="st3">{res.road_address_name}</Text>
-//                             <Text typography="st3">{res.phone}</Text>
-//                         </div>
-//                     }
-//                     bottom={''}
-//                 />
+//                 <Link key={res.id} prefetch href={`/${res.id}`}>
+//                     <ListBox
+//                         key={res.id}
+//                         top={
+//                             <div className={styles.information}>
+//                                 <Text typography="t4">{res.place_name}</Text>
+//                                 <Text typography="st3">{res.road_address_name}</Text>
+//                                 <Text typography="st3">{res.phone}</Text>
+//                             </div>
+//                         }
+//                         bottom={''}
+//                     />
+//                 </Link>
 //             ))}
 
 //             <div ref={observerEl} />
