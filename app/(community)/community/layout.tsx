@@ -43,7 +43,7 @@ const CommunityLayout = ({ children }: { children: ReactNode }) => {
             </div>
             <div className={styles.controller}>
                 {CONTROLLER.map((button, idx) => (
-                    <Link key={idx} prefetch={true} href={`/${button.path}`}>
+                    <Link key={idx} prefetch={true} href={`${button.path}`} className={styles.button}>
                         <Button
                             size="sm"
                             className={idx === selected ? styles.selected : ''}
