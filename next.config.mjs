@@ -51,8 +51,6 @@ const nextConfig = {
                         compress: {
                             drop_console: true, // 콘솔 로그 제거
                         },
-                        mangle: true,
-                        extractComments: false,
                     },
                 }),
             ],
