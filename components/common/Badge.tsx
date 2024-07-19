@@ -16,7 +16,7 @@ const Badge = (props: Props) => {
         : { backgroundColor, color };
 
     return (
-        <span aria-label="badge" className={styles.badge} style={selectedStyle} {...rest}>
+        <span className={styles.badge} style={selectedStyle} {...rest}>
             {children}
         </span>
     );
