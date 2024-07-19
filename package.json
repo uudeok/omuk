@@ -4,8 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "next build",
-        "postbuild": "next-sitemap",
+        "build": "next build && next-sitemap",
         "start": "next start",
         "lint": "next lint",
         "gen-types": "supabase gen types typescript --linked > shared/types/supabase.ts"

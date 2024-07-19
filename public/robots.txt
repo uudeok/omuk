@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://omuk-beta.vercel.app
+
+# Sitemaps
+Sitemap: https://omuk-beta.vercel.app/sitemap.xml
