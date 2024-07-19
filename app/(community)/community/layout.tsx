@@ -10,6 +10,7 @@ import Text from '@/components/common/Text';
 import User from '../../../assets/user.svg';
 import Button from '@/components/common/Button';
 import { AuthContext } from '@/shared/context/AuthProvider';
+import Link from 'next/link';
 
 const CONTROLLER = [
     { key: '리뷰', path: '/community' },
@@ -42,17 +43,17 @@ const CommunityLayout = ({ children }: { children: ReactNode }) => {
             </div>
             <div className={styles.controller}>
                 {CONTROLLER.map((button, idx) => (
-                    <Button
-                        size="sm"
-                        key={idx}
-                        className={idx === selected ? styles.selected : ''}
-                        onClick={() => {
-                            setSelected(idx);
-                            router.push(`${button.path}`);
-                        }}
-                    >
-                        {button.key}
-                    </Button>
+                    <Link key={idx} prefetch={true} href={`/${button.path}`}>
+                        <Button
+                            size="sm"
+                            className={idx === selected ? styles.selected : ''}
+                            onClick={() => {
+                                setSelected(idx);
+                            }}
+                        >
+                            {button.key}
+                        </Button>
+                    </Link>
                 ))}
             </div>
             <main className={styles.content}>{children}</main>

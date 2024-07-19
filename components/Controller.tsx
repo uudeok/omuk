@@ -25,7 +25,7 @@ const Controller = () => {
                 내 페이지
             </Button>
 
-            <Link href="/community" prefetch>
+            <Link prefetch={true} href="/community">
                 <Button size="lg" role="round">
                     커뮤니티
                 </Button>
