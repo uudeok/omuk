@@ -1,4 +1,5 @@
 import TerserPlugin from 'terser-webpack-plugin';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
@@ -9,7 +10,7 @@ const nextConfig = {
                 pathname: '/upload/**',
             },
         ],
-        minimumCacheTTL: 60 * 60 * 24 * 7, // 1주일
+        minimumCacheTTL: 60 * 60 * 24, // 1일
         formats: ['image/avif', 'image/webp'], // AVIF와 WebP 포맷 지원
     },
     webpack: (config) => {
