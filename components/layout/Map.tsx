@@ -30,7 +30,7 @@ const Map = () => {
             setMap(map);
             setIsLoading(false);
         });
-    }, [curLocation]);
+    }, [curLocation, mapEl, setMap]);
 
     return (
         <>

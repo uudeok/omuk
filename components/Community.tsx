@@ -73,7 +73,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
     useEffect(() => {
         queryClient.resetQueries({ queryKey: ['paginatedTotalReview', searchKeyword] });
         setIsEnabled(false);
-    }, [path, queryClient]);
+    }, [path, queryClient, searchKeyword]);
 
     // custom handleObserver 생성 - ssr 초기 페이지땐 실행되지 않도록 구현
     const handleObserver = useCallback(
@@ -86,7 +86,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
                 setIsEnabled(false);
             }
         },
-        [isEnabled, hasNextPage, isFetchingNextPage, fetchNextPage, searchKeyword]
+        [isEnabled, hasNextPage, isFetchingNextPage, fetchNextPage]
     );
 
     const { observerEl } = useInfiniteScroll({
