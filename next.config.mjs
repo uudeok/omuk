@@ -21,40 +21,44 @@ const nextConfig = {
         });
 
         // 코드 스플리팅 및 지연 로딩 최적화
-        // config.optimization.splitChunks = {
-        //     chunks: 'all',
-        //     cacheGroups: {
-        //         default: false,
-        //         vendors: {
-        //             test: /[\\/]node_modules[\\/]/,
-        //             name: 'vendors',
-        //             chunks: 'all',
-        //             priority: -10,
-        //         },
-        //         default: {
-        //             minChunks: 2,
-        //             priority: -20,
-        //             reuseExistingChunk: true,
-        //         },
-        //     },
-        // };
+        config.optimization.splitChunks = {
+            chunks: 'all',
+            cacheGroups: {
+                default: false,
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                    priority: -10,
+                },
+                default: {
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                },
+            },
+        };
 
         // 트리 쉐이킹 활성화
-        // config.optimization.usedExports = true;
+        config.optimization.usedExports = true;
 
         // 자바스크립트 최적화
-        // config.optimization = {
-        //     minimize: true,
-        //     minimizer: [
-        //         new TerserPlugin({
-        //             terserOptions: {
-        //                 compress: {
-        //                     drop_console: true, // 콘솔 로그 제거
-        //                 },
-        //             },
-        //         }),
-        //     ],
-        // };
+        config.optimization.minimize = true;
+        config.optimization.minimizer = [
+            new TerserPlugin({
+                terserOptions: {
+                    compress: {
+                        drop_console: true, // 콘솔 로그 제거
+                        drop_debugger: true, // 디버거 제거
+                    },
+                    mangle: true, // 변수 및 함수 이름 압축
+                    output: {
+                        comments: false, // 주석 제거
+                    },
+                },
+                extractComments: false, // 주석 추출 비활성화
+            }),
+        ];
 
         return config;
     },
