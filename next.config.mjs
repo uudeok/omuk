@@ -43,22 +43,20 @@ const nextConfig = {
         config.optimization.usedExports = true;
 
         // 자바스크립트 최적화
-        config.optimization.minimize = true;
-        config.optimization.minimizer = [
-            new TerserPlugin({
-                terserOptions: {
-                    compress: {
-                        drop_console: true, // 콘솔 로그 제거
-                        drop_debugger: true, // 디버거 제거
+        config.optimization = {
+            minimize: true,
+            minimizer: [
+                new TerserPlugin({
+                    terserOptions: {
+                        compress: {
+                            drop_console: true, // 콘솔 로그 제거
+                        },
+                        mangle: true,
+                        extractComments: false,
                     },
-                    mangle: true, // 변수 및 함수 이름 압축
-                    output: {
-                        comments: false, // 주석 제거
-                    },
-                },
-                extractComments: false, // 주석 추출 비활성화
-            }),
-        ];
+                }),
+            ],
+        };
 
         return config;
     },
