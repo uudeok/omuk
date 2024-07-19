@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
+        "postbuild": "next-sitemap",
         "start": "next start",
         "lint": "next lint",
         "gen-types": "supabase gen types typescript --linked > shared/types/supabase.ts"
@@ -26,6 +27,7 @@
         "git-filter-repo": "^0.0.30",
         "lodash": "^4.17.21",
         "next": "14.2.3",
+        "next-sitemap": "^4.2.3",
         "react": "^18",
         "react-dom": "^18",
         "react-kakao-maps-sdk": "^1.1.26",
