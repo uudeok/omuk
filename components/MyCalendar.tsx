@@ -2,8 +2,7 @@
 
 import styles from '../styles/components/mycalendar.module.css';
 import dayjs from 'dayjs';
-import AngleRight from '../assets/angle-right.svg';
-import AngleLeft from '../assets/angle-left.svg';
+import Icons from './common/Icons';
 import { useState } from 'react';
 import Text from './common/Text';
 import { useCalendar } from '@/hooks';
@@ -37,13 +36,13 @@ const MyCalendar = () => {
             <div className={styles.calendar}>
                 <div className={styles.header}>
                     <div className={styles.controller} onClick={prevController}>
-                        <AngleLeft width={15} />
+                        <Icons.AngleLeft width={15} />
                     </div>
                     <div className={styles.monthLabel}>
                         {curYear}년 {curMonth + 1}월
                     </div>
                     <div className={styles.controller} onClick={nextController}>
-                        <AngleRight width={15} />
+                        <Icons.AngleRight width={15} />
                     </div>
                 </div>
 

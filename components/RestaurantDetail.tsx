@@ -11,16 +11,9 @@ import Text from './common/Text';
 import Button from './common/Button';
 import { makeAdress, maskUsername } from '@/shared/utils';
 import { getPreviewReviewData, getReviewData } from '@/services/reviewService';
-import Hastag from '../assets/hashtag.svg';
-import Clock from '../assets/clock.svg';
-import Position from '../assets/position.svg';
-import Menu from '../assets/menu.svg';
-import ArrowRight from '../assets/right-arrow.svg';
+import Icons from './common/Icons';
 import Badge from './common/Badge';
-import Comment from '../assets/comment.svg';
 import Bookmark from './common/Bookmark';
-import Star from '../assets/star.svg';
-import Search from '../assets/search.svg';
 import LoadingBar from './common/LoadingBar';
 import { useContext, useState } from 'react';
 import { AuthContext } from '@/shared/context/AuthProvider';
@@ -84,7 +77,7 @@ const RestaurantDetail = ({ resData, res_id }: Props) => {
                     <ListRow
                         left={
                             <div>
-                                <Star width={15} />
+                                <Icons.Star width={15} />
                                 <Text typography="st3">즐겨찾기</Text>
                             </div>
                         }
@@ -98,7 +91,7 @@ const RestaurantDetail = ({ resData, res_id }: Props) => {
                     <ListRow
                         left={
                             <div>
-                                <Clock width={15} />
+                                <Icons.Clock width={15} />
                                 <Text typography="st3">영업시간</Text>
                             </div>
                         }
@@ -133,7 +126,7 @@ const RestaurantDetail = ({ resData, res_id }: Props) => {
                     <ListRow
                         left={
                             <div>
-                                <Position width={15} />
+                                <Icons.Position width={15} />
                                 <Text typography="st3">위치</Text>
                             </div>
                         }
@@ -147,7 +140,7 @@ const RestaurantDetail = ({ resData, res_id }: Props) => {
                     <ListRow
                         left={
                             <div>
-                                <Hastag width={15} />
+                                <Icons.Hastag width={15} />
                                 <Text typography="st3">태그</Text>
                             </div>
                         }
@@ -166,13 +159,13 @@ const RestaurantDetail = ({ resData, res_id }: Props) => {
                     <ListRow
                         left={
                             <div>
-                                <Menu width={15} />
+                                <Icons.Menu width={15} />
                                 <Text typography="st3">메뉴보기</Text>
                             </div>
                         }
                         right={
                             <div onClick={() => setMenu()} className={styles.menuBtn}>
-                                <ArrowRight width={9} />
+                                <Icons.ArrowRight width={9} />
                                 <Text typography="st4">메뉴 상세보기</Text>
                             </div>
                         }
@@ -201,7 +194,7 @@ const RestaurantDetail = ({ resData, res_id }: Props) => {
                     <ListRow
                         left={
                             <div>
-                                <Comment width={15} />
+                                <Icons.Comment width={15} />
                                 <Text typography="st3">나의 후기</Text>
                             </div>
                         }
@@ -231,7 +224,7 @@ const RestaurantDetail = ({ resData, res_id }: Props) => {
                     <ListRow
                         left={
                             <div>
-                                <Search width={15} />
+                                <Icons.Search width={15} />
                                 <Text typography="st3">후기 보기</Text>
                             </div>
                         }

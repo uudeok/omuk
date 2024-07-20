@@ -9,7 +9,7 @@ import List, { ListBox } from './common/List';
 import Rating from './common/Rating';
 import { COMPANION } from '@/constants';
 import Button from './common/Button';
-import Pencil from '../assets/pencil.svg';
+import Icons from './common/Icons';
 
 type Props = {
     reviewList: ReviewType[];
@@ -35,7 +35,7 @@ const Review = ({ reviewList }: Props) => {
                             <Text typography="st3">{COMPANION[`${review.companions}`]}</Text>
                             <div className={styles.comment}>
                                 <Text typography="st3">
-                                    <Pencil width={15} /> {review.content}
+                                    <Icons.Pencil width={15} /> {review.content}
                                 </Text>
                             </div>
                             <Button size="sm" role="none" onClick={() => router.push(`/${review.res_id}`)}>

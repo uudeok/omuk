@@ -2,7 +2,7 @@
 
 import styles from '../../styles/ui/alertModal.module.css';
 import Button from '../common/Button';
-import Caution from '../../assets/caution.svg';
+import Icons from '../common/Icons';
 import { useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
 
@@ -29,7 +29,7 @@ const AlertModal = ({ onClose, redirectPath, top, middle, bottom }: Props) => {
     return (
         <div className={styles.layout}>
             <div className={styles.header}>
-                <Caution width={35} />
+                <Icons.Caution width={35} />
             </div>
             <ul className={styles.content}>
                 <li>

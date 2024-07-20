@@ -1,7 +1,6 @@
 import styles from '../../styles/common/rate.module.css';
 import { SetStateAction, Dispatch } from 'react';
-import FillStar from '../../assets/fillStar.svg';
-import GreyStar from '../../assets/greyStar.svg';
+import Icons from './Icons';
 
 type RatingType = {
     ratingIndex: number;
@@ -15,14 +14,14 @@ const Rating = ({ ratingIndex, setRatingIndex }: RatingType) => {
         <div className={styles.rate}>
             {rateArray.map((rate, index) =>
                 rate <= ratingIndex ? (
-                    <FillStar
+                    <Icons.FillStar
                         width={25}
                         key={`rating_${index}`}
                         className={styles.fillStar}
                         onClick={() => setRatingIndex(rate)}
                     />
                 ) : (
-                    <GreyStar
+                    <Icons.GreyStar
                         width={25}
                         key={`rating_${index}`}
                         className={styles.star}

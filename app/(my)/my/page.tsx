@@ -4,8 +4,7 @@ import styles from '../../../styles/pages/mypage.module.css';
 import { useRouter } from 'next/navigation';
 import List, { ListRow } from '@/components/common/List';
 import Text from '@/components/common/Text';
-import FillStar from '../../../assets/fillStar.svg';
-import Pencil from '../../../assets/pencil.svg';
+import Icons from '@/components/common/Icons';
 import { getBookmarkTotalRows } from '@/services/bookmarkService';
 import { useQueries } from '@tanstack/react-query';
 import { getReviewTotalReviews } from '@/services/reviewService';
@@ -51,7 +50,7 @@ const MyPage = () => {
                         onClick={() => router.push('/my/bookmark')}
                         left={
                             <div>
-                                <FillStar width={20} />
+                                <Icons.FillStar width={20} />
                                 <Text typography="st3">즐겨찾기</Text>
                             </div>
                         }
@@ -61,7 +60,7 @@ const MyPage = () => {
                         onClick={() => router.push('/my/review')}
                         left={
                             <div>
-                                <Pencil width={20} />
+                                <Icons.Pencil width={20} />
                                 <Text typography="st3">나의 리뷰</Text>
                             </div>
                         }

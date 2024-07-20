@@ -1,7 +1,6 @@
 'use client';
 
-import NonBookmark from '../../assets/nonBookmark.svg';
-import FillBookmark from '../../assets/bookmark.svg';
+import Icons from './Icons';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getBookmark, deleteBookmark, postBookmark } from '@/services/bookmarkService';
 import { useContext, useState } from 'react';
@@ -55,7 +54,7 @@ const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
 
     return (
         <div onClick={handleBookmarkToggle}>
-            {bookmark && bookmark.length > 0 ? <FillBookmark width={17} /> : <NonBookmark width={17} />}
+            {bookmark && bookmark.length > 0 ? <Icons.FillBookmark width={17} /> : <Icons.NonBookmark width={17} />}
         </div>
     );
 };

@@ -9,8 +9,7 @@ import List, { ListRow } from './common/List';
 import Text from './common/Text';
 import Slider from 'react-slick';
 import Avatar from './common/Avatar';
-import Heart from '../assets/heart.svg';
-import FillHeart from '../assets/fillHeart.svg';
+import Icons from './common/Icons';
 import { useRouter } from 'next/navigation';
 import { addReviewLike, removeReviewLike } from '@/services/reviewLikeService';
 import { CommunityReviewType } from '@/services/reviewService';
@@ -79,7 +78,7 @@ const ReviewCard = ({ list }: Props) => {
                         left={
                             <div className={styles.like}>
                                 <div onClick={() => handleReviewLike(list.id)}>
-                                    {likedByUser ? <FillHeart width={22} /> : <Heart width={22} />}
+                                    {likedByUser ? <Icons.FillHeart width={22} /> : <Icons.Heart width={22} />}
                                 </div>
                                 <Text typography="st3">좋아요 {likeCount}개</Text>
                             </div>

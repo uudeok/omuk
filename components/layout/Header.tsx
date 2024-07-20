@@ -3,7 +3,7 @@
 import styles from '../../styles/layouts/header.module.css';
 import { useRouter } from 'next/navigation';
 import List, { ListRow } from '../common/List';
-import Utensils from '../../assets/utensils.svg';
+import Icons from '../common/Icons';
 import Text from '../common/Text';
 import { signOut } from '@/shared/utils';
 import { useContext } from 'react';
@@ -28,7 +28,7 @@ const Header = () => {
                 <ListRow
                     left={
                         <div onClick={() => (window.location.href = '/')}>
-                            <Utensils width={18} />
+                            <Icons.Utensils width={18} />
                             <Text typography="t4">MUKIROK</Text>
                         </div>
                     }

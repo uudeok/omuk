@@ -7,7 +7,7 @@ import Slide from '@/components/layout/Slide';
 import Avatar from '@/components/common/Avatar';
 import { ProfileType } from '@/services/userService';
 import Text from '@/components/common/Text';
-import User from '../../../assets/user.svg';
+import Icons from '../../../components/common/Icons';
 import Button from '@/components/common/Button';
 import { AuthContext } from '@/shared/context/AuthProvider';
 import Link from 'next/link';
@@ -36,7 +36,7 @@ const CommunityLayout = ({ children }: { children: ReactNode }) => {
                     <Avatar profile={profile} />
                 ) : (
                     <div className={styles.user} onClick={() => router.push('/login')}>
-                        <User width={30} />
+                        <Icons.User width={30} />
                         <Text typography="t4">로그인 해주세요</Text>
                     </div>
                 )}

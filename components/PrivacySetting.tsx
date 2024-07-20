@@ -3,7 +3,7 @@
 import styles from '../styles/components/privacySetting.module.css';
 import List, { ListRow } from './common/List';
 import Text from './common/Text';
-import Setting from '../assets/setting.svg';
+import Icons from './common/Icons';
 import { useState, useEffect } from 'react';
 import ToggleSwitch from './common/ToggleSwitch';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -87,7 +87,7 @@ const PrivacySetting = () => {
                 <ListRow
                     left={
                         <div className={styles.title}>
-                            <Setting width={20} />
+                            <Icons.Setting width={20} />
                             <Text typography="t5">설정</Text>
                         </div>
                     }

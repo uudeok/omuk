@@ -8,8 +8,7 @@ import { useBoolean, useInput, useS3FileUpload } from '@/hooks';
 import Text from '@/components/common/Text';
 import Badge from '@/components/common/Badge';
 import Button from './common/Button';
-import FillStar from '../assets/fillStar.svg';
-import Pencil from '../assets/pencil.svg';
+import Icons from './common/Icons';
 import Input from './common/Input';
 import InputBase from './common/InputBase';
 import Rating from './common/Rating';
@@ -269,7 +268,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
                         <ListRow
                             left={
                                 <div>
-                                    <FillStar width={20} />
+                                    <Icons.FillStar width={20} />
                                     <Text typography="t5">별점</Text>
                                 </div>
                             }
@@ -283,7 +282,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
                         <ListRow
                             left={
                                 <div>
-                                    <Pencil width={20} />
+                                    <Icons.Pencil width={20} />
                                     <Text typography="t5">한줄평</Text>
                                 </div>
                             }
