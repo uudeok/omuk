@@ -1,8 +1,7 @@
 import { createClient } from '@/shared/lib/supabase/brower-client';
 import { ProfileType } from './userService';
 import { ReviewLikesType } from './reviewLikeService';
-import { ExposeType, getFollowerUserIds } from './followService';
-import _ from 'lodash';
+import { getFollowerUserIds } from './followService';
 import { ResponseType } from '@/shared/types';
 
 export type ReviewType = {
@@ -332,6 +331,10 @@ export const getFollowerReviewsWithImages = async (
     return reviewsWithLikes;
 };
 
+interface ReviewImage {
+    images_url: string[]; // 또는 다른 타입으로 수정 필요
+}
+
 // res detail 폼에서 리뷰 보여주기 갯수를 변수로 두기
 export const getPreviewReviewData = async (res_id: string): Promise<CommunityReviewType[]> => {
     const supabase = createClient();
@@ -355,7 +358,7 @@ export const getPreviewReviewData = async (res_id: string): Promise<CommunityRev
 
     const processedData = data.map((review) => ({
         ...review,
-        images_url: _.flatMap(review.review_images, 'images_url'),
+        images_url: review.review_images.flatMap((imageObj: ReviewImage) => imageObj.images_url),
     }));
 
     return processedData;

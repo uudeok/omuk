@@ -4,7 +4,6 @@ import styles from '../styles/components/reviewCard.module.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import dayjs from 'dayjs';
-import _ from 'lodash';
 import { useState } from 'react';
 import List, { ListRow } from './common/List';
 import Text from './common/Text';
@@ -16,7 +15,6 @@ import { useRouter } from 'next/navigation';
 import { addReviewLike, removeReviewLike } from '@/services/reviewLikeService';
 import { CommunityReviewType } from '@/services/reviewService';
 import Image from 'next/image';
-import NoImage from '../public/noimage.png';
 
 type Props = {
     list: CommunityReviewType;
@@ -27,7 +25,7 @@ const ReviewCard = ({ list }: Props) => {
     const [likeCount, setLikeCount] = useState<number>(list.review_likes?.length || 0);
 
     const router = useRouter();
-    const flattenedImages = _.flatten(list.review_images?.map((imageObj) => imageObj.images_url));
+    const flattenedImages = list.review_images?.map((imageObj) => imageObj.images_url).flat();
     const hasImage = list.review_images && list.review_images.length > 0;
 
     const visitedDate = dayjs(list.visitDate).format('YYYY-MM-DD');

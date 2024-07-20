@@ -1,6 +1,6 @@
 import TerserPlugin from 'terser-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import withBundleAnalyzer from '@next/bundle-analyzer';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -15,6 +15,8 @@ const nextConfig = {
         minimumCacheTTL: 60 * 60 * 24, // 1일
         formats: ['image/avif', 'image/webp'], // AVIF와 WebP 포맷 지원
     },
+
+    swcMinify: true,
 
     webpack: (config) => {
         // SVG 로더 추가
@@ -60,36 +62,12 @@ const nextConfig = {
             ],
         };
 
-        // BundleAnalyzerPlugin 활성화 (옵션)
-        if (process.env.ANALYZE === 'true') {
-            config.plugins.push(new BundleAnalyzerPlugin());
-        }
-
         return config;
     },
 };
 
-export default nextConfig;
-
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {
-//     images: {
-//         remotePatterns: [
-//             {
-//                 protocol: 'https',
-//                 hostname: 's3-omuk-images.s3.ap-northeast-2.amazonaws.com',
-//                 pathname: '/upload/**',
-//             },
-//         ],
-//     },
-//     webpack: (config) => {
-//         config.module.rules.push({
-//             test: /\.svg$/,
-//             use: ['@svgr/webpack'],
-//         });
-
-//         return config;
-//     },
-// };
-
-// export default nextConfig;
+// BundleAnalyzerPlugin 활성화 (옵션)
+export default withBundleAnalyzer({
+    enabled: process.env.ANALYZE === 'true',
+    openAnalyzer: true,
+})(nextConfig);

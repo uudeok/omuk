@@ -3,7 +3,6 @@
 import styles from '../styles/components/restaurantDetail.module.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import _ from 'lodash';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useBoolean } from '@/hooks';
