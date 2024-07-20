@@ -1,5 +1,6 @@
 import TerserPlugin from 'terser-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -14,6 +15,7 @@ const nextConfig = {
         minimumCacheTTL: 60 * 60 * 24, // 1일
         formats: ['image/avif', 'image/webp'], // AVIF와 WebP 포맷 지원
     },
+
     webpack: (config) => {
         // SVG 로더 추가
         config.module.rules.push({
@@ -40,6 +42,9 @@ const nextConfig = {
             },
         };
 
+        // 트리 쉐이킹 활성화
+        config.optimization.usedExports = true;
+
         // 자바스크립트 최적화
         config.optimization = {
             minimize: true,
@@ -54,6 +59,11 @@ const nextConfig = {
                 }),
             ],
         };
+
+        // BundleAnalyzerPlugin 활성화 (옵션)
+        if (process.env.ANALYZE === 'true') {
+            config.plugins.push(new BundleAnalyzerPlugin());
+        }
 
         return config;
     },
