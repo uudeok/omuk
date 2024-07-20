@@ -22,11 +22,7 @@ import EmptyState from './common/EmptyState';
 import Badge from './common/Badge';
 import { BUTTON_TO_FEEDBACK } from '@/constants';
 import LoadingBar from './common/LoadingBar';
-import dynamic from 'next/dynamic';
-
-const Slider = dynamic(() => import('react-slick'), {
-    ssr: false, // Load only on client-side
-});
+import Slider from 'react-slick';
 
 type Props = {
     totalReviews: number;

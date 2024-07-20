@@ -24,8 +24,12 @@ import { AuthContext } from '@/shared/context/AuthProvider';
 import Spinner from './common/Spinner';
 import dynamic from 'next/dynamic';
 
-const AlertModal = dynamic(() => import('@/components/modal/AlertModal'));
-const CalendarModal = dynamic(() => import('@/components/modal/CalendarModal'));
+const AlertModal = dynamic(() => import('@/components/modal/AlertModal'), {
+    ssr: false,
+});
+const CalendarModal = dynamic(() => import('@/components/modal/CalendarModal'), {
+    ssr: false,
+});
 
 const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) => {
     const session = useContext(AuthContext);

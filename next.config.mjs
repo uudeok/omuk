@@ -15,6 +15,14 @@ const nextConfig = {
     },
 
     swcMinify: true, // SWC를 사용하여 자바스크립트 및 타입스크립트 파일 압축
+    compiler: {
+        removeConsole: {
+            exclude: ['error'],
+        },
+    },
+    experimental: {
+        scrollRestoration: true,
+    },
 
     webpack: (config) => {
         // SVG 로더 추가
