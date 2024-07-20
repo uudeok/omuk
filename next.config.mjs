@@ -1,5 +1,3 @@
-import TerserPlugin from 'terser-webpack-plugin';
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 
 /** @type {import('next').NextConfig} */
@@ -16,7 +14,7 @@ const nextConfig = {
         formats: ['image/avif', 'image/webp'], // AVIF와 WebP 포맷 지원
     },
 
-    swcMinify: true,
+    swcMinify: true, // SWC를 사용하여 자바스크립트 및 타입스크립트 파일 압축
 
     webpack: (config) => {
         // SVG 로더 추가
@@ -44,29 +42,11 @@ const nextConfig = {
             },
         };
 
-        // 트리 쉐이킹 활성화
-        config.optimization.usedExports = true;
-
-        // 자바스크립트 최적화
-        config.optimization = {
-            minimize: true,
-            minimizer: [
-                new CssMinimizerPlugin(),
-                new TerserPlugin({
-                    terserOptions: {
-                        compress: {
-                            drop_console: true, // 콘솔 로그 제거
-                        },
-                    },
-                }),
-            ],
-        };
-
         return config;
     },
 };
 
-// BundleAnalyzerPlugin 활성화 (옵션)
+// BundleAnalyzerPlugin 활성화
 export default withBundleAnalyzer({
     enabled: process.env.ANALYZE === 'true',
     openAnalyzer: true,
