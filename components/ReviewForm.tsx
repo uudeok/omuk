@@ -18,12 +18,14 @@ import { FeedBackItem } from '@/shared/types';
 import { deleteReview, getReviewData, postReview, updateReview } from '@/services/reviewService';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Modal from './common/Modal';
-import CalendarModal from './modal/CalendarModal';
 import { initializeDate } from '@/shared/utils';
 import { getImageData, updateImages, uploadImages } from '@/services/imageService';
 import { AuthContext } from '@/shared/context/AuthProvider';
 import Spinner from './common/Spinner';
-import AlertModal from './modal/AlertModal';
+import dynamic from 'next/dynamic';
+
+const AlertModal = dynamic(() => import('@/components/modal/AlertModal'));
+const CalendarModal = dynamic(() => import('@/components/modal/CalendarModal'));
 
 const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) => {
     const session = useContext(AuthContext);

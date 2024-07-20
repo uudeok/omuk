@@ -45,6 +45,7 @@
         "eslint-config-next": "14.2.3",
         "kakao.maps.d.ts": "^0.1.39",
         "supabase": "^1.172.2",
+        "swc-minify-webpack-plugin": "^2.1.2",
         "terser-webpack-plugin": "^5.3.10",
         "typescript": "^5"
     }
