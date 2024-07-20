@@ -42,7 +42,6 @@ const nextConfig = {
 
         // 자바스크립트 최적화
         config.optimization = {
-            usedExports: true,
             minimize: true,
             minimizer: [
                 new CssMinimizerPlugin(),
