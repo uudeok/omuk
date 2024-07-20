@@ -1,4 +1,5 @@
 import TerserPlugin from 'terser-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -39,13 +40,12 @@ const nextConfig = {
             },
         };
 
-        // 트리 쉐이킹 활성화
-        config.optimization.usedExports = true;
-
         // 자바스크립트 최적화
         config.optimization = {
+            usedExports: true,
             minimize: true,
             minimizer: [
+                new CssMinimizerPlugin(),
                 new TerserPlugin({
                     terserOptions: {
                         compress: {
