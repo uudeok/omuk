@@ -20,8 +20,8 @@ import { AuthContext } from '@/shared/context/AuthProvider';
 import EmptyState from './common/EmptyState';
 import Rating from './common/Rating';
 import dayjs from 'dayjs';
-import Slider from 'react-slick';
 import Image from 'next/image';
+import Slider from 'react-slick';
 
 type Props = {
     resData: any;

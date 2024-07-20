@@ -42,6 +42,9 @@ const nextConfig = {
             },
         };
 
+        // 트리 쉐이킹 활성화
+        config.optimization.usedExports = true;
+
         return config;
     },
 };

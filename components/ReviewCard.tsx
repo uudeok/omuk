@@ -7,13 +7,13 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import List, { ListRow } from './common/List';
 import Text from './common/Text';
-import Slider from 'react-slick';
 import Avatar from './common/Avatar';
 import Icons from './common/Icons';
 import { useRouter } from 'next/navigation';
 import { addReviewLike, removeReviewLike } from '@/services/reviewLikeService';
 import { CommunityReviewType } from '@/services/reviewService';
 import Image from 'next/image';
+import Slider from 'react-slick';
 
 type Props = {
     list: CommunityReviewType;
