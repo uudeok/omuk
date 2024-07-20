@@ -1,5 +1,4 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
-import { SwcMinifyWebpackPlugin } from 'swc-minify-webpack-plugin';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -16,6 +15,14 @@ const nextConfig = {
     },
 
     swcMinify: true, // SWC를 사용하여 자바스크립트 및 타입스크립트 파일 압축
+    compiler: {
+        removeConsole: {
+            exclude: ['error'],
+        },
+    },
+    experimental: {
+        scrollRestoration: true,
+    },
 
     webpack: (config) => {
         // SVG 로더 추가
@@ -45,14 +52,6 @@ const nextConfig = {
 
         // 트리 쉐이킹 활성화
         config.optimization.usedExports = true;
-
-        // SWC Minify 플러그인 추가
-        config.optimization.minimizer.push(
-            new SwcMinifyWebpackPlugin({
-                compress: true, // 기본값: true
-                mangle: true, // 기본값: true
-            })
-        );
 
         return config;
     },
