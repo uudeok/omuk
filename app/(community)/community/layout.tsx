@@ -43,17 +43,17 @@ const CommunityLayout = ({ children }: { children: ReactNode }) => {
             </div>
             <div className={styles.controller}>
                 {CONTROLLER.map((button, idx) => (
-                    <Link key={idx} prefetch={true} href={`${button.path}`} className={styles.button}>
-                        <Button
-                            size="sm"
-                            className={idx === selected ? styles.selected : ''}
-                            onClick={() => {
-                                setSelected(idx);
-                            }}
-                        >
-                            {button.key}
-                        </Button>
-                    </Link>
+                    <Button
+                        key={idx}
+                        size="sm"
+                        className={idx === selected ? styles.selected : ''}
+                        onClick={() => {
+                            router.push(`${button.path}`);
+                            setSelected(idx);
+                        }}
+                    >
+                        {button.key}
+                    </Button>
                 ))}
             </div>
             <main className={styles.content}>{children}</main>
@@ -62,3 +62,17 @@ const CommunityLayout = ({ children }: { children: ReactNode }) => {
 };
 
 export default CommunityLayout;
+
+{
+    /* <Link key={idx} prefetch={true} href={`${button.path}`} className={styles.button}>
+<Button
+    size="sm"
+    className={idx === selected ? styles.selected : ''}
+    onClick={() => {
+        setSelected(idx);
+    }}
+>
+    {button.key}
+</Button>
+</Link> */
+}
