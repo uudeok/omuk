@@ -1,8 +1,8 @@
-import Community from '@/components/Community';
 import { createClient } from '@/shared/lib/supabase/server-client';
 import { CommunityReviewType } from '@/services/reviewService';
 import { Suspense } from 'react';
 import { generateSkeletonCards } from '@/shared/utils';
+import dynamic from 'next/dynamic';
 
 // STEP1. 'public' 으로 설정한 유저의 리뷰 총 갯수를 가져온다.
 const getReviewTotalRows = async () => {
@@ -61,6 +61,8 @@ const fetchReviewsWithImages = async (pageParam: number, pageSize: number): Prom
     return reviewsWithLikes;
 };
 
+const CommunintyComponent = dynamic(() => import('@/components/Community'), { ssr: false });
+
 const CommunityPage = async () => {
     const initalPage = 0;
     const pageSize = 10;
@@ -69,7 +71,7 @@ const CommunityPage = async () => {
 
     return (
         <Suspense fallback={generateSkeletonCards(5)}>
-            <Community totalReviews={totalReviews} initalReviews={initalReviews} />
+            <CommunintyComponent totalReviews={totalReviews} initalReviews={initalReviews} />
         </Suspense>
     );
 };

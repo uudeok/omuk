@@ -10,7 +10,6 @@ import Text from '@/components/common/Text';
 import Icons from '../../../components/common/Icons';
 import Button from '@/components/common/Button';
 import { AuthContext } from '@/shared/context/AuthProvider';
-import Link from 'next/link';
 
 const CONTROLLER = [
     { key: '리뷰', path: '/community' },

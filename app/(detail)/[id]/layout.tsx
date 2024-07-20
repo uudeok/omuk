@@ -5,21 +5,13 @@ import Text from '@/components/common/Text';
 import List, { ListRow } from '@/components/common/List';
 import { ParamType } from '@/shared/types';
 import { getMetadata, calculateScore } from '@/shared/utils';
+import { getDetail } from './page';
 
 type PropsType = {
     children: ReactNode;
     params: {
         id: string;
     };
-};
-
-const getDetail = async (id: string) => {
-    const response = await fetch(`https://place.map.kakao.com/m/main/v/${id}/`);
-
-    if (!response.ok) {
-        throw new Error('데이터 가져오기 실패');
-    }
-    return response.json();
 };
 
 export const generateMetadata = async ({ params: { id } }: ParamType) => {
