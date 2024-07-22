@@ -1,0 +1,13 @@
+{
+    "headers": [
+        {
+            "source": "/[id].tsx",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "s-maxage=3600, stale-while-revalidate=0"
+                }
+            ]
+        }
+    ]
+}
