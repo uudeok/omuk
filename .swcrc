@@ -5,6 +5,7 @@
             "jsx": false,
             "dynamicImport": false,
             "privateMethod": true,
+            "classPrivateProperty": true,
             "functionBind": false,
             "exportDefaultFrom": false,
             "exportNamespaceFrom": false,
