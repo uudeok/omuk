@@ -1,6 +1,4 @@
 import './global.css';
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 import Script from 'next/script';
 import MapProvider from '@/shared/context/MapProvider';
 import ReactQueryProvider from '@/shared/context/ReactQueryProvider';
