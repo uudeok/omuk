@@ -159,7 +159,7 @@ const Community = () => {
                 )
             )}
 
-            {!isPending && reviewList.length === 0 && <EmptyState label="아직 리뷰가 없어용😅" />}
+            {session && !isPending && reviewList.length === 0 && <EmptyState label="아직 리뷰가 없어용😅" />}
         </div>
     );
 };
