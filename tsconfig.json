@@ -20,7 +20,8 @@
         "types": ["kakao.maps.d.ts"],
         "paths": {
             "@/*": ["./*"]
-        }
+        },
+        "target": "es5"
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "constants/s"],
     "exclude": ["node_modules"]

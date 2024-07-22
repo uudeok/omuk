@@ -14,7 +14,7 @@ import {
     getFollowReviewTotalRows,
 } from '@/services/reviewService';
 import List from './common/List';
-import { getTotalPages } from '@/shared/utils';
+import { generateSkeletonCards, getTotalPages } from '@/shared/utils';
 import { useInfiniteScroll } from '@/hooks';
 import ReviewCard from './ReviewCard';
 import { usePathname } from 'next/navigation';
@@ -50,7 +50,9 @@ const Community = () => {
     });
 
     useEffect(() => {
-        setTotalPage(getTotalPages(totalRow, PAGE_SIZE));
+        if (totalRow !== undefined) {
+            setTotalPage(getTotalPages(totalRow, PAGE_SIZE));
+        }
     }, [totalRow]);
 
     const {
@@ -106,13 +108,9 @@ const Community = () => {
         }
     };
 
-    const handleBeforeChange = useCallback(() => {
-        setIsDragging(true);
-    }, []);
+    const handleBeforeChange = useCallback(() => setIsDragging(true), []);
 
-    const handleAfterChange = useCallback(() => {
-        setIsDragging(false);
-    }, []);
+    const handleAfterChange = useCallback(() => setIsDragging(false), []);
 
     const settings = {
         infinite: false,

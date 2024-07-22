@@ -1,4 +1,5 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
+import withSwc from '@swc/core';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
