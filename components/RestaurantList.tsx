@@ -9,12 +9,10 @@ import { useEffect } from 'react';
 import { ResponseType } from '@/shared/types';
 import LoadingBar from './common/LoadingBar';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 const RestaurantList = () => {
     const { searchCategory, isLoading, errorMsg } = useCategory();
     const { pagination, resData, map } = useMap();
-    const router = useRouter();
 
     useEffect(() => {
         const { kakao } = window;
@@ -41,20 +39,19 @@ const RestaurantList = () => {
 
             <List>
                 {resData.map((res: ResponseType) => (
-                    // <Link key={res.id} prefetch={true} href={`/${res.id}`}>
-                    <ListBox
-                        key={res.id}
-                        onClick={() => router.push(`/${res.id}`)}
-                        top={
-                            <div className={styles.information}>
-                                <Text typography="t4">{res.place_name}</Text>
-                                <Text typography="st3">{res.road_address_name}</Text>
-                                <Text typography="st3">{res.phone}</Text>
-                            </div>
-                        }
-                        bottom={''}
-                    />
-                    // </Link>
+                    <Link key={res.id} prefetch={true} href={`/${res.id}`}>
+                        <ListBox
+                            top={
+                                <div className={styles.information}>
+                                    <Text typography="t4">{res.place_name}</Text>
+                                    <Text typography="st3">{res.road_address_name}</Text>
+                                    <Text typography="st3">{res.phone}</Text>
+                                </div>
+                            }
+                            bottom={''}
+                        />
+                        //{' '}
+                    </Link>
                 ))}
             </List>
             <div ref={observerEl} />
