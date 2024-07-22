@@ -1,11 +1,10 @@
 'use client';
 
 import Modal from '@/components/common/Modal';
-import { useBoolean } from '@/hooks';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useBoolean, useDeviceType } from '@/hooks';
 import Text from '@/components/common/Text';
 import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
 
 const AlertModal = dynamic(() => import('@/components/modal/AlertModal'), {
     ssr: false,
@@ -14,17 +13,14 @@ const AlertModal = dynamic(() => import('@/components/modal/AlertModal'), {
 // mobile 로 접속 시 앱 준비중 모달 안내
 
 const HomePage = () => {
-    const router = useRouter();
+    const isMobile = useDeviceType();
     const { value: isOpen, setTrue: openModal, setFalse: closeModal } = useBoolean();
 
     useEffect(() => {
-        const userAgent = typeof window.navigator === 'undefined' ? '' : navigator.userAgent;
-        const mobileDevice = /Mobi|Android/i.test(userAgent);
-
-        if (mobileDevice) {
+        if (isMobile) {
             openModal();
-        } else return;
-    }, [openModal]);
+        }
+    }, [isMobile, openModal]);
 
     return (
         <Modal isOpen={isOpen} onClose={closeModal} showCloseButton={false}>

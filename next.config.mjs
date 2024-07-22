@@ -3,6 +3,7 @@ import withBundleAnalyzer from '@next/bundle-analyzer';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     swcMinify: true,
+
     images: {
         remotePatterns: [
             {
@@ -22,6 +23,10 @@ const nextConfig = {
         });
 
         return config;
+    },
+
+    experimental: {
+        scrollRestoration: true, // 페이지 탐색 시 스크롤 위치 자동 복원
     },
 };
 

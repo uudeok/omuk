@@ -4,18 +4,19 @@ import styles from '../styles/components/community.module.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import React, { useState, useCallback, useEffect, useContext } from 'react';
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
     getFollowerReviewsWithImages,
     getPaginatedReviewsWithImages,
     getPublicReviewCountByKeyword,
     getFolloweeReviewCountByKeyword,
+    getReviewTotalRows,
+    getFollowReviewTotalRows,
 } from '@/services/reviewService';
 import List from './common/List';
 import { getTotalPages } from '@/shared/utils';
 import { useInfiniteScroll } from '@/hooks';
 import ReviewCard from './ReviewCard';
-import { CommunityReviewType } from '@/services/reviewService';
 import { usePathname } from 'next/navigation';
 import { AuthContext } from '@/shared/context/AuthProvider';
 import EmptyState from './common/EmptyState';
@@ -24,41 +25,44 @@ import { BUTTON_TO_FEEDBACK } from '@/constants';
 import LoadingBar from './common/LoadingBar';
 import Slider from 'react-slick';
 
-type Props = {
-    totalReviews: number;
-    initalReviews: CommunityReviewType[];
-};
-
 const BUTTON_OPTIONS = ['아이와 함께', '부모님 모시고', '혼밥가능', '가성비최고', '분위기좋은', '뷰맛집', '펫 친화'];
 const PAGE_SIZE = 10;
 
-const Community = ({ totalReviews, initalReviews }: Props) => {
+const Community = () => {
     const path = usePathname();
     const queryClient = useQueryClient();
     const session = useContext(AuthContext);
 
-    const [totalPage, setTotalPage] = useState<number>(getTotalPages(totalReviews, PAGE_SIZE));
-    const [isEnabled, setIsEnabled] = useState<boolean>(false);
+    const [totalPage, setTotalPage] = useState<number>(0);
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const [searchKeyword, setSearchKeyword] = useState<string>('');
-    const [filteredReviews, setFilteredReviews] = useState<CommunityReviewType[]>([]);
-    const [showAllReviews, setShowAllReviews] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    const fetchTotalReviews = path === '/community' ? getReviewTotalRows : getFollowReviewTotalRows;
     const fetchInfiniteQuery = path === '/community' ? getPaginatedReviewsWithImages : getFollowerReviewsWithImages;
     const fetchReviewCount = path === '/community' ? getPublicReviewCountByKeyword : getFolloweeReviewCountByKeyword;
 
-    // 2페이지부턴 csr 무한스크롤로 데이터 받아온다
+    // 필터 시에는 동작하지 않도록 구현, 새로운 totalPage 값이 적용되게끔
+    const { data: totalRow } = useQuery({
+        queryKey: ['totalRows'],
+        queryFn: fetchTotalReviews,
+        enabled: !searchKeyword,
+    });
+
+    useEffect(() => {
+        setTotalPage(getTotalPages(totalRow, PAGE_SIZE));
+    }, [totalRow]);
+
     const {
-        data: reviewList,
+        data: reviewList = [],
         hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
+        isPending,
     } = useInfiniteQuery({
         queryKey: ['paginatedTotalReview', searchKeyword],
         queryFn: ({ pageParam }) => fetchInfiniteQuery(pageParam, PAGE_SIZE, searchKeyword),
-        initialPageParam: 2,
-        enabled: isEnabled,
+        initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
             if (lastPageParam < totalPage) {
                 return lastPageParam + 1;
@@ -71,27 +75,12 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
 
     useEffect(() => {
         queryClient.resetQueries({ queryKey: ['paginatedTotalReview', searchKeyword] });
-        setIsEnabled(false);
+        queryClient.resetQueries({ queryKey: ['totalRows'] });
     }, [path, queryClient, searchKeyword]);
-
-    // custom handleObserver 생성 - ssr 초기 페이지땐 실행되지 않도록 구현
-    const handleObserver = useCallback(
-        (entries: IntersectionObserverEntry[]) => {
-            const target = entries[0];
-            if (target.isIntersecting && !isEnabled) {
-                setIsEnabled(true);
-            } else if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
-                fetchNextPage();
-                setIsEnabled(false);
-            }
-        },
-        [isEnabled, hasNextPage, isFetchingNextPage, fetchNextPage]
-    );
 
     const { observerEl } = useInfiniteScroll({
         callbackFn: fetchNextPage,
         hasNextPage: hasNextPage,
-        customHandleObserver: handleObserver,
     });
 
     const handleSearchKeyword = async (e: React.SyntheticEvent, option: string) => {
@@ -109,10 +98,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
             const total = getTotalPages(reviewCount, PAGE_SIZE);
             setTotalPage(total);
 
-            const result = await fetchInfiniteQuery(1, PAGE_SIZE, keyword);
-
-            setFilteredReviews(result);
-            setShowAllReviews(false);
+            queryClient.resetQueries({ queryKey: ['paginatedTotalReview', searchKeyword] });
         } catch (error) {
             console.error('Error fetching reviews:', error);
         } finally {
@@ -139,16 +125,10 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
         afterChange: handleAfterChange,
     };
 
-    const handleShowAllReviews = () => {
-        setSearchKeyword('');
-        setShowAllReviews(true);
-        setFilteredReviews([]);
-    };
-
     return (
         <div>
             <Slider {...settings} className={styles.slider}>
-                <div className={styles.badge} onClick={handleShowAllReviews}>
+                <div className={styles.badge} onClick={(e) => handleSearchKeyword(e, '')}>
                     <Badge isSelected={!searchKeyword}>전체</Badge>
                 </div>
                 {BUTTON_OPTIONS.map((option) => (
@@ -167,25 +147,9 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
 
             {isLoading ? (
                 <LoadingBar />
-            ) : filteredReviews.length > 0 ? (
-                <List>
-                    {filteredReviews.map((review) => (
-                        <ReviewCard list={review} key={review.id} />
-                    ))}
-
-                    {reviewList?.map((review) => (
-                        <ReviewCard list={review} key={review.id} />
-                    ))}
-
-                    <div ref={observerEl} />
-                </List>
             ) : (
-                showAllReviews && (
+                reviewList && (
                     <List>
-                        {initalReviews.map((review: CommunityReviewType) => (
-                            <ReviewCard list={review} key={review.id} />
-                        ))}
-
                         {reviewList?.map((review) => (
                             <ReviewCard list={review} key={review.id} />
                         ))}
@@ -195,9 +159,7 @@ const Community = ({ totalReviews, initalReviews }: Props) => {
                 )
             )}
 
-            {!showAllReviews && filteredReviews.length === 0 && !isLoading && (
-                <EmptyState label="아직 리뷰가 없습니다😅" />
-            )}
+            {!isPending && reviewList.length === 0 && <EmptyState label="아직 리뷰가 없어용😅" />}
         </div>
     );
 };
