@@ -3,7 +3,7 @@
         "parser": {
             "syntax": "ecmascript",
             "jsx": false,
-            "dynamicImport": false,
+            "dynamicImport": true,
             "privateMethod": true,
             "classPrivateProperty": true,
             "functionBind": false,
@@ -11,16 +11,16 @@
             "exportNamespaceFrom": false,
             "decorators": false,
             "decoratorsBeforeExport": false,
-            "topLevelAwait": false,
+            "topLevelAwait": true,
             "importMeta": false,
             "preserveAllComments": false
         },
         "transform": null,
-        "target": "es5",
-        "loose": false,
+        "target": "es2016",
+        "loose": true,
         "externalHelpers": false,
         // Requires v1.2.50 or upper and requires target to be es2016 or upper.
         "keepClassNames": false
     },
-    "isModule": false
+    "isModule": true
 }
