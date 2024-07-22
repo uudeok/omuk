@@ -50,7 +50,6 @@ const RestaurantList = () => {
                             }
                             bottom={''}
                         />
-                        //{' '}
                     </Link>
                 ))}
             </List>
