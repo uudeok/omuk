@@ -4,7 +4,7 @@ import { ParamType } from '@/shared/types';
 export const getDetail = async (id: string) => {
     const response = await fetch(`https://place.map.kakao.com/m/main/v/${id}/`, {
         next: {
-            revalidate: 60 * 60 * 24,
+            revalidate: 3600,
         },
     });
 
