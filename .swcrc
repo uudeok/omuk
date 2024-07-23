@@ -1,8 +1,8 @@
 {
     "jsc": {
         "parser": {
-            "syntax": "ecmascript",
-            "jsx": false,
+            "syntax": "typescript",
+            "jsx": true,
             "dynamicImport": true,
             "privateMethod": true,
             "classPrivateProperty": true,
@@ -19,7 +19,6 @@
         "target": "es2016",
         "loose": true,
         "externalHelpers": false,
-        // Requires v1.2.50 or upper and requires target to be es2016 or upper.
         "keepClassNames": false
     },
     "isModule": true
