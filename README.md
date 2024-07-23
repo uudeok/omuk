@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 먹기록
 
-## Getting Started
+먹기록은 위치 기반으로 주변 음식점을 조회하고, 리뷰를 작성하며, 다양한 기능을 제공하는 애플리케이션입니다. 
 
-First, run the development server:
+## 주요 기능
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+* 메인기능
+	위치 기반 음식점 조회 : 현재 위치를 기반으로 주변 음식점을 확인할 수 있습니다.
+	음식점 검색 : 음식점 이름 또는 지역명으로 음식점을 검색하고, 지도에 마커로 표시됩니다.
+	리뷰 작성 및 수정 : 음식점에 대한 리뷰를 작성하고, 수정할 수 있습니다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* 마이페이지 
+    북마크: 가고 싶은 음식점을 북마크하여 저장하고, 마이페이지에서 확인할 수 있습니다.
+	리뷰 일기장: 작성한 리뷰를 달력에 표기하여 일기장처럼 기록을 남길 수 있습니다.
+    마이페이지 조정: 리뷰 노출 여부 등 다양한 설정을 조정할 수 있습니다.
+    
+* 커뮤니티 
+	리뷰 열람 : 다른 사용자가 작성한 리뷰를 확인할 수 있습니다.
+	팔로우: 리뷰어를 팔로우하고, 팔로우한 사람의 리뷰만 볼 수 있습니다.
+	리뷰 필터링: 특정 키워드에 따라 리뷰를 필터링할 수 있습니다.
+    
+## 기술 스택
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* Next.js : 서버 사이드 렌더링(SSR) 과 정적 사이트 생성(SSG) 등 페이지 특성에 맞는 렌더링을 적용해 SEO 를 개선하고 사용자 경험을 향상시켰습니다. 
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+* Supabase : 프론트엔드와 서버의 장벽을 줄이고데 이터베이스와 인증을 간편하게 처리해 쉽고 빠르게 작업할 수 있었습니다.
 
-## Learn More
+* React-Query : 애플리케이션의 무한 스크롤 구현에 useInfiniteQuery 훅을 사용하여 간편하게 처리했습니다.
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 프로젝트 목표
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Next.js와 Supabase를 사용하여 인증부터 데이터베이스 작업까지 통합된 애플리케이션을 구축하고, 페이지 특성에 맞게 SSR, CSR, SSG, ISR을 고려하여 최적화된 사용자 경험을 제공하는 것을 목표로 했습니다.
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 개발 과정에서의 경험
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Next.js 를 처음 제대로 사용해봤는데, 개발자 경험이 매우 향상되었다는 것을 느꼈습니다.
+자동 캐시 최적화와 metadata, Next/Image, Link 컴포넌트를 통한 최적화 작업이 특히 유용했습니다.
+SSR을 구현하면서 코드와 최적화 작업이 간편해졌고, 성능 개선을 직접 경험할 수 있었습니다.
+
+Supabase를 활용하여 데이터베이스와 인증을 손쉽게 구현할 수 있었고, 서버와 프론트엔드 간의 경계를 허물며 두 역할을 모두 고려할 수 있는 기회를가 되었습니다. SQL을 활용한 데이터 쿼리와 조인 작업으로 여러 번의 API 호출을 줄일 수 있었고, 페이지네이션 구현 시에는 약간의 어려움이 있었지만 explain 메서드를 통해 문제를 해결할 수 있었습니다.
+
+
+
+## 아쉬운 점 및 개선 사항
+
+1. 배포 방법 
+전에 React 로 진행했을때는 AWS 을 사용해 배포를 진행 해 하나부터 열까지 설정하면서 많이 배웠던 경험이 있습니다. 이번에는 Vercel 을 사용해 간편하게 배포를 진행할 수 있었습니다. 별다른 설정없이 레포지토리에 연결만 시켜주면 자동으로 배포가 이뤄진다는 점이 편리했으나, 정적 파일과 서버 파일이 어떻게 다르게 배포 되는지 그 과정을 경험해보지 못한 아쉬움이 있습니다. 
+
+2. 외부 데이터 의존성
+Kakao Map API와 같은 외부 데이터에 의존하는 부분이 많아, 데이터의 한계로 인해 기능 구현에 제약이 있었습니다. 데이터의 확장성이나 대체 방안을 고려할 필요가 있었습니다.
+
+
+
+
+## 프로젝트 이미지
+
+| 메인 페이지 | 내 페이지 | 
+|:----------:|:-----------:|
+| ![](https://velog.velcdn.com/images/o1011/post/b790e43c-e5a8-4282-9ea6-cd923877efb6/image.png) | ![](https://velog.velcdn.com/images/o1011/post/e904e20d-957e-41b9-823f-04c3f9c48d07/image.png)
+ |
+
