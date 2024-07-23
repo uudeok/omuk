@@ -7,7 +7,7 @@ import Text from '@/components/common/Text';
 import { sendSlackNotification } from '@/shared/lib/slack/slackNotifier';
 
 const ErrorPage = ({ error, reset }: any) => {
-    console.log('errorPage error : ', error);
+    console.log('errorPage error 입니다 : ', error);
 
     if (error) {
         sendSlackNotification(error);

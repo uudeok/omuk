@@ -54,7 +54,7 @@ const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
         if (!session) return alert('로그인이 필요한 서비스 입니다.');
         bookmarkToggle.mutate();
         setIsBookmark((prev) => !prev);
-    }, []);
+    }, [session, bookmarkToggle]);
 
     return (
         <div onClick={handleBookmarkToggle}>
