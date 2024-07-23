@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { DeleteObjectCommand, S3 } from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
+import { resizeFile } from '@/shared/utils/imageUtil';
 
 type Options = {
     maxSize?: number;
@@ -93,20 +94,24 @@ export const useS3FileUpload = (options?: Options) => {
     );
 
     const uploadFiles = useCallback(async () => {
-        // 업로드 할 파일이 없으면 리턴한다
         if (files.length === 0) return;
+        console.time('upload');
 
         try {
-            const urls: string[] = [];
+            const startTime = Date.now(); // 전체 업로드 시작 시간 기록
 
-            for (const file of files) {
+            const uploadPromises = files.map(async (file) => {
+                const fileStartTime = Date.now(); // 개별 파일 업로드 시작 시간 기록
+
+                const resizedFile = await resizeFile(file); // 파일 리사이즈 최적화 작업
+
                 const data = new Upload({
                     client: new S3(config),
                     params: {
-                        Key: `upload/${file.name}`,
-                        Body: file,
+                        Key: `upload/${file.name.replace(/\.[^/.]+$/, '')}.webp`,
+                        Body: resizedFile,
                         Bucket: bucketName,
-                        ContentType: file.type,
+                        ContentType: 'image/webp',
                         CacheControl: 'no-store',
                     },
                 });
@@ -115,17 +120,67 @@ export const useS3FileUpload = (options?: Options) => {
                     console.log('progress', progress);
                 });
 
-                const response = await data.done();
-                urls.push(response.Location!);
-            }
+                return data.done().then((response) => {
+                    const fileEndTime = Date.now(); // 개별 파일 업로드 종료 시간 기록
+                    console.log(`파일 ${file.name} 업로드 시간: ${fileEndTime - fileStartTime}ms`);
+                    // response.Location이 undefined인 경우 빈 문자열로 대체
+                    return response.Location || '';
+                });
+            });
 
+            // 모든 업로드 작업이 완료될 때까지 기다림
+            const urls: string[] = await Promise.all(uploadPromises);
+
+            // 전체 업로드 종료 시간 기록
+            const endTime = Date.now();
+            console.log(`전체 업로드 시간: ${endTime - startTime}ms`);
+
+            // 업로드된 이미지 URL을 상태로 설정
             setImageUrls(urls);
+            console.timeEnd('upload');
             return urls;
         } catch (error: any) {
             console.error('이미지 업로드 중 오류 발생:', error);
             throw new Error(error.message);
         }
     }, [files]);
+
+    // const uploadFiles = useCallback(async () => {
+    //     // 업로드 할 파일이 없으면 리턴한다
+    //     if (files.length === 0) return;
+    //     console.time('upload');
+
+    //     try {
+    //         const urls: string[] = [];
+
+    //         for (const file of files) {
+    //             const data = new Upload({
+    //                 client: new S3(config),
+    //                 params: {
+    //                     Key: `upload/${file.name}`,
+    //                     Body: file,
+    //                     Bucket: bucketName,
+    //                     ContentType: file.type,
+    //                     CacheControl: 'no-store',
+    //                 },
+    //             });
+
+    //             data.on('httpUploadProgress', (progress) => {
+    //                 console.log('progress', progress);
+    //             });
+
+    //             const response = await data.done();
+    //             urls.push(response.Location!);
+    //         }
+
+    //         setImageUrls(urls);
+    //         console.timeEnd('upload');
+    //         return urls;
+    //     } catch (error: any) {
+    //         console.error('이미지 업로드 중 오류 발생:', error);
+    //         throw new Error(error.message);
+    //     }
+    // }, [files]);
 
     const deleteFile = useCallback(
         async (fileKey: string) => {

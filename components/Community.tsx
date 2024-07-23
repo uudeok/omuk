@@ -14,7 +14,7 @@ import {
     getFollowReviewTotalRows,
 } from '@/services/reviewService';
 import List from './common/List';
-import { generateSkeletonCards, getTotalPages } from '@/shared/utils';
+import { getTotalPages } from '@/shared/utils';
 import { useInfiniteScroll } from '@/hooks';
 import ReviewCard from './ReviewCard';
 import { usePathname } from 'next/navigation';

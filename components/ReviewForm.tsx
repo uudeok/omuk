@@ -36,9 +36,10 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
     const router = useRouter();
     const fileRef = useRef<HTMLInputElement>(null);
 
-    const { setFiles, files, handleFileInputChange, uploadFiles, alertMessage, convertToFile } = useS3FileUpload({
-        maxSize: 5,
-    });
+    const { setFiles, files, handleFileInputChange, uploadFiles, alertMessage, convertToFile, imageUrls } =
+        useS3FileUpload({
+            maxSize: 5,
+        });
     const [value, onChangeInput, isValid, setValue] = useInput({ maxLength: 30, minLength: 2 });
     const { value: isCalendarOpen, setFalse: closeCalendarModal, toggle: calendarModalToggle } = useBoolean();
     const { value: isErrorOpen, setFalse: closeErrorModal, setTrue: openErrorModal } = useBoolean();
@@ -63,7 +64,6 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         queryKey: ['exisitImage', reviewData?.id],
         queryFn: () => getImageData(reviewData?.id),
         enabled: !!reviewData,
-        staleTime: 0,
     });
 
     const reviewObj = {

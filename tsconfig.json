@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es2016",
-        "lib": ["dom", "dom.iterable", "ES2016.Array.Include"],
+        "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
         "strict": true,

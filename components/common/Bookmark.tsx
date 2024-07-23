@@ -3,7 +3,7 @@
 import Icons from './Icons';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getBookmark, deleteBookmark, postBookmark } from '@/services/bookmarkService';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect, useCallback } from 'react';
 import { AuthContext } from '@/shared/context/AuthProvider';
 
 type BookmarkProps = {
@@ -16,13 +16,21 @@ type BookmarkProps = {
 const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
     const queryClient = useQueryClient();
     const session = useContext(AuthContext);
-    const [debouncedClick, setDebouncedClick] = useState<boolean>(true);
+    const [isBookmark, setIsBookmark] = useState<boolean>(false);
 
     const { data: bookmark } = useQuery({
         queryKey: ['bookmark', res_id],
         queryFn: () => getBookmark(res_id),
         enabled: !!session,
     });
+
+    useEffect(() => {
+        if (bookmark && bookmark.length > 0) {
+            setIsBookmark(true);
+        } else {
+            setIsBookmark(false);
+        }
+    }, [bookmark]);
 
     const bookmarkToggle = useMutation({
         mutationFn: async () => {
@@ -42,19 +50,15 @@ const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
         },
     });
 
-    const handleBookmarkToggle = () => {
+    const handleBookmarkToggle = useCallback(() => {
         if (!session) return alert('로그인이 필요한 서비스 입니다.');
-
-        if (debouncedClick) {
-            setDebouncedClick(false);
-            bookmarkToggle.mutate();
-            setTimeout(() => setDebouncedClick(true), 1000);
-        }
-    };
+        bookmarkToggle.mutate();
+        setIsBookmark((prev) => !prev);
+    }, []);
 
     return (
         <div onClick={handleBookmarkToggle}>
-            {bookmark && bookmark.length > 0 ? <Icons.FillBookmark width={17} /> : <Icons.NonBookmark width={17} />}
+            {isBookmark ? <Icons.FillBookmark width={17} /> : <Icons.NonBookmark width={17} />}
         </div>
     );
 };
