@@ -1,6 +1,6 @@
-export async function sendSlackNotification(message: any) {
-    const webhookUrl = process.env.NEXT_PUBLIC_SLACK_WEBHOOK_URL;
+const webhookUrl = process.env.SLACK_WEBHOOK_URL;
 
+export async function sendSlackNotification(message: any) {
     if (!webhookUrl) {
         console.error('Slack webhook URL is not set');
         return;
