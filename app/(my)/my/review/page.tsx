@@ -2,23 +2,16 @@
 
 import { useRouter } from 'next/navigation';
 import Button from '@/components/common/Button';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { getPaginatedUserReviews, getReviewTotalReviews, ReviewType } from '@/services/reviewService';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { getPaginatedUserReviews, ReviewType } from '@/services/reviewService';
 import { useInfiniteScroll } from '@/hooks';
 import Review from '@/components/Review';
-import { getTotalPages } from '@/shared/utils';
-import { DEFAULT_PAGE_SIZE } from '@/constants';
 import EmptyState from '@/components/common/EmptyState';
+
+const PAGE_SIZE = 15;
 
 const MyReviewList = () => {
     const router = useRouter();
-
-    const { data: pageInfo } = useQuery({
-        queryKey: ['reviewTotalRows'],
-        queryFn: () => getReviewTotalReviews(),
-    });
-
-    const totalPage = getTotalPages(pageInfo, DEFAULT_PAGE_SIZE);
 
     const {
         data: reviewList,
@@ -27,10 +20,10 @@ const MyReviewList = () => {
         isFetchingNextPage,
     } = useInfiniteQuery({
         queryKey: ['paginatedReview'],
-        queryFn: ({ pageParam }) => getPaginatedUserReviews(pageParam, DEFAULT_PAGE_SIZE),
+        queryFn: ({ pageParam }) => getPaginatedUserReviews(pageParam, PAGE_SIZE),
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
-            if (lastPageParam < totalPage) {
+            if (lastPage && lastPage.length === PAGE_SIZE) {
                 return lastPageParam + 1;
             }
         },

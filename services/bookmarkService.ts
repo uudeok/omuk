@@ -22,11 +22,13 @@ export const getBookmark = async (res_id: string) => {
     return bookmark;
 };
 
-type BookmarkType = {
+export type BookmarkType = {
     res_id: string;
     placeName: string;
     category: string;
     address: string | undefined;
+    user_id?: string;
+    id?: number;
 };
 
 // bookmark 생성하기

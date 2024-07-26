@@ -4,23 +4,16 @@ import styles from '../../../../styles/pages/mybookmark.module.css';
 import Button from '@/components/common/Button';
 import List, { ListBox } from '@/components/common/List';
 import { useInfiniteScroll } from '@/hooks';
-import { getBookmarkTotalRows, getUserBookmarksPaginated } from '@/services/bookmarkService';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { BookmarkType, getUserBookmarksPaginated } from '@/services/bookmarkService';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Text from '@/components/common/Text';
-import { DEFAULT_PAGE_SIZE } from '@/constants';
 import EmptyState from '@/components/common/EmptyState';
-import { getTotalPages } from '@/shared/utils';
+
+const PAGE_SIZE = 15;
 
 const MyBookmark = () => {
     const router = useRouter();
-
-    const { data: bookmarkTotalRows } = useQuery({
-        queryKey: ['bookmarkTotalRows'],
-        queryFn: getBookmarkTotalRows,
-    });
-
-    const totalPage = getTotalPages(bookmarkTotalRows, DEFAULT_PAGE_SIZE);
 
     const {
         data: bookmarkList = [],
@@ -29,10 +22,10 @@ const MyBookmark = () => {
         isFetchingNextPage,
     } = useInfiniteQuery({
         queryKey: ['bookmarkList'],
-        queryFn: ({ pageParam }) => getUserBookmarksPaginated(pageParam, DEFAULT_PAGE_SIZE),
+        queryFn: ({ pageParam }) => getUserBookmarksPaginated(pageParam, PAGE_SIZE),
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
-            if (lastPageParam < totalPage) {
+            if (lastPage && lastPage.length === PAGE_SIZE) {
                 return lastPageParam + 1;
             }
         },
@@ -57,7 +50,7 @@ const MyBookmark = () => {
                     {bookmarkList.length === 0 ? (
                         <EmptyState label="아직 즐겨찾기한 곳이 없어요" />
                     ) : (
-                        bookmarkList.map((item: any) => (
+                        bookmarkList.map((item: BookmarkType) => (
                             <ListBox
                                 key={item.id}
                                 top={

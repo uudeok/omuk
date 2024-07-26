@@ -4,17 +4,9 @@ import styles from '../styles/components/community.module.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import React, { useState, useCallback, useEffect, useContext } from 'react';
-import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-    getFollowerReviewsWithImages,
-    getPaginatedReviewsWithImages,
-    getPublicReviewCountByKeyword,
-    getFolloweeReviewCountByKeyword,
-    getReviewTotalRows,
-    getFollowReviewTotalRows,
-} from '@/services/reviewService';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { getFollowerReviewsWithImages, getPaginatedReviewsWithImages } from '@/services/reviewService';
 import List from './common/List';
-import { getTotalPages } from '@/shared/utils';
 import { useInfiniteScroll } from '@/hooks';
 import ReviewCard from './ReviewCard';
 import { usePathname } from 'next/navigation';
@@ -33,27 +25,11 @@ const Community = () => {
     const queryClient = useQueryClient();
     const session = useContext(AuthContext);
 
-    const [totalPage, setTotalPage] = useState<number>(0);
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const [searchKeyword, setSearchKeyword] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const fetchTotalReviews = path === '/community' ? getReviewTotalRows : getFollowReviewTotalRows;
     const fetchInfiniteQuery = path === '/community' ? getPaginatedReviewsWithImages : getFollowerReviewsWithImages;
-    const fetchReviewCount = path === '/community' ? getPublicReviewCountByKeyword : getFolloweeReviewCountByKeyword;
-
-    // 필터 시에는 동작하지 않도록 구현, 새로운 totalPage 값이 적용되게끔
-    const { data: totalRow } = useQuery({
-        queryKey: ['totalRows'],
-        queryFn: fetchTotalReviews,
-        enabled: !searchKeyword,
-    });
-
-    useEffect(() => {
-        if (totalRow !== undefined) {
-            setTotalPage(getTotalPages(totalRow, PAGE_SIZE));
-        }
-    }, [totalRow]);
 
     const {
         data: reviewList = [],
@@ -66,7 +42,7 @@ const Community = () => {
         queryFn: ({ pageParam }) => fetchInfiniteQuery(pageParam, PAGE_SIZE, searchKeyword),
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
-            if (lastPageParam < totalPage) {
+            if (lastPage && lastPage.length === PAGE_SIZE) {
                 return lastPageParam + 1;
             }
         },
@@ -77,8 +53,7 @@ const Community = () => {
 
     useEffect(() => {
         queryClient.resetQueries({ queryKey: ['paginatedTotalReview', searchKeyword] });
-        queryClient.resetQueries({ queryKey: ['totalRows'] });
-    }, [path, queryClient, searchKeyword]);
+    }, [path, searchKeyword, queryClient]);
 
     const { observerEl } = useInfiniteScroll({
         callbackFn: fetchNextPage,
@@ -96,10 +71,6 @@ const Community = () => {
         setSearchKeyword(keyword);
 
         try {
-            const reviewCount = await fetchReviewCount(keyword);
-            const total = getTotalPages(reviewCount, PAGE_SIZE);
-            setTotalPage(total);
-
             queryClient.resetQueries({ queryKey: ['paginatedTotalReview', searchKeyword] });
         } catch (error) {
             console.error('Error fetching reviews:', error);
