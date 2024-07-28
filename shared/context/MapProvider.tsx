@@ -1,6 +1,16 @@
 'use client';
 
-import { RefObject, Dispatch, SetStateAction, useState, useRef, useContext, createContext, ReactNode } from 'react';
+import {
+    RefObject,
+    Dispatch,
+    SetStateAction,
+    useMemo,
+    useState,
+    useRef,
+    useContext,
+    createContext,
+    ReactNode,
+} from 'react';
 import { PaginationType, ResponseType, IMarker } from '../types';
 
 type MapType = {
@@ -34,23 +44,22 @@ const MapProvider = ({ children }: { children: ReactNode }) => {
     const [map, setMap] = useState<kakao.maps.Map>();
     const [resData, setResData] = useState<ResponseType[]>([]);
 
-    return (
-        <MapContext.Provider
-            value={{
-                mapEl,
-                setMarkers,
-                markers,
-                pagination,
-                setPagination,
-                setMap,
-                map,
-                resData,
-                setResData,
-            }}
-        >
-            {children}
-        </MapContext.Provider>
+    const value = useMemo(
+        () => ({
+            mapEl,
+            markers,
+            setMarkers,
+            pagination,
+            setPagination,
+            map,
+            setMap,
+            resData,
+            setResData,
+        }),
+        [markers, pagination, map, resData]
     );
+
+    return <MapContext.Provider value={value}>{children}</MapContext.Provider>;
 };
 
 export default MapProvider;

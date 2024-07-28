@@ -1,4 +1,5 @@
 import styles from '../../styles/layouts/sideBar.module.css';
+import React from 'react';
 import Search from '../Search';
 import RestaurantList from '../RestaurantList';
 import Controller from '../Controller';

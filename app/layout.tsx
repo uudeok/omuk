@@ -28,9 +28,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                         <MapProvider>
                             <SideBar />
                             <Map />
-                            {children}
-                            <div id="modal-root"></div>
                         </MapProvider>
+                        {children}
+                        <div id="modal-root"></div>
                     </AuthProvider>
                 </ReactQueryProvider>
             </body>

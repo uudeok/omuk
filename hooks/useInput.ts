@@ -46,15 +46,18 @@ export const useInput = (options?: Options): returnType => {
     };
 
     /** 첫번째로 실행되어 type에 따라 함수 호출 */
-    const onChangeInput = useCallback((e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        const targetValue: string = e.target.value || '';
+    const onChangeInput = useCallback(
+        (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+            const targetValue: string = e.target.value || '';
 
-        if (type === 'number') {
-            handleNumber(removeNonNumeric(targetValue));
-        } else if (type === 'string') {
-            handleString(targetValue);
-        }
-    }, []);
+            if (type === 'number') {
+                handleNumber(removeNonNumeric(targetValue));
+            } else if (type === 'string') {
+                handleString(targetValue);
+            }
+        },
+        [type]
+    );
 
     return [value, onChangeInput, isValid.current, setValue];
 };

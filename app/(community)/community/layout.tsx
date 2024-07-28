@@ -61,17 +61,3 @@ const CommunityLayout = ({ children }: { children: ReactNode }) => {
 };
 
 export default CommunityLayout;
-
-{
-    /* <Link key={idx} prefetch={true} href={`${button.path}`} className={styles.button}>
-<Button
-    size="sm"
-    className={idx === selected ? styles.selected : ''}
-    onClick={() => {
-        setSelected(idx);
-    }}
->
-    {button.key}
-</Button>
-</Link> */
-}

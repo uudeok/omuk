@@ -3,7 +3,6 @@
 import { useMap } from '@/shared/context/MapProvider';
 import { useCallback } from 'react';
 import { ResponseType } from '@/shared/types';
-import { getMarkerData } from '@/services/reviewService';
 
 export const useMarker = () => {
     const { map, setMarkers } = useMap();

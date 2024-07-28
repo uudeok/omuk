@@ -70,7 +70,13 @@ const RestaurantDetail = ({ resData, res_id }: Props) => {
 
     return (
         <div className={styles.container}>
-            <img src={basicInfo?.mainphotourl} alt={basicInfo?.placenamefull} width="100%" className={styles.mainImg} />
+            <img
+                loading="lazy"
+                src={basicInfo?.mainphotourl}
+                alt={basicInfo?.placenamefull}
+                width="100%"
+                className={styles.mainImg}
+            />
 
             <div className={styles.bookmark}>
                 <List>

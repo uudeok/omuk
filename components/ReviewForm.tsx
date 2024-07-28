@@ -23,6 +23,7 @@ import { getImageData, updateImages, uploadImages } from '@/services/imageServic
 import { AuthContext } from '@/shared/context/AuthProvider';
 import Spinner from './common/Spinner';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
 const AlertModal = dynamic(() => import('@/components/modal/AlertModal'), {
     ssr: false,
@@ -125,6 +126,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
     // 업로드 한 이미지가 있는 경우, 이미지 Url 을 File 객체로 변환작업
     useEffect(() => {
         if (existingImages) {
+            console.log('existing image', existingImages);
             convertToFile(existingImages);
         }
     }, [existingImages, convertToFile]);
@@ -163,6 +165,8 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         }
     };
 
+    console.log(files);
+
     return (
         <div className={styles.container}>
             <div className={styles.content}>
@@ -183,10 +187,10 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
                         <div className={styles.slide}>
                             {files?.map((file, index) => (
                                 <div className={styles.slideImg} key={index}>
-                                    <img
+                                    <Image
                                         src={URL.createObjectURL(file)}
-                                        width="160px"
-                                        height="160px"
+                                        width={160}
+                                        height={160}
                                         alt={`image${index}`}
                                     />
                                     <Button size="sm" role="round" onClick={() => removeImage(file)}>
