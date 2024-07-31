@@ -11,6 +11,7 @@ export const useGeoLocation = () => {
     const [location, setLocation] = useState<LocationType>();
     const [errorMsg, setErrorMsg] = useState<string>('');
 
+    // 위치 정보 제공 거부 시, 디폴트 위치 제공 : 광화문
     const setDefaultLocation = () => {
         const defaultLatitude = 37.579293849225756;
         const defaultLongitude = 126.97798076343491;

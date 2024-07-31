@@ -6,6 +6,7 @@ import Controller from '../Controller';
 import Header from './Header';
 
 const SideBar = () => {
+    console.log('sidebar 렌더링!!!!');
     return (
         <div className={styles.layout}>
             <div className={styles.search}>

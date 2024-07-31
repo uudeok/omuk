@@ -38,7 +38,7 @@ export const useCategory = () => {
                 location: new kakao.maps.LatLng(latitude, longitude),
             }
         );
-    }, [curLocation, setResData, setPagination, addMarker]);
+    }, [curLocation, addMarker]);
 
     return { searchCategory, isLoading, errorMsg };
 };
