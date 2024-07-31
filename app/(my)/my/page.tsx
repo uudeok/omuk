@@ -9,11 +9,13 @@ import { getBookmarkTotalRows } from '@/services/bookmarkService';
 import { useQueries } from '@tanstack/react-query';
 import { getReviewTotalReviews } from '@/services/reviewService';
 import LoadingBar from '@/components/common/LoadingBar';
-import MyCalendar from '@/components/MyCalendar';
-import Follow from '@/components/Follow';
-import PrivacySetting from '@/components/PrivacySetting';
+import dynamic from 'next/dynamic';
 
 /** follow, myreview & mybookmark, calendar, setting 4단락으로 구분 */
+
+const Follow = dynamic(() => import('@/components/Follow'));
+const MyCalendar = dynamic(() => import('@/components/MyCalendar'));
+const PrivacySetting = dynamic(() => import('@/components/PrivacySetting'));
 
 const MyPage = () => {
     const router = useRouter();
