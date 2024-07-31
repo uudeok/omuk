@@ -25,9 +25,7 @@ import Spinner from './common/Spinner';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-const AlertModal = dynamic(() => import('@/components/modal/AlertModal'), {
-    ssr: false,
-});
+const AlertModal = dynamic(() => import('@/components/modal/AlertModal'), { ssr: false });
 const CalendarModal = dynamic(() => import('@/components/modal/CalendarModal'), {
     ssr: false,
 });

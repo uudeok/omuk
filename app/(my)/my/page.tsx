@@ -10,12 +10,12 @@ import { useQueries } from '@tanstack/react-query';
 import { getReviewTotalReviews } from '@/services/reviewService';
 import LoadingBar from '@/components/common/LoadingBar';
 import dynamic from 'next/dynamic';
+import Follow from '@/components/Follow';
 
 /** follow, myreview & mybookmark, calendar, setting 4단락으로 구분 */
 
-const Follow = dynamic(() => import('@/components/Follow'));
-const MyCalendar = dynamic(() => import('@/components/MyCalendar'));
-const PrivacySetting = dynamic(() => import('@/components/PrivacySetting'));
+const MyCalendar = dynamic(() => import('@/components/MyCalendar'), { ssr: false });
+const PrivacySetting = dynamic(() => import('@/components/PrivacySetting'), { ssr: false });
 
 const MyPage = () => {
     const router = useRouter();
