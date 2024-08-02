@@ -1,7 +1,7 @@
 'use client';
 
 import styles from '../../../styles/layouts/communityLayout.module.css';
-import { ReactNode, useContext, useState } from 'react';
+import { ReactNode, useContext, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Slide from '@/components/layout/Slide';
 import Avatar from '@/components/common/Avatar';

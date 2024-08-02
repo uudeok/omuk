@@ -6,9 +6,7 @@ import Text from '@/components/common/Text';
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 
-const AlertModal = dynamic(() => import('@/components/modal/AlertModal'), {
-    ssr: false,
-});
+const AlertModal = dynamic(() => import('@/components/modal/AlertModal'));
 
 // mobile 로 접속 시 앱 준비중 모달 안내
 

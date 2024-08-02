@@ -46,4 +46,8 @@ export const removeReviewLike = async (review_id: number) => {
         .eq('user_id', user_id)
         .eq('review_id', review_id)
         .select();
+
+    if (error) {
+        throw new Error(error.message);
+    }
 };

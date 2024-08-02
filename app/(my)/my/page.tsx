@@ -14,8 +14,10 @@ import Follow from '@/components/Follow';
 
 /** follow, myreview & mybookmark, calendar, setting 4단락으로 구분 */
 
-const MyCalendar = dynamic(() => import('@/components/MyCalendar'), { ssr: false });
-const PrivacySetting = dynamic(() => import('@/components/PrivacySetting'), { ssr: false });
+const MyCalendar = dynamic(() => import('@/components/MyCalendar'), {
+    loading: () => <LoadingBar />,
+});
+const PrivacySetting = dynamic(() => import('@/components/PrivacySetting'));
 
 const MyPage = () => {
     const router = useRouter();

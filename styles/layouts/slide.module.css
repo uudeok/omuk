@@ -7,17 +7,9 @@
     }
 }
 
-/* @keyframes slideIn {
-    0% {
-        transform: translateX(-50%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-} */
-
 .container {
-    position: fixed;
+    position: absolute;
+    /* position: fixed; */
     top: 0;
     height: 100%;
     width: 100%;

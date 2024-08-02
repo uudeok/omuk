@@ -45,15 +45,29 @@ const Bookmark = ({ res_id, placeName, category, address }: BookmarkProps) => {
                 });
             }
         },
+        onMutate: () => {
+            const prevBookmark = queryClient.getQueryData(['bookmark', res_id]);
+            setIsBookmark((prev) => !prev);
+
+            return { prevBookmark };
+        },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['bookmark', res_id] });
+        },
+        onError: (error, variables, context) => {
+            if (context?.prevBookmark) {
+                queryClient.setQueryData(['bookmark', res_id], context.prevBookmark);
+                setIsBookmark((prev) => !prev);
+            }
+            alert('일시적 오류로 잠시 후 다시 시도해주세요.');
+            console.error('즐겨찾기 실패', error);
         },
     });
 
     const handleBookmarkToggle = useCallback(() => {
         if (!session) return alert('로그인이 필요한 서비스 입니다.');
+
         bookmarkToggle.mutate();
-        setIsBookmark((prev) => !prev);
     }, [session, bookmarkToggle]);
 
     return (

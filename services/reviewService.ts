@@ -260,7 +260,8 @@ review_likes (user_id, review_id)
     }
 
     const { data: reviewList, error } = await query
-        .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
+        .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
+        // .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
         .order('created_at', { ascending: false })
         .eq('profiles.expose', 'public');
 
@@ -311,7 +312,7 @@ export const getFollowerReviewsWithImages = async (
     }
 
     const { data: reviews, error: reviewError } = await query
-        .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
+        .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
         .order('created_at', { ascending: false })
         .in('user_id', followeeIds!)
         .not('profiles.expose', 'eq', 'privacy');
