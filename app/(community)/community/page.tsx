@@ -3,7 +3,7 @@ import { generateSkeletonCards, getMetadata } from '@/shared/utils';
 import Community from '@/components/Community';
 import { createClient } from '@/shared/lib/supabase/server-client';
 
-export const getReviewsWithImages = async (pageParam: number, pageSize: number, filter?: string) => {
+const getReviewsWithImages = async (pageParam: number, pageSize: number, filter?: string) => {
     const supabase = createClient();
 
     const { data: userData } = await supabase.auth.getUser();
