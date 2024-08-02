@@ -5,7 +5,7 @@ import { createClient } from '@/shared/lib/supabase/server-client';
 import { CommunityReviewType } from '@/services/reviewService';
 
 // STEP1. 팔로워한 유저의 ids 가져오기 (프로필 비공개 제외)
-export const getFollowerUserIds = async () => {
+const getFollowerUserIds = async () => {
     const supabase = createClient();
 
     const { data: userData } = await supabase.auth.getUser();
@@ -33,7 +33,7 @@ export const getFollowerUserIds = async () => {
     return followeeIds;
 };
 
-export const getFollowerReviewsWithImages = async (
+const getFollowerReviewsWithImages = async (
     pageParam: number,
     pageSize: number,
     filter?: string
