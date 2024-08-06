@@ -7,5 +7,5 @@ export { useInfiniteScroll } from './useInfiniteScroll';
 export { useRemove } from './useRemove';
 export { useMarker } from './useMarker';
 export { useCalendar } from './useCalendar';
-export { useS3FileUpload } from './useS3FileUpload';
+export { useS3FileUploader } from './useS3FileUploader';
 export { useDeviceType } from './useDeviceType';

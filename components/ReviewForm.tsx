@@ -4,7 +4,7 @@ import styles from '../styles/components/reviewform.module.css';
 import dayjs from 'dayjs';
 import { useEffect, useState, useRef, useContext, useCallback, useMemo } from 'react';
 import List, { ListRow } from '@/components/common/List';
-import { useBoolean, useInput, useS3FileUpload } from '@/hooks';
+import { useBoolean, useInput, useS3FileUploader } from '@/hooks';
 import Text from '@/components/common/Text';
 import Badge from '@/components/common/Badge';
 import Button from './common/Button';
@@ -16,26 +16,29 @@ import { useRouter } from 'next/navigation';
 import { FEEDBACK_LIST, COMPANIONS } from '@/constants';
 import { FeedBackItem } from '@/shared/types';
 import { deleteReview, getReviewData, postReview, updateReview } from '@/services/reviewService';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Modal from './common/Modal';
 import { initializeDate } from '@/shared/utils';
 import { getImageData, updateImages, uploadImages } from '@/services/imageService';
 import { AuthContext } from '@/shared/context/AuthProvider';
 import Spinner from './common/Spinner';
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
+import PreviewImage from './common/PreviewImage';
+import { updateImagesUrls } from '@/services/reviewImageService';
 
 const AlertModal = dynamic(() => import('@/components/modal/AlertModal'));
 const CalendarModal = dynamic(() => import('@/components/modal/CalendarModal'));
 
 const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) => {
+    const queryClient = useQueryClient();
     const session = useContext(AuthContext);
     const router = useRouter();
     const fileRef = useRef<HTMLInputElement>(null);
 
-    const { setFiles, files, handleFileInputChange, uploadFiles, alertMessage, convertToFile } = useS3FileUpload({
-        maxSize: 5,
-    });
+    const { handleFileInputChange, uploadFiles, alertMessage, imageUrls, setImageUrls, deleteFiles } =
+        useS3FileUploader({
+            maxSize: 5,
+        });
     const [value, onChangeInput, isValid, setValue] = useInput({ maxLength: 30, minLength: 2 });
     const { value: isCalendarOpen, setFalse: closeCalendarModal, toggle: calendarModalToggle } = useBoolean();
     const { value: isErrorOpen, setFalse: closeErrorModal, setTrue: openErrorModal } = useBoolean();
@@ -45,6 +48,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
     const [selectedNegatives, setSelectedNegatives] = useState<FeedBackItem[]>([]);
     const [selectedCompanions, setSelectedCompanions] = useState<string | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date>(initializeDate);
+    const [deleteImages, setDeleteImages] = useState<string[]>([]);
 
     const date = dayjs(selectedDate).format('YYYY-MM-DD');
     const positiveFeedback = useMemo(() => FEEDBACK_LIST.find((feedback) => feedback.type === 'positive')!, []);
@@ -73,6 +77,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         content: value,
     };
 
+    // Review 작성
     const postReviewMutation = useMutation({
         mutationFn: async () => {
             const review_id = await postReview(reviewObj);
@@ -90,15 +95,22 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         },
     });
 
+    // Review 수정
     const updateReviewMutation = useMutation({
         mutationFn: async () => {
             const review_id = await updateReview(reviewObj);
             const uploadedUrls = await uploadFiles();
+            await deleteFiles(deleteImages);
+
+            await updateImagesUrls(imageUrls, reviewData.id);
+
             if (uploadedUrls) {
-                await updateImages(uploadedUrls, review_id);
+                const newUrls = [...existingImages.images_url, ...uploadedUrls];
+                await updateImages(newUrls, review_id);
             }
         },
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['review', res_id] });
             router.replace(`/${res_id}`);
         },
         onError: (error) => {
@@ -106,6 +118,11 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
             openErrorModal();
         },
     });
+
+    const removeImage = (file: string) => {
+        setImageUrls((prevImages) => prevImages.filter((img) => img !== file));
+        setDeleteImages((prev) => [...prev, file]);
+    };
 
     // 리뷰가 있는 경우 데이터 채워넣기
     useEffect(() => {
@@ -119,13 +136,11 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         }
     }, [reviewData, setValue, positiveFeedback.items, negativeFeedback.items]);
 
-    // 업로드 한 이미지가 있는 경우, 이미지 Url 을 File 객체로 변환작업
     useEffect(() => {
         if (existingImages) {
-            console.log('existing image', existingImages);
-            convertToFile(existingImages);
+            setImageUrls(existingImages.images_url);
         }
-    }, [existingImages, convertToFile]);
+    }, [existingImages]);
 
     const handleFeedbackClick = useCallback((feedback: FeedBackItem, isPositive: boolean) => {
         const setSelected = isPositive ? setSelectedPositives : setSelectedNegatives;
@@ -134,15 +149,6 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
             return isSelected ? prev.filter((item) => item.id !== feedback.id) : [...prev, feedback];
         });
     }, []);
-
-    // 가려진 input file 을 trigger 하는 함수
-    const triggerFileInput = () => {
-        fileRef?.current?.click();
-    };
-
-    const removeImage = async (file: File) => {
-        setFiles((prevImages) => prevImages.filter((img) => img !== file));
-    };
 
     const isFormValid = useMemo(
         () => !isValid || rate === 0 || !value || !selectedCompanions,
@@ -154,6 +160,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         if (process) {
             try {
                 await deleteReview(res_id);
+                await deleteFiles(imageUrls);
                 router.replace(`/${res_id}`);
             } catch (error) {
                 openErrorModal();
@@ -179,23 +186,13 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
                         <Text typography="t5">사진첨부</Text>
 
                         <div className={styles.slide}>
-                            {files?.map((file, index) => (
-                                <div className={styles.slideImg} key={index}>
-                                    <Image
-                                        src={URL.createObjectURL(file)}
-                                        width={160}
-                                        height={160}
-                                        alt={`image${index}`}
-                                    />
-                                    <Button size="sm" role="round" onClick={() => removeImage(file)}>
-                                        x
-                                    </Button>
-                                </div>
+                            {imageUrls?.map((file, index) => (
+                                <PreviewImage imageUrl={file} key={index} removeImage={removeImage} />
                             ))}
                         </div>
 
-                        <div onClick={triggerFileInput} className={styles.addImg}>
-                            사진을 추가해보세요 ({files.length}/5)
+                        <div onClick={() => fileRef?.current?.click()} className={styles.addImg}>
+                            사진을 추가해보세요 ({imageUrls.length}/5)
                         </div>
 
                         <Input bottomText={alertMessage && alertMessage}>

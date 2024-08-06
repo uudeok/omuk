@@ -20,3 +20,5 @@ export const resizeFile = (file: File): Promise<Blob> => {
         );
     });
 };
+
+// 반환 타입으로는 base64, blob or file (default type is base64)

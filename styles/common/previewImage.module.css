@@ -1,0 +1,29 @@
+.slideImg {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px; /* 이미지 간격 */
+}
+
+.slideImg img {
+    object-fit: cover; /* 이미지가 너비와 높이에 맞춰집니다 */
+}
+
+.slideImg button {
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.slideImg button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
