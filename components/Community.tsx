@@ -69,7 +69,7 @@ const Community = ({ initialReviews }: Props) => {
                 setIsEnabled(false);
             }
         },
-        [isEnabled, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading]
+        [isEnabled, hasNextPage, isFetchingNextPage, fetchNextPage]
     );
 
     const { observerEl } = useInfiniteScroll({

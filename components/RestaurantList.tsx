@@ -39,7 +39,7 @@ const RestaurantList = () => {
 
             <List>
                 {resData.map((res: ResponseType) => (
-                    <Link key={res.id} prefetch href={`/${res.id}`}>
+                    <Link key={res.id} prefetch={true} href={`/${res.id}`}>
                         <ListBox
                             top={
                                 <div className={styles.information}>

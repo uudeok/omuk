@@ -3,6 +3,7 @@ import withBundleAnalyzer from '@next/bundle-analyzer';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     swcMinify: true,
+    reactStrictMode: false,
 
     // 서버가 클라이언트로 반환하는 응답에 대해 캐시 헤더를 강제로 설정
     headers: async () => {

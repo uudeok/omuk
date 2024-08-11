@@ -55,6 +55,8 @@ export const useS3FileUploader = (options?: Options) => {
     const uploadFiles = useCallback(async () => {
         if (files.length === 0) return;
 
+        const startTime = performance.now(); // 업로드 시작 시간 기록
+
         try {
             const uploadPromises = files.map(async (file) => {
                 const resizedFile = await resizeFile(file); // 파일 리사이즈 최적화 작업
@@ -91,6 +93,10 @@ export const useS3FileUploader = (options?: Options) => {
             results
                 .filter((result) => result.status === 'rejected')
                 .forEach((result) => console.error('업로드 실패:', (result as PromiseRejectedResult).reason));
+
+            const endTime = performance.now(); // 업로드 종료 시간 기록
+            const uploadTime = endTime - startTime; // 업로드에 걸린 시간 계산
+            console.log(`업로드 완료, 걸린 시간: ${uploadTime}ms`);
 
             return urls;
         } catch (error: any) {

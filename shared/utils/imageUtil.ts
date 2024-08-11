@@ -4,8 +4,8 @@ export const resizeFile = (file: File): Promise<Blob> => {
     return new Promise((resolve, reject) => {
         Resizer.imageFileResizer(
             file,
-            450, // 최대 너비
-            450, // 최대 높이
+            350, // 최대 너비
+            350, // 최대 높이
             'webp', // 포맷
             100, // 품질
             0, // 회전 각도

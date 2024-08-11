@@ -140,7 +140,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         if (existingImages) {
             setImageUrls(existingImages.images_url);
         }
-    }, [existingImages]);
+    }, [existingImages, setImageUrls]);
 
     const handleFeedbackClick = useCallback((feedback: FeedBackItem, isPositive: boolean) => {
         const setSelected = isPositive ? setSelectedPositives : setSelectedNegatives;
