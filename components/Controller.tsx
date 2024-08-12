@@ -25,11 +25,12 @@ const Controller = () => {
                 내 페이지
             </Button>
 
-            <Link prefetch={true} href="/community">
-                <Button size="lg" role="round">
-                    커뮤니티
-                </Button>
-            </Link>
+            {/* <Link prefetch={true} href="/community"> */}
+
+            <Button size="lg" role="round" onClick={() => redirectPage('community')}>
+                커뮤니티
+            </Button>
+            {/* </Link> */}
         </div>
     );
 };

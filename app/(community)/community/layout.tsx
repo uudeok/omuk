@@ -47,7 +47,7 @@ const CommunityLayout = ({ children }: { children: ReactNode }) => {
                         size="sm"
                         className={idx === selected ? styles.selected : ''}
                         onClick={() => {
-                            router.push(`${button.path}`);
+                            router.push(button.path);
                             setSelected(idx);
                         }}
                     >
