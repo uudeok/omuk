@@ -365,115 +365,17 @@ export const getPreviewReviewData = async (res_id: string): Promise<CommunityRev
     return processedData;
 };
 
-/// keyword 별로 리뷰 총 갯수 가져오기
-
-export const getPublicReviewCountByKeyword = async (keyword: string) => {
+export const findUserReview = async (res_id: string) => {
     const supabase = createClient();
-
-    const { data, error }: any = await supabase
-        .from('review')
-        .select(
-            `*,
-        profiles!inner (id, username, avatar_url, email, expose)`
-        )
-        .eq('profiles.expose', 'public')
-        .contains('positive', [keyword])
-        .explain({ format: 'json', analyze: true });
-
-    if (error) {
-        throw new Error(error.message);
-    }
-
-    const actualRows = data[0].Plan.Plans[0]['Actual Rows'];
-
-    return actualRows;
-};
-
-export const getFolloweeReviewCountByKeyword = async (keyword: string) => {
-    const supabase = createClient();
-
-    const followeeIds = await getFollowerUserIds();
-
-    if (followeeIds && followeeIds.length === 0) {
-        return 0;
-    }
-
-    const { data, error }: any = await supabase
-        .from('review')
-        .select(
-            `*,
-        profiles!inner (id, username, avatar_url, email, expose)`
-        )
-        .in('user_id', followeeIds!)
-        .not('profiles.expose', 'eq', 'privacy')
-        .contains('positive', [keyword])
-        .explain({ format: 'json', analyze: true });
-
-    if (error) {
-        throw new Error(error.message);
-    }
-
-    const actualRows = data[0].Plan.Plans[0]['Actual Rows'];
-
-    return actualRows;
-};
-
-export const getMarkerData = async (resData: ResponseType) => {
-    const supabase = createClient();
-
     const { data: userData } = await supabase.auth.getSession();
 
-    const user_id = userData?.session?.user.id;
+    const user_id = userData?.session?.user.id || null;
 
-    const { data, error } = await supabase.from('review').select('*').eq('user_id', user_id).eq('res_id', resData.id);
+    const { data, error } = await supabase.from('review').select('*').eq('user_id', user_id).eq('res_id', res_id);
 
     if (error) {
         throw new Error(error.message);
     }
 
     return data;
-};
-
-//'public' 으로 설정한 유저의 리뷰 총 갯수를 가져온다.
-export const getReviewTotalRows = async () => {
-    const supabase = createClient();
-
-    const { data, error }: any = await supabase
-        .from('review')
-        .select(
-            `*,
-        profiles!inner (id, username, avatar_url, email, expose)`
-        )
-        .eq('profiles.expose', 'public')
-        .explain({ format: 'json', analyze: true });
-
-    if (error) {
-        throw new Error(error.message);
-    }
-    const actualRows = data[0].Plan.Plans[0]['Actual Rows'];
-
-    return actualRows;
-};
-
-// STEP2. 리뷰 테이블에서 해당 유저 ids 가 작성한 리뷰 갯수를 가져온다.
-export const getFollowReviewTotalRows = async () => {
-    const supabase = createClient();
-
-    const followeeIds = await getFollowerUserIds();
-
-    if (followeeIds && followeeIds.length === 0) {
-        return 0;
-    }
-    const { data, error }: any = await supabase
-        .from('review')
-        .select('*')
-        .in('user_id', followeeIds!)
-        .explain({ format: 'json', analyze: true });
-
-    if (error) {
-        throw new Error(error.message);
-    }
-    const actualRows = data[0].Plan.Plans[0]['Actual Rows'];
-
-    return actualRows;
 };

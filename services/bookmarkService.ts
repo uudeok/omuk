@@ -135,3 +135,23 @@ export const getUserBookmarksPaginated = async (pageParam: number, pageSize: num
 
     return bookmarkList;
 };
+
+export const findUserBookmark = async (res_id: string) => {
+    const supabase = createClient();
+    const { data: userData } = await supabase.auth.getSession();
+
+    const user_id = userData?.session?.user.id || null;
+
+    const { data, error } = await supabase
+        .from('bookmark')
+        .select('*')
+        .eq('user_id', user_id)
+        .eq('res_id', res_id)
+        .maybeSingle();
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return data;
+};

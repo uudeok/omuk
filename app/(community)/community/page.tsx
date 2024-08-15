@@ -18,7 +18,7 @@ const getReivewDatas = async (pageParam: number, pageSize: number, filter?: stri
         {
             headers: {
                 apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-                Authorization: `Bearer ${access_token}`,
+                // Authorization: `Bearer ${access_token}`,
                 Range: `${pageParam}-${pageSize}`,
             },
             cache: 'no-store',

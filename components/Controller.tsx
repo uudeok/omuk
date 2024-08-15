@@ -5,7 +5,6 @@ import { useContext } from 'react';
 import Button from './common/Button';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '@/shared/context/AuthProvider';
-import Link from 'next/link';
 
 const Controller = () => {
     const router = useRouter();
@@ -25,12 +24,9 @@ const Controller = () => {
                 내 페이지
             </Button>
 
-            {/* <Link prefetch={true} href="/community"> */}
-
-            <Button size="lg" role="round" onClick={() => redirectPage('community')}>
+            <Button size="lg" role="round" onClick={() => router.push('/community')}>
                 커뮤니티
             </Button>
-            {/* </Link> */}
         </div>
     );
 };

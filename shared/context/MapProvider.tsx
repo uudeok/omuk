@@ -15,8 +15,8 @@ import { PaginationType, ResponseType, IMarker } from '../types';
 
 type MapType = {
     mapEl: RefObject<HTMLDivElement> | null;
-    markers: IMarker[];
-    setMarkers: Dispatch<SetStateAction<IMarker[]>>;
+    markers: IMarker[] | kakao.maps.Marker[];
+    setMarkers: Dispatch<SetStateAction<IMarker[]>> | Dispatch<SetStateAction<kakao.maps.Marker[]>>;
     pagination: PaginationType | null;
     setPagination: Dispatch<SetStateAction<PaginationType | null>>;
     map: kakao.maps.Map | undefined;

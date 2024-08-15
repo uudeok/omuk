@@ -1,76 +1,36 @@
 'use client';
 
-import { QueryClient, QueryClientProvider, isServer } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { ReactNode } from 'react';
-import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental';
+import { useState } from 'react';
 
-function makeQueryClient() {
-    return new QueryClient({
-        defaultOptions: {
-            queries: {
-                // With SSR, we usually want to set some default staleTime
-                // above 0 to avoid refetching immediately on the client
-                retry: 1,
-            },
-        },
-    });
-}
-let browserQueryClient: QueryClient | undefined = undefined;
+const ReactQueryProvider = ({ children }: { children: React.ReactNode }) => {
+    const [queryClient] = useState(
+        () =>
+            new QueryClient({
+                defaultOptions: {
+                    queries: {
+                        retry: 1,
 
-function getQueryClient() {
-    if (isServer) {
-        // Server: always make a new query client
-        return makeQueryClient();
-    } else {
-        // Browser: make a new query client if we don't already have one
-        // This is very important, so we don't re-make a new client if React
-        // suspends during the initial render. This may not be needed if we
-        // have a suspense boundary BELOW the creation of the query client
-        if (!browserQueryClient) browserQueryClient = makeQueryClient();
-        return browserQueryClient;
-    }
-}
+                        // SSR을 위해서는 staleTime을 설정해야 합니다.
+                        /* 
+                         staleTime이 0으로 설정할 경우 서버에서 prefetch이후 
+                         클라이언트에서 hydrate하는 과정에서 
+                        한번 더 fetch가 발생하고 이는 잠재적인 불일치를 야기합니다.
+                        */
 
-export default function ReactQueryProvider({ children }: { children: ReactNode }) {
-    // NOTE: Avoid useState when initializing the query client if you don't
-    //       have a suspense boundary between this and the code that may
-    //       suspend because React will throw away the client on the initial
-    //       render if it suspends and there is no boundary
-    const queryClient = getQueryClient();
+                        staleTime: 60 * 1000,
+                    },
+                },
+            })
+    );
 
     return (
         <QueryClientProvider client={queryClient}>
-            <ReactQueryStreamedHydration>{children}</ReactQueryStreamedHydration>
+            {children}
             <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     );
-}
+};
 
-// 'use client';
-
-// import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-// import { useState } from 'react';
-
-// const ReactQueryProvider = ({ children }: { children: React.ReactNode }) => {
-//     const [queryClient] = useState(
-//         () =>
-//             new QueryClient({
-//                 defaultOptions: {
-//                     queries: {
-//                         retry: 1,
-//                     },
-//                 },
-//             })
-//     );
-
-//     return (
-//         <QueryClientProvider client={queryClient}>
-//             {children}
-//             <ReactQueryDevtools initialIsOpen={false} />
-//         </QueryClientProvider>
-//     );
-// };
-
-// export default ReactQueryProvider;
+export default ReactQueryProvider;

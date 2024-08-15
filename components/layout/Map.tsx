@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react';
 import { useGeoLocation } from '@/hooks';
 
 const Map = () => {
-    const { mapEl, setMap } = useMap();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const { mapEl, setMap } = useMap();
     const { curLocation } = useGeoLocation();
 
     useEffect(() => {
