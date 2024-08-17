@@ -6,7 +6,7 @@ import Icons from './common/Icons';
 import { useState } from 'react';
 import Text from './common/Text';
 import { useCalendar } from '@/hooks';
-import { ReviewType, getReviewList } from '@/services/reviewService';
+import { ReviewType, getReviewsByMonth } from '@/services/reviewService';
 import { cutText } from '@/shared/utils/stringUtil';
 import Review from './Review';
 import { useQuery } from '@tanstack/react-query';
@@ -20,14 +20,22 @@ const MyCalendar = () => {
     const displayDate = dayjs(selectedDate).format('YYYY-MM-DD');
 
     const { data: reviewList } = useQuery({
-        queryKey: ['reviewList'],
-        queryFn: getReviewList,
+        queryKey: ['reviewByMonth', curYear, curMonth],
+        queryFn: () => getReviewsByMonth(curYear, curMonth),
     });
 
-    const handleReview = (date: Date) => {
+    const handleSelectedDate = (date: Date) => {
         setSelectedDate(date);
         const result = reviewList?.filter((review) => dayjs(review.visitDate).isSame(date));
         setSelectedReviewList(result);
+    };
+
+    const isNextMonthDisabled = () => {
+        return curMonth >= new Date().getMonth();
+    };
+
+    const checkIfNotCurrentMonth = (date: Date) => {
+        return curMonth !== date.getMonth();
     };
 
     return (
@@ -41,7 +49,10 @@ const MyCalendar = () => {
                     <div className={styles.monthLabel}>
                         {curYear}년 {curMonth + 1}월
                     </div>
-                    <div className={styles.controller} onClick={nextController}>
+                    <div
+                        className={`${styles.controller} ${isNextMonthDisabled() ? styles.disabled : ''}`}
+                        onClick={nextController}
+                    >
                         <Icons.AngleRight width={15} />
                     </div>
                 </div>
@@ -68,8 +79,8 @@ const MyCalendar = () => {
                                             <button
                                                 className={`${styles.dateCell} ${review && styles.visited} ${
                                                     selectedDate === row.date && styles.selected
-                                                }`}
-                                                onClick={() => handleReview(row.date)}
+                                                } ${checkIfNotCurrentMonth(row.date) && styles.notCurrent}`}
+                                                onClick={() => handleSelectedDate(row.date)}
                                                 disabled={row.date > new Date()}
                                             >
                                                 {row.date.getDate()}

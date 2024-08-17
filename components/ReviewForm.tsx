@@ -87,6 +87,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
             }
         },
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['review', res_id] });
             router.replace(`/${res_id}`);
         },
         onError: (error) => {
@@ -164,6 +165,8 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
                 router.replace(`/${res_id}`);
             } catch (error) {
                 openErrorModal();
+            } finally {
+                queryClient.invalidateQueries({ queryKey: ['review', res_id] });
             }
         }
     };

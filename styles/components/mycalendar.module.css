@@ -7,6 +7,10 @@
     margin: 5px;
 }
 
+.disabled {
+    display: none;
+}
+
 .calendar {
     display: flex;
     flex-direction: column;
@@ -69,4 +73,8 @@
     background-color: var(--mainColorDk);
     border-radius: 50%;
     color: white;
+}
+
+.notCurrent {
+    color: var(--grey400);
 }

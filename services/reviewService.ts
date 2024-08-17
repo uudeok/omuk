@@ -2,7 +2,6 @@ import { createClient } from '@/shared/lib/supabase/brower-client';
 import { ProfileType } from './userService';
 import { ReviewLikesType } from './reviewLikeService';
 import { getFollowerUserIds } from './followService';
-import { ResponseType } from '@/shared/types';
 
 export type ReviewType = {
     rate: number;
@@ -147,24 +146,6 @@ export const deleteReview = async (res_id: string) => {
     if (error) {
         throw new Error(error.message);
     }
-};
-
-// 유저_id 로 작성한 모든 리뷰 가져오기
-export const getReviewList = async (): Promise<ReviewType[] | undefined | []> => {
-    const supabase = createClient();
-    const { data } = await supabase.auth.getSession();
-
-    if (!data.session) return;
-
-    const user_id = data.session.user.id;
-
-    const { data: reviewList, error } = await supabase.from('review').select('*').eq('user_id', user_id).select();
-
-    if (error) {
-        throw new Error(error.message);
-    }
-
-    return reviewList;
 };
 
 // review 데이터 총 갯수 가져오기
@@ -378,4 +359,28 @@ export const findUserReview = async (res_id: string) => {
     }
 
     return data;
+};
+
+export const getReviewsByMonth = async (year: number, month: number) => {
+    const supabase = createClient();
+    const { data: userData } = await supabase.auth.getSession();
+
+    const user_id = userData?.session?.user.id;
+
+    const startDate = new Date(Date.UTC(year, month, 1)).toISOString();
+    const endDate = new Date(Date.UTC(year, month + 1, 0, 23, 59, 59)).toISOString();
+
+    const { data: reviewList, error } = await supabase
+        .from('review')
+        .select('*')
+        .eq('user_id', user_id)
+        .gte('visitDate', startDate)
+        .lte('visitDate', endDate)
+        .select();
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return reviewList;
 };

@@ -103,11 +103,13 @@
     padding: 5px;
 }
 
-.menuBtn {
+.menuBtn,
+.menuBtn svg {
     cursor: pointer;
 
     &:hover {
         color: var(--mainColorDk);
+        fill: var(--mainColorDk);
     }
 }
 

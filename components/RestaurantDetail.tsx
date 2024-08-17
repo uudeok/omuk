@@ -46,6 +46,8 @@ const RestaurantDetail = ({ resData, res_id }: Props) => {
         enabled: !!session,
     });
 
+    console.log(reviewData);
+
     const { data: reviewPreview } = useQuery({
         queryKey: ['previewReview', res_id],
         queryFn: () => getPreviewReviewData(res_id),

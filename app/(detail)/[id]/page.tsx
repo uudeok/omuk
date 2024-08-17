@@ -2,9 +2,7 @@ import RestaurantDetail from '@/components/RestaurantDetail';
 import { ParamType } from '@/shared/types';
 
 export const getDetail = async (id: string) => {
-    const response = await fetch(`https://place.map.kakao.com/m/main/v/${id}/`, {
-        cache: 'no-store',
-    });
+    const response = await fetch(`https://place.map.kakao.com/m/main/v/${id}/`);
 
     if (!response.ok) {
         throw new Error('데이터 가져오기 실패');
