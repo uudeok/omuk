@@ -114,7 +114,6 @@ const Follow = () => {
                     />
                 </Input>
             </form>
-
             {hasSearched && (
                 <div>
                     {searchLoading ? (
@@ -157,6 +156,7 @@ const Follow = () => {
                     )}
                 </div>
             )}
+
             <div className={styles.follow}>
                 <List>
                     <ListRow

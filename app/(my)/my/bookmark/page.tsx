@@ -20,9 +20,11 @@ const MyBookmark = () => {
         hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
+        isFetching,
     } = useInfiniteQuery({
         queryKey: ['bookmarkList'],
         queryFn: ({ pageParam }) => getUserBookmarksPaginated(pageParam, PAGE_SIZE),
+        staleTime: 0,
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
             if (lastPage && lastPage.length === PAGE_SIZE) {
@@ -47,8 +49,8 @@ const MyBookmark = () => {
 
             <div>
                 <List>
-                    {bookmarkList.length === 0 ? (
-                        <EmptyState label="아직 즐겨찾기한 곳이 없어요" />
+                    {!isFetching && bookmarkList.length === 0 ? (
+                        <EmptyState label="아직 즐겨찾기한 곳이 없어요😅" />
                     ) : (
                         bookmarkList.map((item: BookmarkType) => (
                             <ListBox

@@ -14,10 +14,11 @@ const MyReviewList = () => {
     const router = useRouter();
 
     const {
-        data: reviewList,
+        data: reviewList = [],
         hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
+        isFetching,
     } = useInfiniteQuery({
         queryKey: ['paginatedReview'],
         queryFn: ({ pageParam }) => getPaginatedUserReviews(pageParam, PAGE_SIZE),
@@ -44,8 +45,8 @@ const MyReviewList = () => {
             </Button>
 
             <div>
-                {reviewList && reviewList.length === 0 ? (
-                    <EmptyState label="작성한 리뷰가 없어요" />
+                {!isFetching && reviewList.length === 0 ? (
+                    <EmptyState label="아직 작성한 리뷰가 없어요😅" />
                 ) : (
                     <Review reviewList={reviewList as ReviewType[]} />
                 )}

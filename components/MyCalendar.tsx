@@ -30,10 +30,19 @@ const MyCalendar = () => {
         setSelectedReviewList(result);
     };
 
+    // 현재 월보다 이후의 월을 선택하지 못하도록 한다
     const isNextMonthDisabled = () => {
-        return curMonth >= new Date().getMonth();
+        const date = new Date();
+        const currentYear = date.getFullYear();
+        const currentMonth = date.getMonth() + 1;
+
+        const selectedLastDay = new Date(curYear, curMonth + 1, 0);
+        const currentLastDay = new Date(currentYear, currentMonth, 0);
+
+        return selectedLastDay >= currentLastDay;
     };
 
+    // 달력에 표시된 날짜 중에서, 현재 선택된 월에 속하지 않는 날짜를 구분하기 위한 함수
     const checkIfNotCurrentMonth = (date: Date) => {
         return curMonth !== date.getMonth();
     };

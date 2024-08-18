@@ -32,6 +32,7 @@ const MyPage = () => {
             queryKey: [data.queryKey],
             queryFn: () => data.queryFn(),
         })),
+
         combine: (results) => {
             return {
                 data: results.map((result) => result.data),
