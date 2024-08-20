@@ -1,0 +1,61 @@
+.reviewCard {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+
+    padding: 5px;
+}
+
+.cardContent {
+    padding: 10px;
+}
+
+.cardHeader span:nth-child(1) {
+    flex: 1;
+    line-height: 1.2;
+}
+
+.cardHeader span:nth-child(2) {
+    width: 80px;
+    text-align: right;
+}
+
+.previewImg {
+    position: relative;
+    width: 100%;
+    max-height: 150px;
+    overflow: hidden;
+    /* margin-top: 10px; */
+    margin-bottom: 15px;
+}
+
+.sliderItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+}
+
+.reviewImage {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+
+    margin: 0 auto;
+}
+
+.positiveBadge {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+
+    padding: 5px;
+}
+
+.visitDate {
+    text-align: right;
+    padding: 5px;
+}

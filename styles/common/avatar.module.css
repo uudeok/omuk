@@ -9,8 +9,22 @@
     border-radius: 50px;
     margin-left: 5px;
     cursor: pointer;
+    transition: opacity 0.3s ease;
 
     &:hover {
         opacity: 0.8;
     }
+}
+
+.avatar > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.detailInfo {
+    display: flex;
+    gap: 15px;
+    margin-top: 3px;
+    font-size: 12px;
+    color: #888; /* 회색으로 부드러운 느낌 */
 }

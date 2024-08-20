@@ -60,7 +60,7 @@ const getFollowerReviewsWithImages = async (
         `
         )
         .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
-        .order('created_at', { ascending: false })
+        .order('visitDate', { ascending: false })
         .in('user_id', followeeIds!)
         .not('profiles.expose', 'eq', 'privacy');
 

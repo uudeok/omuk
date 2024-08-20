@@ -17,6 +17,7 @@ export type ReviewType = {
     review_images?: ReviewImagesType[];
     profiles?: ProfileType;
     review_likes?: ReviewLikesType[];
+    address?: string;
 };
 
 export type ReviewImagesType = {
@@ -56,6 +57,7 @@ export const postReview = async ({
     placeName,
     visitDate,
     companions,
+    address,
 }: ReviewType) => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
@@ -77,6 +79,7 @@ export const postReview = async ({
                 visitDate: visitDate,
                 companions: companions,
                 user_id: user_id,
+                address: address,
             },
         ])
         .select();
@@ -100,6 +103,7 @@ export const updateReview = async ({
     placeName,
     visitDate,
     companions,
+    address,
 }: ReviewType) => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
@@ -119,6 +123,7 @@ export const updateReview = async ({
             placeName: placeName,
             visitDate: visitDate,
             companions: companions,
+            address: address,
         })
         .eq('user_id', user_id)
         .eq('res_id', res_id)
@@ -148,8 +153,8 @@ export const deleteReview = async (res_id: string) => {
     }
 };
 
-// review 데이터 총 갯수 가져오기
-export const getReviewTotalReviews = async () => {
+// user review 데이터 총 갯수 가져오기
+export const getUserReviewCount = async () => {
     const supabase = createClient();
     const { data } = await supabase.auth.getSession();
 
@@ -161,6 +166,24 @@ export const getReviewTotalReviews = async () => {
         .from('review')
         .select('*')
         .eq('user_id', user_id)
+        .explain({ format: 'json', analyze: true });
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    const actualRows = reviewData[0].Plan.Plans[0]['Actual Rows'];
+
+    return actualRows;
+};
+
+// 음식점에 달린 review 총 갯수 가져오기
+export const getRestaurantReviewCount = async (res_id: string) => {
+    const supabase = createClient();
+    const { data: reviewData, error }: any = await supabase
+        .from('review')
+        .select('*')
+        .eq('res_id', res_id)
         .explain({ format: 'json', analyze: true });
 
     if (error) {
@@ -243,7 +266,7 @@ review_likes (user_id, review_id)
     const { data: reviewList, error } = await query
         .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
         // .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
-        .order('created_at', { ascending: false })
+        .order('visitDate', { ascending: false })
         .eq('profiles.expose', 'public');
 
     if (error) {
@@ -294,7 +317,7 @@ export const getFollowerReviewsWithImages = async (
 
     const { data: reviews, error: reviewError } = await query
         .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
-        .order('created_at', { ascending: false })
+        .order('visitDate', { ascending: false })
         .in('user_id', followeeIds!)
         .not('profiles.expose', 'eq', 'privacy');
 
@@ -318,7 +341,11 @@ interface ReviewImage {
 }
 
 // res detail 폼에서 리뷰 보여주기 갯수를 변수로 두기
-export const getPreviewReviewData = async (res_id: string): Promise<CommunityReviewType[]> => {
+export const getReviewList = async (
+    res_id: string,
+    pageParam: number,
+    pageSize: number
+): Promise<CommunityReviewType[]> => {
     const supabase = createClient();
 
     const { data, error } = await supabase
@@ -329,8 +356,8 @@ export const getPreviewReviewData = async (res_id: string): Promise<CommunityRev
     profiles!inner (id, username, avatar_url, email),
     review_likes (user_id, review_id)`
         )
-        .order('created_at', { ascending: false })
-        .range(0, 3)
+        .order('visitDate', { ascending: false })
+        .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
         .eq('profiles.expose', 'public')
         .eq('res_id', res_id);
 

@@ -7,7 +7,7 @@ import Text from '@/components/common/Text';
 import Icons from '@/components/common/Icons';
 import { getBookmarkTotalRows } from '@/services/bookmarkService';
 import { useQueries } from '@tanstack/react-query';
-import { getReviewTotalReviews } from '@/services/reviewService';
+import { getUserReviewCount } from '@/services/reviewService';
 import LoadingBar from '@/components/common/LoadingBar';
 import dynamic from 'next/dynamic';
 import Follow from '@/components/Follow';
@@ -24,7 +24,7 @@ const MyPage = () => {
 
     const fetchData = [
         { queryKey: 'bookmarkTotalRows', queryFn: getBookmarkTotalRows },
-        { queryKey: 'reviewTotalRows', queryFn: getReviewTotalReviews },
+        { queryKey: 'reviewTotalRows', queryFn: getUserReviewCount },
     ];
 
     const combinedQueries = useQueries({

@@ -19,8 +19,8 @@ export const makeAdress = (address: AddressType) => {
 };
 
 export const calculateScore = (feedback: FeedbackType) => {
-    if (feedback.scorecnt === 0) return 0;
-    const score = feedback.scoresum / feedback.scorecnt;
+    if (feedback?.scorecnt === 0 || undefined) return 0;
+    const score = feedback?.scoresum / feedback?.scorecnt;
     return score.toFixed(1);
 };
 

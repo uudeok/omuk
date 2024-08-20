@@ -22,6 +22,10 @@ import FillHeart from '../../assets/fillHeart.svg';
 import Heart from '../../assets/heart.svg';
 import FillBell from '../../assets/fillBell.svg';
 import Pencil from '../../assets/pencil.svg';
+import Filter from '../../assets/filter.svg';
+import Rotate from '../../assets/rotate.svg';
+import FillFilter from '../../assets/fillFilter.svg';
+import FillRotate from '../../assets/fillRotate.svg';
 
 const Icons = {
     AngleRight,
@@ -48,6 +52,10 @@ const Icons = {
     GreyStar,
     FillHeart,
     Phone,
+    Filter,
+    Rotate,
+    FillFilter,
+    FillRotate,
 };
 
 export default Icons;

@@ -5,7 +5,7 @@ import Button from '@/components/common/Button';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getPaginatedUserReviews, ReviewType } from '@/services/reviewService';
 import { useInfiniteScroll } from '@/hooks';
-import Review from '@/components/Review';
+import CompactReview from '@/components/CompactReview';
 import EmptyState from '@/components/common/EmptyState';
 
 const PAGE_SIZE = 15;
@@ -48,7 +48,7 @@ const MyReviewList = () => {
                 {!isFetching && reviewList.length === 0 ? (
                     <EmptyState label="아직 작성한 리뷰가 없어요😅" />
                 ) : (
-                    <Review reviewList={reviewList as ReviewType[]} />
+                    <CompactReview reviewList={reviewList as ReviewType[]} />
                 )}
             </div>
             <div ref={observerEl} />

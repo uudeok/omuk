@@ -20,7 +20,7 @@ type Props = {
     list: CommunityReviewType;
 };
 
-const ReviewCard = ({ list }: Props) => {
+const FeedReview = ({ list }: Props) => {
     const router = useRouter();
     const session = useContext(AuthContext);
 
@@ -116,4 +116,4 @@ const ReviewCard = ({ list }: Props) => {
     );
 };
 
-export default ReviewCard;
+export default FeedReview;

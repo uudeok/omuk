@@ -1,0 +1,70 @@
+.layout {
+    background-color: white;
+    width: 700px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    padding-bottom: 15px;
+    border-bottom: 1px solid lightgrey;
+    margin-bottom: 20px;
+}
+
+.title {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dropdown {
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.listItem {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.badgeContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.badge {
+    display: flex;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.footer {
+    margin-top: 30px;
+    padding: 10px;
+    display: flex;
+    /* border: 1px solid black; */
+    justify-content: center;
+}
+
+.footer button {
+    width: 300px;
+}
+
+.region {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}

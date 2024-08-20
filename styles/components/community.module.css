@@ -67,3 +67,27 @@
         color: white;
     }
 }
+
+/* .filterLayout {
+    padding: 10px;
+} */
+
+.filter {
+    display: flex;
+    cursor: pointer;
+    gap: 5px;
+
+    padding: 10px;
+}
+
+.badges {
+    border: 1px solid lightgray;
+    padding: 5px;
+    display: flex;
+    gap: 3px;
+    border-radius: 5px;
+
+    &:hover {
+        background-color: whitesmoke;
+    }
+}

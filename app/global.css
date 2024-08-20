@@ -121,6 +121,10 @@ a {
     text-decoration: none;
 }
 
+li {
+    list-style: none;
+}
+
 :root {
     --mainColor: #ffd55c;
     --mainColorDk: #fbc62e;

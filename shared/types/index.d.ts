@@ -67,7 +67,6 @@ export type FeedBackItem = {
     id: number;
     label: string;
     value: string;
-    selected: boolean;
 };
 
 export type FeedBackType = {

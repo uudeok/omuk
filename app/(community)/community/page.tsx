@@ -2,37 +2,34 @@ import { Suspense } from 'react';
 import { generateSkeletonCards, getMetadata } from '@/shared/utils';
 import Community from '@/components/Community';
 import { createClient } from '@/shared/lib/supabase/server-client';
-import { CommunityReviewType } from '@/services/reviewService';
-
-const URL = 'https://pzcyaccpdcqzgqwcutut.supabase.co/rest/v1';
 
 const getReivewDatas = async (pageParam: number, pageSize: number, filter?: string) => {
     const supabase = createClient();
 
-    const { data: userData } = await supabase.auth.getSession();
-    const access_token = userData.session?.access_token;
-    const user_id = userData.session?.user.id;
+    const { data: userData } = await supabase.auth.getUser();
+    const user_id = userData?.user?.id || null;
 
-    const response = await fetch(
-        `${URL}/review?select=*,review_images(images_url),profiles(id,username,avatar_url,email,expose),review_likes(user_id,review_id)&order=created_at.desc&profiles.expose=eq.public&or=(profiles.not.is.null)`,
-        {
-            headers: {
-                apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-                // Authorization: `Bearer ${access_token}`,
-                Range: `${pageParam}-${pageSize}`,
-            },
-            cache: 'no-store',
-        }
-    );
+    const { data: reviewList, error } = await supabase
+        .from('review')
+        .select(
+            `
+            *,
+            review_images (images_url),
+            profiles!inner (id, username, avatar_url, email, expose),
+            review_likes (user_id, review_id)
+            `
+        )
+        .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
+        .order('visitDate', { ascending: false })
+        .eq('profiles.expose', 'public');
 
-    if (!response.ok) {
-        throw new Error(response.statusText);
+    if (error) {
+        throw new Error(error.message);
     }
 
-    const result = await response.json();
-
+    // 사용자 ID가 있는 경우, 로그인한 상태로 좋아요 여부를 확인합니다.
     if (user_id) {
-        const reviewsWithLikes = result.map((review: CommunityReviewType) => {
+        const reviewsWithLikes = reviewList.map((review) => {
             const likedByUser = review.review_likes.some((like: { user_id: string }) => like.user_id === user_id);
             return {
                 ...review,
@@ -41,12 +38,14 @@ const getReivewDatas = async (pageParam: number, pageSize: number, filter?: stri
         });
         return reviewsWithLikes;
     }
-    const reviewWithoutLikes = result.map((review: CommunityReviewType) => ({
+
+    // 로그인하지 않은 경우, 모든 리뷰에 대해 likedByUser 값을 false로 설정합니다.
+    const reviewsWithoutLikes = reviewList.map((review) => ({
         ...review,
         likedByUser: false,
     }));
 
-    return reviewWithoutLikes;
+    return reviewsWithoutLikes;
 };
 
 export const generateMetadata = async () => {

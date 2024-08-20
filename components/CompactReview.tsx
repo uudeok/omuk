@@ -15,7 +15,7 @@ type Props = {
     reviewList: ReviewType[];
 };
 
-const Review = ({ reviewList }: Props) => {
+const CompactReview = ({ reviewList }: Props) => {
     const router = useRouter();
     const [rate, setRate] = useState<number>(0);
 
@@ -49,4 +49,4 @@ const Review = ({ reviewList }: Props) => {
     );
 };
 
-export default Review;
+export default CompactReview;

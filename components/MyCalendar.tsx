@@ -8,7 +8,7 @@ import Text from './common/Text';
 import { useCalendar } from '@/hooks';
 import { ReviewType, getReviewsByMonth } from '@/services/reviewService';
 import { cutText } from '@/shared/utils/stringUtil';
-import Review from './Review';
+import CompactReview from './CompactReview';
 import { useQuery } from '@tanstack/react-query';
 
 const MyCalendar = () => {
@@ -116,7 +116,7 @@ const MyCalendar = () => {
                 {selectedDate && selectedReivewList && selectedReivewList.length === 0 && (
                     <Text typography="t5">{displayDate} 리뷰가 없어요</Text>
                 )}
-                {selectedReivewList && <Review reviewList={selectedReivewList} />}
+                {selectedReivewList && <CompactReview reviewList={selectedReivewList} />}
             </div>
         </div>
     );

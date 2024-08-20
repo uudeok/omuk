@@ -27,6 +27,7 @@ export const generateMetadata = async ({ params: { id } }: ParamType) => {
 
 const DetailLayout = async ({ children, params: { id } }: PropsType) => {
     const resData = await getDetail(id);
+
     const { basicInfo } = resData;
 
     return (

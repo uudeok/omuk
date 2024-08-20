@@ -18,13 +18,14 @@ import { FeedBackItem } from '@/shared/types';
 import { deleteReview, getReviewData, postReview, updateReview } from '@/services/reviewService';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Modal from './common/Modal';
-import { initializeDate } from '@/shared/utils';
+import { initializeDate, makeAdress } from '@/shared/utils';
 import { getImageData, updateImages, uploadImages } from '@/services/imageService';
 import { AuthContext } from '@/shared/context/AuthProvider';
 import Spinner from './common/Spinner';
 import dynamic from 'next/dynamic';
 import PreviewImage from './common/PreviewImage';
 import { updateImagesUrls } from '@/services/reviewImageService';
+import useResStore from '@/shared/lib/store/useResStore';
 
 const AlertModal = dynamic(() => import('@/components/modal/AlertModal'));
 const CalendarModal = dynamic(() => import('@/components/modal/CalendarModal'));
@@ -34,6 +35,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
     const session = useContext(AuthContext);
     const router = useRouter();
     const fileRef = useRef<HTMLInputElement>(null);
+    const { resData } = useResStore();
 
     const { handleFileInputChange, uploadFiles, alertMessage, imageUrls, setImageUrls, deleteFiles } =
         useS3FileUploader({
@@ -75,6 +77,7 @@ const ReviewForm = ({ res_id, resName }: { res_id: string; resName: string }) =>
         visitDate: selectedDate,
         companions: selectedCompanions,
         content: value,
+        address: makeAdress(resData.basicInfo?.address),
     };
 
     // Review 작성
