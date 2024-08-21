@@ -11,17 +11,12 @@ import Button from './common/Button';
 import Text from './common/Text';
 import { useInput } from '@/hooks';
 import { searchUserData, ProfileType } from '@/services/userService';
-import {
-    checkFollowing,
-    getFollowerTotalRows,
-    getFollowingTotalRows,
-    requestFollow,
-    requestUnFollow,
-} from '@/services/followService';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { checkFollowing, requestFollow, requestUnFollow } from '@/services/followService';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '@/shared/context/AuthProvider';
 import Spinner from './common/Spinner';
+import { UserDetailType } from '@/services/userDetailService';
 
 const Follow = () => {
     const queryClient = useQueryClient();
@@ -34,17 +29,7 @@ const Follow = () => {
     const [profile, setProfile] = useState<ProfileType | null>(null);
     const [hasFollow, setHasFollow] = useState<boolean>(false);
 
-    // 팔로잉 수 불러옴
-    const { data: followingTotalRows } = useQuery({
-        queryKey: ['followingTotalRows'],
-        queryFn: getFollowingTotalRows,
-    });
-
-    // 팔로워 수 불러옴 status 상관없음
-    const { data: followerTotalRows } = useQuery({
-        queryKey: ['followerTotalRows', 'all'],
-        queryFn: () => getFollowerTotalRows(),
-    });
+    const userData = queryClient.getQueryData(['userData']) as UserDetailType;
 
     const followMutation = useMutation({
         mutationFn: async () => {
@@ -52,7 +37,12 @@ const Follow = () => {
             return requestFollow({ requester_id: session.user.id, requestee_id: profile.id });
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['followingTotalRows'] });
+            queryClient.setQueryData(['userData'], (oldData: UserDetailType | undefined) => {
+                if (oldData) {
+                    return { ...oldData, following_count: oldData.following_count + 1 };
+                }
+                return oldData;
+            });
             setHasFollow(true);
         },
     });
@@ -63,7 +53,12 @@ const Follow = () => {
             return requestUnFollow(profile.id);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['followingTotalRows'] });
+            queryClient.setQueryData(['userData'], (oldData: UserDetailType | undefined) => {
+                if (oldData) {
+                    return { ...oldData, following_count: oldData.following_count - 1 };
+                }
+                return oldData;
+            });
             setHasFollow(false);
         },
     });
@@ -162,12 +157,12 @@ const Follow = () => {
                     <ListRow
                         onClick={() => router.push('/my/follower')}
                         left={<Text typography="st3">팔로워</Text>}
-                        right={followerTotalRows ? `${followerTotalRows}명` : '0명'}
+                        right={userData.follower_count > 0 ? `${userData.follower_count}명` : '0명'}
                     />
                     <ListRow
                         onClick={() => router.push('/my/following')}
                         left={<Text typography="st3">팔로잉</Text>}
-                        right={followingTotalRows ? `${followingTotalRows}명` : '0명'}
+                        right={userData.following_count > 0 ? `${userData.following_count}명` : '0명'}
                     />
                 </List>
             </div>

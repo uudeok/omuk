@@ -90,30 +90,6 @@ export const getBookmarkList = async () => {
     return bookmarkList;
 };
 
-// bookmark 데이터 총 갯수 가져오기
-export const getBookmarkTotalRows = async () => {
-    const supabase = createClient();
-    const { data } = await supabase.auth.getSession();
-
-    if (!data.session) return;
-
-    const user_id = data.session.user.id;
-
-    const { data: bookmarkData, error }: any = await supabase
-        .from('bookmark')
-        .select('*')
-        .eq('user_id', user_id)
-        .explain({ format: 'json', analyze: true });
-
-    if (error) {
-        throw new Error(error.message);
-    }
-
-    const actualRows = bookmarkData[0].Plan.Plans[0]['Actual Rows'];
-
-    return actualRows;
-};
-
 // // 사용자에 대한 북마크 목록을 페이지 단위로 가져오기
 export const getUserBookmarksPaginated = async (pageParam: number, pageSize: number) => {
     const supabase = createClient();

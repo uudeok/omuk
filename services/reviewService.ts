@@ -153,37 +153,14 @@ export const deleteReview = async (res_id: string) => {
     }
 };
 
-// user review 데이터 총 갯수 가져오기
-export const getUserReviewCount = async () => {
-    const supabase = createClient();
-    const { data } = await supabase.auth.getSession();
-
-    if (!data.session) return;
-
-    const user_id = data.session.user.id;
-
-    const { data: reviewData, error }: any = await supabase
-        .from('review')
-        .select('*')
-        .eq('user_id', user_id)
-        .explain({ format: 'json', analyze: true });
-
-    if (error) {
-        throw new Error(error.message);
-    }
-
-    const actualRows = reviewData[0].Plan.Plans[0]['Actual Rows'];
-
-    return actualRows;
-};
-
 // 음식점에 달린 review 총 갯수 가져오기
 export const getRestaurantReviewCount = async (res_id: string) => {
     const supabase = createClient();
     const { data: reviewData, error }: any = await supabase
         .from('review')
-        .select('*')
+        .select(`*, profiles!inner (id, username, avatar_url, email, expose)`)
         .eq('res_id', res_id)
+        .eq('profiles.expose', 'public')
         .explain({ format: 'json', analyze: true });
 
     if (error) {
@@ -341,17 +318,16 @@ interface ReviewImage {
 }
 
 // res detail 폼에서 리뷰 보여주기 갯수를 변수로 두기
-export const getReviewList = async (
-    res_id: string,
-    pageParam: number,
-    pageSize: number
-): Promise<CommunityReviewType[]> => {
+export const getReviewList = async (res_id: string, pageParam: number, pageSize: number) => {
     const supabase = createClient();
+
+    // const reviewCount = await getRestaurantReviewCount(res_id);
 
     const { data, error } = await supabase
         .from('review')
         .select(
             `*,
+   
     review_images (images_url),
     profiles!inner (id, username, avatar_url, email),
     review_likes (user_id, review_id)`
@@ -365,12 +341,12 @@ export const getReviewList = async (
         throw new Error(error.message);
     }
 
-    const processedData = data.map((review) => ({
+    const reviewList = data.map((review) => ({
         ...review,
         images_url: review.review_images.flatMap((imageObj: ReviewImage) => imageObj.images_url),
     }));
 
-    return processedData;
+    return reviewList;
 };
 
 export const findUserReview = async (res_id: string) => {
@@ -411,3 +387,39 @@ export const getReviewsByMonth = async (year: number, month: number) => {
 
     return reviewList;
 };
+
+// export const getReviewList = async (
+//     res_id: string,
+//     pageParam: number,
+//     pageSize: number
+// ): Promise<CommunityReviewType[]> => {
+//     const supabase = createClient();
+
+//     const reviewCount = await getRestaurantReviewCount(res_id);
+
+//     console.log('count', reviewCount);
+
+//     const { data, error } = await supabase
+//         .from('review')
+//         .select(
+//             `*,
+//     review_images (images_url),
+//     profiles!inner (id, username, avatar_url, email),
+//     review_likes (user_id, review_id)`
+//         )
+//         .order('visitDate', { ascending: false })
+//         .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
+//         .eq('profiles.expose', 'public')
+//         .eq('res_id', res_id);
+
+//     if (error) {
+//         throw new Error(error.message);
+//     }
+
+//     const reviewList = data.map((review) => ({
+//         ...review,
+//         images_url: review.review_images.flatMap((imageObj: ReviewImage) => imageObj.images_url),
+//     }));
+
+//     return reviewList;
+// };

@@ -103,6 +103,7 @@ export const getFollowerList = async (pageParam: number, pageSize: number) => {
     if (error) {
         throw new Error(error.message);
     }
+
     return followerList;
 };
 
@@ -129,31 +130,6 @@ export const getFollowListByStatus = async (status: string) => {
     return followList;
 };
 
-// following 데이터 총 갯수 가져오기 (주체 나 > 타인)
-export const getFollowingTotalRows = async () => {
-    const supabase = createClient();
-    const { data } = await supabase.auth.getSession();
-
-    if (!data.session) return;
-
-    const user_id = data.session.user.id;
-
-    const { data: followingData, error }: any = await supabase
-        .from('follow')
-        .select('*')
-        .eq('requester_id', user_id)
-        .explain({ format: 'json', analyze: true });
-
-    if (error) {
-        throw new Error(error.message);
-    }
-
-    const actualRows = followingData[0].Plan.Plans[0]['Actual Rows'];
-
-    return actualRows;
-};
-
-// follower 데이터 총 갯수 가져오기 (주쳬 : 타인 > 나) (+ status 로 조회 기능)
 export const getFollowerTotalRows = async (status?: 'pending' | 'accepted') => {
     const supabase = createClient();
 
@@ -161,7 +137,7 @@ export const getFollowerTotalRows = async (status?: 'pending' | 'accepted') => {
 
     if (!data.session) return;
 
-    const user_id = data.session.user.id;
+    const user_id = data.session.user?.id;
 
     let query = supabase.from('follow').select('*').eq('requestee_id', user_id);
 

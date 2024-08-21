@@ -5,12 +5,11 @@ import { useRouter } from 'next/navigation';
 import List, { ListRow } from '@/components/common/List';
 import Text from '@/components/common/Text';
 import Icons from '@/components/common/Icons';
-import { getBookmarkTotalRows } from '@/services/bookmarkService';
-import { useQueries } from '@tanstack/react-query';
-import { getUserReviewCount } from '@/services/reviewService';
+import { useQuery } from '@tanstack/react-query';
 import LoadingBar from '@/components/common/LoadingBar';
 import dynamic from 'next/dynamic';
 import Follow from '@/components/Follow';
+import { getUserDetailData } from '@/services/userDetailService';
 
 /** follow, myreview & mybookmark, calendar, setting 4단락으로 구분 */
 
@@ -22,28 +21,12 @@ const PrivacySetting = dynamic(() => import('@/components/PrivacySetting'));
 const MyPage = () => {
     const router = useRouter();
 
-    const fetchData = [
-        { queryKey: 'bookmarkTotalRows', queryFn: getBookmarkTotalRows },
-        { queryKey: 'reviewTotalRows', queryFn: getUserReviewCount },
-    ];
-
-    const combinedQueries = useQueries({
-        queries: fetchData.map((data) => ({
-            queryKey: [data.queryKey],
-            queryFn: () => data.queryFn(),
-        })),
-
-        combine: (results) => {
-            return {
-                data: results.map((result) => result.data),
-                pending: results.some((result) => result.isPending),
-            };
-        },
+    const { data: userData, isFetching } = useQuery({
+        queryKey: ['userData'],
+        queryFn: getUserDetailData,
     });
 
-    if (combinedQueries.pending) return <LoadingBar />;
-
-    const [bookmarkPagination, reviewPagination] = combinedQueries.data;
+    if (isFetching) return <LoadingBar />;
 
     return (
         <div>
@@ -59,7 +42,7 @@ const MyPage = () => {
                                 <Text typography="st3">즐겨찾기</Text>
                             </div>
                         }
-                        right={bookmarkPagination ? `${bookmarkPagination}개` : '아직 없어용'}
+                        right={userData?.bookmark_count! > 0 ? `${userData?.bookmark_count}개` : '아직 없어용'}
                     />
                     <ListRow
                         onClick={() => router.push('/my/review')}
@@ -69,7 +52,7 @@ const MyPage = () => {
                                 <Text typography="st3">나의 리뷰</Text>
                             </div>
                         }
-                        right={reviewPagination ? `${reviewPagination}개` : '아직 없어용'}
+                        right={userData?.review_count! > 0 ? `${userData?.review_count}개` : '아직 없어용'}
                     />
                 </List>
             </div>

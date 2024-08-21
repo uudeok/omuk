@@ -10,6 +10,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getReviewList, getRestaurantReviewCount } from '@/services/reviewService';
 import Button from './common/Button';
 import { useState } from 'react';
+import Spinner from './common/Spinner';
 
 const ReviewList = ({ res_id }: { res_id: string }) => {
     const [reviewsPerPage, setReviewsPerPage] = useState(3); // 처음에는 3개씩 가져옴
@@ -33,8 +34,8 @@ const ReviewList = ({ res_id }: { res_id: string }) => {
                 return lastPageParam + 1;
             }
         },
-        select: (data) => {
-            return data.pages.flatMap((page) => page);
+        select: (results) => {
+            return results.pages.flatMap((page) => page);
         },
     });
 
@@ -68,8 +69,48 @@ const ReviewList = ({ res_id }: { res_id: string }) => {
                     더보기
                 </Button>
             )}
+
+            {isFetchingNextPage && (
+                <div className={styles.spinner}>
+                    <Spinner size="sm" />
+                </div>
+            )}
         </div>
     );
 };
 
 export default ReviewList;
+
+{
+    /* <div className={styles.layout}>
+<List>
+    <ListRow
+        left={
+            <div>
+                <Icons.Search width={15} />
+                <Text typography="st3">후기 보기</Text>
+            </div>
+        }
+        right={reviewCount !== 0 && <Text typography="st2">{reviewCount}개의 리뷰</Text>}
+    />
+
+    {reviewList.length > 0 ? (
+        reviewList.map((review) => <DetailReview key={review.id} reviewDetail={review} />)
+    ) : (
+        <EmptyState label="리뷰가 없습니다." />
+    )}
+</List>
+
+{hasNextPage && (
+    <Button size="lg" onClick={getMoreReviewData}>
+        더보기
+    </Button>
+)}
+
+{isFetchingNextPage && (
+    <div className={styles.spinner}>
+        <Spinner size="sm" />
+    </div>
+)}
+</div> */
+}
