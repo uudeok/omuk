@@ -15,8 +15,8 @@ import { PaginationType, ResponseType, IMarker } from '../types';
 
 type MapType = {
     mapEl: RefObject<HTMLDivElement> | null;
-    markers: IMarker[] | kakao.maps.Marker[];
-    setMarkers: Dispatch<SetStateAction<IMarker[]>> | Dispatch<SetStateAction<kakao.maps.Marker[]>>;
+    markers: kakao.maps.Marker[];
+    setMarkers: Dispatch<SetStateAction<kakao.maps.Marker[]>>;
     pagination: PaginationType | null;
     setPagination: Dispatch<SetStateAction<PaginationType | null>>;
     map: kakao.maps.Map | undefined;
@@ -39,7 +39,7 @@ const MapContext = createContext<MapType>({
 
 const MapProvider = ({ children }: { children: ReactNode }) => {
     const mapEl = useRef<HTMLDivElement>(null);
-    const [markers, setMarkers] = useState<IMarker[]>([]);
+    const [markers, setMarkers] = useState<kakao.maps.Marker[]>([]);
     const [pagination, setPagination] = useState<PaginationType | null>(null);
     const [map, setMap] = useState<kakao.maps.Map>();
     const [resData, setResData] = useState<ResponseType[]>([]);

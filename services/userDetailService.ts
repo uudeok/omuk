@@ -9,6 +9,7 @@ export type UserDetailType = {
     badges: string[] | null;
 };
 
+// MyPage component
 export const getUserDetailData = async (): Promise<UserDetailType> => {
     const supabase = createClient();
 
@@ -20,6 +21,23 @@ export const getUserDetailData = async (): Promise<UserDetailType> => {
         .from('user_detail')
         .select('*')
         .eq('user_id', user_id)
+        .maybeSingle();
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return userData;
+};
+
+// Avatar component user detail
+export const getUsersDetailData = async (userId: string): Promise<UserDetailType> => {
+    const supabase = createClient();
+
+    const { data: userData, error } = await supabase
+        .from('user_detail')
+        .select('*')
+        .eq('user_id', userId)
         .maybeSingle();
 
     if (error) {

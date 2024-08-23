@@ -12,3 +12,10 @@ export const keepNumericAndDot = (value: string): string => {
 export const cutText = (text: string, maxLength: number) => {
     return text.length > maxLength ? text.substring(0, maxLength) : text;
 };
+
+export const cutCategory = (categories: string) => {
+    const categoryParts = categories.split(' > ');
+    const lastCategory = categoryParts[categoryParts.length - 1];
+
+    return lastCategory;
+};
