@@ -28,7 +28,7 @@ const RestaurantDetail = ({ resData, res_id }: Props) => {
     return (
         <div className={styles.container}>
             <img
-                // loading="lazy"
+                loading="lazy"
                 src={basicInfo?.mainphotourl}
                 alt={basicInfo?.placenamefull}
                 width="100%"
