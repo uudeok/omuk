@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/components/reviewCard.module.css';
+import styles from '../styles/components/feedReview.module.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import dayjs from 'dayjs';
@@ -63,8 +63,8 @@ const FeedReview = ({ list }: Props) => {
     return (
         <div className={styles.layout}>
             <div className={styles.header}>
-                <Avatar profile={list.profiles!} />
-                <Text typography="st3" color="grey">
+                <Avatar profile={list.profiles!} showDetail={true} />
+                <Text typography="st5" color="grey">
                     {visitedDate}
                 </Text>
             </div>

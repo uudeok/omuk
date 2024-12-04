@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/ui/marker.module.css';
+import styles from '../styles/ui/overlay.module.css';
 import { useMap } from '@/shared/context/MapProvider';
 import { useCallback, useState } from 'react';
 import { ResponseType } from '@/shared/types';
@@ -33,18 +33,21 @@ export const useMarker = () => {
                 map.setBounds(bounds);
 
                 /** custom overlay 구현 */
-
                 const content = `            
-                <div class="${styles.customOverlay}">
-                    <div class="${styles.content}">
-                      <button class="${styles.closeButton}">X</button>
-                        <h2>${res.place_name}</h2>
-                        <span>${cutCategory(res.category_name)}</span>
-                        <span>${res.phone}</span>
-                        <p>${res.road_address_name}</p>
-                    </div>
-                    <div class="${styles.overlayArrow}"></div>
+            <div class="${styles.customOverlay}">
+                <div class="${styles.header}">
+                    <h2 class="${styles.placeName}">${res.place_name}</h2>   
+                    <button class="${styles.closeButton}">X</button>
                 </div>
+
+                <div class="${styles.content}">
+                    <span>${cutCategory(res.category_name)}</span>
+                    <span>${res.phone}</span>
+                    <p>${res.road_address_name}</p>
+                </div>
+                 <div class="${styles.overlayArrow}"></div>
+          
+            </div>
                 `;
 
                 const overlay = new kakao.maps.CustomOverlay({
@@ -59,9 +62,6 @@ export const useMarker = () => {
                     overlayArr.forEach((o) => o.setMap(null));
 
                     overlay.setMap(map);
-
-                    bounds.extend(new kakao.maps.LatLng(Number(res.y), Number(res.x)));
-                    map.setBounds(bounds);
                 });
 
                 markersArr.push(marker);
