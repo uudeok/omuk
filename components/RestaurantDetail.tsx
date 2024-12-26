@@ -28,8 +28,6 @@ const RestaurantDetail = ({ resData, res_id }: Props) => {
     const url = basicInfo?.mainphotourl;
     const secureUrl = url.replace('http://', 'https://');
 
-    console.log(secureUrl);
-
     return (
         <div className={styles.container}>
             <img
