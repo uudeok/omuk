@@ -12,7 +12,6 @@ export const getDetail = async (id: string) => {
 
 const DetailPage = async ({ params: { id } }: ParamType) => {
     const resData = await getDetail(id);
-    console.log(resData);
 
     const jsonLd = {
         '@context': 'https://schema.org',
