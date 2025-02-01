@@ -26,7 +26,11 @@ const DetailPage = async ({ params: { id } }: ParamType) => {
     return (
         <>
             <section>
-                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                    id={id}
+                />
             </section>
             <RestaurantDetail resData={resData} res_id={id} />
         </>
