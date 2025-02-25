@@ -1,5 +1,8 @@
 {
     "jsc": {
-        "target": "es2019"
+        "parser": {
+            "privateMethod": true,
+            "classPrivateProperty": true
+        }
     }
 }
