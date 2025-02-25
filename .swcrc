@@ -1,8 +1,15 @@
 {
     "jsc": {
         "parser": {
+            "syntax": "typescript",
             "privateMethod": true,
             "classPrivateProperty": true
+        },
+
+        "loose": true,
+        "target": "es2015",
+        "transform": {
+            "legacyDecorator": true
         }
     }
 }
