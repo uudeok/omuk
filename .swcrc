@@ -2,14 +2,19 @@
     "jsc": {
         "parser": {
             "syntax": "typescript",
-            "privateMethod": true,
-            "classPrivateProperty": true
+            "privateMethod": false,
+            "classPrivateProperty": false
         },
 
         "loose": true,
         "target": "es2015",
         "transform": {
             "legacyDecorator": true
+        }
+    },
+    "env": {
+        "targets": {
+            "safari": "13"
         }
     }
 }
