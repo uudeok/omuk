@@ -2,12 +2,11 @@
     "jsc": {
         "parser": {
             "syntax": "typescript",
-            "privateMethod": false,
-            "classPrivateProperty": false
+            "privateMethod": true,
+            "classPrivateProperty": true
         },
-
         "loose": true,
-        "target": "es2015",
+        "target": "es5",
         "transform": {
             "legacyDecorator": true
         }
